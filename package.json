@@ -12,7 +12,6 @@
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@types/react-redux": "^7.1.24",
-    "@types/react-router-dom": "^5.3.3",
     "antd": "^4.22.3",
     "i18next": "^21.8.16",
     "prettier": "^2.7.1",
@@ -60,6 +59,7 @@
     "*.js": "eslint --cache --fix"
   },
   "devDependencies": {
+    "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.25",
     "@typescript-eslint/eslint-plugin": "^5.32.0",
     "@typescript-eslint/parser": "^5.32.0",
