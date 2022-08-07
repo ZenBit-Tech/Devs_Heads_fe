@@ -48,7 +48,7 @@ const signIn: FC = () => {
           />
         </label>
         {formik.touched.password && formik.errors.password ? <div>{formik.errors.password}</div> : null}
-        <button type="submit">Register</button>
+        <button type="submit">Sign In</button>
       </form>
     </>
   );
