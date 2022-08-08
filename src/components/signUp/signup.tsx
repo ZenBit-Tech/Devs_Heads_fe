@@ -3,8 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAppDispatch } from '../../redux/hooks';
 import { email, password } from '../../redux/reducers/signUp';
-import image from '../../image/google.jpg';
-import styled from 'styled-components';
+import { Div, Button, Register, Form, Label, Input, P } from './signup.styled';
 
 const signUp: FC = () => {
   const dispatch = useAppDispatch();
@@ -27,27 +26,16 @@ const signUp: FC = () => {
     },
   });
 
-  const Button = styled.button`
-  text-align: right;
-  background: rgb(67, 67, 194);
-  background-image: url(${image});
-  background-repeat: no-repeat;
-  background-size: 40px;
-  border: none;
-  border-radius: 3px;
-  color: white;
-  padding: 8px;
-  padding-right: 20px;
-  height: 40px;
-  width: 200px;`;
-
   return (
-    <>
-      <form onSubmit={formik.handleSubmit }>
+    <Div>
+      <Form onSubmit={formik.handleSubmit }>
+        <P>Quick Sign Up</P>
         <Button>Sign Up With Google</Button>
-        <label>
+        <P>Or</P>
+        <P>Use your email</P>
+        <Label>
           Email
-          <input
+          <Input
             id="email"
             name="email" 
             type="email"
@@ -55,11 +43,11 @@ const signUp: FC = () => {
             onBlur={formik.handleBlur}
             value={formik.values.email}
           />
-        </label>
+        </Label>
         {formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}
-        <label>
+        <Label>
           Create a password
-          <input
+          <Input
             id="createPassword"
             name="createPassword" 
             type="password" 
@@ -67,11 +55,11 @@ const signUp: FC = () => {
             onBlur={formik.handleBlur}
             value={formik.values.createPassword}
           />
-        </label>
+        </Label>
         {formik.touched.createPassword && formik.errors.createPassword ? <div>{formik.errors.createPassword}</div> : null}
-        <label>
+        <Label>
           Confirm password
-          <input
+          <Input
             id="password"
             name="password" 
             type="password" 
@@ -79,11 +67,11 @@ const signUp: FC = () => {
             onBlur={formik.handleBlur}
             value={formik.values.password}
           />
-        </label>
+        </Label>
         {formik.touched.password && formik.errors.password ? <div>{formik.errors.password}</div> : null}
-        <button style={{color: 'blue'}} type="submit">Register</button>
-      </form>
-    </>
+        <Register type="submit">Register</Register>
+      </Form>
+    </Div>
   );
 };
 
