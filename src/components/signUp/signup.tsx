@@ -1,34 +1,41 @@
 import React, { FC } from 'react';
-import { useFormik } from 'formik';
+import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppDispatch } from '../../redux/hooks';
 import { email, password } from '../../redux/reducers/signUp';
 import { Div, Button, Register, Form, Label, Input, P } from './signup.styled';
 
+type FormData =  {
+  email: string;
+  createPassword: string;
+  password: string;
+}
+
+const schema = Yup.object({
+  email: Yup.string().email().required(),
+  createPassword: Yup.string().min(8).required(),
+  password: Yup.string().min(8).required(),
+}).required();
+
 const signUp: FC = () => {
-  const dispatch = useAppDispatch();
-  
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      createPassword: '',
-      password: '',
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().email('Invalid email').required(),
-      createPassword: Yup.string().min(8, 'The minimum length is 8 characters').required(),
-      password: Yup.string().min(8, 'The minimum length is 8 characters').required(),
-    }),
-    onSubmit: (values) => {
-      dispatch(email(values.email));
-      dispatch(password(values.password));
-      formik.handleReset(values)
-    },
+  const { register, handleSubmit, reset, formState: { errors} } = useForm<FormData>({
+    resolver: yupResolver(schema),
+    defaultValues: {email: '', createPassword: '', password: ''}
   });
+  const dispatch = useAppDispatch();
+
+  const onSubmit = handleSubmit((values) => {
+    dispatch(email(values.email));
+    dispatch(password(values.password));
+    alert('successfully submitted');
+    reset({ email: '', createPassword: '', password: ''});
+  });
+  
 
   return (
     <Div>
-      <Form onSubmit={formik.handleSubmit }>
+      <Form onSubmit={onSubmit}>
         <P>Quick Sign Up</P>
         <Button>Sign Up With Google</Button>
         <P>Or</P>
@@ -37,38 +44,29 @@ const signUp: FC = () => {
           Email
           <Input
             id="email"
-            name="email" 
             type="email"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
+            {...register("email")}
           />
         </Label>
-        {formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}
+        <P>{errors.email?.message}</P>
         <Label>
           Create a password
           <Input
             id="createPassword"
-            name="createPassword" 
             type="password" 
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.createPassword}
+            {...register("createPassword")}
           />
         </Label>
-        {formik.touched.createPassword && formik.errors.createPassword ? <div>{formik.errors.createPassword}</div> : null}
+        <P>{errors.createPassword?.message}</P>
         <Label>
           Confirm password
           <Input
             id="password"
-            name="password" 
             type="password" 
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.password}
+            {...register("password")}
           />
         </Label>
-        {formik.touched.password && formik.errors.password ? <div>{formik.errors.password}</div> : null}
+        <P>{errors.password?.message}</P>
         <Register type="submit">Register</Register>
       </Form>
     </Div>
