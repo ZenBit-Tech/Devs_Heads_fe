@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -19,6 +20,7 @@ const schema = Yup.object({
 }).required();
 
 const signUp: FC = () => {
+  const navigate = useNavigate();
   const { register, handleSubmit, reset, formState: { errors} } = useForm<FormData>({
     resolver: yupResolver(schema),
     defaultValues: {email: '', createPassword: '', password: ''}
@@ -28,10 +30,9 @@ const signUp: FC = () => {
   const onSubmit = handleSubmit((values) => {
     dispatch(email(values.email));
     dispatch(password(values.password));
-    alert('successfully submitted');
     reset({ email: '', createPassword: '', password: ''});
+    navigate('/home');
   });
-  
 
   return (
     <Div>

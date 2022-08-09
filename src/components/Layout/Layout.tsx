@@ -11,9 +11,6 @@ const Layout: FC = () => {
             <NavLink to="/">home</NavLink>
           </li>
           <li>
-            <NavLink to="/signup">Sign Up</NavLink>
-          </li>
-          <li>
             <NavLink to="/sample">sample</NavLink>
           </li>
         </ul>

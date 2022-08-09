@@ -7,7 +7,7 @@ const SamplePage = lazy(
 );
 
 const SignUp = lazy(
-  () => import("./components/signUp/signup")
+  () => import("./pages/Signup")
 );
 
 const App: FC = () => {
