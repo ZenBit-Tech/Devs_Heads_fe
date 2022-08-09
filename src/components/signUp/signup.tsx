@@ -31,7 +31,7 @@ const signUp: FC = () => {
     dispatch(email(values.email));
     dispatch(password(values.password));
     reset({ email: '', createPassword: '', password: ''});
-    navigate('/home');
+    navigate('/registration');
   });
 
   return (
