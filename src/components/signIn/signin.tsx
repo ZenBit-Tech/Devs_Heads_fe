@@ -26,6 +26,13 @@ const signIn: FC = () => {
   const onSubmit = handleSubmit((values) => {
     dispatch(email(values.email));
     dispatch(password(values.password));
+    
+    if (errors.email) {
+        alert('Invalid Email or Password');
+    } else {
+        alert('You have sucessfully logged in');
+    }
+
     reset({ email: '', password: '' });
   });
 
