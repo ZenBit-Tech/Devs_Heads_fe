@@ -6,12 +6,17 @@ const SamplePage = lazy(
   () => import("./pages/SamplePage" /* webpackChunkName: "sample-page" */)
 );
 
+const RegistrationPage = lazy(
+  () => import("./pages/RegistrationPage")
+);
+
 const App: FC = () => {
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<Layout />}>
+            <Route path="/registration" element={<RegistrationPage />} />
             <Route path="sample" element={<SamplePage />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Route>
