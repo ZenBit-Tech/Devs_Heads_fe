@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useAppDispatch } from '../../redux/hooks';
-import { email, password } from '../../redux/reducers/signUp';
+import { useAppDispatch } from 'redux/hooks';
+import { email, password } from 'redux/reducers/signUp';
 import { Div, Button, Register, Form, Label, Input, P } from './signup.styled';
 import { useTranslation } from 'react-i18next';
 
