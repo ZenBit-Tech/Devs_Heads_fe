@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import React, { FC } from 'react';
+import { NavLink, Outlet } from 'react-router-dom';
 
 const Layout: FC = () => {
   return (
@@ -11,6 +11,9 @@ const Layout: FC = () => {
           </li>
           <li>
             <NavLink to="/sample">sample</NavLink>
+          </li>
+          <li>
+            <NavLink to="/settings">settings</NavLink>
           </li>
         </ul>
       </nav>

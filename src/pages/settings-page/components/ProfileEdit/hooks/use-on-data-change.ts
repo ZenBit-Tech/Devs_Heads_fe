@@ -1,0 +1,185 @@
+import { ChangeEvent, useState } from 'react';
+import { RadioChangeEvent } from 'antd';
+import { ITextareaWithDatesOnChange, OnChangeObjectKeys } from '../interfaces/interfaces';
+
+export const useOnDataChange = () => {
+  const categoryOptions = [
+    { id: 1, value: 'Legal' },
+    { id: 2, value: 'IT' },
+    { id: 3, value: 'Sales' },
+    { id: 4, value: 'Finance' },
+    { id: 5, value: 'Construction' },
+    { id: 6, value: 'Accounting' },
+    { id: 7, value: 'Design' },
+    { id: 8, value: 'Security' },
+    { id: 9, value: 'Healthcare' },
+    { id: 10, value: 'Marketing' },
+  ];
+
+  const [file, setFile] = useState<Blob>();
+  const [file64, setFile64] = useState<string | ArrayBuffer | null>();
+  const onChangePhotoHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFile64(reader.result);
+    };
+    const newFile = e.target.files && e.target.files[0];
+    if (newFile) {
+      setFile(newFile);
+      reader.readAsDataURL(newFile);
+    }
+  };
+  const onPhotoDelete = () => {
+    setFile(undefined);
+    setFile64(null);
+  };
+
+  const [textAreaWithDatesState, setTextAreaWithDatesState] = useState({
+    education: [
+      {
+        info: '',
+        dateStart: new Date().toISOString(),
+        dateEnd: new Date().toISOString(),
+        error: false,
+      },
+    ],
+    experience: [
+      {
+        info: '',
+        dateStart: new Date().toISOString(),
+        dateEnd: new Date().toISOString(),
+        error: false,
+      },
+    ],
+  });
+  const onChangeTextareaWithDates = (args: ITextareaWithDatesOnChange) => {
+    setTextAreaWithDatesState(prevState => {
+      const newState = { ...prevState };
+      newState[args.key][args.index] = args.item;
+      console.log(newState);
+      return newState;
+    });
+  };
+  const addField = (key: OnChangeObjectKeys) => {
+    setTextAreaWithDatesState(prevState => {
+      const newState = { ...prevState };
+      newState[key].push({
+        info: '',
+        dateStart: new Date().toISOString(),
+        dateEnd: new Date().toISOString(),
+        error: false,
+      });
+      return newState;
+    });
+  };
+
+  const [skillsOptions, setSkillsOptions] = useState([
+    { label: 'Business analysis', value: false },
+    { label: 'Consulting', value: false },
+    { label: 'Estimate', value: false },
+    { label: 'Recruiting', value: false },
+    { label: 'SMM', value: false },
+    { label: 'Copyrighting', value: false },
+    { label: 'UI/UX', value: false },
+    { label: 'Administration', value: false },
+    { label: 'Taxation', value: false },
+    { label: 'Coaching', value: false },
+    { label: 'Full stack', value: false },
+    { label: 'Quality control', value: false },
+    { label: 'Communication', value: false },
+    { label: 'JavaScript', value: false },
+    { label: 'QA Automation', value: false },
+    { label: 'ReactJS', value: false },
+    { label: 'Python', value: false },
+    { label: 'Game dev', value: false },
+    { label: 'Flutter', value: false },
+    { label: 'Node.js', value: false },
+    { label: 'DevOps', value: false },
+    { label: 'Scrum Master', value: false },
+    { label: 'Agile Coach', value: false },
+    { label: 'Project Manager', value: false },
+  ]);
+
+  const onSkillsChange = (index: number) => {
+    setSkillsOptions(prevState => {
+      return prevState.map((e, i) => {
+        if (index === i) {
+          return { ...e, value: !e.value };
+        }
+        return e;
+      });
+    });
+  };
+
+  const [englishOption, setEnglishOption] = useState('Pre-intermediate');
+  const englishOptions = [
+    { label: 'Pre-intermediate', value: 'Pre-intermediate' },
+    { label: 'Intermediate', value: 'Intermediate' },
+    { label: 'Upper-intermediate', value: 'Upper-intermediate' },
+  ];
+  const onEnglishOptionChange = ({ target: { value } }: RadioChangeEvent) => {
+    setEnglishOption(value);
+  };
+
+  const [position, setPosition] = useState('');
+  const [positionError, setPositionError] = useState(false);
+  const onPositionChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.value.length > 25) {
+      setPositionError(true);
+    } else {
+      setPosition(e.currentTarget.value);
+      setPositionError(false);
+    }
+  };
+
+  const [category, setCategory] = useState('');
+  const onCategoryChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setCategory(e.currentTarget.value);
+  };
+
+  const [price, setPrice] = useState<number>(0);
+  const onPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (+e.currentTarget.value < 0) {
+      window.alert('Wrong price');
+    } else {
+      setPrice(+e.currentTarget.value);
+    }
+  };
+
+  const [description, setDescription] = useState('');
+  const [descriptionError, setDescriptionError] = useState(false);
+  const onDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.currentTarget.value.length > 200) {
+      setDescriptionError(true);
+    } else {
+      setDescription(e.currentTarget.value);
+      setDescriptionError(false);
+    }
+  };
+
+  return {
+    skillsOptions,
+    onSkillsChange,
+    textAreaWithDatesState,
+    onChangeTextareaWithDates,
+    addField,
+    englishOption,
+    englishOptions,
+    onEnglishOptionChange,
+    position,
+    onPositionChange,
+    category,
+    onCategoryChange,
+    onPriceChange,
+    price,
+    description,
+    onDescriptionChange,
+    onChangePhotoHandler,
+    file,
+    file64,
+    categoryOptions,
+    onPhotoDelete,
+    positionError,
+    descriptionError,
+  };
+};
