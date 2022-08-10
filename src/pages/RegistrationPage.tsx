@@ -1,18 +1,20 @@
 import React, { FC } from 'react';
 import { Div1, H1, P, Div2, Div3, Button, Button2 } from './Registration.styles';
+import { useTranslation } from 'react-i18next';
 
 const RegistrationPage: FC = () => {
+  const { t } = useTranslation();
   return (
     <Div1>
-      <H1>Complete your registration</H1>
-      <P>Please select your role</P>
+      <H1>{`${t('Registration.title')}`}</H1>
+      <P>{`${t('Registration.selectRole')}`}</P>
       <Div2>
-        <P>I want to</P>
+        <P>{`${t('Registration.text')}`}</P>
         <Div3>
-          <Button>Work as a freelancer</Button>
-          <Button>Hire for a project</Button>
+          <Button>{`${t('Registration.buttonText1')}`}</Button>
+          <Button>{`${t('Registration.buttonText2')}`}</Button>
         </Div3>
-        <Button2>Create My Account</Button2>
+        <Button2>{`${t('Registration.buttonAccount')}`}</Button2>
       </Div2>
     </Div1>
   );

@@ -1,5 +1,23 @@
 import styled from 'styled-components';
 
+const backgroundColor = {
+  Button2: 'rgb(50, 90, 199)',
+  borderColor: 'rgba(116, 114, 114, 0.932)'
+}
+
+const buttonColorHover = 'rgb(33, 163, 33)';
+
+const Color = {
+  Button: 'white',
+  Text: 'rgba(116, 114, 114, 0.932)'
+}
+
+const FontSize = {
+  Text: '18px',
+  Button: '18px',
+  Button2: '20px'
+}
+
 export const Div1 = styled.div`
 align-content: center;
 display: flex;
@@ -11,7 +29,7 @@ text-align: center;`
 export const Div2 = styled.div`
 display: flex;
 flex-flow: column wrap;
-border: solid 1px rgba(116, 114, 114, 0.932);
+border: solid 1px ${backgroundColor.borderColor};
 justify-content: space-around;
 width: 480px`
 
@@ -23,27 +41,27 @@ margin-bottom: 50px;`
 
 export const P = styled.p`
 text-align: center;
-font-size: 16px;
-color: rgba(116, 114, 114, 0.932);
+font-size: ${FontSize.Text};
+color: ${Color.Text};
 margin-bottom: 30px;`
 
 export const Button = styled.button`
 &:hover {
-  background: rgb(33, 163, 33);
-  color: white;
+  background: ${buttonColorHover};
+  color: ${Color.Button};
 }
-border: solid 1px rgba(116, 114, 114, 0.932);
+border: solid 1px ${backgroundColor.borderColor};
 border-radius: 6px;
-font-size: 14px;
+font-size: ${FontSize.Button};
 padding: 30px;
 width: 235px;`
 
 export const Button2 = styled.button`
-background: rgb(50, 90, 199);
+background: ${backgroundColor.Button2};
 border: none;
 border-radius: 6px;
-color: white;
-font-size: 20px;
+color: ${Color.Button};
+font-size: ${FontSize.Button2};
 height: 40px;
 margin-left: 30px;
 margin-top: 20px;
