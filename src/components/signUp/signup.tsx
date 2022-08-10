@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppDispatch } from '../../redux/hooks';
 import { email, password } from '../../redux/reducers/signUp';
 import { Div, Button, Register, Form, Label, Input, P } from './signup.styled';
+import { useTranslation } from 'react-i18next';
 
 type FormData =  {
   email: string;
@@ -26,6 +27,7 @@ const signUp: FC = () => {
     defaultValues: {email: '', createPassword: '', password: ''}
   });
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const onSubmit = handleSubmit((values) => {
     dispatch(email(values.email));
@@ -37,12 +39,12 @@ const signUp: FC = () => {
   return (
     <Div>
       <Form onSubmit={onSubmit}>
-        <P>Quick Sign Up</P>
-        <Button>Sign Up With Google</Button>
-        <P>Or</P>
-        <P>Use your email</P>
+        <P>{`${t('SignUp.quickSign')}`}</P>
+        <Button>{`${t('SignUp.buttonGoogle')}`}</Button>
+        <P>{`${t('SignUp.or')}`}</P>
+        <P>{`${t('SignUp.textEmail')}`}</P>
         <Label>
-          Email
+          {`${t('SignUp.email')}`}
           <Input
             id="email"
             type="email"
@@ -51,7 +53,7 @@ const signUp: FC = () => {
         </Label>
         <P>{errors.email?.message}</P>
         <Label>
-          Create a password
+        {`${t('SignUp.createPassword')}`}
           <Input
             id="createPassword"
             type="password" 
@@ -60,7 +62,7 @@ const signUp: FC = () => {
         </Label>
         <P>{errors.createPassword?.message}</P>
         <Label>
-          Confirm password
+        {`${t('SignUp.password')}`}
           <Input
             id="password"
             type="password" 
@@ -68,7 +70,7 @@ const signUp: FC = () => {
           />
         </Label>
         <P>{errors.password?.message}</P>
-        <Register type="submit">Register</Register>
+        <Register type="submit">{`${t('SignUp.register')}`}</Register>
       </Form>
     </Div>
   );
