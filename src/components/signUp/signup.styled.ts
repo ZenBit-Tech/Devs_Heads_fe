@@ -60,7 +60,7 @@ align-content: center;
 display: flex;
 flex-flow: column wrap;`
 
-export const Label = styled.label`
+export const ControlStyle = styled.label`
 color:  ${color.paragraphColor};
 display: flex;
 flex-flow: column wrap;
