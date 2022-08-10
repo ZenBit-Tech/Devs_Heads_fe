@@ -1,20 +1,35 @@
 import image from '../../image/google.jpg';
 import styled from 'styled-components';
 
+const backgroundColor = {
+  button: 'rgb(50, 90, 199)',
+  border: 'rgb(153, 152, 152)',
+}
+
+const color = {
+  paragraphColor: 'rgb(116, 113, 113)',
+  buttonText: 'white',
+}
+
+const font = {
+  fontSizeP: '12px',
+  fontSizeB: '20px',
+}
+
 export const Div = styled.div`
-border: solid 1px rgb(153, 152, 152);
+border: solid 1px ${backgroundColor.border};
 margin-left: 400px;
 width: 400px`;
 
 export const Button = styled.button`
 text-align: right;
-background: rgb(50, 90, 199);
+background: ${backgroundColor.button};
 background-image: url(${image});
 background-repeat: no-repeat;
 background-size: 40px;
-border: 2px rgb(50, 90, 199);
+border: 2px ${backgroundColor.button};
 border-radius: 6px;
-color: white;
+color: ${color.buttonText};
 margin-left: 40px;
 padding: 8px;
 padding-right: 20px;
@@ -22,18 +37,18 @@ height: 40px;
 width: 200px;`; 
 
 export const P = styled.p`
-color:  rgb(116, 113, 113);
-font-size: 12px;
+color: ${color.paragraphColor};
+font-size: ${font.fontSizeP};
 text-align: center;
 margin-top: 5px;
 margin-bottom: 3px`
 
 export const Register = styled.button`
-background: rgb(50, 90, 199);
+background: ${backgroundColor.button};
 border: none;
 border-radius: 6px;
-color: white;
-font-size: 20px;
+color: ${color.buttonText};
+font-size: ${font.fontSizeB};
 height: 40px;
 margin-left: 50px;
 margin-top: 20px;
@@ -46,13 +61,13 @@ display: flex;
 flex-flow: column wrap;`
 
 export const Label = styled.label`
-color:  rgb(116, 113, 113);
+color:  ${color.paragraphColor};
 display: flex;
 flex-flow: column wrap;
 margin-top: 10px;`
 
 export const Input = styled.input`
 border-radius: 6px;
-border: solid 1px rgb(153, 152, 152);
+border: solid 1px ${backgroundColor.border};
 height: 30px;
 width: 300px;`
