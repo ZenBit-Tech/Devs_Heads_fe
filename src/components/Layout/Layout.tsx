@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import SignInPage from 'pages/Home';
 
 const Layout: FC = () => {
   return (
@@ -16,7 +15,6 @@ const Layout: FC = () => {
         </ul>
       </nav>
       <Outlet />
-      <SignInPage />
     </div>
   );
 };
