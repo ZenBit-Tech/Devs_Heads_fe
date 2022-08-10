@@ -16,7 +16,7 @@ const App: FC = () => {
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route path="signin" element={<SignInPage />} />
+            <Route path="/" element={<SignInPage />} />
             <Route path="sample" element={<SamplePage />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Route>
