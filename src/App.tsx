@@ -1,7 +1,7 @@
 import React, { FC, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
-import PrivateRoutes from './components/hoc/PrivateRoutes';
+import PrivateRoutes from './hoc/PrivateRoutes';
 
 const SamplePage = lazy(() => import('./pages/SamplePage' /* webpackChunkName: "sample-page" */));
 

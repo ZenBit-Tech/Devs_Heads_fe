@@ -1,0 +1,9 @@
+Index: .eslintcache
+===================================================================
+diff --git a/.eslintcache b/.eslintcache
+new file mode 100644
+--- /dev/null	
++++ b/.eslintcache	
+@@ -0,0 +1,1 @@
++[{"C:\\IT\\intership\\Devs_Heads_fe\\src\\localization\\i18n.js":"1"},{"size":257,"mtime":1660215695220,"results":"2","hashOfConfig":"3"},{"filePath":"4","messages":"5","suppressedMessages":"6","errorCount":0,"fatalErrorCount":0,"warningCount":0,"fixableErrorCount":0,"fixableWarningCount":0},"n3etq9","C:\\IT\\intership\\Devs_Heads_fe\\src\\localization\\i18n.js",[],[]]
+\ No newline at end of file
