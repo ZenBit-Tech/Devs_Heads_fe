@@ -22,7 +22,6 @@
     "baseUrl": "src"
   },
   "include": [
-    "src",
-    "redux"
+    "src"
   ]
 }

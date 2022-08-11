@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppDispatch } from 'redux/hooks';
 import { email } from 'redux/reducers/signin';
+import { Div, Div2, H1, H2, Form, Input, Button, ControlStyle, LinkStyle, P, ErrorP } from './Signin.styles';
 import { useTranslation } from 'react-i18next';
 
 type FormData = {
@@ -34,32 +35,33 @@ const signIn: FC = () => {
   };
 
   return (
-    <>
-      <h1>{`${t('SignIn.title')}`}</h1>
-      <h2>{`${t('SignIn.upperText')}`}</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>{`${t('SignIn.email')}`}</label>
+    <Div>
+      <H1>{`${t('SignIn.title')}`}</H1>
+      <H2>{`${t('SignIn.upperText')}`}</H2>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <ControlStyle>{`${t('SignIn.email')}`}</ControlStyle>
           <Controller
-            render={({ field }) => <input type="text" {...field} />}
+            render={({ field }) => <Input type="text" {...field} />}
             name="email"
             control={control}
             defaultValue="" 
           />
-          {errors.email?.message}
-        <label>{`${t('SignIn.password')}`}</label>
+        <ControlStyle>{`${t('SignIn.password')}`}</ControlStyle>
           <Controller
-            render={({ field }) => <input type="password" {...field} />}
+            render={({ field }) => <Input type="password" {...field} />}
             name="password"
             control={control}
             defaultValue=""
           />
-          <p>{errors.password?.message}</p>
-          <Link to="">{`${t('SignIn.forgotPassword')}`}</Link>
-        <button type="submit">{`${t('SignIn.buttonSignin')}`}</button>
-      </form>
-      <p>{`${t('SignIn.text')}`}</p>
-      <Link to="/signup">{`${t('SignIn.registerLink')}`}</Link>
-    </>
+          <LinkStyle><Link to="">{`${t('SignIn.forgotPassword')}`}</Link></LinkStyle>
+          <ErrorP>{errors.password?.message}</ErrorP>
+        <Button type="submit">{`${t('SignIn.buttonSignin')}`}</Button>
+      </Form>
+      <Div2>
+        <P>{`${t('SignIn.text')}`}</P>
+        <Link to="/signup">{`${t('SignIn.registerLink')}`}</Link>
+      </Div2>
+    </Div>
   );
 }
 
