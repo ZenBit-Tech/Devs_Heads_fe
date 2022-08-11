@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useAppDispatch } from '../../redux/hooks';
-import { email, password } from '../../redux/reducers/signin';
+import { useAppDispatch } from 'redux/hooks';
+import { email } from 'redux/reducers/signin';
 
 type FormData = {
   email: string;
@@ -25,7 +25,6 @@ const signIn: FC = () => {
 
   const onSubmit = handleSubmit((values) => {
     dispatch(email(values.email));
-    dispatch(password(values.password));
     
     if (errors.email) {
         alert('Invalid Email or Password');
