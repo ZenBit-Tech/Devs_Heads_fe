@@ -2,6 +2,52 @@ import { ChangeEvent, useState } from 'react';
 import { RadioChangeEvent } from 'antd';
 import { ITextareaWithDatesOnChange, OnChangeObjectKeys } from '../interfaces/interfaces';
 
+const PRE_INTERMEDIATE = 'Pre-intermediate';
+const textareaMock = {
+  education: [
+    {
+      info: '',
+      dateStart: new Date().toISOString(),
+      dateEnd: new Date().toISOString(),
+      error: false,
+    },
+  ],
+  experience: [
+    {
+      info: '',
+      dateStart: new Date().toISOString(),
+      dateEnd: new Date().toISOString(),
+      error: false,
+    },
+  ],
+};
+const skillsMock = [
+  { label: 'Business analysis', value: false },
+  { label: 'Consulting', value: false },
+  { label: 'Estimate', value: false },
+  { label: 'Recruiting', value: false },
+  { label: 'SMM', value: false },
+  { label: 'Copyrighting', value: false },
+  { label: 'UI/UX', value: false },
+  { label: 'Administration', value: false },
+  { label: 'Taxation', value: false },
+  { label: 'Coaching', value: false },
+  { label: 'Full stack', value: false },
+  { label: 'Quality control', value: false },
+  { label: 'Communication', value: false },
+  { label: 'JavaScript', value: false },
+  { label: 'QA Automation', value: false },
+  { label: 'ReactJS', value: false },
+  { label: 'Python', value: false },
+  { label: 'Game dev', value: false },
+  { label: 'Flutter', value: false },
+  { label: 'Node.js', value: false },
+  { label: 'DevOps', value: false },
+  { label: 'Scrum Master', value: false },
+  { label: 'Agile Coach', value: false },
+  { label: 'Project Manager', value: false },
+];
+
 export const useOnDataChange = () => {
   const categoryOptions = [
     { id: 1, value: 'Legal' },
@@ -34,24 +80,7 @@ export const useOnDataChange = () => {
     setFile64(null);
   };
 
-  const [textAreaWithDatesState, setTextAreaWithDatesState] = useState({
-    education: [
-      {
-        info: '',
-        dateStart: new Date().toISOString(),
-        dateEnd: new Date().toISOString(),
-        error: false,
-      },
-    ],
-    experience: [
-      {
-        info: '',
-        dateStart: new Date().toISOString(),
-        dateEnd: new Date().toISOString(),
-        error: false,
-      },
-    ],
-  });
+  const [textAreaWithDatesState, setTextAreaWithDatesState] = useState(textareaMock);
   const onChangeTextareaWithDates = (args: ITextareaWithDatesOnChange) => {
     setTextAreaWithDatesState(prevState => {
       const newState = { ...prevState };
@@ -73,32 +102,7 @@ export const useOnDataChange = () => {
     });
   };
 
-  const [skillsOptions, setSkillsOptions] = useState([
-    { label: 'Business analysis', value: false },
-    { label: 'Consulting', value: false },
-    { label: 'Estimate', value: false },
-    { label: 'Recruiting', value: false },
-    { label: 'SMM', value: false },
-    { label: 'Copyrighting', value: false },
-    { label: 'UI/UX', value: false },
-    { label: 'Administration', value: false },
-    { label: 'Taxation', value: false },
-    { label: 'Coaching', value: false },
-    { label: 'Full stack', value: false },
-    { label: 'Quality control', value: false },
-    { label: 'Communication', value: false },
-    { label: 'JavaScript', value: false },
-    { label: 'QA Automation', value: false },
-    { label: 'ReactJS', value: false },
-    { label: 'Python', value: false },
-    { label: 'Game dev', value: false },
-    { label: 'Flutter', value: false },
-    { label: 'Node.js', value: false },
-    { label: 'DevOps', value: false },
-    { label: 'Scrum Master', value: false },
-    { label: 'Agile Coach', value: false },
-    { label: 'Project Manager', value: false },
-  ]);
+  const [skillsOptions, setSkillsOptions] = useState(skillsMock);
 
   const onSkillsChange = (index: number) => {
     setSkillsOptions(prevState => {
@@ -111,7 +115,7 @@ export const useOnDataChange = () => {
     });
   };
 
-  const [englishOption, setEnglishOption] = useState('Pre-intermediate');
+  const [englishOption, setEnglishOption] = useState(PRE_INTERMEDIATE);
   const englishOptions = [
     { label: 'Pre-intermediate', value: 'Pre-intermediate' },
     { label: 'Intermediate', value: 'Intermediate' },
@@ -121,7 +125,7 @@ export const useOnDataChange = () => {
     setEnglishOption(value);
   };
 
-  const [position, setPosition] = useState('');
+  const [position, setPosition] = useState<string>('');
   const [positionError, setPositionError] = useState(false);
   const onPositionChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.value.length > 25) {
@@ -132,7 +136,7 @@ export const useOnDataChange = () => {
     }
   };
 
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState<string>('');
   const onCategoryChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.currentTarget.value);
   };
@@ -146,7 +150,7 @@ export const useOnDataChange = () => {
     }
   };
 
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState<string>('');
   const [descriptionError, setDescriptionError] = useState(false);
   const onDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget.value.length > 200) {

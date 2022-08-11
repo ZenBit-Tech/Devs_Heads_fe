@@ -6,8 +6,8 @@ import {
   ITextareaWithDatesOnChange,
   OnChangeObjectKeys,
 } from '../interfaces/interfaces';
+import { useTranslation } from 'react-i18next';
 
-//Styles
 const Container = styled.div`
   display: flex;
 `;
@@ -36,20 +36,18 @@ interface ITextareaWithDates {
 }
 
 export const TextareaWithDates = (props: ITextareaWithDates) => {
+  const { t } = useTranslation();
+
   const [startDate, setStartDate] = useState<string>(
     props.item.dateStart || new Date().toISOString(),
   );
   const [endDate, setEndDate] = useState<string>(props.item.dateEnd || new Date().toISOString());
   const [text, setText] = useState<string>(props.item.info || '');
   const [isTouched, setIsTouched] = useState<boolean>(false);
+  const [dateError, setDateError] = useState<boolean>(false);
 
   useEffect(() => {
-    let error = props.item.error;
-    if (!text && isTouched) {
-      error = true;
-    } else {
-      error = false;
-    }
+    const error = !text && isTouched;
     props.onChange({
       index: props.index,
       item: { info: text, dateStart: startDate, dateEnd: endDate, error: error },
@@ -60,16 +58,18 @@ export const TextareaWithDates = (props: ITextareaWithDates) => {
 
   const onChangeStartDate = (e: ChangeEvent<HTMLInputElement>) => {
     if (new Date(e.currentTarget.value) > new Date(endDate)) {
-      window.alert('Wrong Date');
+      setDateError(true);
     } else {
+      setDateError(false);
       setStartDate(e.currentTarget.value);
     }
   };
 
   const onChangeEndDate = (e: ChangeEvent<HTMLInputElement>) => {
     if (new Date(e.currentTarget.value) < new Date(startDate)) {
-      window.alert('Wrong Date');
+      setDateError(true);
     } else {
+      setDateError(false);
       setEndDate(e.currentTarget.value);
     }
   };
@@ -85,13 +85,13 @@ export const TextareaWithDates = (props: ITextareaWithDates) => {
       <div>
         <StyledTextarea
           onChange={onTextChange}
-          placeholder="Maximum text length <200 characters"
+          placeholder={`${t('ProfileEdit.descriptionPlaceholder')}`}
           value={text}
         />
         {props.item.error && (
           <Alert
             style={{ height: '30px', margin: '0 0 10px' }}
-            message="Field is required"
+            message={`${t('ProfileEdit.fieldIsRequired')}`}
             type="warning"
             showIcon
             closable
@@ -100,13 +100,22 @@ export const TextareaWithDates = (props: ITextareaWithDates) => {
       </div>
       <Block>
         <CalendarBlock>
-          <label>Start time</label>
+          <label>{`${t('ProfileEdit.startDate')}`}</label>
           <input value={startDate} onChange={onChangeStartDate} type="date" />
         </CalendarBlock>
         <CalendarBlock>
-          <label>End time</label>
+          <label>{`${t('ProfileEdit.endDate')}`}</label>
           <input value={endDate} onChange={onChangeEndDate} type="date" />
         </CalendarBlock>
+        {dateError && (
+          <Alert
+            style={{ height: '28px', margin: '22px 0 0' }}
+            message={`${t('ProfileEdit.wrongDate')}`}
+            type="warning"
+            showIcon
+            closable
+          />
+        )}
       </Block>
     </Container>
   );
