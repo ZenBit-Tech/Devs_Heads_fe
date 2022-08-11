@@ -1,5 +1,15 @@
 {
   "Sample": {
     "title": "Text for sample"
+  },
+  "SignIn": {
+    "title": "Get Job",
+    "upperText": "THE BEST WAY TO FIND YOUR JOB!",
+    "email": "Username or Email",
+    "password": "Password",
+    "forgotPassword": "Forgot your password?",
+    "buttonSignin": "Sign In",
+    "text": "Don`t have an account yet?",
+    "registerLink": "Register Now"
   }
 }
