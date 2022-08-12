@@ -1,12 +1,11 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useAppDispatch } from 'redux/hooks';
-import { email } from 'redux/reducers/signUp';
 import { Div, Button, Register, Form, ControlStyle, Input, P } from './signup.styled';
 import { useTranslation } from 'react-i18next';
+import { useSignUpMutation } from 'service/httpService';
 
 type FormData =  {
   email: string;
@@ -14,23 +13,26 @@ type FormData =  {
   password: string;
 }
 
+
 const schema = Yup.object({
   email: Yup.string().email().required(),
   createPassword: Yup.string().min(8).required(),
   password: Yup.string().min(8).required(),
 }).required();
 
-const signUp: FC = () => {
+const signUp = () => {
+  const [signUp, {isLoading}] = useSignUpMutation();
   const navigate = useNavigate();
-  const { handleSubmit, control, reset, formState: { errors} } = useForm<FormData>({
+  const { control, handleSubmit, reset, formState: { errors} } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
 
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
-
-  const onSubmit: SubmitHandler<FormData> = values => {
-    dispatch(email(values.email));
+  
+  const onSubmit: SubmitHandler<FormData> = async (values: object) => {
+    await signUp(values)
+    console.log(isLoading);
+    
     reset({ email: '', createPassword: '', password: ''});
     navigate('/registration');
   };
