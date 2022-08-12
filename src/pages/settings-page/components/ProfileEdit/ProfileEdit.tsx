@@ -5,18 +5,17 @@ import { TextareaWithDates } from './components/TextareaWithDates';
 import { useOnDataChange } from './hooks/use-on-data-change';
 import { Image, Alert } from 'antd';
 import { useTranslation } from 'react-i18next';
-
-const colors = {
-  black: 'black',
-  dodgerblue: 'dodgerblue',
-  white: 'white',
-  green: '#5db501',
-  default: '',
-};
-const defaultPhoto = 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png';
+import { defaultProfilePhoto } from '../../../../constants/default-images';
+import {
+  BLACK_COLOR,
+  DEFAULT_COLOR,
+  DODGERBLUE_COLOR,
+  GREEN_COLOR,
+  WHITE_COLOR,
+} from '../../../../constants/colors';
 
 const Container = styled.div`
-  border: 1px solid ${colors.black};
+  border: 1px solid ${BLACK_COLOR};
   padding: 5px;
 `;
 
@@ -24,11 +23,9 @@ const ProfilePhoto = styled.div`
   display: flex;
   flex-direction: column;
   align-self: center;
-
   & > button {
     width: 100px;
   }
-
   & > span {
     font-size: 24px;
   }
@@ -54,8 +51,8 @@ const SkillButton = styled.button<{ selected: boolean }>`
   border-radius: 10px;
   margin: 5px;
   height: 30px;
-  background-color: ${props => (props.selected ? colors.dodgerblue : colors.default)};
-  color: ${props => (props.selected ? colors.white : colors.default)};
+  background-color: ${props => (props.selected ? DODGERBLUE_COLOR : DEFAULT_COLOR)};
+  color: ${props => (props.selected ? WHITE_COLOR : DEFAULT_COLOR)};
 `;
 
 const StyledTextarea = styled.textarea<{ height: string }>`
@@ -68,16 +65,18 @@ const SaveButton = styled.button`
   width: 140px;
   height: 50px;
   border-radius: 10px;
-  background-color: ${colors.green};
-  color: ${colors.white};
-  border-color: ${colors.white};
+  background-color: ${GREEN_COLOR};
+  color: ${WHITE_COLOR};
+  border-color: ${WHITE_COLOR};
   margin: 0 auto;
 `;
+
 const Block = styled.div`
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
 `;
+
 const Title = styled.div`
   font-size: 20px;
   margin-top: 15px;
@@ -124,7 +123,7 @@ export const ProfileEdit = () => {
       <Block>
         <ProfilePhoto>
           <Title>{`${t('ProfileEdit.profilePhotoTitle')}`}</Title>
-          <Image width={200} src={file64?.toString() || defaultPhoto} />
+          <Image width={200} src={file64?.toString() || defaultProfilePhoto} />
           <input type={'file'} onChange={onChangePhotoHandler} />
           <button onClick={onPhotoDelete}>{`${t('ProfileEdit.deletePhotoButton')}`}</button>
         </ProfilePhoto>
