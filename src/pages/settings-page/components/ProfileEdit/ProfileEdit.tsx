@@ -5,7 +5,7 @@ import { TextareaWithDates } from './components/TextareaWithDates';
 import { useOnDataChange } from './hooks/use-on-data-change';
 import { Image, Alert } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { defaultProfilePhoto } from '../../../../constants/default-images';
+import { defaultProfilePhoto } from 'constants/links';
 import {
   BLACK_COLOR,
   DEFAULT_COLOR,
