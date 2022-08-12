@@ -2,6 +2,10 @@
   "Sample": {
     "title": "Text for sample"
   },
+  "SettingsPage": {
+    "profileEdit": "Profile (Edit)",
+    "contactInfo": "Contact Info"
+  },
   "ProfileEdit": {
     "profilePhotoTitle": "Profile photo",
     "deletePhotoButton": "Delete photo",

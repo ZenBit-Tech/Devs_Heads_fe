@@ -12,7 +12,7 @@ import {
   DODGERBLUE_COLOR,
   GREEN_COLOR,
   WHITE_COLOR,
-} from '../../../../constants/colors';
+} from 'constants/colors';
 
 const Container = styled.div`
   border: 1px solid ${BLACK_COLOR};
@@ -23,9 +23,11 @@ const ProfilePhoto = styled.div`
   display: flex;
   flex-direction: column;
   align-self: center;
+
   & > button {
     width: 100px;
   }
+
   & > span {
     font-size: 24px;
   }
