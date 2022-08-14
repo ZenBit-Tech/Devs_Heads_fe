@@ -5,7 +5,7 @@ import PrivateRoutes from './hoc/PrivateRoutes';
 import GoogleAuth from './components/GoogleAuth/GoogleAuth';
 
 const SamplePage = lazy(() => import('./pages/SamplePage' /* webpackChunkName: "sample-page" */));
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+
 const Cookies = require('js-cookie');
 
 const App: FC = () => {

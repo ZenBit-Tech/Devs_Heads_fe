@@ -1,5 +1,8 @@
 {
-  "Sample": {
-    "title": "Text for sample"
-  }
+	"Sample": {
+		"title": "Text for sample"
+	},
+	"GoogleAuthButton": {
+		"googleAuth": "Sign up with Google"
+	}
 }

@@ -16,6 +16,7 @@ module.exports = {
   rules: {
     "indent": ["error", "tab"],
     "prettier/prettier": [2, { "useTabs": true }],
+    '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
