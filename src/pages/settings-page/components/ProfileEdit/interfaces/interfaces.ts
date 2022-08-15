@@ -1,7 +1,7 @@
 export interface IEducationAndExperienceTemplate {
   info: string;
-  dateStart: string;
-  dateEnd: string;
+  dateStart: Date;
+  dateEnd: Date;
   error: boolean;
 }
 

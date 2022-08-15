@@ -38,10 +38,10 @@ interface ITextareaWithDates {
 export const TextareaWithDates = (props: ITextareaWithDates) => {
   const { t } = useTranslation();
 
-  const [startDate, setStartDate] = useState<string>(
+  const [startDate, setStartDate] = useState<Date>(
     props.item.dateStart || new Date().toISOString(),
   );
-  const [endDate, setEndDate] = useState<string>(props.item.dateEnd || new Date().toISOString());
+  const [endDate, setEndDate] = useState<Date>(props.item.dateEnd || new Date().toISOString());
   const [text, setText] = useState<string>(props.item.info || '');
   const [isTouched, setIsTouched] = useState<boolean>(false);
   const [dateError, setDateError] = useState<boolean>(false);
@@ -61,7 +61,7 @@ export const TextareaWithDates = (props: ITextareaWithDates) => {
       setDateError(true);
     } else {
       setDateError(false);
-      setStartDate(e.currentTarget.value);
+      setStartDate(new Date(e.currentTarget.value));
     }
   };
 
@@ -70,7 +70,7 @@ export const TextareaWithDates = (props: ITextareaWithDates) => {
       setDateError(true);
     } else {
       setDateError(false);
-      setEndDate(e.currentTarget.value);
+      setEndDate(new Date(e.currentTarget.value));
     }
   };
   const onTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -101,11 +101,19 @@ export const TextareaWithDates = (props: ITextareaWithDates) => {
       <Block>
         <CalendarBlock>
           <label>{`${t('ProfileEdit.startDate')}`}</label>
-          <input value={startDate} onChange={onChangeStartDate} type="date" />
+          <input
+            value={startDate.toLocaleDateString('en-CA')}
+            onChange={onChangeStartDate}
+            type="date"
+          />
         </CalendarBlock>
         <CalendarBlock>
           <label>{`${t('ProfileEdit.endDate')}`}</label>
-          <input value={endDate} onChange={onChangeEndDate} type="date" />
+          <input
+            value={endDate.toLocaleDateString('en-CA')}
+            onChange={onChangeEndDate}
+            type="date"
+          />
         </CalendarBlock>
         {dateError && (
           <Alert

@@ -108,6 +108,9 @@ export const ProfileEdit = () => {
     onPhotoDelete,
     positionError,
     descriptionError,
+    priceError,
+    onSubmitErrors,
+    onSubmit,
   } = useOnDataChange();
 
   const { t } = useTranslation();
@@ -141,6 +144,14 @@ export const ProfileEdit = () => {
                 closable
               />
             )}
+            {onSubmitErrors.positionError && (
+              <Alert
+                message={`${t('ProfileEdit.fieldIsRequired')}`}
+                type="warning"
+                showIcon
+                closable
+              />
+            )}
           </Position>
           <Category>
             <Title>{`${t('ProfileEdit.categoryTitle')}`}</Title>
@@ -154,6 +165,17 @@ export const ProfileEdit = () => {
             <Title>{`${t('ProfileEdit.priceTitle')}`}</Title>
             <input onChange={onPriceChange} value={price} type="number" />
             <span>$</span>
+            {priceError && (
+              <Alert message={`${t('ProfileEdit.priceAlert')}`} type="warning" showIcon closable />
+            )}
+            {onSubmitErrors.priceError && (
+              <Alert
+                message={`${t('ProfileEdit.fieldIsRequired')}`}
+                type="warning"
+                showIcon
+                closable
+              />
+            )}
           </div>
         </div>
       </Block>
@@ -161,6 +183,9 @@ export const ProfileEdit = () => {
         <Title>{`${t('ProfileEdit.skillsTitle')}`}</Title>
         <span>{`${t('ProfileEdit.skillsSubTitle')}`}</span>
         <SkillsButtonsBlock>{optionButtons}</SkillsButtonsBlock>
+        {onSubmitErrors.skillsError && (
+          <Alert message={`${t('ProfileEdit.skillsSubTitle')}`} type="warning" showIcon closable />
+        )}
       </div>
       <div>
         <Title>{`${t('ProfileEdit.englishLevelTitle')}`}</Title>
@@ -190,6 +215,9 @@ export const ProfileEdit = () => {
             closable
           />
         )}
+        {onSubmitErrors.descriptionError && (
+          <Alert message={`${t('ProfileEdit.fieldIsRequired')}`} type="warning" showIcon closable />
+        )}
       </div>
       <div>
         <Title>{`${t('ProfileEdit.educationTitle')}`}</Title>
@@ -202,6 +230,9 @@ export const ProfileEdit = () => {
             onChange={onChangeTextareaWithDates}
           />
         ))}
+        {onSubmitErrors.educationError && (
+          <Alert message={`${t('ProfileEdit.fieldIsRequired')}`} type="warning" showIcon closable />
+        )}
         <button onClick={() => addField('education')}>{`${t(
           'ProfileEdit.addEducationButton',
         )}`}</button>
@@ -217,12 +248,15 @@ export const ProfileEdit = () => {
             onChange={onChangeTextareaWithDates}
           />
         ))}
+        {onSubmitErrors.experienceError && (
+          <Alert message={`${t('ProfileEdit.fieldIsRequired')}`} type="warning" showIcon closable />
+        )}
         <button onClick={() => addField('experience')}>{`${t(
           'ProfileEdit.addExperienceButton',
         )}`}</button>
       </div>
       <div style={{ display: 'flex' }}>
-        <SaveButton>{`${t('ProfileEdit.saveButton')}`}</SaveButton>
+        <SaveButton onClick={onSubmit}>{`${t('ProfileEdit.saveButton')}`}</SaveButton>
       </div>
     </Container>
   );

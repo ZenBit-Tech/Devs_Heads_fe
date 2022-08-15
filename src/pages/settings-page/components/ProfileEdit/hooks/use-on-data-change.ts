@@ -7,16 +7,16 @@ const textareaMock = {
   education: [
     {
       info: '',
-      dateStart: new Date().toISOString(),
-      dateEnd: new Date().toISOString(),
+      dateStart: new Date(),
+      dateEnd: new Date(),
       error: false,
     },
   ],
   experience: [
     {
       info: '',
-      dateStart: new Date().toISOString(),
-      dateEnd: new Date().toISOString(),
+      dateStart: new Date(),
+      dateEnd: new Date(),
       error: false,
     },
   ],
@@ -47,6 +47,14 @@ const skillsMock = [
   { label: 'Agile Coach', value: false },
   { label: 'Project Manager', value: false },
 ];
+const errors = {
+  positionError: false,
+  priceError: false,
+  descriptionError: false,
+  skillsError: false,
+  educationError: false,
+  experienceError: false,
+};
 
 export const useOnDataChange = () => {
   const categoryOptions = [
@@ -85,7 +93,6 @@ export const useOnDataChange = () => {
     setTextAreaWithDatesState(prevState => {
       const newState = { ...prevState };
       newState[args.key][args.index] = args.item;
-      console.log(newState);
       return newState;
     });
   };
@@ -94,8 +101,8 @@ export const useOnDataChange = () => {
       const newState = { ...prevState };
       newState[key].push({
         info: '',
-        dateStart: new Date().toISOString(),
-        dateEnd: new Date().toISOString(),
+        dateStart: new Date(),
+        dateEnd: new Date(),
         error: false,
       });
       return newState;
@@ -136,17 +143,19 @@ export const useOnDataChange = () => {
     }
   };
 
-  const [category, setCategory] = useState<string>('');
+  const [category, setCategory] = useState<string>(categoryOptions[0].value);
   const onCategoryChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.currentTarget.value);
   };
 
   const [price, setPrice] = useState<number>(0);
+  const [priceError, setPriceError] = useState<boolean>(false);
   const onPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (+e.currentTarget.value < 0) {
-      window.alert('Wrong price');
+      setPriceError(true);
     } else {
       setPrice(+e.currentTarget.value);
+      setPriceError(false);
     }
   };
 
@@ -158,6 +167,99 @@ export const useOnDataChange = () => {
     } else {
       setDescription(e.currentTarget.value);
       setDescriptionError(false);
+    }
+  };
+
+  const [onSubmitErrors, setOnSubmitErrors] = useState(errors);
+  const onSubmit = () => {
+    const filteredSkills = skillsOptions.filter(s => s.value);
+    const filteredEducation = textAreaWithDatesState.education.filter(e => !!e.info);
+    const filteredExperience = textAreaWithDatesState.experience.filter(e => !!e.info);
+
+    if (!position) {
+      setOnSubmitErrors(prevState => {
+        return { ...prevState, positionError: true };
+      });
+    }
+
+    if (position) {
+      setOnSubmitErrors(prevState => {
+        return { ...prevState, positionError: false };
+      });
+    }
+
+    if (!price) {
+      setOnSubmitErrors(prevState => {
+        return { ...prevState, priceError: true };
+      });
+    }
+
+    if (price) {
+      setOnSubmitErrors(prevState => {
+        return { ...prevState, priceError: false };
+      });
+    }
+
+    if (filteredSkills.length < 3) {
+      setOnSubmitErrors(prevState => {
+        return { ...prevState, skillsError: true };
+      });
+    }
+
+    if (filteredSkills.length >= 3) {
+      setOnSubmitErrors(prevState => {
+        return { ...prevState, skillsError: false };
+      });
+    }
+
+    if (!description) {
+      setOnSubmitErrors(prevState => {
+        return { ...prevState, descriptionError: true };
+      });
+    }
+
+    if (description) {
+      setOnSubmitErrors(prevState => {
+        return { ...prevState, descriptionError: false };
+      });
+    }
+
+    if (filteredEducation.length === 0) {
+      setOnSubmitErrors(prevState => {
+        return { ...prevState, educationError: true };
+      });
+    }
+
+    if (filteredEducation.length > 0) {
+      setOnSubmitErrors(prevState => {
+        return { ...prevState, educationError: false };
+      });
+    }
+
+    if (filteredExperience.length === 0) {
+      setOnSubmitErrors(prevState => {
+        return { ...prevState, experienceError: true };
+      });
+    }
+
+    if (filteredExperience.length > 0) {
+      setOnSubmitErrors(prevState => {
+        return { ...prevState, experienceError: false };
+      });
+    }
+    const objToSend = {
+      profilePhoto: file,
+      position: position,
+      category: category,
+      wage: price,
+      skills: filteredSkills.map(s => s.label),
+      englishLevel: englishOption,
+      description: description,
+      education: filteredEducation,
+      experience: filteredExperience,
+    };
+    if (Object.values(onSubmitErrors).filter(value => !value).length === 0) {
+      console.log(objToSend);
     }
   };
 
@@ -185,5 +287,8 @@ export const useOnDataChange = () => {
     onPhotoDelete,
     positionError,
     descriptionError,
+    priceError,
+    onSubmitErrors,
+    onSubmit,
   };
 };
