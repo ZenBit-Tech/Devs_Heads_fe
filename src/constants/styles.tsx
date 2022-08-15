@@ -5,12 +5,12 @@ export const backgroundColor = {
 
 export const buttonColorHover = 'rgb(33, 163, 33)';
 
-export const Color = {
+export const color = {
   Button: 'white',
   Text: 'rgba(116, 114, 114, 0.932)'
 }
 
-export const FontSize = {
+export const font = {
   Text: '18px',
   Button: '18px',
   Button2: '20px'

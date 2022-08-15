@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { backgroundColor, buttonColorHover, Color, FontSize } from '../style/App.styled';
+import { backgroundColor, buttonColorHover, color, font } from 'constants/styles';
 
 export const Div1 = styled.div`
 align-content: center;
@@ -24,18 +24,18 @@ margin-bottom: 50px;`
 
 export const P = styled.p`
 text-align: center;
-font-size: ${FontSize.Text};
-color: ${Color.Text};
+font-size: ${font.Text};
+color: ${color.Text};
 margin-bottom: 30px;`
 
 export const Button = styled.button`
 &:hover {
   background: ${buttonColorHover};
-  color: ${Color.Button};
+  color: ${color.Button};
 }
 border: solid 1px ${backgroundColor.borderColor};
 border-radius: 6px;
-font-size: ${FontSize.Button};
+font-size: ${font.Button};
 padding: 30px;
 width: 235px;`
 
@@ -43,8 +43,8 @@ export const Button2 = styled.button`
 background: ${backgroundColor.Button2};
 border: none;
 border-radius: 6px;
-color: ${Color.Button};
-font-size: ${FontSize.Button2};
+color: ${color.Button};
+font-size: ${font.Button2};
 height: 40px;
 margin-left: 30px;
 margin-top: 20px;
