@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { backgroundColor, backgroundForm, color, font } from 'style/App.styled';
+import { backgroundColor, backgroundForm, color, font } from 'constants/styles';
 
 export const Div = styled.div`
 margin-left: 400px;
