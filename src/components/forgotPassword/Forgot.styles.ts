@@ -1,29 +1,10 @@
 import styled from 'styled-components';
 import { backgroundColor, backgroundForm, color, font } from 'style/App.styled';
 
+
 export const Div = styled.div`
 margin-left: 400px;
 width: 500px;`
-
-export const Div2 = styled.div`
-display: flex;
-text-align: center;
-justify-content: space-around;
-margin-top: 5px;
-margin-left: 30px;
-width: 350px;`
-
-export const H1 = styled.h1`
-text-align: center;`
-
-export const H2 = styled.h2`
-text-align: center;`
-
-export const P = styled.p`
-font-size: ${font.fontSize};
-font-weight: bold;
-margin-top: 2px;
-margin-left: 70px`
 
 export const ErrorP = styled.p`
 color: ${color.paragraphColor}
@@ -50,11 +31,7 @@ export const ControlStyle = styled.label`
 color:  ${color.paragraphColor};
 display: flex;
 flex-flow: column wrap;
-margin-top: 20px;`
-
-export const LinkStyle = styled.div`
-margin-top: 5px;
-margin-left: 100px;`
+margin-top: 50px;`
 
 export const Button = styled.button`
 background: ${backgroundColor.button};

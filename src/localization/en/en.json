@@ -11,5 +11,9 @@
     "buttonSignin": "Sign In",
     "text": "Don`t have an account yet?",
     "registerLink": "Register Now"
+  },
+  "ForgotPassword": {
+    "email": "Email",
+    "sendButton": "Send"
   }
 }

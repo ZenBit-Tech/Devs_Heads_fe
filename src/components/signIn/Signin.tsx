@@ -28,7 +28,6 @@ const signIn = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (values: object) => {
     await signIn(values);
-      // alert('Invalid Email or Password');
     alert('You have sucessfully logged in');
     reset({ email: '', password: '' });
     navigate('/home');
@@ -53,7 +52,7 @@ const signIn = () => {
             control={control}
             defaultValue=""
           />
-          <LinkStyle><Link to="">{`${t('SignIn.forgotPassword')}`}</Link></LinkStyle>
+          <LinkStyle><Link to="/forgot-passowrd">{`${t('SignIn.forgotPassword')}`}</Link></LinkStyle>
           <ErrorP>{errors.password?.message}</ErrorP>
         <Button type="submit">{`${t('SignIn.buttonSignin')}`}</Button>
       </Form>
