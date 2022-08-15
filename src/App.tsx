@@ -1,10 +1,16 @@
 import React, { FC, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Layout from './components/Layout/Layout';
+import Layout from 'components/Layout/Layout';
 import PrivateRoutes from './hoc/PrivateRoutes';
 import GoogleAuth from './components/GoogleAuth/GoogleAuth';
 
-const SamplePage = lazy(() => import('./pages/SamplePage' /* webpackChunkName: "sample-page" */));
+const SamplePage = lazy(
+  () => import("pages/SamplePage" /* webpackChunkName: "sample-page" */)
+);
+
+const SignUp = lazy(
+  () => import("pages/Signup")
+);
 
 const Cookies = require('js-cookie');
 
@@ -19,11 +25,12 @@ const App: FC = () => {
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<Layout />}>
+            <Route path="sample" element={<SamplePage />} />
             <Route element={<PrivateRoutes token={token} />}>
               {/*here insert your private routes */}
-              <Route path="sample" element={<SamplePage />} />
             </Route>
             {/*here public routes */}
+            <Route path="/sign-up" element={<SignUp />} />
             <Route path="*" element={<Navigate to="/" />} />
             <Route path="*" element={<GoogleAuth />} />
           </Route>
