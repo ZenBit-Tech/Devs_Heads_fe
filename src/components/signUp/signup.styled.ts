@@ -1,6 +1,6 @@
 import image from 'image/google.jpg';
 import styled from 'styled-components';
-import { backgroundColor, color, font } from 'style/App.styled';
+import { backgroundColor, color, font } from 'constants/styles';
 
 export const Div = styled.div`
 border: solid 1px ${backgroundColor.border};
