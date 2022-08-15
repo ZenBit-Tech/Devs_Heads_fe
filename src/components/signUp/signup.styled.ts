@@ -1,4 +1,4 @@
-import image from '../../image/google.jpg';
+import image from 'image/google.jpg';
 import styled from 'styled-components';
 import { backgroundColor, color, font } from 'style/App.styled';
 
