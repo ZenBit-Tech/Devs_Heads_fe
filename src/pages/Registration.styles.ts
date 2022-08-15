@@ -1,22 +1,5 @@
 import styled from 'styled-components';
-
-const backgroundColor = {
-  Button2: 'rgb(50, 90, 199)',
-  borderColor: 'rgba(116, 114, 114, 0.932)'
-}
-
-const buttonColorHover = 'rgb(33, 163, 33)';
-
-const Color = {
-  Button: 'white',
-  Text: 'rgba(116, 114, 114, 0.932)'
-}
-
-const FontSize = {
-  Text: '18px',
-  Button: '18px',
-  Button2: '20px'
-}
+import { backgroundColor, buttonColorHover, Color, FontSize } from '../style/App.styled';
 
 export const Div1 = styled.div`
 align-content: center;
