@@ -1,21 +1,21 @@
 import image from 'image/google.jpg';
 import styled from 'styled-components';
-import { backgroundColor, color, font } from 'constants/styles';
+import { GREY, BLUE, WHITE, FONT_SMALL, FONT_LARGE } from 'constants/styles';
 
 export const Div = styled.div`
-border: solid 1px ${backgroundColor.border};
+border: solid 1px ${GREY};
 margin-left: 400px;
 width: 400px`;
 
 export const Button = styled.button`
 text-align: right;
-background: ${backgroundColor.button};
+background: ${BLUE};
 background-image: url(${image});
 background-repeat: no-repeat;
 background-size: 40px;
-border: 2px ${backgroundColor.button};
+border: 2px ${BLUE};
 border-radius: 6px;
-color: ${color.buttonText};
+color: ${WHITE};
 margin-left: 40px;
 padding: 8px;
 padding-right: 20px;
@@ -23,18 +23,18 @@ height: 40px;
 width: 200px;`; 
 
 export const P = styled.p`
-color: ${color.paragraphColor2};
-font-size: ${font.fontSizeP};
+color: ${GREY};
+font-size: ${FONT_SMALL};
 text-align: center;
 margin-top: 5px;
 margin-bottom: 3px`
 
 export const Register = styled.button`
-background: ${backgroundColor.button};
+background: ${BLUE};
 border: none;
 border-radius: 6px;
-color: ${color.buttonText};
-font-size: ${font.fontSizeB};
+color: ${WHITE};
+font-size: ${FONT_LARGE};
 height: 40px;
 margin-left: 50px;
 margin-top: 20px;
@@ -47,13 +47,13 @@ display: flex;
 flex-flow: column wrap;`
 
 export const ControlStyle = styled.label`
-color:  ${color.paragraphColor2};
+color:  ${GREY};
 display: flex;
 flex-flow: column wrap;
 margin-top: 10px;`
 
 export const Input = styled.input`
 border-radius: 6px;
-border: solid 1px ${backgroundColor.border};
+border: solid 1px ${GREY};
 height: 30px;
 width: 300px;`

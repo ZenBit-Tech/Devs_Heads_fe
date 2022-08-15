@@ -46,7 +46,7 @@ const signUp = () => {
         <P>{`${t('SignUp.textEmail')}`}</P>
         <ControlStyle>{`${t('SignUp.email')}`}</ControlStyle>
           <Controller
-            render={({ field }) => <Input  type="email" {...field}/>}
+            render={({ field }: any) => <Input  type="email" {...field}/>}
             name="email"
             control={control}
             defaultValue=""
@@ -54,7 +54,7 @@ const signUp = () => {
           <P>{errors.email?.message}</P>
         <ControlStyle>{`${t('SignUp.createPassword')}`}</ControlStyle>
           <Controller
-            render={({ field }) => <Input type="password" {...field}/>}
+            render={({ field }: any) => <Input type="password" {...field}/>}
             name="createPassword"
             control={control}
             defaultValue=""
@@ -62,7 +62,7 @@ const signUp = () => {
           <P>{errors.createPassword?.message}</P>
         <ControlStyle>{`${t('SignUp.password')}`}</ControlStyle>
           <Controller
-              render={({ field }) => <Input type="password" {...field } />}
+              render={({ field }: any) => <Input type="password" {...field } />}
               name="password"
               control={control}
               defaultValue=""

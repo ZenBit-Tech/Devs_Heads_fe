@@ -11,5 +11,8 @@
     "createPassword": "Create a password",
     "password": "Confirm password",
     "register": "Register"
+  },
+  "GoogleAuthButton": {
+    "googleAuth": "Sign up with Google"
   }
 }
