@@ -1,20 +1,6 @@
 import image from '../../image/google.jpg';
 import styled from 'styled-components';
-
-const backgroundColor = {
-  button: 'rgb(50, 90, 199)',
-  border: 'rgb(153, 152, 152)',
-}
-
-const color = {
-  paragraphColor: 'rgb(116, 113, 113)',
-  buttonText: 'white',
-}
-
-const font = {
-  fontSizeP: '12px',
-  fontSizeB: '20px',
-}
+import { backgroundColor, color, font } from 'style/App.styled';
 
 export const Div = styled.div`
 border: solid 1px ${backgroundColor.border};
@@ -37,7 +23,7 @@ height: 40px;
 width: 200px;`; 
 
 export const P = styled.p`
-color: ${color.paragraphColor};
+color: ${color.paragraphColor2};
 font-size: ${font.fontSizeP};
 text-align: center;
 margin-top: 5px;
@@ -61,7 +47,7 @@ display: flex;
 flex-flow: column wrap;`
 
 export const ControlStyle = styled.label`
-color:  ${color.paragraphColor};
+color:  ${color.paragraphColor2};
 display: flex;
 flex-flow: column wrap;
 margin-top: 10px;`
