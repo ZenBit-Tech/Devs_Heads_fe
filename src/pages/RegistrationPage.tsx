@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Div1, H1, P, Div2, Div3, Button, Button2 } from './Registration.styles';
-import { GREEN, WHITE } from '../constants/styles';
+import { GREEN, WHITE } from 'constants/styles';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
