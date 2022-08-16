@@ -2,6 +2,16 @@
   "Sample": {
     "title": "Text for sample"
   },
+  "SignUp": {
+    "quickSign": "Quick Sign Up",
+    "buttonGoogle": "Sign Up With Google",
+    "or": "Or",
+    "textEmail": "Use your email",
+    "email": "Email",
+    "createPassword": "Create a password",
+    "password": "Confirm password",
+    "register": "Register"
+  },
   "GoogleAuthButton": {
     "googleAuth": "Sign up with Google"
   },
