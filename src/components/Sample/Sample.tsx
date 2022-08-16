@@ -4,6 +4,7 @@ import { increment, decrement } from '../../redux/reducers/sampleSlice';
 import type { RootState } from '../../redux/store';
 import { TitleStyled } from './Sample.styles';
 import { useTranslation } from 'react-i18next';
+import GoogleAuth from '../GoogleAuth/GoogleAuth';
 
 const Sample: FC = () => {
   const value = useAppSelector((state: RootState) => state.sample.value);
@@ -16,6 +17,7 @@ const Sample: FC = () => {
       <div>{value}</div>
       <button onClick={() => dispatch(decrement())}>-10</button>
       <button onClick={() => dispatch(increment())}>+10</button>
+      <GoogleAuth />
     </div>
   );
 };

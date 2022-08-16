@@ -2,6 +2,9 @@
   "Sample": {
     "title": "Text for sample"
   },
+  "GoogleAuthButton": {
+    "googleAuth": "Sign up with Google"
+  },
   "SettingsPage": {
     "profileEdit": "Profile (Edit)",
     "contactInfo": "Contact Info"

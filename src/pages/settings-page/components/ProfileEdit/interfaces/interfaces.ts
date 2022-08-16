@@ -17,3 +17,18 @@ export interface ITextareaWithDatesOnChange {
   index: number;
   item: IEducationAndExperienceTemplate;
 }
+export interface ISkill {
+  label: string;
+  value: boolean;
+}
+export interface IProfileEdit {
+  profilePhoto?: Blob;
+  position: string;
+  category: string;
+  wage: number;
+  skills: ISkill[];
+  englishLevel: string;
+  description: string;
+  education: IEducationAndExperienceTemplate[];
+  experience: IEducationAndExperienceTemplate[];
+}

@@ -1,6 +1,13 @@
 import { ChangeEvent, useState } from 'react';
 import { RadioChangeEvent } from 'antd';
-import { ITextareaWithDatesOnChange, OnChangeObjectKeys } from '../interfaces/interfaces';
+import {
+  IProfileEdit,
+  ISkill,
+  ITextareaWithDatesMainState,
+  ITextareaWithDatesOnChange,
+  OnChangeObjectKeys,
+} from '../interfaces/interfaces';
+import { useSendData } from './use-send-data';
 
 const PRE_INTERMEDIATE = 'Pre-intermediate';
 const textareaMock = {
@@ -57,6 +64,8 @@ const errors = {
 };
 
 export const useOnDataChange = () => {
+  const { sendData } = useSendData();
+
   const categoryOptions = [
     { id: 1, value: 'Legal' },
     { id: 2, value: 'IT' },
@@ -88,7 +97,8 @@ export const useOnDataChange = () => {
     setFile64(null);
   };
 
-  const [textAreaWithDatesState, setTextAreaWithDatesState] = useState(textareaMock);
+  const [textAreaWithDatesState, setTextAreaWithDatesState] =
+    useState<ITextareaWithDatesMainState>(textareaMock);
   const onChangeTextareaWithDates = (args: ITextareaWithDatesOnChange) => {
     setTextAreaWithDatesState(prevState => {
       const newState = { ...prevState };
@@ -109,7 +119,7 @@ export const useOnDataChange = () => {
     });
   };
 
-  const [skillsOptions, setSkillsOptions] = useState(skillsMock);
+  const [skillsOptions, setSkillsOptions] = useState<ISkill[]>(skillsMock);
 
   const onSkillsChange = (index: number) => {
     setSkillsOptions(prevState => {
@@ -122,7 +132,7 @@ export const useOnDataChange = () => {
     });
   };
 
-  const [englishOption, setEnglishOption] = useState(PRE_INTERMEDIATE);
+  const [englishOption, setEnglishOption] = useState<string>(PRE_INTERMEDIATE);
   const englishOptions = [
     { label: 'Pre-intermediate', value: 'Pre-intermediate' },
     { label: 'Intermediate', value: 'Intermediate' },
@@ -247,12 +257,12 @@ export const useOnDataChange = () => {
         return { ...prevState, experienceError: false };
       });
     }
-    const objToSend = {
+    const objToSend: IProfileEdit = {
       profilePhoto: file,
       position: position,
       category: category,
       wage: price,
-      skills: filteredSkills.map(s => s.label),
+      skills: filteredSkills,
       englishLevel: englishOption,
       description: description,
       education: filteredEducation,
@@ -260,6 +270,7 @@ export const useOnDataChange = () => {
     };
     if (Object.values(onSubmitErrors).filter(value => !value).length === 0) {
       console.log(objToSend);
+      sendData(objToSend);
     }
   };
 
