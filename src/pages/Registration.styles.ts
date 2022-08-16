@@ -1,5 +1,14 @@
 import styled from 'styled-components';
-import { BLUE, LIGHT_GREY, GREY, GREEN, WHITE, FONT_SMALL, FONT_MEDIUM, FONT_LARGE } from 'constants/styles';
+import { 
+  BLUE,
+  LIGHT_GREY,
+  GREY,
+  DARK_GREY,
+  GREEN,
+  WHITE,
+  FONT_MEDIUM,
+  FONT_LARGE
+} from '../constants/styles';
 
 export const Div1 = styled.div`
 align-content: center;
@@ -24,15 +33,15 @@ margin-bottom: 50px;`
 
 export const P = styled.p`
 text-align: center;
-font-size: ${FONT_SMALL};
-color: ${GREY};
+font-size: ${FONT_MEDIUM};
+color: ${DARK_GREY};
 margin-bottom: 30px;`
 
 export const Button = styled.button`
 &:hover {
   background: ${GREEN};
   color: ${WHITE};
-}
+};
 border: solid 1px ${GREY};
 border-radius: 6px;
 font-size: ${FONT_MEDIUM};
