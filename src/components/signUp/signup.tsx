@@ -7,12 +7,11 @@ import { Div, Button, Register, Form, ControlStyle, Input, P } from './signup.st
 import { useTranslation } from 'react-i18next';
 import { useSignUpMutation } from 'service/httpService';
 
-type FormData =  {
+type FormData = {
   email: string;
   createPassword: string;
   password: string;
-}
-
+};
 
 const schema = Yup.object({
   email: Yup.string().email().required(),
@@ -21,19 +20,24 @@ const schema = Yup.object({
 }).required();
 
 const signUp = () => {
-  const [signUp, {isLoading}] = useSignUpMutation();
+  const [signUp, { isLoading }] = useSignUpMutation();
   const navigate = useNavigate();
-  const { control, handleSubmit, reset, formState: { errors} } = useForm<FormData>({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
 
   const { t } = useTranslation();
-  
+
   const onSubmit: SubmitHandler<FormData> = async (values: object) => {
-    await signUp(values)
+    await signUp(values);
     console.log(isLoading);
-    
-    reset({ email: '', createPassword: '', password: ''});
+
+    reset({ email: '', createPassword: '', password: '' });
     navigate('/registration');
   };
 
@@ -45,29 +49,29 @@ const signUp = () => {
         <P>{`${t('SignUp.or')}`}</P>
         <P>{`${t('SignUp.textEmail')}`}</P>
         <ControlStyle>{`${t('SignUp.email')}`}</ControlStyle>
-          <Controller
-            render={({ field }: any) => <Input  type="email" {...field}/>}
-            name="email"
-            control={control}
-            defaultValue=""
-          />
-          <P>{errors.email?.message}</P>
+        <Controller
+          render={({ field }: any) => <Input type="email" {...field} />}
+          name="email"
+          control={control}
+          defaultValue=""
+        />
+        <P>{errors.email?.message}</P>
         <ControlStyle>{`${t('SignUp.createPassword')}`}</ControlStyle>
-          <Controller
-            render={({ field }: any) => <Input type="password" {...field}/>}
-            name="createPassword"
-            control={control}
-            defaultValue=""
-          />
-          <P>{errors.createPassword?.message}</P>
+        <Controller
+          render={({ field }: any) => <Input type="password" {...field} />}
+          name="createPassword"
+          control={control}
+          defaultValue=""
+        />
+        <P>{errors.createPassword?.message}</P>
         <ControlStyle>{`${t('SignUp.password')}`}</ControlStyle>
-          <Controller
-              render={({ field }: any) => <Input type="password" {...field } />}
-              name="password"
-              control={control}
-              defaultValue=""
-            />
-          <P>{errors.password?.message}</P>
+        <Controller
+          render={({ field }: any) => <Input type="password" {...field} />}
+          name="password"
+          control={control}
+          defaultValue=""
+        />
+        <P>{errors.password?.message}</P>
         <Register type="submit">{`${t('SignUp.register')}`}</Register>
       </Form>
     </Div>

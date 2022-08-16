@@ -4,13 +4,13 @@ import Layout from 'components/Layout/Layout';
 import PrivateRoutes from './hoc/PrivateRoutes';
 import GoogleAuth from './components/GoogleAuth/GoogleAuth';
 
-const SamplePage = lazy(
-  () => import("pages/SamplePage" /* webpackChunkName: "sample-page" */)
-);
+const SamplePage = lazy(() => import('pages/SamplePage' /* webpackChunkName: "sample-page" */));
 
-const SignUp = lazy(
-  () => import("pages/Signup")
-);
+const SignUp = lazy(() => import('pages/Signup'));
+import { SettingsPage } from './pages/settings-page/SettingsPage';
+import { ProfileEdit } from './pages/settings-page/components/ProfileEdit/ProfileEdit';
+import { ContactInfo } from './pages/settings-page/components/ContactInfo/ContactInfo';
+import './App.css';
 
 const Cookies = require('js-cookie');
 
@@ -33,6 +33,10 @@ const App: FC = () => {
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="*" element={<Navigate to="/" />} />
             <Route path="*" element={<GoogleAuth />} />
+            <Route path="settings/" element={<SettingsPage />}>
+              <Route path="edit-profile" element={<ProfileEdit />} />
+              <Route path="contact-info" element={<ContactInfo />} />
+            </Route>
           </Route>
         </Routes>
       </Suspense>

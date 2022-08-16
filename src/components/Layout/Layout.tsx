@@ -12,6 +12,9 @@ const Layout: FC = () => {
           <li>
             <NavLink to="/sample">sample</NavLink>
           </li>
+          <li>
+            <NavLink to="/settings">settings</NavLink>
+          </li>
         </ul>
       </nav>
       <Outlet />
