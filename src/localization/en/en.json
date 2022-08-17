@@ -42,6 +42,13 @@
     "fieldIsRequired": "Field is required",
     "wrongDate": "Wrong date"
   },
+  "ContactInfo": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "phone": "Phone",
+    "wrongPhoneNumberPattern": "Wrong phone number pattern"
+  },
   "WelcomePage": {
     "title": "Welcome",
     "description": "This page will have information about your profile",
