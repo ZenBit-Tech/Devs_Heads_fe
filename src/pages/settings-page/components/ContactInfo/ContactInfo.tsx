@@ -1,48 +1,16 @@
 import React from 'react';
-import styled from 'styled-components';
-import { BLACK_COLOR, GREEN_COLOR, WHITE_COLOR } from 'constants/colors';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { Alert } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { phoneNumberRegExp } from 'constants/reg-exps';
-
-const Container = styled.div`
-  border: 1px solid ${BLACK_COLOR};
-  padding: 5px;
-`;
-
-const InputBlock = styled.div`
-  width: 600px;
-  margin: 30px auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-`;
-
-const StyledInput = styled.input`
-  width: 400px;
-  border-radius: 5px;
-`;
-
-const StyledLabel = styled.label`
-  font-size: 24px;
-`;
-
-const SaveButton = styled.button`
-  display: block;
-  font-size: 24px;
-  width: 200px;
-  height: 50px;
-  border-radius: 10px;
-  background-color: ${GREEN_COLOR};
-  color: ${WHITE_COLOR};
-  border-color: ${WHITE_COLOR};
-  margin: 0 auto;
-`;
-
-const Form = styled.form`
-  width: border-box;
-`;
+import {
+  Container,
+  Form,
+  StyledLabel,
+  StyledInput,
+  InputBlock,
+  SaveButton,
+} from './ContactInfo.styles';
 
 interface IFormInputs {
   firstName: string;
