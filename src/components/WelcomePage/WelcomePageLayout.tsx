@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { WelcomePageLayoutWrapper, TitleStyled, ImageStyled } from './WelcomePageLayout.styles';
-import ArrowDowm from '../../assets/arrowDown.jpg';
+import ArrowDowm from 'assets/arrowDown.jpg';
 
 const WelcomePageLayout: FC = () => {
   const { t } = useTranslation();
