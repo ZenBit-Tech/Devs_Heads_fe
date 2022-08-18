@@ -16,6 +16,16 @@
     "email": "Email",
     "sendButton": "Send"
   },
+  "SignUp": {
+    "quickSign": "Quick Sign Up",
+    "buttonGoogle": "Sign Up With Google",
+    "or": "Or",
+    "textEmail": "Use your email",
+    "email": "Email",
+    "createPassword": "Create a password",
+    "password": "Confirm password",
+    "register": "Register"
+  },
   "GoogleAuthButton": {
     "googleAuth": "Sign up with Google"
   },
@@ -26,5 +36,45 @@
     "buttonText1": "Work as a freelancer",
     "buttonText2": "Hire for a project",
     "buttonAccount": "Create My Account"
+  },
+  "SettingsPage": {
+    "profileEdit": "Profile (Edit)",
+    "contactInfo": "Contact Info"
+  },
+  "ProfileEdit": {
+    "profilePhotoTitle": "Profile photo",
+    "deletePhotoButton": "Delete photo",
+    "positionTitle": "Position",
+    "positionAlert": "Maximum length is 25 symbols",
+    "categoryTitle": "Category",
+    "priceTitle": "Price",
+    "priceAlert": "Wrong price",
+    "skillsTitle": "Skills",
+    "skillsSubTitle": "You must mark at least 3 skills",
+    "englishLevelTitle": "English level",
+    "descriptionTitle": "Description",
+    "descriptionPlaceholder": "Maximum text length <200 characters",
+    "educationTitle": "Education",
+    "addEducationButton": "+ Add education",
+    "experienceTitle": "Experience",
+    "addExperienceButton": "+ Add experience",
+    "saveButton": "Save changes",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "fieldIsRequired": "Field is required",
+    "wrongDate": "Wrong date"
+  },
+  "ContactInfo": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "phone": "Phone",
+    "wrongPhoneNumberPattern": "Wrong phone number pattern"
+  },
+  "WelcomePage": {
+    "title": "Welcome",
+    "description": "This page will have information about your profile",
+    "pointerToLink": "please follow the link",
+    "linkDescription": "Create my profile"
   }
 }

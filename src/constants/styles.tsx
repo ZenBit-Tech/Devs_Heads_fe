@@ -9,3 +9,4 @@ export const GREEN = 'rgb(33, 163, 33)';
 export const FONT_SMALL = '12px';
 export const FONT_MEDIUM = '14px';
 export const FONT_LARGE = '20px';
+export const FONT_H1 = '40px';

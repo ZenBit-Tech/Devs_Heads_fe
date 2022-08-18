@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { FormData } from 'components/signIn/Signin';
 
-export const authApi = createApi({
+export const authSignIn = createApi({
 	reducerPath: 'auth',
 	baseQuery: fetchBaseQuery({ baseUrl: process.env.BASE_URL }),
 	endpoints: build => ({
@@ -18,4 +18,4 @@ export const authApi = createApi({
 	}),
 });
 
-export const { useSignInMutation } = authApi;
+export const { useSignInMutation } = authSignIn;
