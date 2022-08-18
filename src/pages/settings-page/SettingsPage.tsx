@@ -1,8 +1,7 @@
 import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
-import styled from 'styled-components';
-import { BLACK_COLOR } from 'constants/colors';
+import { Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+<<<<<<< HEAD
 
 const Container = styled.div`
 	margin: 0 auto;
@@ -22,6 +21,9 @@ const Link = styled(NavLink)`
 		border-style: solid;
 	}
 `;
+=======
+import { Container, Link } from './SettingsPage.styles';
+>>>>>>> 8c7527e53baccd1309773542f31db46be95a9482
 
 export const SettingsPage = () => {
 	const { t } = useTranslation();

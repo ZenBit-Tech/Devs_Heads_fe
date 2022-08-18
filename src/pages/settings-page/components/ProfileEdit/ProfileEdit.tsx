@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import styled from 'styled-components';
 import { Radio } from 'antd';
 import { TextareaWithDates } from './components/TextareaWithDates';
 import { useOnDataChange } from './hooks/use-on-data-change';
@@ -7,6 +6,7 @@ import { Image, Alert } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { defaultProfilePhoto } from 'constants/links';
 import {
+<<<<<<< HEAD
 	BLACK_COLOR,
 	DEFAULT_COLOR,
 	DODGERBLUE_COLOR,
@@ -83,6 +83,19 @@ const Title = styled.div`
 	font-size: 20px;
 	margin-top: 15px;
 `;
+=======
+  Container,
+  Title,
+  Block,
+  SkillsButtonsBlock,
+  SkillButton,
+  SaveButton,
+  Position,
+  Category,
+  ProfilePhoto,
+  StyledTextarea,
+} from './ProfileEdit.styles';
+>>>>>>> 8c7527e53baccd1309773542f31db46be95a9482
 
 export const ProfileEdit = () => {
 	const {
