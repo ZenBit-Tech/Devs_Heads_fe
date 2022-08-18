@@ -53,7 +53,7 @@ const signIn = () => {
 				console.log(sucess);
 				reset({ email: '', password: '' });
 				alert('You have sucessfully logged in');
-				navigate('/home');
+				navigate('/welcome');
 			})
 			.catch(() => {
 				setError(true);
@@ -70,7 +70,7 @@ const signIn = () => {
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				<ControlStyle>{`${t('SignIn.email')}`}</ControlStyle>
 				<Controller
-					render={({ field }) => <Input type="text" {...field} />}
+					render={({ field }) => <Input type="email" {...field} />}
 					name="email"
 					control={control}
 					defaultValue=""
@@ -90,7 +90,7 @@ const signIn = () => {
 			</Form>
 			<Div2>
 				<P>{`${t('SignIn.text')}`}</P>
-				<Link to="/signup">{`${t('SignIn.registerLink')}`}</Link>
+				<Link to="/sign-up">{`${t('SignIn.registerLink')}`}</Link>
 			</Div2>
 		</Div>
 	);

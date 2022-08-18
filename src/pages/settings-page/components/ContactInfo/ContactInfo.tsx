@@ -3,14 +3,15 @@ import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { Alert } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { phoneNumberRegExp } from 'constants/reg-exps';
-import { Form, StyledLabel, StyledInput, InputBlock, SaveButton } from './ContactInfo.styles';
-import styled from 'styled-components';
-import { BLACK_COLOR } from 'constants/colors';
+import {
+	Container,
+	Form,
+	StyledLabel,
+	StyledInput,
+	InputBlock,
+	SaveButton,
+} from './ContactInfo.styles';
 
-const Container = styled.div`
-	border: 1px solid ${BLACK_COLOR};
-	padding: 5px;
-`;
 interface IFormInputs {
 	firstName: string;
 	lastName: string;

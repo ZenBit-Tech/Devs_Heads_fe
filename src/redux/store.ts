@@ -9,6 +9,7 @@ export const store = configureStore({
 		[authApi.reducerPath]: authApi.reducer,
 		[authSignIn.reducerPath]: authSignIn.reducer,
 	},
+	middleware: getDefaultMiddleware => getDefaultMiddleware().concat(authSignIn.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
