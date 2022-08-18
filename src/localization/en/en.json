@@ -47,6 +47,10 @@
     "lastName": "Last name",
     "email": "Email",
     "phone": "Phone",
-    "wrongPhoneNumberPattern": "Wrong phone number pattern"
+    "wrongPhoneNumberPattern": "Wrong phone number pattern",
+    "error": "Error",
+    "success": "Success",
+    "someErrorOccurred": "Some error occurred",
+    "dataHasBeenSaved": "Your data has been saved"
   }
 }

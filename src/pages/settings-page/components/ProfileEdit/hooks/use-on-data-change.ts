@@ -181,7 +181,7 @@ export const useOnDataChange = () => {
   };
 
   const [onSubmitErrors, setOnSubmitErrors] = useState(errors);
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const filteredSkills = skillsOptions.filter(s => s.value);
     const filteredEducation = textAreaWithDatesState.education.filter(e => !!e.info);
     const filteredExperience = textAreaWithDatesState.experience.filter(e => !!e.info);
@@ -268,8 +268,7 @@ export const useOnDataChange = () => {
       education: filteredEducation,
       experience: filteredExperience,
     };
-    if (Object.values(onSubmitErrors).filter(value => !value).length === 0) {
-      console.log(objToSend);
+    if (Object.values(onSubmitErrors).filter(Boolean).length === 0) {
       sendData(objToSend);
     }
   };
