@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
@@ -7,7 +7,7 @@ import { Div, Button, Register, Form, ControlStyle, Input, P } from './signup.st
 import { useTranslation } from 'react-i18next';
 import { useSignUpMutation } from 'service/httpService';
 
-type FormData = {
+export type FormData = {
 	email: string;
 	createPassword: string;
 	password: string;
@@ -20,7 +20,9 @@ const schema = Yup.object({
 }).required();
 
 const signUp = () => {
-	const [signUp, { isLoading }] = useSignUpMutation();
+	const [signUp] = useSignUpMutation();
+	const [error, setError] = useState(false);
+	const [sucess, setSucess] = useState(false);
 	const navigate = useNavigate();
 	const {
 		control,
@@ -33,12 +35,25 @@ const signUp = () => {
 
 	const { t } = useTranslation();
 
-	const onSubmit: SubmitHandler<FormData> = async (values: object) => {
-		await signUp(values);
-		console.log(isLoading);
-
-		reset({ email: '', createPassword: '', password: '' });
-		navigate('/registration');
+	const onSubmit: SubmitHandler<FormData> = async values => {
+		if (values.createPassword !== values.password) {
+			alert('Invalid password');
+			reset({ email: '', createPassword: '', password: '' });
+		} else {
+			await signUp(values)
+				.unwrap()
+				.then(() => {
+					setSucess(true);
+					console.log(sucess);
+					reset({ email: '', createPassword: '', password: '' });
+					navigate('/registration');
+				})
+				.catch(() => {
+					setError(true);
+					console.log(error);
+					alert('Invalid email or password');
+				});
+		}
 	};
 
 	return (
