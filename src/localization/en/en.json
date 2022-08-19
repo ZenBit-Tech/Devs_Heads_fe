@@ -2,6 +2,20 @@
   "Sample": {
     "title": "Text for sample"
   },
+  "SignIn": {
+    "title": "Get Job",
+    "upperText": "THE BEST WAY TO FIND YOUR JOB!",
+    "email": "Username or Email",
+    "password": "Password",
+    "forgotPassword": "Forgot your password?",
+    "buttonSignin": "Sign In",
+    "text": "Don`t have an account yet?",
+    "registerLink": "Register Now"
+  },
+  "ForgotPassword": {
+    "email": "Email",
+    "sendButton": "Send"
+  },
   "SignUp": {
     "quickSign": "Quick Sign Up",
     "buttonGoogle": "Sign Up With Google",
@@ -14,6 +28,14 @@
   },
   "GoogleAuthButton": {
     "googleAuth": "Sign up with Google"
+  },
+  "Registration": {
+    "title": "Complete your registration",
+    "selectRole": "Please select your role",
+    "text": "I want to",
+    "buttonText1": "Work as a freelancer",
+    "buttonText2": "Hire for a project",
+    "buttonAccount": "Create My Account"
   },
   "SettingsPage": {
     "profileEdit": "Profile (Edit)",

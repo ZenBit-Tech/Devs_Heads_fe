@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Div, Register, Form, ControlStyle, Input, P } from './signup.styled';
 import { useTranslation } from 'react-i18next';
 import { useSignUpMutation } from 'service/httpService';
-import GoogleAuth from '../GoogleAuth/GoogleAuth';
+import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
 
 export type FormData = {
 	email: string;
@@ -37,11 +37,12 @@ const signUp = () => {
 	const { t } = useTranslation();
 
 	const onSubmit: SubmitHandler<FormData> = async values => {
+		const { email, password } = values;
 		if (values.createPassword !== values.password) {
 			alert('Invalid password');
 			reset({ email: '', createPassword: '', password: '' });
 		} else {
-			await signUp(values)
+			await signUp({ email, password })
 				.unwrap()
 				.then(() => {
 					setSucess(true);
@@ -52,6 +53,7 @@ const signUp = () => {
 				.catch(() => {
 					setError(true);
 					console.log(error);
+					reset({ email: '', createPassword: '', password: '' });
 					alert('Invalid email or password');
 				});
 		}
