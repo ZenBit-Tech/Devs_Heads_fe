@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { authApi, profileApi } from 'service/httpService';
+import { authSignIn } from 'service/signinHttp';
 import sampleReducer from './reducers/sampleSlice';
 
 export const store = configureStore({
 	reducer: {
 		sample: sampleReducer,
+		[authSignIn.reducerPath]: authSignIn.reducer,
 		[authApi.reducerPath]: authApi.reducer,
 		[profileApi.reducerPath]: profileApi.reducer,
 	},

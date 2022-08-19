@@ -68,7 +68,9 @@ export const ContactInfo = () => {
 							name="firstName"
 							control={control}
 							defaultValue=""
-							rules={{ required: { value: true, message: `${t('ProfileEdit.fieldIsRequired')}` } }}
+							rules={{
+								required: { value: true, message: `${t('ProfileEdit.fieldIsRequired')}` },
+							}}
 							render={({ field }) => <StyledInput {...field} />}
 						/>
 						{errors.firstName && (
@@ -83,7 +85,9 @@ export const ContactInfo = () => {
 							name="lastName"
 							control={control}
 							defaultValue=""
-							rules={{ required: { value: true, message: `${t('ProfileEdit.fieldIsRequired')}` } }}
+							rules={{
+								required: { value: true, message: `${t('ProfileEdit.fieldIsRequired')}` },
+							}}
 							render={({ field }) => <StyledInput {...field} />}
 						/>
 						{errors.lastName && <Alert message={errors.lastName.message} type="warning" showIcon />}

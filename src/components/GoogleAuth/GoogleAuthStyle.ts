@@ -4,9 +4,8 @@ import { BLUE, LIGHT_BLUE, WHITE } from './colors';
 export const Container = styled.div`
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
-	align-content: center;
-	margin-top: 100px;
+	margin-top: 10px;
+	margin-left: 30px;
 	width: 220px;
 	height: 50px;
 	background: ${BLUE};
