@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { FormData } from 'components/signIn/Signin';
 
+const BASE_URL = 'http://localhost:3000';
+
 export const authSignIn = createApi({
 	reducerPath: 'auth',
-	baseQuery: fetchBaseQuery({ baseUrl: process.env.BASE_URL }),
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
 	endpoints: build => ({
 		signIn: build.mutation<{ email: string; password: string }, FormData>({
 			query: body => ({

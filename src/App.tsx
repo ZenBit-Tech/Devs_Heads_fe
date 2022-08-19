@@ -37,14 +37,14 @@ const App: FC = () => {
 					<Route path="/" element={<Layout />}>
 						<Route element={<PrivateRoutes token={token} />}>
 							{/*here insert your private routes */}
-							<Route path="welcome" element={<WelcomePage />} />
+							<Route path="/registration" element={<RegistrationPage />} />
 						</Route>
 						{/*here public routes */}
 						<Route path="sample" element={<SamplePage />} />
 						<Route path="/sign-in" element={<SignIn />} />
 						<Route path="/forgot-passowrd" element={<ForgotPassword />} />
 						<Route path="/sign-up" element={<SignUp />} />
-						<Route path="/registration" element={<RegistrationPage />} />
+						<Route path="/welcome" element={<WelcomePage />} />
 						<Route path="*" element={<Navigate to="/" />} />
 						<Route path="*" element={<GoogleAuth />} />
 						<Route path="settings/" element={<SettingsPage />}>
