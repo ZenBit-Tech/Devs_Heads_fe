@@ -4,13 +4,13 @@ import sampleReducer from './reducers/sampleSlice';
 // import signUpReducer from './reducers/signUp';
 
 export const store = configureStore({
-  reducer: {
-    sample: sampleReducer,
-    [authApi.reducerPath]: authApi.reducer,
-    [profileApi.reducerPath]: profileApi.reducer,
-  },
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(authApi.middleware, profileApi.middleware),
+	reducer: {
+		sample: sampleReducer,
+		[authApi.reducerPath]: authApi.reducer,
+		[profileApi.reducerPath]: profileApi.reducer,
+	},
+	middleware: getDefaultMiddleware =>
+		getDefaultMiddleware().concat(authApi.middleware, profileApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
