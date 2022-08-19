@@ -30,7 +30,6 @@ export const ContactInfo = () => {
 	const [sendForm] = usePostProfileInfoMutation();
 
 	const userEmail = useAppSelector(() => 'user@email.puthere');
-	const some = useAppSelector(state => state.auth.mutations);
 
 	const {
 		handleSubmit,
@@ -42,10 +41,11 @@ export const ContactInfo = () => {
 	const onSubmit: SubmitHandler<IContactInfoForm> = async data => {
 		await sendForm(data)
 			.unwrap()
-			.then(() => openNotificationWithIcon('success'))
+			.then(() => {
+				openNotificationWithIcon('success');
+				reset();
+			})
 			.catch(() => openNotificationWithIcon('error'));
-		reset();
-		console.log(some);
 	};
 
 	const openNotificationWithIcon = (type: NotificationType) => {

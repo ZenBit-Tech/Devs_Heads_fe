@@ -24,11 +24,11 @@ export const { useSignUpMutation } = authApi;
 /*TODO when backend is ready*/
 export const profileApi = createApi({
 	reducerPath: 'profile',
-	baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/profile' }),
+	baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000' }),
 	endpoints: build => ({
 		postProfileInfo: build.mutation<{ error: string }, IContactInfoForm>({
 			query: body => ({
-				url: '/info',
+				url: '/contact-info',
 				method: 'post',
 				body,
 				headers: {
@@ -39,7 +39,7 @@ export const profileApi = createApi({
 		}),
 		postProfile: build.mutation({
 			query: body => ({
-				url: '/',
+				url: '/profile',
 				method: 'post',
 				body,
 				headers: {
