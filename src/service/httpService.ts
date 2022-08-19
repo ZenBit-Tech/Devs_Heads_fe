@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { FormData } from 'components/signUp';
 import { IContactInfoForm } from '../pages/settings-page/components/ContactInfo/ContactInfo';
 
 // Define a service using a base URL and expected endpoints
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const authApi = createApi({
 	reducerPath: 'auth',
 	baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000' }),
 	endpoints: build => ({
-		signUp: build.mutation({
+		signUp: build.mutation<{ email: string; password: string }, FormData>({
 			query: body => ({
 				url: 'auth/sign-up',
 				method: 'post',
@@ -16,7 +16,6 @@ export const authApi = createApi({
 					'Content-type': 'application/json; charset=UTF-8',
 				},
 			}),
-			transformResponse: (response: { data: { email: string } }, meta, arg) => response.data,
 		}),
 	}),
 });

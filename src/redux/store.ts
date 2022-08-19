@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { authApi, profileApi } from 'service/httpService';
 import sampleReducer from './reducers/sampleSlice';
-// import signUpReducer from './reducers/signUp';
 
 export const store = configureStore({
 	reducer: {

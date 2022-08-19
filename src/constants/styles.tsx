@@ -8,3 +8,4 @@ export const DARK_GREY = 'rgb(61, 59, 59)';
 export const FONT_SMALL = '12px';
 export const FONT_MEDIUM = '14px';
 export const FONT_LARGE = '20px';
+export const FONT_H1 = '40px';

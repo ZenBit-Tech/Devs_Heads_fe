@@ -2,9 +2,9 @@ import React, { FC } from 'react';
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
 import { increment, decrement } from 'redux/reducers/sampleSlice';
 import type { RootState } from 'redux/store';
+import { TitleStyled } from './Sample.styles';
 import { useTranslation } from 'react-i18next';
 import GoogleAuth from '../GoogleAuth/GoogleAuth';
-import { TitleStyled } from './Sample.styles';
 
 const Sample: FC = () => {
 	const value = useAppSelector((state: RootState) => state.sample.value);
