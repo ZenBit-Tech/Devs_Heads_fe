@@ -5,17 +5,17 @@ import { WelcomePageLayoutWrapper, TitleStyled, ImageStyled } from './WelcomePag
 import ArrowDowm from 'assets/arrowDown.jpg';
 
 const WelcomePageLayout: FC = () => {
-  const { t } = useTranslation();
+	const { t } = useTranslation();
 
-  return (
-    <WelcomePageLayoutWrapper>
-      <TitleStyled>{`${t('WelcomePage.title')}`}</TitleStyled>
-      <p>{`${t('WelcomePage.description')}`}</p>
-      <p>{`${t('WelcomePage.pointerToLink')}`}</p>
-      <ImageStyled src={ArrowDowm} alt="arrowDown" />
-      <Link to="/settings">{`${t('WelcomePage.linkDescription')}`}</Link>
-    </WelcomePageLayoutWrapper>
-  );
+	return (
+		<WelcomePageLayoutWrapper>
+			<TitleStyled>{`${t('WelcomePage.title')}`}</TitleStyled>
+			<p>{`${t('WelcomePage.description')}`}</p>
+			<p>{`${t('WelcomePage.pointerToLink')}`}</p>
+			<ImageStyled src={ArrowDowm} alt="arrowDown" />
+			<Link to="/settings">{`${t('WelcomePage.linkDescription')}`}</Link>
+		</WelcomePageLayoutWrapper>
+	);
 };
 
 export default WelcomePageLayout;
