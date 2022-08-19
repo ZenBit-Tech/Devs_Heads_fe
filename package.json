@@ -60,9 +60,8 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "prettier --write"
-    ],
-    "*.js": "eslint --cache --fix"
+      "eslint --fix"
+    ]
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
