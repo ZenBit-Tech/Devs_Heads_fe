@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { authApi, profileApi } from 'service/httpService';
 import { authSignIn } from 'service/signinHttp';
-import { authApi } from 'service/httpService';
 import sampleReducer from './reducers/sampleSlice';
 
 export const store = configureStore({
@@ -8,8 +8,10 @@ export const store = configureStore({
 		sample: sampleReducer,
 		[authSignIn.reducerPath]: authSignIn.reducer,
 		[authApi.reducerPath]: authApi.reducer,
+		[profileApi.reducerPath]: profileApi.reducer,
 	},
-	middleware: getDefaultMiddleware => getDefaultMiddleware().concat(authApi.middleware),
+	middleware: getDefaultMiddleware =>
+		getDefaultMiddleware().concat([authApi.middleware, profileApi.middleware]),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

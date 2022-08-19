@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import { Alert } from 'antd';
+import { Alert, notification } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { phoneNumberRegExp } from 'constants/reg-exps';
 import {
@@ -11,29 +11,51 @@ import {
 	InputBlock,
 	SaveButton,
 } from './ContactInfo.styles';
+import { useAppSelector } from 'redux/hooks';
+import { usePostProfileInfoMutation } from 'service/httpService';
 
-interface IFormInputs {
+export interface IContactInfoForm {
 	firstName: string;
 	lastName: string;
 	email: string;
 	phoneNumber: string;
 }
+type NotificationType = 'success' | 'error';
 
 const phoneRegExp = new RegExp(phoneNumberRegExp);
 
 export const ContactInfo = () => {
 	const { t } = useTranslation();
 
+	const [sendForm] = usePostProfileInfoMutation();
+
+	const userEmail = useAppSelector(() => 'user@email.puthere');
+
 	const {
 		handleSubmit,
 		control,
 		reset,
 		formState: { errors },
-	} = useForm<IFormInputs>();
+	} = useForm<IContactInfoForm>();
 
-	const onSubmit: SubmitHandler<IFormInputs> = data => {
-		console.log(data);
-		reset();
+	const onSubmit: SubmitHandler<IContactInfoForm> = async data => {
+		await sendForm(data)
+			.unwrap()
+			.then(() => {
+				openNotificationWithIcon('success');
+				reset();
+			})
+			.catch(() => openNotificationWithIcon('error'));
+	};
+
+	const openNotificationWithIcon = (type: NotificationType) => {
+		notification[type]({
+			message: type === 'success' ? `${t('ContactInfo.success')}` : `${t('ContactInfo.error')}`,
+			description:
+				type === 'success'
+					? `${t('ContactInfo.dataHasBeenSaved')}`
+					: `${t('ContactInfo.someErrorOccurred')}`,
+		});
 	};
 
 	return (
@@ -76,8 +98,8 @@ export const ContactInfo = () => {
 					<Controller
 						name="email"
 						control={control}
-						defaultValue=""
-						render={({ field }) => <StyledInput {...field} />}
+						defaultValue={userEmail}
+						render={({ field }) => <StyledInput disabled {...field} />}
 					/>
 				</InputBlock>
 				<InputBlock>
