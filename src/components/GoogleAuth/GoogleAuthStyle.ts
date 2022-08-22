@@ -10,16 +10,16 @@ export const Container = styled.div`
 	height: 50px;
 	background: ${BLUE};
 	padding: 2px;
-	border-radius: 5px;
+	border-radius: 6px;
 
 	&:hover {
 		background: ${LIGHT_BLUE};
 	}
 `;
 export const Image = styled.img`
-	width: 50px;
-	height: 50px;
-	border-radius: 5px;
+	width: 45px;
+	height: 45px;
+	border-radius: 6px;
 `;
 export const Typography = styled.div`
 	color: ${WHITE};

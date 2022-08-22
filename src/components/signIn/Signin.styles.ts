@@ -55,6 +55,10 @@ export const Form = styled.form`
 `;
 
 export const Input = styled.input`
+	&:focus {
+		box-shadow: 0000;
+		outline: 0;
+	}
 	border-radius: 6px;
 	border: solid 1px ${GREY};
 	height: 30px;
