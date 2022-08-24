@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
@@ -7,12 +7,15 @@ import { Div, Register, Form, ControlStyle, Input, P } from './signup.styled';
 import { useTranslation } from 'react-i18next';
 import { useSignUpMutation } from 'service/httpService';
 import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
+import { notification } from 'antd';
 
 export type FormData = {
 	email: string;
 	createPassword: string;
 	password: string;
 };
+
+type Alert = 'success' | 'error';
 
 const schema = Yup.object({
 	email: Yup.string().email().required(),
@@ -21,9 +24,8 @@ const schema = Yup.object({
 }).required();
 
 const signUp = () => {
+	const { t } = useTranslation();
 	const [signUp] = useSignUpMutation();
-	const [error, setError] = useState(false);
-	const [sucess, setSucess] = useState(false);
 	const navigate = useNavigate();
 	const {
 		control,
@@ -34,28 +36,27 @@ const signUp = () => {
 		resolver: yupResolver(schema),
 	});
 
-	const { t } = useTranslation();
+	const alert = (type: Alert) => {
+		notification[type]({
+			message: type === 'success' ? `${t('SignUp.errorPasswords')}` : `${t('SignUp.errorEmail')}`,
+		});
+	};
 
 	const onSubmit: SubmitHandler<FormData> = async values => {
 		const { email, password } = values;
 		if (values.createPassword !== values.password) {
-			alert('Invalid password');
+			alert('success');
 			reset({ email: '', createPassword: '', password: '' });
 		} else {
-			await signUp({ email, password })
-				.unwrap()
-				.then(() => {
-					setSucess(true);
-					console.log(sucess);
-					reset({ email: '', createPassword: '', password: '' });
-					navigate('/registration');
-				})
-				.catch(() => {
-					setError(true);
-					console.log(error);
-					reset({ email: '', createPassword: '', password: '' });
-					alert('Invalid email or password');
-				});
+			try {
+				await signUp({ email, password }).unwrap();
+				reset({ email: '', createPassword: '', password: '' });
+				navigate('/role-selection');
+			} catch (e) {
+				alert('error');
+				console.log(e);
+				reset({ email: '', createPassword: '', password: '' });
+			}
 		}
 	};
 

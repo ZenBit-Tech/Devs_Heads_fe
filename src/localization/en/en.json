@@ -10,7 +10,9 @@
 		"forgotPassword": "Forgot your password?",
 		"buttonSignin": "Sign In",
 		"text": "Don`t have an account yet?",
-		"registerLink": "Register Now"
+		"registerLink": "Register Now",
+		"success": "You have sucessfully logged in",
+		"error": "Invalid email or username"
 	},
 	"ForgotPassword": {
 		"email": "Email",
@@ -24,7 +26,9 @@
 		"email": "Email",
 		"createPassword": "Create a password",
 		"password": "Confirm password",
-		"register": "Register"
+		"register": "Register",
+		"errorPasswords": "Invalid password",
+		"errorEmail": "Invalid email or password"
 	},
 	"GoogleAuthButton": {
 		"googleAuth": "Sign up with Google"
