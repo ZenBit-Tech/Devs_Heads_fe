@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { IContactInfoForm } from '../pages/settings-page/components/ContactInfo/ContactInfo';
 
 type FormData = {
 	email: string;
@@ -6,7 +7,6 @@ type FormData = {
 };
 
 const BASE_URL = 'http://localhost:3000';
-import { IContactInfoForm } from '../pages/settings-page/components/ContactInfo/ContactInfo';
 
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
@@ -23,14 +23,24 @@ export const authApi = createApi({
 				},
 			}),
 		}),
+		signIn: build.mutation<{ email: string; password: string }, FormData>({
+			query: body => ({
+				url: 'auth/sign-in',
+				method: 'post',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
 	}),
 });
-export const { useSignUpMutation } = authApi;
+export const { useSignUpMutation, useSignInMutation } = authApi;
 
 /*TODO when backend is ready*/
 export const profileApi = createApi({
 	reducerPath: 'profile',
-	baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000' }),
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
 	endpoints: build => ({
 		postProfileInfo: build.mutation<{ error: string }, IContactInfoForm>({
 			query: body => ({
