@@ -80,5 +80,29 @@
 		"description": "This page will have information about your profile",
 		"pointerToLink": "please follow the link",
 		"linkDescription": "Create my profile"
+	},
+	"JobPostPage": {
+		"title": "Write a title for your job post",
+		"descriptionTitle": "Describe your job",
+		"categoryTitle": "Job Category",
+		"skillsTitle": "Skills",
+		"skillsSubTitle": "You must mark at least 3 skills",
+		"durationTitle": "How long will your work take?",
+		"shortDuration": "Short",
+		"mediumDuration": "Medium",
+		"longDuration": "Long",
+		"shortMonthDuration": "0-1 month",
+		"mediumMonthDuration": "1-6 months",
+		"longMonthDuration": "6+ months",
+		"HoutlyRateTitle": "Hourly rate",
+		"from": "From",
+		"to": "To",
+		"perHour": "/hour",
+		"buttonTitle": "Create!",
+		"descriptionPlaceholder": "Max. 5000 characters",
+		"titleAlert": "Maximum length is 50 symbols",
+		"fieldIsRequired": "This field is required",
+		"skillsWarning": "You must mark at least 3 skills",
+		"priceError": "Price must be grater than 0."
 	}
 }

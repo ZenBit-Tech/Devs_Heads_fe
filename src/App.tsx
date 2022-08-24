@@ -23,6 +23,8 @@ const SignIn = lazy(() => import('pages/SigninPage'));
 
 const ForgotPassword = lazy(() => import('components/forgotPassword/forgotPassword'));
 
+const JobPostPage = lazy(() => import('pages/JobPostPage'));
+
 const App: FC = () => {
 	Cookies.set('name', 'value');
 	const a = Cookies.get('accessToken'); // TODO delete mock token when sign up/sign in will be completed
@@ -45,6 +47,7 @@ const App: FC = () => {
 						<Route path="/forgot-passowrd" element={<ForgotPassword />} />
 						<Route path="/sign-up" element={<SignUp />} />
 						<Route path="/welcome" element={<WelcomePage />} />
+						<Route path="/job-post" element={<JobPostPage />} />
 						<Route path="*" element={<Navigate to="/" />} />
 						<Route path="*" element={<GoogleAuth />} />
 						<Route path="welcome" element={<WelcomePage />} />
