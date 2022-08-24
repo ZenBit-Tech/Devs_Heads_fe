@@ -80,5 +80,10 @@
 		"description": "This page will have information about your profile",
 		"pointerToLink": "please follow the link",
 		"linkDescription": "Create my profile"
+	},
+	"PostJobPage": {
+		"title": "Your Postings",
+		"description": "No active job posts",
+		"button": "Post a Job"
 	}
 }

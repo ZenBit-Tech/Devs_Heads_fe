@@ -7,6 +7,7 @@ import { SettingsPage } from './pages/settings-page/SettingsPage';
 import { ProfileEdit } from './pages/settings-page/components/ProfileEdit/ProfileEdit';
 import { ContactInfo } from './pages/settings-page/components/ContactInfo/ContactInfo';
 import './App.css';
+import GlobalStyle from 'config/GlobalStyle';
 
 const SamplePage = lazy(() => import('pages/SamplePage' /* webpackChunkName: "sample-page" */));
 const WelcomePage = lazy(
@@ -23,6 +24,11 @@ const SignIn = lazy(() => import('pages/SigninPage'));
 
 const ForgotPassword = lazy(() => import('components/forgotPassword/forgotPassword'));
 
+const PostJobPage = lazy(() => import('pages/PostJobPage' /* webpackChunkName: "post-job-page" */));
+const JobDescriptionPage = lazy(
+	() => import('pages/JobDescriptionPage' /* webpackChunkName: "job-description-page" */),
+);
+
 const App: FC = () => {
 	Cookies.set('name', 'value');
 	const a = Cookies.get('accessToken'); // TODO delete mock token when sign up/sign in will be completed
@@ -32,6 +38,7 @@ const App: FC = () => {
 
 	return (
 		<>
+			<GlobalStyle />
 			<Suspense fallback={<div>Loading...</div>}>
 				<Routes>
 					<Route path="/" element={<Layout />}>
@@ -45,6 +52,8 @@ const App: FC = () => {
 						<Route path="/forgot-passowrd" element={<ForgotPassword />} />
 						<Route path="/sign-up" element={<SignUp />} />
 						<Route path="/welcome" element={<WelcomePage />} />
+						<Route path="post-job" element={<PostJobPage />} />
+						<Route path="post-job/:id" element={<JobDescriptionPage />} />
 						<Route path="*" element={<Navigate to="/" />} />
 						<Route path="*" element={<GoogleAuth />} />
 						<Route path="welcome" element={<WelcomePage />} />
