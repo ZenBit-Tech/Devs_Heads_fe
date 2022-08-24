@@ -7,6 +7,10 @@ type FormData = {
 	password: string;
 };
 
+type FormPass = {
+	password: string;
+};
+
 const BASE_URL = 'http://localhost:3000';
 
 // Define a service using a base URL and expected endpoints
@@ -44,9 +48,24 @@ export const authApi = createApi({
 				},
 			}),
 		}),
+		resetPassword: build.mutation<{ password: string }, FormPass>({
+			query: body => ({
+				url: 'auth/forgot-password',
+				method: 'post',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
 	}),
 });
-export const { useSignUpMutation, useSignInMutation, useForgotPasswordMutation } = authApi;
+export const {
+	useSignUpMutation,
+	useSignInMutation,
+	useForgotPasswordMutation,
+	useResetPasswordMutation,
+} = authApi;
 
 /*TODO when backend is ready*/
 export const profileApi = createApi({

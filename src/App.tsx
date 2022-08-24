@@ -2,7 +2,6 @@ import React, { FC, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from 'components/Layout/Layout';
 import PrivateRoutes from './hoc/PrivateRoutes';
-import GoogleAuth from './components/GoogleAuth/GoogleAuth';
 import { SettingsPage } from './pages/settings-page/SettingsPage';
 import { ProfileEdit } from './pages/settings-page/components/ProfileEdit/ProfileEdit';
 import { ContactInfo } from './pages/settings-page/components/ContactInfo/ContactInfo';
@@ -22,6 +21,8 @@ const SignIn = lazy(() => import('pages/SigninPage'));
 
 const ForgotPassword = lazy(() => import('components/forgotPassword/forgotPassword'));
 
+const ResetPassword = lazy(() => import('components/resetPassword/resetPassword'));
+
 const App: FC = () => {
 	Cookies.set('name', 'value');
 	const a = Cookies.get('accessToken'); // TODO delete mock token when sign up/sign in will be completed
@@ -35,11 +36,11 @@ const App: FC = () => {
 				<Routes>
 					<Route path="/" element={<Layout />}>
 						{/*here public routes */}
-						<Route path="/sign-in" element={<SignIn />} />
+						<Route path={'/reset-password'} element={<ResetPassword />} />
 						<Route path="/forgot-password" element={<ForgotPassword />} />
+						<Route path="/sign-in" element={<SignIn />} />
 						<Route path="/sign-up" element={<SignUp />} />
 						<Route path="/role-selection" element={<RoleSelection />} />
-						<Route path="*" element={<GoogleAuth />} />
 						<Route path="/welcome" element={<WelcomePage />} />
 						<Route path="settings/" element={<SettingsPage />}>
 							<Route path="edit-profile" element={<ProfileEdit />} />

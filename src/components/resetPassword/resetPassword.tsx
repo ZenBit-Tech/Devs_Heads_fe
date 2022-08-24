@@ -1,7 +1,9 @@
 import React from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { notification } from 'antd';
 import {
 	Div,
 	Form,
@@ -9,19 +11,25 @@ import {
 	Button,
 	ControlStyle,
 	ErrorP,
-} from 'components/forgotPassword/Forgot.styles';
+} from 'components/resetPassword/resetPassword.style';
 import { useTranslation } from 'react-i18next';
+import { useResetPasswordMutation } from 'service/httpService';
 
 export type FormPass = {
 	createPassword: string;
 	password: string;
 };
 
+type Alert = 'success' | 'error';
+
 const schema = Yup.object({
-	email: Yup.string().email().required(),
+	createPassword: Yup.string().min(8).required(),
+	password: Yup.string().min(8).required(),
 }).required();
 
 const resetPassword = () => {
+	const [setPassword] = useResetPasswordMutation();
+	const navigate = useNavigate();
 	const {
 		handleSubmit,
 		control,
@@ -33,20 +41,34 @@ const resetPassword = () => {
 
 	const { t } = useTranslation();
 
+	const alert = (type: Alert) => {
+		notification[type]({
+			message: type === 'success' ? `${t('ResetPassword.success')}` : `${t('ResetPassword.error')}`,
+		});
+	};
+
 	const onSubmit: SubmitHandler<FormPass> = async values => {
-		try {
-			console.log(values);
-			reset({ createPassword: '', password: '' });
-		} catch (e) {
-			reset({ createPassword: '', password: '' });
-			console.log(e);
+		const { password } = values;
+		if (values.createPassword !== values.password) {
+			alert('error');
+		} else {
+			try {
+				await setPassword({ password }).unwrap();
+				alert('success');
+				reset({ createPassword: '', password: '' });
+				navigate('/role-selection');
+			} catch (e) {
+				reset({ createPassword: '', password: '' });
+				alert('error');
+				console.log(e);
+			}
 		}
 	};
 
 	return (
 		<Div>
 			<Form onSubmit={handleSubmit(onSubmit)}>
-				<ControlStyle>{`${t('ForgotPassword.email')}`}</ControlStyle>
+				<ControlStyle>{`${t('ResetPassword.newPassword')}`}</ControlStyle>
 				<Controller
 					render={({ field }) => <Input type="password" {...field} />}
 					name="createPassword"
@@ -54,15 +76,15 @@ const resetPassword = () => {
 					defaultValue=""
 				/>
 				<ErrorP>{errors.createPassword?.message}</ErrorP>
-				<ControlStyle>{`${t('ForgotPassword.email')}`}</ControlStyle>
+				<ControlStyle>{`${t('ResetPassword.password')}`}</ControlStyle>
 				<Controller
 					render={({ field }) => <Input type="password" {...field} />}
 					name="password"
 					control={control}
 					defaultValue=""
 				/>
-				<ErrorP>{errors.createPassword?.message}</ErrorP>
-				<Button type="submit">{`${t('ForgotPassword.sendButton')}`}</Button>
+				<ErrorP>{errors.password?.message}</ErrorP>
+				<Button type="submit">{`${t('SignUp.register')}`}</Button>
 			</Form>
 		</Div>
 	);
