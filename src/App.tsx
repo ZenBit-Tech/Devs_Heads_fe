@@ -21,7 +21,7 @@ const SignIn = lazy(() => import('pages/SigninPage'));
 
 const ForgotPassword = lazy(() => import('components/forgotPassword/forgotPassword'));
 
-const ResetPassword = lazy(() => import('components/resetPassword/resetPassword'));
+const ResetPassword = lazy(() => import('components/restorePassword/restorePassword'));
 
 const App: FC = () => {
 	Cookies.set('name', 'value');
@@ -36,7 +36,7 @@ const App: FC = () => {
 				<Routes>
 					<Route path="/" element={<Layout />}>
 						{/*here public routes */}
-						<Route path={'/reset-password'} element={<ResetPassword />} />
+						<Route path={'/restore-password'} element={<ResetPassword />} />
 						<Route path="/forgot-password" element={<ForgotPassword />} />
 						<Route path="/sign-in" element={<SignIn />} />
 						<Route path="/sign-up" element={<SignUp />} />

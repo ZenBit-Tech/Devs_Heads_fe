@@ -11,7 +11,7 @@ import {
 	Button,
 	ControlStyle,
 	ErrorP,
-} from 'components/resetPassword/resetPassword.style';
+} from 'components/restorePassword/restorePassword.style';
 import { useTranslation } from 'react-i18next';
 import { useResetPasswordMutation } from 'service/httpService';
 
