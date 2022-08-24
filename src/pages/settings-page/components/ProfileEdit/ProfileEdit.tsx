@@ -62,8 +62,8 @@ export const ProfileEdit = () => {
 			<Block>
 				<ProfilePhoto>
 					<Title>{`${t('ProfileEdit.profilePhotoTitle')}`}</Title>
-					<Image width={200} src={file64?.toString() || defaultProfilePhoto} />
-					<input type={'file'} onChange={onChangePhotoHandler} />
+					<Image width={200} src={file64 || defaultProfilePhoto} />
+					<input type={'file'} accept=".png, .jpg, .jpeg" onChange={onChangePhotoHandler} />
 					<button onClick={onPhotoDelete}>{`${t('ProfileEdit.deletePhotoButton')}`}</button>
 				</ProfilePhoto>
 				<div>

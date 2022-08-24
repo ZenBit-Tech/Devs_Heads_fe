@@ -1,2 +1,2 @@
 export const defaultProfilePhoto =
-	'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png';
+	'https://mod.go.ke/wp-content/uploads/2021/04/default-profile-pic.png';

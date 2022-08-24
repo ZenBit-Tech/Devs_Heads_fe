@@ -18,6 +18,8 @@ import {
 } from './Signin.styles';
 import { useTranslation } from 'react-i18next';
 import { useSignInMutation } from 'service/signinHttp';
+import { useAppDispatch } from '../../redux/hooks';
+import { saveEmail } from '../../redux/reducers/userSlice';
 
 export type FormData = {
 	email: string;
@@ -30,6 +32,7 @@ const schema = Yup.object({
 }).required();
 
 const signIn = () => {
+	const dispatch = useAppDispatch();
 	const [signIn] = useSignInMutation();
 	const [error, setError] = useState(false);
 	const [sucess, setSucess] = useState(false);
@@ -49,6 +52,7 @@ const signIn = () => {
 		await signIn(values)
 			.unwrap()
 			.then(() => {
+				dispatch(saveEmail(values.email));
 				setSucess(true);
 				console.log(sucess);
 				reset({ email: '', password: '' });

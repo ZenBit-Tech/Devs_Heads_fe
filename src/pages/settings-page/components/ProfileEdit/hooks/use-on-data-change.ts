@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { RadioChangeEvent } from 'antd';
 import {
+	EnglishLevelEnum,
 	IProfileEdit,
 	ISkill,
 	ITextareaWithDatesMainState,
@@ -8,8 +9,8 @@ import {
 	OnChangeObjectKeys,
 } from '../interfaces/interfaces';
 import { useSendData } from './use-send-data';
+import { defaultProfilePhoto } from 'constants/links';
 
-const PRE_INTERMEDIATE = 'Pre-intermediate';
 const textareaMock = {
 	education: [
 		{
@@ -80,11 +81,13 @@ export const useOnDataChange = () => {
 	];
 
 	const [file, setFile] = useState<Blob>();
-	const [file64, setFile64] = useState<string | ArrayBuffer | null>();
+	const [file64, setFile64] = useState<string>(defaultProfilePhoto);
 	const onChangePhotoHandler = async (e: ChangeEvent<HTMLInputElement>) => {
 		const reader = new FileReader();
 		reader.onloadend = () => {
-			setFile64(reader.result);
+			if (typeof reader.result === 'string') {
+				setFile64(reader.result);
+			}
 		};
 		const newFile = e.target.files && e.target.files[0];
 		if (newFile) {
@@ -94,7 +97,7 @@ export const useOnDataChange = () => {
 	};
 	const onPhotoDelete = () => {
 		setFile(undefined);
-		setFile64(null);
+		setFile64(defaultProfilePhoto);
 	};
 
 	const [textAreaWithDatesState, setTextAreaWithDatesState] =
@@ -132,11 +135,13 @@ export const useOnDataChange = () => {
 		});
 	};
 
-	const [englishOption, setEnglishOption] = useState<string>(PRE_INTERMEDIATE);
+	const [englishOption, setEnglishOption] = useState<EnglishLevelEnum>(
+		EnglishLevelEnum.PRE_INTERMEDIATE,
+	);
 	const englishOptions = [
-		{ label: 'Pre-intermediate', value: 'Pre-intermediate' },
+		{ label: 'Pre-intermediate', value: 'Pre_intermediate' },
 		{ label: 'Intermediate', value: 'Intermediate' },
-		{ label: 'Upper-intermediate', value: 'Upper-intermediate' },
+		{ label: 'Upper-intermediate', value: 'Upper_intermediate' },
 	];
 	const onEnglishOptionChange = ({ target: { value } }: RadioChangeEvent) => {
 		setEnglishOption(value);
@@ -258,7 +263,7 @@ export const useOnDataChange = () => {
 			});
 		}
 		const objToSend: IProfileEdit = {
-			profilePhoto: file,
+			profilePhoto: file64,
 			position: position,
 			category: category,
 			wage: price,
@@ -269,7 +274,7 @@ export const useOnDataChange = () => {
 			experience: filteredExperience,
 		};
 		if (Object.values(onSubmitErrors).filter(Boolean).length === 0) {
-			sendData(objToSend);
+			await sendData(objToSend);
 		}
 	};
 

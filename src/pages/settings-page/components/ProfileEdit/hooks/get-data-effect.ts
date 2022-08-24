@@ -1,42 +1,24 @@
-import { IProfileEdit } from '../interfaces/interfaces';
-
-interface ExperienceAndEducation {
-	message: string;
-	dateStart: Date;
-	dateEnd: Date;
-}
-interface IDataToReceive {
-	photo?: Blob;
-	position: string;
-	price: number;
-	englishLevel: string;
-	hour_rate: number;
-	description: string;
-	category: string;
-	educations: ExperienceAndEducation[];
-	experience: ExperienceAndEducation[];
-	profileSkills: string[];
-}
+import { IBackEndProfileEdit, IProfileEdit } from '../interfaces/interfaces';
 
 //We create an object to transform data from back end
 /*TODO check object with backend*/
 export const getDataEffect = () => {
-	const getData = (data: IDataToReceive): IProfileEdit => {
+	const getData = (data: IBackEndProfileEdit): IProfileEdit => {
 		const newObj: IProfileEdit = {
 			profilePhoto: data.photo,
 			position: data.position,
-			category: data.category,
+			category: data.category.name,
 			wage: data.price,
-			skills: data.profileSkills.map(e => {
-				return { label: e, value: false };
+			skills: data.skills.map(e => {
+				return { label: e.name, value: false };
 			}),
 			englishLevel: data.englishLevel,
 			description: data.description,
-			education: data.educations.map(e => {
-				return { dateEnd: e.dateEnd, dateStart: e.dateStart, info: e.message, error: false };
+			education: data.education.map(e => {
+				return { dateEnd: e.endDate, dateStart: e.startDate, info: e.description, error: false };
 			}),
 			experience: data.experience.map(e => {
-				return { dateStart: e.dateStart, dateEnd: e.dateEnd, info: e.message, error: false };
+				return { dateStart: e.startDate, dateEnd: e.endDate, info: e.description, error: false };
 			}),
 		};
 		console.log(newObj);

@@ -7,6 +7,8 @@ import { Div, Register, Form, ControlStyle, Input, P } from './signup.styled';
 import { useTranslation } from 'react-i18next';
 import { useSignUpMutation } from 'service/httpService';
 import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
+import { useAppDispatch } from '../../redux/hooks';
+import { saveEmail, saveUserId } from '../../redux/reducers/userSlice';
 
 export type FormData = {
 	email: string;
@@ -21,6 +23,7 @@ const schema = Yup.object({
 }).required();
 
 const signUp = () => {
+	const dispatch = useAppDispatch();
 	const [signUp] = useSignUpMutation();
 	const [error, setError] = useState(false);
 	const [sucess, setSucess] = useState(false);
@@ -44,8 +47,10 @@ const signUp = () => {
 		} else {
 			await signUp({ email, password })
 				.unwrap()
-				.then(() => {
+				.then(res => {
 					setSucess(true);
+					dispatch(saveUserId(res.id));
+					dispatch(saveEmail(email));
 					console.log(sucess);
 					reset({ email: '', createPassword: '', password: '' });
 					navigate('/registration');
