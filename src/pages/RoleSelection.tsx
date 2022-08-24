@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import { Div1, H1, P, Div2, Div3, Button, Button2 } from './Registration.styles';
+import { Div1, H1, P, Div2, Div3, Button, Button2 } from './RoleSelection.styles';
 import { GREEN, WHITE } from 'constants/styles';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-const RegistrationPage: FC = () => {
+const RoleSelection: FC = () => {
 	const [toogle, setToogle] = React.useState(true);
 	const [green, setGreen] = React.useState('');
 	const [white, setWhite] = React.useState('');
@@ -39,4 +39,4 @@ const RegistrationPage: FC = () => {
 	);
 };
 
-export default RegistrationPage;
+export default RoleSelection;
