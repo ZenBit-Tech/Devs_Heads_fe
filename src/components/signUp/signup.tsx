@@ -51,7 +51,7 @@ const signUp = () => {
 			try {
 				await signUp({ email, password }).unwrap();
 				reset({ email: '', createPassword: '', password: '' });
-				navigate('/registration');
+				navigate('/role-selection');
 			} catch (e) {
 				alert('error');
 				console.log(e);
