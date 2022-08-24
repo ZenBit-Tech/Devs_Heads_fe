@@ -51,10 +51,11 @@ export const authApi = createApi({
 		resetPassword: build.mutation<{ password: string }, FormPass>({
 			query: body => ({
 				url: 'auth/restore-password',
-				method: 'post',
+				method: 'patch',
 				body,
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
+					'Access-Control-Allow-Origin': 'no-cors',
 				},
 			}),
 		}),
