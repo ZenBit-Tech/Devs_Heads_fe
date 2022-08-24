@@ -18,8 +18,8 @@ import {
 } from './Signin.styles';
 import { useTranslation } from 'react-i18next';
 import { useSignInMutation } from 'service/signinHttp';
-import { useAppDispatch } from '../../redux/hooks';
-import { saveEmail } from '../../redux/reducers/userSlice';
+import { useAppDispatch } from 'redux/hooks';
+import { saveEmail } from 'redux/reducers/userSlice';
 
 export type FormData = {
 	email: string;

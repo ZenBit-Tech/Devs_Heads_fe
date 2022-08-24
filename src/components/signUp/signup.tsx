@@ -7,8 +7,8 @@ import { Div, Register, Form, ControlStyle, Input, P } from './signup.styled';
 import { useTranslation } from 'react-i18next';
 import { useSignUpMutation } from 'service/httpService';
 import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
-import { useAppDispatch } from '../../redux/hooks';
-import { saveEmail, saveUserId } from '../../redux/reducers/userSlice';
+import { useAppDispatch } from 'redux/hooks';
+import { saveEmail, saveUserId } from 'redux/reducers/userSlice';
 
 export type FormData = {
 	email: string;

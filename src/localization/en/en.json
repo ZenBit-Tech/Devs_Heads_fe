@@ -52,6 +52,11 @@
 		"skillsTitle": "Skills",
 		"skillsSubTitle": "You must mark at least 3 skills",
 		"englishLevelTitle": "English level",
+		"englishLevelLabels": {
+			"preIntermediate": "Pre-Intermediate",
+			"intermediate": "Intermediate",
+			"upperIntermediate": "Upper-Intermediate"
+		},
 		"descriptionTitle": "Description",
 		"descriptionPlaceholder": "Maximum text length <200 characters",
 		"educationTitle": "Education",

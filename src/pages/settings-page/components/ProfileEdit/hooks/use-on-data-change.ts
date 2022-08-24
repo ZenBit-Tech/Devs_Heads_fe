@@ -1,7 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { RadioChangeEvent } from 'antd';
 import {
-	EnglishLevelEnum,
 	IProfileEdit,
 	ISkill,
 	ITextareaWithDatesMainState,
@@ -10,6 +9,7 @@ import {
 } from '../interfaces/interfaces';
 import { useSendData } from './use-send-data';
 import { defaultProfilePhoto } from 'constants/links';
+import { EnglishLevelEnum } from 'enum/english-level-enum';
 
 const textareaMock = {
 	education: [
@@ -138,11 +138,6 @@ export const useOnDataChange = () => {
 	const [englishOption, setEnglishOption] = useState<EnglishLevelEnum>(
 		EnglishLevelEnum.PRE_INTERMEDIATE,
 	);
-	const englishOptions = [
-		{ label: 'Pre-intermediate', value: 'Pre_intermediate' },
-		{ label: 'Intermediate', value: 'Intermediate' },
-		{ label: 'Upper-intermediate', value: 'Upper_intermediate' },
-	];
 	const onEnglishOptionChange = ({ target: { value } }: RadioChangeEvent) => {
 		setEnglishOption(value);
 	};
@@ -285,7 +280,6 @@ export const useOnDataChange = () => {
 		onChangeTextareaWithDates,
 		addField,
 		englishOption,
-		englishOptions,
 		onEnglishOptionChange,
 		position,
 		onPositionChange,

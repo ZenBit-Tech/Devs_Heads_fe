@@ -26,7 +26,6 @@ export const ProfileEdit = () => {
 		onChangeTextareaWithDates,
 		addField,
 		englishOption,
-		englishOptions,
 		onEnglishOptionChange,
 		position,
 		onPositionChange,
@@ -48,6 +47,12 @@ export const ProfileEdit = () => {
 	} = useOnDataChange();
 
 	const { t } = useTranslation();
+
+	const englishOptions = [
+		{ label: t('ProfileEdit.englishLevelLabels.preIntermediate'), value: 'Pre_intermediate' },
+		{ label: t('ProfileEdit.englishLevelLabels.intermediate'), value: 'Intermediate' },
+		{ label: t('ProfileEdit.englishLevelLabels.upperIntermediate'), value: 'Upper_intermediate' },
+	];
 
 	const optionButtons = useMemo(() => {
 		return skillsOptions.map((e, i) => (

@@ -1,3 +1,5 @@
+import { EnglishLevelEnum } from 'enum/english-level-enum';
+
 export interface IEducationAndExperienceTemplate {
 	info: string;
 	dateStart: Date;
@@ -31,11 +33,6 @@ export interface IProfileEdit {
 	description: string;
 	education: IEducationAndExperienceTemplate[];
 	experience: IEducationAndExperienceTemplate[];
-}
-export enum EnglishLevelEnum {
-	PRE_INTERMEDIATE = 'Pre_intermediate',
-	INTERMEDIATE = 'Intermediate',
-	UPPER_INTERMEDIATE = 'Upper_intermediate',
 }
 
 //Backend interfaces
