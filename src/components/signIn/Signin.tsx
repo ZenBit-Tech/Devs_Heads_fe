@@ -86,7 +86,7 @@ const signIn = () => {
 					defaultValue=""
 				/>
 				<LinkStyle>
-					<Link to="/forgot-passowrd">{`${t('SignIn.forgotPassword')}`}</Link>
+					<Link to="/forgot-password">{`${t('SignIn.forgotPassword')}`}</Link>
 				</LinkStyle>
 				<ErrorP>{errors.password?.message}</ErrorP>
 				<Button type="submit">{`${t('SignIn.buttonSignin')}`}</Button>
