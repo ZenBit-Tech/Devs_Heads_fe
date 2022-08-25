@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
@@ -9,12 +9,15 @@ import { useSignUpMutation } from 'service/httpService';
 import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
 import { useAppDispatch } from 'redux/hooks';
 import { saveEmail, saveUserId } from 'redux/reducers/userSlice';
+import { notification } from 'antd';
 
 export type FormData = {
 	email: string;
 	createPassword: string;
 	password: string;
 };
+
+type Alert = 'success' | 'error';
 
 const schema = Yup.object({
 	email: Yup.string().email().required(),
@@ -23,10 +26,9 @@ const schema = Yup.object({
 }).required();
 
 const signUp = () => {
+	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
 	const [signUp] = useSignUpMutation();
-	const [error, setError] = useState(false);
-	const [sucess, setSucess] = useState(false);
 	const navigate = useNavigate();
 	const {
 		control,
@@ -37,30 +39,29 @@ const signUp = () => {
 		resolver: yupResolver(schema),
 	});
 
-	const { t } = useTranslation();
+	const alert = (type: Alert) => {
+		notification[type]({
+			message: type === 'success' ? `${t('SignUp.errorPasswords')}` : `${t('SignUp.errorEmail')}`,
+		});
+	};
 
 	const onSubmit: SubmitHandler<FormData> = async values => {
 		const { email, password } = values;
 		if (values.createPassword !== values.password) {
-			alert('Invalid password');
+			alert('success');
 			reset({ email: '', createPassword: '', password: '' });
 		} else {
-			await signUp({ email, password })
-				.unwrap()
-				.then(res => {
-					setSucess(true);
-					dispatch(saveUserId(res.id));
-					dispatch(saveEmail(email));
-					console.log(sucess);
-					reset({ email: '', createPassword: '', password: '' });
-					navigate('/registration');
-				})
-				.catch(() => {
-					setError(true);
-					console.log(error);
-					reset({ email: '', createPassword: '', password: '' });
-					alert('Invalid email or password');
-				});
+			try {
+				const res = await signUp({ email, password }).unwrap();
+				dispatch(saveUserId(res.id));
+				dispatch(saveEmail(email));
+				reset({ email: '', createPassword: '', password: '' });
+				navigate('/role-selection');
+			} catch (e) {
+				alert('error');
+				console.log(e);
+				reset({ email: '', createPassword: '', password: '' });
+			}
 		}
 	};
 

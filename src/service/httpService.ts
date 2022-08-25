@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { FormEmail } from 'components/forgotPassword/forgotPassword';
 
 type FormData = {
 	email: string;
@@ -35,14 +36,34 @@ export const authApi = createApi({
 				},
 			}),
 		}),
+		signIn: build.mutation<{ email: string; password: string }, FormData>({
+			query: body => ({
+				url: 'auth/sign-in',
+				method: 'post',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
+		forgotPassword: build.mutation<{ email: string }, FormEmail>({
+			query: body => ({
+				url: 'auth/forgot-password',
+				method: 'post',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
 	}),
 });
-export const { useSignUpMutation } = authApi;
+export const { useSignUpMutation, useSignInMutation, useForgotPasswordMutation } = authApi;
 
 /*TODO when backend is ready*/
 export const profileApi = createApi({
 	reducerPath: 'profile',
-	baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000' }),
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
 	endpoints: build => ({
 		postProfileInfo: build.mutation<IContactInfoForm, IContactInfoForm>({
 			query: ({ id, email, firstName, lastName, phone }) => ({

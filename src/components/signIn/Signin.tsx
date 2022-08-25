@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { notification } from 'antd';
 import {
 	Div,
 	Div2,
@@ -17,14 +18,16 @@ import {
 	ErrorP,
 } from './Signin.styles';
 import { useTranslation } from 'react-i18next';
-import { useSignInMutation } from 'service/signinHttp';
 import { useAppDispatch } from 'redux/hooks';
 import { saveEmail } from 'redux/reducers/userSlice';
+import { useSignInMutation } from 'service/httpService';
 
 export type FormData = {
 	email: string;
 	password: string;
 };
+
+type Alert = 'success' | 'error';
 
 const schema = Yup.object({
 	email: Yup.string().required(),
@@ -32,10 +35,9 @@ const schema = Yup.object({
 }).required();
 
 const signIn = () => {
+	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
 	const [signIn] = useSignInMutation();
-	const [error, setError] = useState(false);
-	const [sucess, setSucess] = useState(false);
 	const navigate = useNavigate();
 	const {
 		handleSubmit,
@@ -46,25 +48,26 @@ const signIn = () => {
 		resolver: yupResolver(schema),
 	});
 
-	const { t } = useTranslation();
+	const alert = (type: Alert) => {
+		notification[type]({
+			message: type === 'success' ? `${t('SignIn.success')}` : `${t('SignIn.error')}`,
+		});
+	};
 
 	const onSubmit: SubmitHandler<FormData> = async values => {
-		await signIn(values)
-			.unwrap()
-			.then(() => {
-				dispatch(saveEmail(values.email));
-				setSucess(true);
-				console.log(sucess);
-				reset({ email: '', password: '' });
-				alert('You have sucessfully logged in');
-				navigate('/welcome');
-			})
-			.catch(() => {
-				setError(true);
-				console.log(error);
-				reset({ email: '', password: '' });
-				alert('Invalid email or username');
-			});
+		const { email, password } = values;
+
+		try {
+			await signIn({ email, password }).unwrap();
+			dispatch(saveEmail(values.email));
+			alert('success');
+			reset({ email: '', password: '' });
+			navigate('/welcome');
+		} catch (e) {
+			reset({ email: '', password: '' });
+			alert('error');
+			console.log(e);
+		}
 	};
 
 	return (
