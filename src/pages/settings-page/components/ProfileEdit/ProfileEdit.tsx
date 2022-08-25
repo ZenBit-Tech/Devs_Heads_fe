@@ -26,7 +26,6 @@ export const ProfileEdit = () => {
 		onChangeTextareaWithDates,
 		addField,
 		englishOption,
-		englishOptions,
 		onEnglishOptionChange,
 		position,
 		onPositionChange,
@@ -49,6 +48,12 @@ export const ProfileEdit = () => {
 
 	const { t } = useTranslation();
 
+	const englishOptions = [
+		{ label: t('ProfileEdit.englishLevelLabels.preIntermediate'), value: 'Pre_intermediate' },
+		{ label: t('ProfileEdit.englishLevelLabels.intermediate'), value: 'Intermediate' },
+		{ label: t('ProfileEdit.englishLevelLabels.upperIntermediate'), value: 'Upper_intermediate' },
+	];
+
 	const optionButtons = useMemo(() => {
 		return skillsOptions.map((e, i) => (
 			<SkillButton key={e.label} selected={e.value} onClick={() => onSkillsChange(i)}>
@@ -62,8 +67,8 @@ export const ProfileEdit = () => {
 			<Block>
 				<ProfilePhoto>
 					<Title>{`${t('ProfileEdit.profilePhotoTitle')}`}</Title>
-					<Image width={200} src={file64?.toString() || defaultProfilePhoto} />
-					<input type={'file'} onChange={onChangePhotoHandler} />
+					<Image width={200} src={file64 || defaultProfilePhoto} />
+					<input type={'file'} accept=".png, .jpg, .jpeg" onChange={onChangePhotoHandler} />
 					<button onClick={onPhotoDelete}>{`${t('ProfileEdit.deletePhotoButton')}`}</button>
 				</ProfilePhoto>
 				<div>

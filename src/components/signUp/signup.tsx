@@ -7,6 +7,8 @@ import { Div, Register, Form, ControlStyle, Input, P } from './signup.styled';
 import { useTranslation } from 'react-i18next';
 import { useSignUpMutation } from 'service/httpService';
 import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
+import { useAppDispatch } from 'redux/hooks';
+import { saveEmail, saveUserId } from 'redux/reducers/userSlice';
 import { notification } from 'antd';
 
 export type FormData = {
@@ -25,6 +27,7 @@ const schema = Yup.object({
 
 const signUp = () => {
 	const { t } = useTranslation();
+	const dispatch = useAppDispatch();
 	const [signUp] = useSignUpMutation();
 	const navigate = useNavigate();
 	const {
@@ -49,7 +52,9 @@ const signUp = () => {
 			reset({ email: '', createPassword: '', password: '' });
 		} else {
 			try {
-				await signUp({ email, password }).unwrap();
+				const res = await signUp({ email, password }).unwrap();
+				dispatch(saveUserId(res.id));
+				dispatch(saveEmail(email));
 				reset({ email: '', createPassword: '', password: '' });
 				navigate('/role-selection');
 			} catch (e) {

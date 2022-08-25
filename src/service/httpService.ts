@@ -1,20 +1,32 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IContactInfoForm } from '../pages/settings-page/components/ContactInfo/ContactInfo';
 import { FormEmail } from 'components/forgotPassword/forgotPassword';
 
 type FormData = {
 	email: string;
 	password: string;
 };
+interface ISignUpResponse {
+	email: string;
+	password: string;
+	googleId: string;
+	id: number;
+}
 
 const BASE_URL = 'http://localhost:3000';
+interface IContactInfoForm {
+	firstName: string;
+	lastName: string;
+	email: string;
+	phone: string;
+	id: number | undefined;
+}
 
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
 	reducerPath: 'auth',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
 	endpoints: build => ({
-		signUp: build.mutation<{ email: string; password: string }, FormData>({
+		signUp: build.mutation<ISignUpResponse, FormData>({
 			query: body => ({
 				url: 'auth/sign-up',
 				method: 'post',
@@ -53,16 +65,15 @@ export const profileApi = createApi({
 	reducerPath: 'profile',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
 	endpoints: build => ({
-		postProfileInfo: build.mutation<{ error: string }, IContactInfoForm>({
-			query: body => ({
-				url: '/contact-info',
+		postProfileInfo: build.mutation<IContactInfoForm, IContactInfoForm>({
+			query: ({ id, email, firstName, lastName, phone }) => ({
+				url: `/contact-info/${id}`,
 				method: 'post',
-				body,
+				body: { email, firstName, lastName, phone },
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
 				},
 			}),
-			//transformResponse: (response: { error: string }, meta, arg) => response,
 		}),
 		postProfile: build.mutation({
 			query: body => ({
