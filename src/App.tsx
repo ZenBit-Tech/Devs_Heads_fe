@@ -16,8 +16,6 @@ const SignUp = lazy(() => import('pages/Signup'));
 
 const Cookies = require('js-cookie');
 
-const RoleSelection = lazy(() => import('./pages/RoleSelection'));
-
 const SignIn = lazy(() => import('pages/SigninPage'));
 
 const ForgotPassword = lazy(() => import('components/forgotPassword/forgotPassword'));
@@ -40,7 +38,7 @@ const App: FC = () => {
 						<Route path="/sign-in" element={<SignIn />} />
 						<Route path="/forgot-passowrd" element={<ForgotPassword />} />
 						<Route path="/sign-up" element={<SignUp />} />
-						<Route path="/role-selection" element={<RoleSelection />} />
+						<Route path="/job-post" element={<JobPostPage />} />
 						<Route path="*" element={<GoogleAuth />} />
 						<Route path="/welcome" element={<WelcomePage />} />
 						<Route path="settings/" element={<SettingsPage />}>
