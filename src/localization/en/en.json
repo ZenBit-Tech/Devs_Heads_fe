@@ -86,7 +86,6 @@
 		"descriptionTitle": "Describe your job",
 		"categoryTitle": "Job Category",
 		"skillsTitle": "Skills",
-		"skillsSubTitle": "You must mark at least 3 skills",
 		"durationTitle": "How long will your work take?",
 		"shortDuration": "Short",
 		"mediumDuration": "Medium",
@@ -97,12 +96,16 @@
 		"HoutlyRateTitle": "Hourly rate",
 		"from": "From",
 		"to": "To",
-		"perHour": "/hour",
 		"buttonTitle": "Create!",
 		"descriptionPlaceholder": "Max. 5000 characters",
-		"titleAlert": "Maximum length is 50 symbols",
+		"titleError": "Maximum length is 50 symbols",
+		"lengthWarning": "Must be at least 6 characters",
+		"descriptionError": "Maximum length is 5000 symbols",
 		"fieldIsRequired": "This field is required",
-		"skillsWarning": "You must mark at least 3 skills",
-		"priceError": "Price must be grater than 0."
+		"skillsError": "You must mark at least 3 skills",
+		"priceError": "Price must be grater than 0.",
+		"error": "Error",
+		"success": "Success",
+		"dataHasBeenSaved": "Your data has been saved"
 	}
 }

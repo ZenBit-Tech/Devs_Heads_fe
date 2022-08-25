@@ -1,4 +1,11 @@
-import { DEFAULT_COLOR, DODGERBLUE_COLOR, WHITE_COLOR } from 'constants/colors';
+import {
+	BLACK_COLOR,
+	DEFAULT_COLOR,
+	DODGERBLUE_COLOR,
+	LIGHTBLUE_COLOR,
+	RED_COLOR,
+	WHITE_COLOR,
+} from 'constants/colors';
 import { LARGE_FONT_SIZE } from 'constants/fonts';
 import styled from 'styled-components';
 
@@ -13,20 +20,8 @@ export const Title = styled.div`
 	font-weight: 500;
 `;
 
-export const StyledTextarea = styled.textarea<{ height: string; width: string }>`
-	width: ${props => props.width};
-	height: ${props => props.height};
-	resize: none;
-`;
-
-export const Category = styled.div`
-	& > select {
-		width: 80%;
-	}
-`;
-
 export const SkillsButtonsBlock = styled.div`
-	max-width: 700px;
+	max-width: 100%;
 `;
 
 export const SkillButton = styled.button<{ selected: boolean }>`
@@ -36,10 +31,6 @@ export const SkillButton = styled.button<{ selected: boolean }>`
 	height: 40px;
 	background-color: ${props => (props.selected ? DODGERBLUE_COLOR : DEFAULT_COLOR)};
 	color: ${props => (props.selected ? WHITE_COLOR : DEFAULT_COLOR)};
-`;
-
-export const CheckBoxLabel = styled.label`
-	padding: 5px;
 `;
 
 export const Li = styled.li`
@@ -55,13 +46,13 @@ export const CreateButton = styled.button`
 	background-color: ${DODGERBLUE_COLOR};
 	color: ${WHITE_COLOR};
 	border-color: ${WHITE_COLOR};
-	margin: 0 auto;
+	margin: 2% auto;
 	text-align: center;
 	&:hover {
-		background-color: #4961eb;
+		background-color: ${LIGHTBLUE_COLOR};
 	}
 	&active {
-		box-shadow: 0 5px #666;
+		box-shadow: 0 5px;
 		transform: translateY(10px);
 	}
 `;
@@ -84,6 +75,12 @@ export const CurrencyColumn = styled.div`
 	}
 `;
 
-export const CheckLabel = styled.label`
-	padding: 2%;
+export const Label = styled.label`
+	width: 170px;
+	margin: 5px;
+	height: 40px;
+`;
+
+export const Span = styled.span<{ value: boolean }>`
+	color: ${props => (props.value ? RED_COLOR : BLACK_COLOR)};
 `;
