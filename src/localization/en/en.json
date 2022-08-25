@@ -18,6 +18,12 @@
 		"email": "Email",
 		"sendButton": "Send"
 	},
+	"ResetPassword": {
+		"newPassword": "New password",
+		"password": "Confirm password",
+		"success": "You have sucessfully logged in",
+		"error": "Invalid password"
+	},
 	"SignUp": {
 		"quickSign": "Quick Sign Up",
 		"buttonGoogle": "Sign Up With Google",

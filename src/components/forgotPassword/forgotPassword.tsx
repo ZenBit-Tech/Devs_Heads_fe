@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -16,7 +16,7 @@ const schema = Yup.object({
 
 const forgotPassword = () => {
 	const [forgot] = useForgotPasswordMutation();
-	const [change, setChange] = useState(true);
+
 	const {
 		handleSubmit,
 		control,
@@ -32,7 +32,6 @@ const forgotPassword = () => {
 		try {
 			await forgot(values).unwrap();
 			reset({ email: '' });
-			setChange(false);
 		} catch (e) {
 			reset({ email: '' });
 			console.log(e);
@@ -41,37 +40,17 @@ const forgotPassword = () => {
 
 	return (
 		<Div>
-			{change ? (
-				<Form onSubmit={handleSubmit(onSubmit)}>
-					<ControlStyle>{`${t('ForgotPassword.email')}`}</ControlStyle>
-					<Controller
-						render={({ field }) => <Input type="email" {...field} />}
-						name="email"
-						control={control}
-						defaultValue=""
-					/>
-					<ErrorP>{errors.email?.message}</ErrorP>
-					<Button type="submit">{`${t('ForgotPassword.sendButton')}`}</Button>
-				</Form>
-			) : (
-				<Form>
-					<ControlStyle>{`${t('SignUp.createPassword')}`}</ControlStyle>
-					<Controller
-						render={() => <Input type="password" />}
-						name="createPassword"
-						// control={control}
-						defaultValue=""
-					/>
-					<ControlStyle>{`${t('SignUp.password')}`}</ControlStyle>
-					<Controller
-						render={() => <Input type="password" />}
-						name="password"
-						// control={control}
-						defaultValue=""
-					/>
-					<Button type="submit">{`${t('SignIn.buttonSignIn')}`}</Button>
-				</Form>
-			)}
+			<Form onSubmit={handleSubmit(onSubmit)}>
+				<ControlStyle>{`${t('ForgotPassword.email')}`}</ControlStyle>
+				<Controller
+					render={({ field }) => <Input type="email" {...field} />}
+					name="email"
+					control={control}
+					defaultValue=""
+				/>
+				<ErrorP>{errors.email?.message}</ErrorP>
+				<Button type="submit">{`${t('ForgotPassword.sendButton')}`}</Button>
+			</Form>
 		</Div>
 	);
 };

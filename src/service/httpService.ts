@@ -12,6 +12,11 @@ interface ISignUpResponse {
 	id: number;
 }
 
+type FormPass = {
+	password: string;
+	token: string;
+};
+
 const BASE_URL = 'http://localhost:3000';
 interface IContactInfoForm {
 	firstName: string;
@@ -56,9 +61,26 @@ export const authApi = createApi({
 				},
 			}),
 		}),
+		resetPassword: build.mutation<{ password: string }, FormPass>({
+			query: body => ({
+				url: 'auth/restore-password',
+				method: 'post',
+				body,
+				mode: 'cors',
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+					'Access-Control-Allow-Origin': '*',
+				},
+			}),
+		}),
 	}),
 });
-export const { useSignUpMutation, useSignInMutation, useForgotPasswordMutation } = authApi;
+export const {
+	useSignUpMutation,
+	useSignInMutation,
+	useForgotPasswordMutation,
+	useResetPasswordMutation,
+} = authApi;
 
 /*TODO when backend is ready*/
 export const profileApi = createApi({

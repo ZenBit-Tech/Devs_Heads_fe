@@ -2,7 +2,6 @@ import React, { FC, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from 'components/Layout/Layout';
 import PrivateRoutes from './hoc/PrivateRoutes';
-import GoogleAuth from './components/GoogleAuth/GoogleAuth';
 import { SettingsPage } from './pages/settings-page/SettingsPage';
 import { ProfileEdit } from './pages/settings-page/components/ProfileEdit/ProfileEdit';
 import { ContactInfo } from './pages/settings-page/components/ContactInfo/ContactInfo';
@@ -23,6 +22,7 @@ const SignIn = lazy(() => import('pages/SigninPage'));
 
 const ForgotPassword = lazy(() => import('components/forgotPassword/forgotPassword'));
 
+const RestorePassword = lazy(() => import('components/restorePassword/restorePassword'));
 const PostJobPage = lazy(() => import('pages/PostJobPage'));
 const JobDescriptionPage = lazy(() => import('pages/JobDescriptionPage'));
 
@@ -43,12 +43,11 @@ const App: FC = () => {
 							{/*here public routes */}
 							<Route path="/sign-in" element={<SignIn />} />
 							<Route path="/forgot-passowrd" element={<ForgotPassword />} />
+							<Route path={'/restore-password/:token'} element={<RestorePassword />} />
 							<Route path="/sign-up" element={<SignUp />} />
 							<Route path="/welcome" element={<WelcomePage />} />
 							<Route path="*" element={<Navigate to="/" />} />
 							<Route path="/role-selection" element={<RoleSelection />} />
-							<Route path="*" element={<GoogleAuth />} />
-							<Route path="welcome" element={<WelcomePage />} />
 							<Route path="post-job" element={<PostJobPage />} />
 							<Route path="post-job/:id" element={<JobDescriptionPage />} />
 							<Route path="settings/" element={<SettingsPage />}>
