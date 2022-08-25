@@ -47,6 +47,7 @@ const App: FC = () => {
 						<Route path="/sign-up" element={<SignUp />} />
 						<Route path="/welcome" element={<WelcomePage />} />
 						<Route path="*" element={<Navigate to="/" />} />
+						<Route path="/role-selection" element={<RoleSelection />} />
 						<Route path="*" element={<GoogleAuth />} />
 						<Route path="welcome" element={<WelcomePage />} />
 						<Route path="settings/" element={<SettingsPage />}>
