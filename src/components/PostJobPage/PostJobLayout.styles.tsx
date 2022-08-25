@@ -1,30 +1,30 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-	border: 1px solid black;
-	border-radius: 20px;
-	margin: 20px;
-	padding: 20px;
+	border: 1px solid ${props => props.theme.colors.black};
+	border-radius: ${props => props.theme.spacing(5)};
+	margin: ${props => props.theme.spacing(5)};
+	padding: ${props => props.theme.spacing(5)};
 `;
 
 export const TitleStyled = styled.p`
-	font-weight: 700;
+	font-weight: ${props => props.theme.font_weight.bold};
 `;
 
 export const DescriptionDataStyled = styled.p`
-	height: 40px;
+	height: ${props => props.theme.spacing(10)};
 	overflow: hidden;
 `;
 
 export const DateStyled = styled.div`
-	width: 200px;
-	height: 35px;
+	width: ${props => props.theme.spacing(40)};
+	height: ${props => props.theme.spacing(8)};
 	display: flex;
 	align-items: center;
-	background-color: gray;
-	color: white;
-	border-radius: 5px;
-	padding-left: 10px;
+	background-color: ${props => props.theme.colors.gray};
+	color: ${props => props.theme.colors.white};
+	border-radius: ${props => props.theme.spacing(1)};
+	padding-left: ${props => props.theme.spacing(3)};
 	margin-left: auto;
 `;
 export const NonPostWrapper = styled.div`
@@ -32,8 +32,8 @@ export const NonPostWrapper = styled.div`
 `;
 
 export const DescriptionStyled = styled.p`
-	font-weight: 700;
-	margin-top: 35px;
+	font-weight: ${props => props.theme.font_weight.bold};
+	margin-top: ${props => props.theme.spacing(9)};
 `;
 
 export const ImageStyled = styled.img`
@@ -41,10 +41,10 @@ export const ImageStyled = styled.img`
 `;
 
 export const ButtonStyled = styled.button`
-	margin-top: 60px;
-	min-width: 150px;
-	border-radius: 25px;
-	height: 40px;
-	background-color: black;
-	color: white;
+	margin-top: ${props => props.theme.spacing(15)};
+	min-width: ${props => props.theme.spacing(38)};
+	border-radius: ${props => props.theme.spacing(6)};
+	height: ${props => props.theme.spacing(10)};
+	background-color: ${props => props.theme.colors.black};
+	color: ${props => props.theme.colors.white};
 `;
