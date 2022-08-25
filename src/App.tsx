@@ -8,7 +8,6 @@ import { ProfileEdit } from './pages/settings-page/components/ProfileEdit/Profil
 import { ContactInfo } from './pages/settings-page/components/ContactInfo/ContactInfo';
 import './App.css';
 
-const SamplePage = lazy(() => import('pages/SamplePage' /* webpackChunkName: "sample-page" */));
 const WelcomePage = lazy(
 	() => import('./pages/WelcomePage/WelcomePage' /* webpackChunkName: "welcome-page" */),
 );
@@ -17,7 +16,7 @@ const SignUp = lazy(() => import('pages/Signup'));
 
 const Cookies = require('js-cookie');
 
-const RegistrationPage = lazy(() => import('./pages/RegistrationPage'));
+const RoleSelection = lazy(() => import('./pages/RoleSelection'));
 
 const SignIn = lazy(() => import('pages/SigninPage'));
 
@@ -37,24 +36,24 @@ const App: FC = () => {
 			<Suspense fallback={<div>Loading...</div>}>
 				<Routes>
 					<Route path="/" element={<Layout />}>
-						<Route element={<PrivateRoutes token={token} />}>
-							{/*here insert your private routes */}
-							<Route path="/registration" element={<RegistrationPage />} />
-						</Route>
 						{/*here public routes */}
-						<Route path="sample" element={<SamplePage />} />
 						<Route path="/sign-in" element={<SignIn />} />
 						<Route path="/forgot-passowrd" element={<ForgotPassword />} />
 						<Route path="/sign-up" element={<SignUp />} />
 						<Route path="/welcome" element={<WelcomePage />} />
 						<Route path="/job-post" element={<JobPostPage />} />
 						<Route path="*" element={<Navigate to="/" />} />
+						<Route path="/role-selection" element={<RoleSelection />} />
 						<Route path="*" element={<GoogleAuth />} />
-						<Route path="welcome" element={<WelcomePage />} />
+						<Route path="/welcome" element={<WelcomePage />} />
 						<Route path="settings/" element={<SettingsPage />}>
 							<Route path="edit-profile" element={<ProfileEdit />} />
 							<Route path="contact-info" element={<ContactInfo />} />
 						</Route>
+						<Route path="*" element={<Navigate to="/" />} />
+					</Route>
+					<Route element={<PrivateRoutes token={token} />}>
+						{/*here insert your private routes */}
 					</Route>
 				</Routes>
 			</Suspense>
