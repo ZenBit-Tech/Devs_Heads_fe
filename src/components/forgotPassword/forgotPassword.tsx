@@ -1,5 +1,4 @@
 import React from 'react';
-// import { useNavigate } from 'react-router-dom';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,7 +16,6 @@ const schema = Yup.object({
 
 const forgotPassword = () => {
 	const [forgot] = useForgotPasswordMutation();
-	// const navigate = useNavigate();
 
 	const {
 		handleSubmit,

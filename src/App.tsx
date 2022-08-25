@@ -27,6 +27,7 @@ const App: FC = () => {
 	Cookies.set('name', 'value');
 	const a = Cookies.get('accessToken'); // TODO delete mock token when sign up/sign in will be completed
 	console.log(Cookies.get('key'));
+	localStorage.setItem('token', 'djeifjerjfioerjforejoirjfore');
 	const token: string | null = localStorage.getItem('token');
 	console.log(a);
 
