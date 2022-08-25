@@ -11,7 +11,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
 	padding: 1% 8% 1% 8%;
-	font-size: 20px;
+	font-size: ${LARGE_FONT_SIZE};
 `;
 
 export const Title = styled.div`

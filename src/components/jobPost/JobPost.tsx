@@ -13,10 +13,10 @@ import {
 import { useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
 import Select from 'react-select';
 import { notification } from 'antd';
 import { useOnDataChange } from 'components/jobPost/hooks/dataChanges';
+import ValidationSchema from 'components/jobPost/validationSchema';
 
 type JobSubmitForm = {
 	title: string;
@@ -32,28 +32,6 @@ const JobPost = () => {
 
 	const { skillsOptions, onSkillsChange, filteredSkills } = useOnDataChange();
 
-	const validationSchema = Yup.object().shape({
-		title: Yup.string()
-			.required(`${t('JobPostPage.fieldIsRequired')}`)
-			.min(6, `${t('JobPostPage.lengthWarning')}`)
-			.max(50, `${t('JobPostPage.titleError')}`),
-		category: Yup.object().shape({
-			label: Yup.string().required(`${t('JobPostPage.fieldIsRequired')}`),
-			value: Yup.string().required(),
-		}),
-		description: Yup.string()
-			.required(`${t('JobPostPage.fieldIsRequired')}`)
-			.min(6, `${t('JobPostPage.lengthWarning')}`)
-			.max(5000, `${t('JobPostPage.titleError')}`),
-		fromHourRate: Yup.number()
-			.required(`${t('JobPostPage.fieldIsRequired')}`)
-			.positive(),
-		toHourRate: Yup.number()
-			.required(`${t('JobPostPage.fieldIsRequired')}`)
-			.positive(),
-		duration: Yup.string().required(`${t('JobPostPage.fieldIsRequired')}`),
-	});
-
 	const [state] = useState({ data: { checked: `${t('JobPostPage.shortMonthDuration')}` } });
 	const {
 		register,
@@ -61,7 +39,7 @@ const JobPost = () => {
 		control,
 		formState: { errors },
 	} = useForm<JobSubmitForm>({
-		resolver: yupResolver(validationSchema),
+		resolver: yupResolver(ValidationSchema),
 	});
 
 	type NotificationType = 'success' | 'error';
@@ -72,8 +50,7 @@ const JobPost = () => {
 		});
 	};
 
-	const onSubmit = (data: JobSubmitForm) => {
-		console.log(JSON.stringify(data, null, 2));
+	const onSubmit = () => {
 		openNotificationWithIcon('success');
 	};
 
@@ -195,8 +172,8 @@ const JobPost = () => {
 										className={`form-check-input`}
 										type="radio"
 										name="duration"
-										value={`${t('JobPostPage.shortMonthDuration')}`}
-										defaultChecked={state.data.checked === `${t('JobPostPage.shortMonthDuration')}`}
+										value={'0-1 month'}
+										defaultChecked={state.data.checked === '0-1 month'}
 									/>
 									{`${t('JobPostPage.shortMonthDuration')}`}
 								</label>
@@ -209,7 +186,7 @@ const JobPost = () => {
 										className={`form-check-input`}
 										type="radio"
 										name="duration"
-										value={`${t('JobPostPage.mediumMonthDuration')}`}
+										value={'1-6 months'}
 									/>
 									{`${t('JobPostPage.mediumMonthDuration')}`}
 								</label>
@@ -222,7 +199,7 @@ const JobPost = () => {
 										className={`form-check-input`}
 										type="radio"
 										name="duration"
-										value={`${t('JobPostPage.longMonthDuration')}`}
+										value={'6+ months'}
 									/>
 									{`${t('JobPostPage.longMonthDuration')}`}
 								</label>
