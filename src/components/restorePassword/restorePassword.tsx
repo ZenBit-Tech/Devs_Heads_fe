@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { notification } from 'antd';
@@ -47,13 +47,15 @@ const resetPassword = () => {
 		});
 	};
 
+	const { token } = useParams<{ token: string }>();
+
 	const onSubmit: SubmitHandler<FormPass> = async values => {
 		const { password } = values;
 		if (values.createPassword !== values.password) {
 			alert('error');
 		} else {
 			try {
-				await setPassword({ password }).unwrap();
+				await setPassword({ password, token: token || '' }).unwrap();
 				alert('success');
 				reset({ createPassword: '', password: '' });
 				navigate('/role-selection');
