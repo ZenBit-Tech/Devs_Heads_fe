@@ -58,7 +58,7 @@ const resetPassword = () => {
 				await setPassword({ password, token: token || '' }).unwrap();
 				alert('success');
 				reset({ createPassword: '', password: '' });
-				navigate('/role-selection');
+				navigate('/sign-in');
 			} catch (e) {
 				reset({ createPassword: '', password: '' });
 				alert('error');

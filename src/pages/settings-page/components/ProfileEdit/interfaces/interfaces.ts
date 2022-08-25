@@ -1,3 +1,5 @@
+import { EnglishLevelEnum } from 'enum/english-level-enum';
+
 export interface IEducationAndExperienceTemplate {
 	info: string;
 	dateStart: Date;
@@ -22,13 +24,37 @@ export interface ISkill {
 	value: boolean;
 }
 export interface IProfileEdit {
-	profilePhoto?: Blob;
+	profilePhoto: string;
 	position: string;
 	category: string;
 	wage: number;
 	skills: ISkill[];
-	englishLevel: string;
+	englishLevel: EnglishLevelEnum;
 	description: string;
 	education: IEducationAndExperienceTemplate[];
 	experience: IEducationAndExperienceTemplate[];
+}
+
+//Backend interfaces
+interface IBackEndExperienceAndEducation {
+	description: string;
+	startDate: Date;
+	endDate: Date;
+}
+interface IBackEndSkill {
+	name: string;
+}
+interface IBackEndCategory {
+	name: string;
+}
+export interface IBackEndProfileEdit {
+	photo: string;
+	position: string;
+	englishLevel: EnglishLevelEnum;
+	price: number;
+	description: string;
+	category: IBackEndCategory;
+	education: IBackEndExperienceAndEducation[];
+	experience: IBackEndExperienceAndEducation[];
+	skills: IBackEndSkill[];
 }

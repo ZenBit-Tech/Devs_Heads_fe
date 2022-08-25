@@ -1,25 +1,8 @@
-import { IProfileEdit } from '../interfaces/interfaces';
+import { IBackEndProfileEdit, IProfileEdit } from '../interfaces/interfaces';
 import { usePostProfileMutation } from 'service/httpService';
 import { notification } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-interface ExperienceAndEducation {
-	message: string;
-	dateStart: Date;
-	dateEnd: Date;
-}
-interface IDataToSend {
-	photo?: Blob;
-	position: string;
-	price: number;
-	englishLevel: string;
-	hour_rate: number;
-	description: string;
-	category: string;
-	educations: ExperienceAndEducation[];
-	experience: ExperienceAndEducation[];
-	profileSkills: string[];
-}
 type NotificationType = 'success' | 'error';
 
 export const useSendData = () => {
@@ -39,26 +22,27 @@ export const useSendData = () => {
 	/*TODO check object with backend*/
 	const sendData = async (data: IProfileEdit) => {
 		try {
-			const newObj: IDataToSend = {
+			const newObj: IBackEndProfileEdit = {
 				position: data.position,
 				price: data.wage,
 				englishLevel: data.englishLevel,
-				hour_rate: data.wage,
 				description: data.description,
-				category: data.category,
-				profileSkills: data.skills.map(s => s.label),
-				educations: data.education.map(e => {
+				category: { name: data.category },
+				skills: data.skills.map(s => {
+					return { name: s.label };
+				}),
+				education: data.education.map(e => {
 					return {
-						message: e.info,
-						dateStart: e.dateStart,
-						dateEnd: e.dateEnd,
+						description: e.info,
+						startDate: e.dateStart,
+						endDate: e.dateEnd,
 					};
 				}),
 				experience: data.experience.map(e => {
 					return {
-						message: e.info,
-						dateStart: e.dateStart,
-						dateEnd: e.dateEnd,
+						description: e.info,
+						startDate: e.dateStart,
+						endDate: e.dateEnd,
 					};
 				}),
 				photo: data.profilePhoto,

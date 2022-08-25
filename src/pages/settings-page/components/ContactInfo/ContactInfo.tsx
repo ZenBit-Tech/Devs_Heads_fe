@@ -11,14 +11,15 @@ import {
 	InputBlock,
 	SaveButton,
 } from './ContactInfo.styles';
-import { useAppSelector } from 'redux/hooks';
 import { usePostProfileInfoMutation } from 'service/httpService';
+import { RootState } from 'redux/store';
+import { useAppSelector } from 'redux/hooks';
 
 export interface IContactInfoForm {
 	firstName: string;
 	lastName: string;
 	email: string;
-	phoneNumber: string;
+	phone: string;
 }
 type NotificationType = 'success' | 'error';
 
@@ -29,21 +30,20 @@ export const ContactInfo = () => {
 
 	const [sendForm] = usePostProfileInfoMutation();
 
-	const userEmail = useAppSelector(() => 'user@email.puthere');
-
+	const { user } = useAppSelector<RootState>(state => state);
+	const userEmail = user.email;
+	const userId = user.id;
 	const {
 		handleSubmit,
 		control,
-		reset,
 		formState: { errors },
-	} = useForm<IContactInfoForm>();
+	} = useForm<IContactInfoForm>({ defaultValues: { email: userEmail } });
 
 	const onSubmit: SubmitHandler<IContactInfoForm> = async data => {
-		await sendForm(data)
+		await sendForm({ ...data, id: userId })
 			.unwrap()
 			.then(() => {
 				openNotificationWithIcon('success');
-				reset();
 			})
 			.catch(() => openNotificationWithIcon('error'));
 	};
@@ -98,7 +98,6 @@ export const ContactInfo = () => {
 					<Controller
 						name="email"
 						control={control}
-						defaultValue={userEmail}
 						render={({ field }) => <StyledInput disabled {...field} />}
 					/>
 				</InputBlock>
@@ -106,7 +105,7 @@ export const ContactInfo = () => {
 					<StyledLabel>{`${t('ContactInfo.phone')}`}</StyledLabel>
 					<div>
 						<Controller
-							name="phoneNumber"
+							name="phone"
 							control={control}
 							defaultValue=""
 							rules={{
@@ -118,9 +117,7 @@ export const ContactInfo = () => {
 							}}
 							render={({ field }) => <StyledInput {...field} />}
 						/>
-						{errors.phoneNumber && (
-							<Alert message={errors.phoneNumber.message} type="warning" showIcon />
-						)}
+						{errors.phone && <Alert message={errors.phone.message} type="warning" showIcon />}
 					</div>
 				</InputBlock>
 				<SaveButton>{`${t('ProfileEdit.saveButton')}`}</SaveButton>
