@@ -7,10 +7,11 @@ import { SettingsPage } from './pages/settings-page/SettingsPage';
 import { ProfileEdit } from './pages/settings-page/components/ProfileEdit/ProfileEdit';
 import { ContactInfo } from './pages/settings-page/components/ContactInfo/ContactInfo';
 import './App.css';
+import GlobalStyle from 'config/GlobalStyle';
+import { ThemeProvider } from 'styled-components';
+import { theme } from 'config/theme';
 
-const WelcomePage = lazy(
-	() => import('./pages/WelcomePage/WelcomePage' /* webpackChunkName: "welcome-page" */),
-);
+const WelcomePage = lazy(() => import('./pages/WelcomePage/WelcomePage'));
 
 const SignUp = lazy(() => import('pages/Signup'));
 
@@ -22,6 +23,9 @@ const SignIn = lazy(() => import('pages/SigninPage'));
 
 const ForgotPassword = lazy(() => import('components/forgotPassword/forgotPassword'));
 
+const PostJobPage = lazy(() => import('pages/PostJobPage'));
+const JobDescriptionPage = lazy(() => import('pages/JobDescriptionPage'));
+
 const App: FC = () => {
 	Cookies.set('name', 'value');
 	const a = Cookies.get('accessToken'); // TODO delete mock token when sign up/sign in will be completed
@@ -31,27 +35,34 @@ const App: FC = () => {
 
 	return (
 		<>
-			<Suspense fallback={<div>Loading...</div>}>
-				<Routes>
-					<Route path="/" element={<Layout />}>
-						{/*here public routes */}
-						<Route path="/sign-in" element={<SignIn />} />
-						<Route path="/forgot-passowrd" element={<ForgotPassword />} />
-						<Route path="/sign-up" element={<SignUp />} />
-						<Route path="/role-selection" element={<RoleSelection />} />
-						<Route path="*" element={<GoogleAuth />} />
-						<Route path="/welcome" element={<WelcomePage />} />
-						<Route path="settings/" element={<SettingsPage />}>
-							<Route path="edit-profile" element={<ProfileEdit />} />
-							<Route path="contact-info" element={<ContactInfo />} />
+			<ThemeProvider theme={theme}>
+				<GlobalStyle />
+				<Suspense fallback={<div>Loading...</div>}>
+					<Routes>
+						<Route path="/" element={<Layout />}>
+							{/*here public routes */}
+							<Route path="/sign-in" element={<SignIn />} />
+							<Route path="/forgot-passowrd" element={<ForgotPassword />} />
+							<Route path="/sign-up" element={<SignUp />} />
+							<Route path="/welcome" element={<WelcomePage />} />
+							<Route path="*" element={<Navigate to="/" />} />
+							<Route path="/role-selection" element={<RoleSelection />} />
+							<Route path="*" element={<GoogleAuth />} />
+							<Route path="welcome" element={<WelcomePage />} />
+							<Route path="post-job" element={<PostJobPage />} />
+							<Route path="post-job/:id" element={<JobDescriptionPage />} />
+							<Route path="settings/" element={<SettingsPage />}>
+								<Route path="edit-profile" element={<ProfileEdit />} />
+								<Route path="contact-info" element={<ContactInfo />} />
+							</Route>
+							<Route path="*" element={<Navigate to="/" />} />
 						</Route>
-						<Route path="*" element={<Navigate to="/" />} />
-					</Route>
-					<Route element={<PrivateRoutes token={token} />}>
-						{/*here insert your private routes */}
-					</Route>
-				</Routes>
-			</Suspense>
+						<Route element={<PrivateRoutes token={token} />}>
+							{/*here insert your private routes */}
+						</Route>
+					</Routes>
+				</Suspense>
+			</ThemeProvider>
 		</>
 	);
 };
