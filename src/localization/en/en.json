@@ -100,5 +100,11 @@
 		"title": "Your Postings",
 		"description": "No active job posts",
 		"button": "Post a Job"
+	},
+	"PostDetailPage": {
+		"skills": "Skills",
+		"rate": "Hourly Rate",
+		"project": "Project length",
+		"skillsTechnik": "Technical Writing Services"
 	}
 }
