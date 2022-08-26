@@ -105,6 +105,7 @@
 		"skills": "Skills",
 		"rate": "Hourly Rate",
 		"project": "Project length",
-		"skillsTechnik": "Technical Writing Services"
+		"skillsTechnik": "Technical Writing Services",
+		"category": "Category /"
 	}
 }

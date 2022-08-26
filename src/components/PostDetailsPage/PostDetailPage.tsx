@@ -34,7 +34,9 @@ function DescriptionPage() {
 			{hardCodeData.map(item => (
 				<div key={item.id}>
 					<TitleStyled>{item.title}</TitleStyled>
-					<CategoryStyled color={'black'}>Category/ {item.category}</CategoryStyled>
+					<CategoryStyled color={'black'}>
+						{`${t('PostDetailPage.category')}`} {item.category}
+					</CategoryStyled>
 					<DescriptionStyled>{item.description}</DescriptionStyled>
 					<BorderStyled></BorderStyled>
 					<WrapperSkillsStyled>
