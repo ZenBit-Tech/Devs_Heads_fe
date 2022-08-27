@@ -15,7 +15,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Select from 'react-select';
 import { notification } from 'antd';
-import { useOnDataChange } from 'components/jobPost/dataChanges';
+import { useOnDataChange, selection } from 'components/jobPost/dataChanges';
 import ValidationSchema from 'components/jobPost/validationSchema';
 
 type JobSubmitForm = {
@@ -98,18 +98,7 @@ const JobPost = () => {
 							return (
 								<Select
 									{...field}
-									options={[
-										{ value: 'Legal', label: 'Legal' },
-										{ value: 'IT', label: 'IT' },
-										{ value: 'Sales', label: 'Sales' },
-										{ value: 'Finance', label: 'Finance' },
-										{ value: 'Construction', label: 'Construction' },
-										{ value: 'Accounting', label: 'Accounting' },
-										{ value: 'Design', label: 'Design' },
-										{ value: 'Security', label: 'Security' },
-										{ value: 'Healthcare', label: 'Healthcare' },
-										{ value: 'Marketing', label: 'Marketing' },
-									]}
+									options={selection}
 									className={`${errors.category ? 'is-invalid' : ''}`}
 								/>
 							);

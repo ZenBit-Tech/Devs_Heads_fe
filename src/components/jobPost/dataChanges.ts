@@ -1,6 +1,19 @@
 import { useState } from 'react';
 import { ISkill } from 'components/jobPost/interfaces';
 
+export const selection = [
+	{ value: 'Legal', label: 'Legal' },
+	{ value: 'IT', label: 'IT' },
+	{ value: 'Sales', label: 'Sales' },
+	{ value: 'Finance', label: 'Finance' },
+	{ value: 'Construction', label: 'Construction' },
+	{ value: 'Accounting', label: 'Accounting' },
+	{ value: 'Design', label: 'Design' },
+	{ value: 'Security', label: 'Security' },
+	{ value: 'Healthcare', label: 'Healthcare' },
+	{ value: 'Marketing', label: 'Marketing' },
+];
+
 export const skillsMock = [
 	{ label: 'Business analysis', value: false },
 	{ label: 'Consulting', value: false },
