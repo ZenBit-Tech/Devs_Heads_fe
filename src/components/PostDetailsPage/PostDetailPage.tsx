@@ -49,7 +49,7 @@ function DescriptionPage() {
 					</CategorySkillsBlock>
 					<CategorySkillsBlock>
 						<CategoryStyled>{`${t('PostDetailPage.project')}`}</CategoryStyled>
-						<Checkbox>{post.jobDuration}</Checkbox>
+						<Checkbox defaultChecked>{post.jobDuration}</Checkbox>
 					</CategorySkillsBlock>
 				</WrapperSkillsStyled>
 			</Wrapper>
