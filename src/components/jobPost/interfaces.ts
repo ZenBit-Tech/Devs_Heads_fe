@@ -1,12 +1,39 @@
 export interface ISkill {
-	label: string;
+	name: string;
 	value: boolean;
 }
 export interface IJobPost {
 	title: string;
 	category: string;
 	duration: string;
-	from_hour_rate: number;
-	to_hour_rate: number;
+	fromHourRate: number;
+	toHourRate: number;
 	description: string;
+}
+
+export type JobSubmitForm = {
+	title: string;
+	category: { label: string; value: string };
+	fromHourRate: number;
+	toHourRate: number;
+	description: string;
+	duration: string;
+	skills: { name: string }[];
+};
+
+interface ISkillBE {
+	name: string;
+}
+interface ICategoryBE {
+	name: string;
+}
+
+export interface IJobPostBE {
+	jobTitle: string;
+	jobCategory: ICategoryBE;
+	jobDuration: string;
+	fromHourRate: number;
+	toHourRate: number;
+	jobDescription: string;
+	jobSkills: ISkillBE[];
 }
