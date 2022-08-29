@@ -27,7 +27,7 @@ function DescriptionPage() {
 	} else if (isSuccess) {
 		content = (
 			<Wrapper>
-				<TitleStyled>{post.title}</TitleStyled>
+				<TitleStyled>{post.jobTitle}</TitleStyled>
 				<CategoryStyled color={'black'}>
 					{`${t('PostDetailPage.category')}`} {post.jobCategory.name}
 				</CategoryStyled>
@@ -49,7 +49,7 @@ function DescriptionPage() {
 					</CategorySkillsBlock>
 					<CategorySkillsBlock>
 						<CategoryStyled>{`${t('PostDetailPage.project')}`}</CategoryStyled>
-						<Checkbox>{post.jobDuration}</Checkbox>
+						<Checkbox defaultChecked>{post.jobDuration}</Checkbox>
 					</CategorySkillsBlock>
 				</WrapperSkillsStyled>
 			</Wrapper>

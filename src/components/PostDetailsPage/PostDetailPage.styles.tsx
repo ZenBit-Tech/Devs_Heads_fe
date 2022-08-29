@@ -17,7 +17,7 @@ export const Wrapper = styled.div`
 export const CategoryStyled = styled.div`
 	border: 2px solid ${props => props.color || props.theme.colors.gray};
 	border-radius: ${props => props.theme.spacing(2)};
-	width: ${props => props.theme.spacing(40)};
+	width: ${props => props.theme.spacing(51)};
 	padding: ${props => props.theme.spacing(3)} ${props => props.theme.spacing(5)};
 	height: ${props => props.theme.spacing(12)};
 	margin-bottom: ${props => props.theme.spacing(8)};
