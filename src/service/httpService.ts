@@ -110,3 +110,22 @@ export const profileApi = createApi({
 	}),
 });
 export const { usePostProfileInfoMutation, usePostProfileMutation } = profileApi;
+
+export const jobPostApi = createApi({
+	reducerPath: 'jobPost',
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	endpoints: build => ({
+		postJob: build.mutation({
+			query: body => ({
+				url: '/jobPost',
+				method: 'POST',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
+	}),
+});
+
+export const { usePostJobMutation } = jobPostApi;
