@@ -125,7 +125,10 @@ export const jobPostApi = createApi({
 				},
 			}),
 		}),
+		getJobsDetail: build.query({
+			query: id => `/jobPost/${id}`,
+		}),
 	}),
 });
 
-export const { usePostJobMutation } = jobPostApi;
+export const { usePostJobMutation, useGetJobsDetailQuery } = jobPostApi;
