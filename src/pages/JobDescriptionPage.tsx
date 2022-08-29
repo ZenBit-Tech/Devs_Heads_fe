@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
+import PostDetailPageLayout from 'components/PostDetailsPage/PostDetailPage';
 
 const JobDescriptionPage: FC = () => {
-	return <div>JobDescriptionPage</div>;
+	return <PostDetailPageLayout />;
 };
-
 export default JobDescriptionPage;
