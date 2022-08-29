@@ -115,6 +115,7 @@
 		"skillsError": "You must mark at least 3 skills",
 		"error": "Error",
 		"success": "Success",
+		"someErrorOccurred": "Some error occurred",
 		"dataHasBeenSaved": "Your data has been saved"
 	},
 	"PostJobPage": {

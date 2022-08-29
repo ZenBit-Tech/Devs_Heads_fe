@@ -14,24 +14,13 @@ import { useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Select from 'react-select';
-import { notification } from 'antd';
 import { useOnDataChange, selection } from 'components/jobPost/dataChanges';
 import ValidationSchema from 'components/jobPost/validationSchema';
-
-type JobSubmitForm = {
-	title: string;
-	category: { label: string; value: string };
-	fromHourRate: number;
-	toHourRate: number;
-	description: string;
-	duration: string;
-};
+import { JobSubmitForm } from 'components/jobPost/interfaces';
 
 const JobPost = () => {
 	const { t } = useTranslation();
-
-	const { skillsOptions, onSkillsChange, filteredSkills } = useOnDataChange();
-
+	const { skillsOptions, onSkillsChange, skills, onSubmit } = useOnDataChange();
 	const [state] = useState({ data: { checked: `${t('JobPostPage.shortMonthDuration')}` } });
 	const {
 		register,
@@ -42,35 +31,23 @@ const JobPost = () => {
 		resolver: yupResolver(ValidationSchema),
 	});
 
-	type NotificationType = 'success' | 'error';
-	const openNotificationWithIcon = (type: NotificationType) => {
-		notification[type]({
-			message: type === 'success' && `${t('JobPostPage.success')}`,
-			description: type === 'success' && `${t('JobPostPage.dataHasBeenSaved')}`,
-		});
-	};
-
-	const onSubmit = () => {
-		openNotificationWithIcon('success');
-	};
-
 	const optionButtons = useMemo(() => {
 		return skillsOptions.map((e, i) => (
-			<Label key={e.label} className={`btn btn-${e.value ? 'primary' : 'light'}`}>
+			<Label key={e.name} className={`btn btn-${e.value ? 'primary' : 'light'}`}>
 				<input
 					type="checkbox"
 					checked={e.value}
 					autoComplete="off"
 					onChange={() => onSkillsChange(i)}
 				/>
-				{e.label}
+				{e.name}
 			</Label>
 		));
 	}, [skillsOptions]);
 
 	const [redColor, setRedColor] = useState(false);
 	const onSkillsTrue = () => {
-		if (filteredSkills.length < 3) {
+		if (skills.length < 3) {
 			setRedColor(true);
 		} else {
 			setRedColor(false);
@@ -105,7 +82,7 @@ const JobPost = () => {
 						}}
 					/>
 					{errors.category && (
-						<div className="invalid-feedback">{errors.category.label?.message}</div>
+						<div className="invalid-feedback">{errors.category.value?.message}</div>
 					)}
 				</Column>
 				<Column>

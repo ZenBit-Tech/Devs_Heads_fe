@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ISkill } from 'components/jobPost/interfaces';
+import { ISkill, JobSubmitForm } from 'components/jobPost/interfaces';
+import { useSendData } from 'components/jobPost/dataSend';
 
 export const selection = [
 	{ value: 'Legal', label: 'Legal' },
@@ -15,36 +16,42 @@ export const selection = [
 ];
 
 export const skillsMock = [
-	{ label: 'Business analysis', value: false },
-	{ label: 'Consulting', value: false },
-	{ label: 'Estimate', value: false },
-	{ label: 'Recruiting', value: false },
-	{ label: 'SMM', value: false },
-	{ label: 'Copyrighting', value: false },
-	{ label: 'UI/UX', value: false },
-	{ label: 'Administration', value: false },
-	{ label: 'Taxation', value: false },
-	{ label: 'Coaching', value: false },
-	{ label: 'Full stack', value: false },
-	{ label: 'Quality control', value: false },
-	{ label: 'Communication', value: false },
-	{ label: 'JavaScript', value: false },
-	{ label: 'QA Automation', value: false },
-	{ label: 'ReactJS', value: false },
-	{ label: 'Python', value: false },
-	{ label: 'Game dev', value: false },
-	{ label: 'Flutter', value: false },
-	{ label: 'Node.js', value: false },
-	{ label: 'DevOps', value: false },
-	{ label: 'Scrum Master', value: false },
-	{ label: 'Agile Coach', value: false },
-	{ label: 'Project Manager', value: false },
+	{ name: 'Business analysis', value: false },
+	{ name: 'Consulting', value: false },
+	{ name: 'Estimate', value: false },
+	{ name: 'Recruiting', value: false },
+	{ name: 'SMM', value: false },
+	{ name: 'Copyrighting', value: false },
+	{ name: 'UI/UX', value: false },
+	{ name: 'Administration', value: false },
+	{ name: 'Taxation', value: false },
+	{ name: 'Coaching', value: false },
+	{ name: 'Full stack', value: false },
+	{ name: 'Quality control', value: false },
+	{ name: 'Communication', value: false },
+	{ name: 'JavaScript', value: false },
+	{ name: 'QA Automation', value: false },
+	{ name: 'ReactJS', value: false },
+	{ name: 'Python', value: false },
+	{ name: 'Game dev', value: false },
+	{ name: 'Flutter', value: false },
+	{ name: 'Node.js', value: false },
+	{ name: 'DevOps', value: false },
+	{ name: 'Scrum Master', value: false },
+	{ name: 'Agile Coach', value: false },
+	{ name: 'Project Manager', value: false },
 ];
 
 export const useOnDataChange = () => {
+	const { sendData } = useSendData();
+
 	const [skillsOptions, setSkillsOptions] = useState<ISkill[]>(skillsMock);
 
 	const filteredSkills = skillsOptions.filter(s => s.value);
+
+	const skills = filteredSkills.map(({ value, ...rest }) => {
+		return rest;
+	});
 
 	const onSkillsChange = (index: number) => {
 		setSkillsOptions(prevState => {
@@ -57,9 +64,23 @@ export const useOnDataChange = () => {
 		});
 	};
 
+	const onSubmit = async (data: JobSubmitForm) => {
+		if (skills.length >= 3) {
+			const newData = {
+				...data,
+				skills,
+			};
+			console.log(newData);
+			sendData(newData);
+		} else {
+			return;
+		}
+	};
+
 	return {
 		skillsOptions,
 		onSkillsChange,
-		filteredSkills,
+		skills,
+		onSubmit,
 	};
 };
