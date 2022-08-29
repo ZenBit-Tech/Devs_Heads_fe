@@ -27,7 +27,7 @@ function DescriptionPage() {
 	} else if (isSuccess) {
 		content = (
 			<Wrapper>
-				<TitleStyled>{post.title}</TitleStyled>
+				<TitleStyled>{post.jobTitle}</TitleStyled>
 				<CategoryStyled color={'black'}>
 					{`${t('PostDetailPage.category')}`} {post.jobCategory.name}
 				</CategoryStyled>
