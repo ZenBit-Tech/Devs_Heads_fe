@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -53,6 +53,9 @@ const signIn = () => {
 			message: type === 'success' ? `${t('SignIn.success')}` : `${t('SignIn.error')}`,
 		});
 	};
+
+	const { token } = useParams<{ token: string }>();
+	localStorage.setItem('token', token || '');
 
 	const onSubmit: SubmitHandler<FormData> = async values => {
 		const { email, password } = values;

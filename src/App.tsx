@@ -41,15 +41,14 @@ const App: FC = () => {
 					<Routes>
 						<Route path="/" element={<Layout />}>
 							{/*here public routes */}
-							<Route path="/sign-in" element={<SignIn />} />
-							<Route path="/forgot-passowrd" element={<ForgotPassword />} />
-							<Route path={'/restore-password/:token'} element={<RestorePassword />} />
 							<Route path="/sign-up" element={<SignUp />} />
-							<Route path="/welcome" element={<WelcomePage />} />
-							<Route path="*" element={<Navigate to="/" />} />
+							<Route path="/sign-in" element={<SignIn />} />
 							<Route path="/role-selection" element={<RoleSelection />} />
-							<Route path="post-job" element={<PostJobPage />} />
+							<Route path="/welcome" element={<WelcomePage />} />
+							<Route path="/forgot-password" element={<ForgotPassword />} />
+							<Route path={'/restore-password/:token'} element={<RestorePassword />} />
 							<Route path="post-job/:id" element={<JobDescriptionPage />} />
+							<Route path="post-job" element={<PostJobPage />} />
 							<Route path="settings/" element={<SettingsPage />}>
 								<Route path="edit-profile" element={<ProfileEdit />} />
 								<Route path="contact-info" element={<ContactInfo />} />
