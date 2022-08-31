@@ -19,6 +19,7 @@ export type JobSubmitForm = {
 	description: string;
 	duration: string;
 	skills: { name: string }[];
+	userId: number | undefined;
 };
 
 interface ISkillBE {
@@ -36,4 +37,5 @@ export interface IJobPostBE {
 	toHourRate: number;
 	jobDescription: string;
 	jobSkills: ISkillBE[];
+	userId: number | undefined;
 }
