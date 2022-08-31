@@ -81,3 +81,23 @@ export const HourRateStyled = styled.div`
 	text-align: center;
 	padding: ${props => props.theme.spacing(3)};
 `;
+
+export const SendProposal = styled.button`
+	width: 140px;
+	height: 50px;
+	border-radius: 10px;
+	margin-bottom: 4%;
+	margin-left: 30%;
+	text-align: center;
+	@media (max-width: 800px) {
+		margin-left: auto;
+	}
+`;
+export const Column = styled.div`
+	display: flex;
+	float: left;
+	width: 50%;
+	@media (max-width: 800px) {
+		width: 100%;
+	}
+`;
