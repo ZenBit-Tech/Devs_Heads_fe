@@ -101,6 +101,7 @@
 		"descriptionTitle": "Describe your job",
 		"categoryTitle": "Job Category",
 		"skillsTitle": "Skills",
+		"hourTitle":"Hourly Rate",
 		"durationTitle": "How long will your work take?",
 		"shortDuration": "Short",
 		"mediumDuration": "Medium",
