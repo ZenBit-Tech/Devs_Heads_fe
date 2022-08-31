@@ -84,3 +84,7 @@ export const Label = styled.label`
 export const Span = styled.span<{ value: boolean }>`
 	color: ${props => (props.value ? RED_COLOR : BLACK_COLOR)};
 `;
+
+export const P = styled.p`
+	color: ${RED_COLOR};
+`;
