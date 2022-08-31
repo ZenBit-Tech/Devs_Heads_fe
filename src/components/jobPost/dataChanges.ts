@@ -51,9 +51,7 @@ export const useOnDataChange = () => {
 	const navigate = useNavigate();
 
 	const { user } = useAppSelector<RootState>(state => state);
-	const userEmail = user.email;
 	const userId = user.id;
-	console.log(userId);
 
 	const [skillsOptions, setSkillsOptions] = useState<ISkill[]>(skillsMock);
 
@@ -81,7 +79,6 @@ export const useOnDataChange = () => {
 				userId,
 				skills,
 			};
-			console.log(newData);
 			sendData(newData);
 			navigate('/post-job');
 		} else {
