@@ -128,6 +128,17 @@
 		"rate": "Hourly Rate",
 		"project": "Project length",
 		"skillsTechnik": "Technical Writing Services",
-		"category": "Category /"
+		"category": "Category /",
+		"hourTitle": "Your Hourly Rate",
+		"CVTitle": "Cover letter",
+		"sendBtn": "Send",
+		"sendPrpBtn": "Send proposal",
+		"loading": "Loading...",
+		"fieldIsRequired": "This field is required!",
+		"error": "Error",
+		"success": "Success",
+		"someErrorOccurred": "Some error occurred.",
+		"proposalSent": "Your proposal has been sent successfully!",
+		"priceError": "This field must be a positive number"
 	}
 }

@@ -8,29 +8,51 @@ import {
 	SkillsItem,
 	HourRateStyled,
 	WrapperSkillsStyled,
+	SendProposal,
+	Column,
 } from './PostDetailPage.styles';
 import { useTranslation } from 'react-i18next';
 import { Checkbox } from 'antd';
 import { useParams } from 'react-router-dom';
 import { useGetJobsDetailQuery } from 'service/httpService';
-import { Suspense } from 'react';
-import { JobSkills } from './interfaces';
+import { Suspense, useState } from 'react';
+import { JobSkills } from 'components/PostDetailsPage/interfaces';
+import Modal from 'components/PostDetailsPage/components/Modal';
 
 function DescriptionPage() {
 	const { t } = useTranslation();
 	const params = useParams();
+
+	const [disable, setDisable] = useState(false);
+
+	const useModal = () => {
+		const [isShown, setIsShown] = useState<boolean>(false);
+		const toggle = () => setIsShown(!isShown);
+		return {
+			isShown,
+			toggle,
+		};
+	};
+
+	const { isShown, toggle } = useModal();
 	const { data: post, isFetching, isSuccess } = useGetJobsDetailQuery(params.id);
 
 	let content;
 	if (isFetching) {
-		content = <Suspense fallback={<div>Loading...</div>}></Suspense>;
+		content = <Suspense fallback={<div>{`${t('PostDetailPage.loading')}`}</div>}></Suspense>;
 	} else if (isSuccess) {
 		content = (
 			<Wrapper>
 				<TitleStyled>{post.jobTitle}</TitleStyled>
-				<CategoryStyled color={'black'}>
-					{`${t('PostDetailPage.category')}`} {post.jobCategory.name}
-				</CategoryStyled>
+				<Column>
+					<CategoryStyled color={'black'}>
+						{`${t('PostDetailPage.category')}`} {post.jobCategory.name}
+					</CategoryStyled>
+				</Column>
+				<SendProposal onClick={toggle} className="btn btn-success" disabled={disable}>
+					{`${t('PostDetailPage.sendPrpBtn')}`}
+				</SendProposal>
+				<Modal isShown={isShown} hide={toggle} setDisable={setDisable} />
 				<DescriptionStyled>{post.jobDescription}</DescriptionStyled>
 				<BorderStyled></BorderStyled>
 				<WrapperSkillsStyled>
