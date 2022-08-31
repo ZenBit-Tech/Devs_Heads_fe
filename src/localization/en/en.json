@@ -139,6 +139,8 @@
 		"success": "Success",
 		"someErrorOccurred": "Some error occurred.",
 		"proposalSent": "Your proposal has been sent successfully!",
-		"priceError": "This field must be a positive number"
+		"priceError": "This field must be a positive number!",
+		"minLength": "Must be at least 6 characters",
+		"maxLength": "Maximum length is 50 symbols"
 	}
 }

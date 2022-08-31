@@ -31,10 +31,11 @@ type ProposalForm = {
 type NotificationType = 'success' | 'error';
 
 const Schema = Yup.object().shape({
-	price: Yup.number()
+	price: Yup.number().required().positive(),
+	message: Yup.string()
 		.required(`${t('PostDetailPage.fieldIsRequired')}`)
-		.positive(),
-	message: Yup.string().required(`${t('PostDetailPage.fieldIsRequired')}`),
+		.min(6, `${t('PostDetailPage.minLength')}`)
+		.max(50, `${t('PostDetailPage.maxLength')}`),
 });
 
 export const Modal: FunctionComponent<ModalProps> = ({ isShown, hide, setDisable }) => {
