@@ -12,12 +12,16 @@ interface ISignUpResponse {
 	id: number;
 }
 
+interface ISignInResponse {
+	token: string;
+	userId: number;
+}
+
 type FormPass = {
 	password: string;
 	token: string;
 };
 
-const BASE_URL = 'http://localhost:3000';
 interface IContactInfoForm {
 	firstName: string;
 	lastName: string;
@@ -26,6 +30,7 @@ interface IContactInfoForm {
 	id: number | undefined;
 }
 
+const BASE_URL = 'http://localhost:3000';
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
 	reducerPath: 'auth',
@@ -41,7 +46,7 @@ export const authApi = createApi({
 				},
 			}),
 		}),
-		signIn: build.mutation<{ email: string; password: string }, FormData>({
+		signIn: build.mutation<ISignInResponse, FormData>({
 			query: body => ({
 				url: 'auth/sign-in',
 				method: 'post',
@@ -136,7 +141,7 @@ export const jobPostApi = createApi({
 			query: id => `/jobPost/${id}`,
 		}),
 		getPostJob: build.query({
-			query: id => `/jobPost/user/${id}`,
+			query: email => `/jobPost/user/${email}`,
 		}),
 	}),
 });

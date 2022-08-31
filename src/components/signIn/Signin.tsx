@@ -19,7 +19,7 @@ import {
 } from './Signin.styles';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'redux/hooks';
-import { saveEmail } from 'redux/reducers/userSlice';
+import { saveEmail, saveUserId } from 'redux/reducers/userSlice';
 import { useSignInMutation } from 'service/httpService';
 
 export type FormData = {
@@ -61,7 +61,9 @@ const signIn = () => {
 		const { email, password } = values;
 
 		try {
-			await signIn({ email, password }).unwrap();
+			const res = await signIn({ email, password }).unwrap();
+			dispatch(saveUserId(res.userId));
+			console.log(res.userId);
 			dispatch(saveEmail(values.email));
 			alert('success');
 			reset({ email: '', password: '' });

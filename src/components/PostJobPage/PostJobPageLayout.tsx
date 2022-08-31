@@ -18,8 +18,9 @@ import { useGetPostJobQuery } from 'service/httpService';
 const PostJobPageLayout: FC = () => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
-	const currentUser = useAppSelector(state => state.user.id);
 	const [hasPublished, setPublished] = useState(false);
+	const currentUser = useAppSelector(state => state.user.id);
+	console.log(currentUser);
 	const { data: post } = useGetPostJobQuery(currentUser);
 
 	useEffect(() => {
