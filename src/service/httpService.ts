@@ -132,3 +132,25 @@ export const jobPostApi = createApi({
 });
 
 export const { usePostJobMutation, useGetJobsDetailQuery } = jobPostApi;
+
+export const proposalPostApi = createApi({
+	reducerPath: 'jobProposal',
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	endpoints: build => ({
+		postProposal: build.mutation({
+			query: body => ({
+				url: '/jobProposal',
+				method: 'POST',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
+		getProposalDetail: build.query({
+			query: proposalId => `/jobProposal/proposal/${proposalId.userId}/${proposalId.jobId}`,
+		}),
+	}),
+});
+
+export const { usePostProposalMutation, useGetProposalDetailQuery } = proposalPostApi;

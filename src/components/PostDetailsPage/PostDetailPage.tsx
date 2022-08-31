@@ -14,15 +14,15 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Checkbox } from 'antd';
 import { useParams } from 'react-router-dom';
-import { useGetJobsDetailQuery } from 'service/httpService';
-import { Suspense, useState } from 'react';
+import { useGetJobsDetailQuery, useGetProposalDetailQuery } from 'service/httpService';
+import { Suspense, useEffect, useState } from 'react';
 import { JobSkills } from 'components/PostDetailsPage/interfaces';
 import Modal from 'components/PostDetailsPage/components/Modal';
 
 function DescriptionPage() {
 	const { t } = useTranslation();
 	const params = useParams();
-
+	const userId = JSON.parse(localStorage.getItem('userId') || '{}');
 	const [disable, setDisable] = useState(false);
 
 	const useModal = () => {
@@ -36,6 +36,25 @@ function DescriptionPage() {
 
 	const { isShown, toggle } = useModal();
 	const { data: post, isFetching, isSuccess } = useGetJobsDetailQuery(params.id);
+
+	const proposalId = {
+		userId: userId.userId || userId.id,
+		jobId: Number(params.id),
+	};
+	const { data: id, isLoading, isError } = useGetProposalDetailQuery(proposalId);
+
+	useEffect(() => {
+		const buttonDisable = () => {
+			if (isLoading) {
+				return <Suspense fallback={<div>{`${t('PostDetailPage.loading')}`}</div>}></Suspense>;
+			} else if (isError) {
+				setDisable(false);
+			} else if (id) {
+				setDisable(true);
+			}
+		};
+		buttonDisable();
+	}, [id]);
 
 	let content;
 	if (isFetching) {
@@ -52,7 +71,12 @@ function DescriptionPage() {
 				<SendProposal onClick={toggle} className="btn btn-success" disabled={disable}>
 					{`${t('PostDetailPage.sendPrpBtn')}`}
 				</SendProposal>
-				<Modal isShown={isShown} hide={toggle} setDisable={setDisable} />
+				<Modal
+					isShown={isShown}
+					hide={toggle}
+					setDisable={setDisable}
+					jobPostId={Number(params.id)}
+				/>
 				<DescriptionStyled>{post.jobDescription}</DescriptionStyled>
 				<BorderStyled></BorderStyled>
 				<WrapperSkillsStyled>
