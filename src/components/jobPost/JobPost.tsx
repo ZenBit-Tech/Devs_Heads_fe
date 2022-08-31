@@ -9,6 +9,7 @@ import {
 	SkillsButtonsBlock,
 	Label,
 	Span,
+	P,
 } from './JobPost.styles';
 import { useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -64,7 +65,7 @@ const JobPost = () => {
 						{...register('title')}
 						className={`form-control ${errors.title ? 'is-invalid' : ''}`}
 					/>
-					<div className="invalid-feedback">{errors.title?.message}</div>
+					{errors.title && <P>{errors.title?.message}</P>}
 				</div>
 				<Column>
 					<Title>{`${t('JobPostPage.categoryTitle')}`}</Title>
@@ -81,9 +82,7 @@ const JobPost = () => {
 							);
 						}}
 					/>
-					{errors.category && (
-						<div className="invalid-feedback">{errors.category.value?.message}</div>
-					)}
+					{errors.category && <P>{errors.category.value?.message}</P>}
 				</Column>
 				<Column>
 					<div>
@@ -108,6 +107,7 @@ const JobPost = () => {
 									className={`form-control ${errors.fromHourRate ? 'is-invalid' : ''}`}
 								/>
 							</div>
+							{errors.fromHourRate && <P>{`${t('JobPostPage.priceError')}`}</P>}
 						</CurrencyColumn>
 						<CurrencyColumn>
 							<label>To</label>
@@ -119,6 +119,7 @@ const JobPost = () => {
 									className={`form-control ${errors.toHourRate ? 'is-invalid' : ''}`}
 								/>
 							</div>
+							{errors.toHourRate && <P>{`${t('JobPostPage.priceError')}`}</P>}
 						</CurrencyColumn>
 					</div>
 					<div>
@@ -180,7 +181,7 @@ const JobPost = () => {
 						{...register('description')}
 						className={`form-control ${errors.description ? 'is-invalid' : ''}`}
 					/>
-					<div className="invalid-feedback">{errors.description?.message}</div>
+					{errors.description && <P>{errors.description?.message}</P>}
 				</div>
 				<div style={{ display: 'flex' }}>
 					<CreateButton type="submit" onClick={onSkillsTrue}>{`${t(
