@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { ISkill, JobSubmitForm } from 'components/jobPost/interfaces';
 import { useSendData } from 'components/jobPost/dataSend';
+import { useAppSelector } from 'redux/hooks';
+import { useNavigate } from 'react-router-dom';
+import { RootState } from 'redux/store';
 
 export const selection = [
 	{ value: 'Legal', label: 'Legal' },
@@ -45,6 +48,11 @@ export const skillsMock = [
 export const useOnDataChange = () => {
 	const { sendData } = useSendData();
 
+	const navigate = useNavigate();
+
+	const { user } = useAppSelector<RootState>(state => state);
+	const userId = user.id;
+
 	const [skillsOptions, setSkillsOptions] = useState<ISkill[]>(skillsMock);
 
 	const filteredSkills = skillsOptions.filter(s => s.value);
@@ -68,10 +76,11 @@ export const useOnDataChange = () => {
 		if (skills.length >= 3) {
 			const newData = {
 				...data,
+				userId,
 				skills,
 			};
-			console.log(newData);
 			sendData(newData);
+			navigate('/post-job');
 		} else {
 			return;
 		}

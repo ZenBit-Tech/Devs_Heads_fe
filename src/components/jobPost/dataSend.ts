@@ -27,6 +27,7 @@ export const useSendData = () => {
 				toHourRate: data.toHourRate,
 				jobDescription: data.description,
 				jobSkills: data.skills,
+				userId: data.userId,
 			};
 			await sendJobPost(newObj).unwrap();
 			openNotificationWithIcon('success');

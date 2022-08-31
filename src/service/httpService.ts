@@ -41,7 +41,7 @@ export const authApi = createApi({
 				},
 			}),
 		}),
-		signIn: build.mutation<{ email: string; password: string }, FormData>({
+		signIn: build.mutation<{ email: string; password: string; userId: number }, FormData>({
 			query: body => ({
 				url: 'auth/sign-in',
 				method: 'post',
