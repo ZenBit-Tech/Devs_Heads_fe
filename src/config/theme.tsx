@@ -3,6 +3,8 @@ export const theme = {
 		gray: 'gray',
 		white: 'white',
 		black: 'black',
+		green: '#19543E',
+		ligntGreen: '#C1E1C1',
 	},
 
 	font_weight: {

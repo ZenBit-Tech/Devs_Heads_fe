@@ -73,6 +73,12 @@ export const authApi = createApi({
 				},
 			}),
 		}),
+		getUser: build.query({
+			query: () => ({
+				url: `auth/user`,
+				responseHandler: response => response.json(),
+			}),
+		}),
 	}),
 });
 export const {
@@ -80,6 +86,7 @@ export const {
 	useSignInMutation,
 	useForgotPasswordMutation,
 	useResetPasswordMutation,
+	useGetUserQuery,
 } = authApi;
 
 /*TODO when backend is ready*/
@@ -125,7 +132,13 @@ export const jobPostApi = createApi({
 				},
 			}),
 		}),
+		getJobsDetail: build.query({
+			query: id => `/jobPost/${id}`,
+		}),
+		getPostJob: build.query({
+			query: id => `/jobPost/user/${id}`,
+		}),
 	}),
 });
 
-export const { usePostJobMutation } = jobPostApi;
+export const { usePostJobMutation, useGetJobsDetailQuery, useGetPostJobQuery } = jobPostApi;

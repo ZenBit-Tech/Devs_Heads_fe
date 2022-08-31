@@ -22,5 +22,6 @@ export const userSlice = createSlice({
 		},
 	},
 });
+
 export const { saveEmail, saveUserId } = userSlice.actions;
 export const userReducer = userSlice.reducer;

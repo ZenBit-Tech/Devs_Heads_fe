@@ -48,8 +48,8 @@ const App: FC = () => {
 							<Route path={'/restore-password/:token'} element={<RestorePassword />} />
 							<Route path="/sign-up" element={<SignUp />} />
 							<Route path="/welcome" element={<WelcomePage />} />
+							<Route path="/create-job-post" element={<JobPostPage />} />
 							<Route path="/role-selection" element={<RoleSelection />} />
-							<Route path="post-job" element={<PostJobPage />} />
 							<Route path="post-job/:id" element={<JobDescriptionPage />} />
 							<Route path="post-job" element={<PostJobPage />} />
 							<Route path="settings/" element={<SettingsPage />}>
