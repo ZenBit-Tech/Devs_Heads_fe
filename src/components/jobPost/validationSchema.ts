@@ -1,21 +1,22 @@
+import { t } from 'i18next';
 import * as Yup from 'yup';
 
 const ValidationSchema = Yup.object().shape({
 	title: Yup.string()
-		.required('This field is required')
-		.min(6, 'Must be at least 6 characters')
-		.max(50, 'Maximum length is 50 symbols'),
+		.required(`${t('JobPostPage.fieldIsRequired')}`)
+		.min(6, `${t('JobPostPage.minLength')}`)
+		.max(100, `${t('JobPostPage.maxLength100')}`),
 	category: Yup.object().shape({
-		label: Yup.string().required('This field is required'),
-		value: Yup.string().required(),
+		label: Yup.string().required(`${t('JobPostPage.fieldIsRequired')}`),
+		value: Yup.string().required(`${t('JobPostPage.fieldIsRequired')}`),
 	}),
 	description: Yup.string()
-		.required('This field is required')
-		.min(6, 'Must be at least 6 characters')
-		.max(5000, 'Maximum length is 5000 symbols'),
-	fromHourRate: Yup.number().required('This field is required').positive(),
-	toHourRate: Yup.number().required('This field is required').positive(),
-	duration: Yup.string().required('This field is required'),
+		.required(`${t('JobPostPage.fieldIsRequired')}`)
+		.min(6, `${t('JobPostPage.minLength')}`)
+		.max(5000, `${t('JobPostPage.maxLength5000')}`),
+	fromHourRate: Yup.number().required().positive(),
+	toHourRate: Yup.number().required().positive(),
+	duration: Yup.string().required(`${t('JobPostPage.fieldIsRequired')}`),
 });
 
 export default ValidationSchema;
