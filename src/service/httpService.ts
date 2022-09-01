@@ -141,7 +141,7 @@ export const jobPostApi = createApi({
 			query: id => `/jobPost/${id}`,
 		}),
 		getPostJob: build.query({
-			query: email => `/jobPost/user/${email}`,
+			query: id => `/jobPost/user/${id}`,
 		}),
 	}),
 });

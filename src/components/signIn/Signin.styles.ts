@@ -23,11 +23,11 @@ export const Div2 = styled.div`
 	width: 350px;
 `;
 
-export const H1 = styled.h1`
+export const H1 = styled.h2`
 	text-align: center;
 `;
 
-export const H2 = styled.h2`
+export const H2 = styled.h3`
 	text-align: center;
 `;
 
@@ -49,9 +49,9 @@ export const Form = styled.form`
 	display: flex;
 	flex-flow: column wrap;
 	margin-top: 20px;
-	margin-left: 100px;
-	height: 300px;
-	width: 300px;
+	margin-left: 30px;
+	height: 400px;
+	width: 450px;
 `;
 
 export const Input = styled.input`
@@ -61,20 +61,20 @@ export const Input = styled.input`
 	}
 	border-radius: 6px;
 	border: solid 1px ${GREY};
-	height: 30px;
-	width: 250px;
+	height: 35px;
+	width: 300px;
 `;
 
 export const ControlStyle = styled.label`
 	color: ${DARK_GREY};
 	display: flex;
 	flex-flow: column wrap;
-	margin-top: 20px;
+	margin-top: 30px;
 `;
 
 export const LinkStyle = styled.div`
-	margin-top: 5px;
-	margin-left: 100px;
+	margin-top: 10px;
+	margin-left: 150px;
 `;
 
 export const Button = styled.button`
@@ -84,9 +84,9 @@ export const Button = styled.button`
 	color: ${WHITE};
 	font-size: ${FONT_MEDIUM};
 	height: 40px;
-	margin-left: 50px;
-	margin-top: 20px;
-	margin-bottom: 10px;
+	margin-left: 60px;
+	margin-top: 60px;
+	margin-bottom: 5px;
 	height: 50px;
 	width: 150px;
 `;

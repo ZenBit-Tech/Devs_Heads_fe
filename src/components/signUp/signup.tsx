@@ -53,6 +53,7 @@ const signUp = () => {
 		} else {
 			try {
 				const res = await signUp({ email, password }).unwrap();
+				localStorage.setItem('userId', JSON.stringify(res.id));
 				dispatch(saveUserId(res.id));
 				dispatch(saveEmail(email));
 				reset({ email: '', createPassword: '', password: '' });

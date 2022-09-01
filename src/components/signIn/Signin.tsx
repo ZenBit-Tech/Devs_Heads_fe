@@ -62,7 +62,7 @@ const signIn = () => {
 
 		try {
 			const res = await signIn({ email, password }).unwrap();
-			console.log(res);
+			localStorage.setItem('userId', JSON.stringify(res.userId));
 			dispatch(saveUserId(res.userId));
 			dispatch(saveEmail(values.email));
 			alert('success');
@@ -94,10 +94,10 @@ const signIn = () => {
 					control={control}
 					defaultValue=""
 				/>
+				<ErrorP>{errors.password?.message}</ErrorP>
 				<LinkStyle>
 					<Link to="/forgot-password">{`${t('SignIn.forgotPassword')}`}</Link>
 				</LinkStyle>
-				<ErrorP>{errors.password?.message}</ErrorP>
 				<Button type="submit">{`${t('SignIn.buttonSignin')}`}</Button>
 			</Form>
 			<Div2>
