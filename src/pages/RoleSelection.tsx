@@ -1,24 +1,30 @@
 import React, { FC } from 'react';
-import { Div1, H1, P, Div2, Div3, Button, Button2 } from './RoleSelection.styles';
-import { GREEN, WHITE } from 'constants/styles';
+import { Div1, H1, P, Div2, Div3, Button2 } from './RoleSelection.styles';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { setUser } from 'redux/reducers/userSlice';
+import { useDispatch } from 'react-redux';
+import { Radio } from 'antd';
+import { RadioChangeEvent } from 'antd';
+import { RootState } from 'redux/store';
+import { useSelector } from 'react-redux';
 
 const RoleSelection: FC = () => {
-	const [toogle, setToogle] = React.useState(true);
-	const [green, setGreen] = React.useState('');
-	const [white, setWhite] = React.useState('');
 	const { t } = useTranslation();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const role = useSelector((state: RootState) => state.user.role);
 
-	const changeColor = () => {
-		setToogle(state => !state);
-		setGreen(() => (toogle ? GREEN : ''));
-		setWhite(() => (toogle ? WHITE : ''));
+	const Role = {
+		Freelancer: 'freelancer',
+		Client: 'client',
 	};
 
+	const handleChange = (event: RadioChangeEvent) => {
+		dispatch(setUser(event.target.value));
+	};
 	const handleClick = () => {
-		!toogle ? navigate('/welcome') : null;
+		navigate('/welcome');
 	};
 
 	return (
@@ -28,10 +34,12 @@ const RoleSelection: FC = () => {
 			<Div2>
 				<P>{`${t('Registration.text')}`}</P>
 				<Div3>
-					<Button style={{ background: green, color: white }} onClick={() => changeColor()}>
-						{`${t('Registration.buttonText1')}`}
-					</Button>
-					<Button>{`${t('Registration.buttonText2')}`}</Button>
+					<Radio.Group buttonStyle="solid" onChange={handleChange} value={role}>
+						<Radio.Button value={Role.Freelancer}>{`${t(
+							'Registration.buttonText1',
+						)}`}</Radio.Button>
+						<Radio.Button value={Role.Client}>{`${t('Registration.buttonText2')}`}</Radio.Button>
+					</Radio.Group>
 				</Div3>
 				<Button2 onClick={() => handleClick()}>{`${t('Registration.buttonAccount')}`}</Button2>
 			</Div2>

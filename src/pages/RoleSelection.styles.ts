@@ -3,7 +3,6 @@ import {
 	BLUE,
 	LIGHT_GREY,
 	GREY,
-	GREEN,
 	WHITE,
 	FONT_SMALL,
 	FONT_MEDIUM,
@@ -39,14 +38,11 @@ export const P = styled.p`
 	font-size: ${FONT_SMALL};
 	color: ${GREY};
 	margin-bottom: 30px;
+	margin-top: 30px;
 `;
 
-export const Button = styled.button`
-	&:hover {
-		background: ${GREEN};
-		color: ${WHITE};
-	}
-	border: solid 1px ${GREY};
+export const LabelStyled = styled.label`
+	border: 1px solid ${GREY};
 	border-radius: 6px;
 	font-size: ${FONT_MEDIUM};
 	padding: 30px;
