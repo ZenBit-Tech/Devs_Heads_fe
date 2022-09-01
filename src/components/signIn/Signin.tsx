@@ -62,8 +62,8 @@ const signIn = () => {
 
 		try {
 			const res = await signIn({ email, password }).unwrap();
+			console.log(res);
 			dispatch(saveUserId(res.userId));
-			console.log(res.userId);
 			dispatch(saveEmail(values.email));
 			alert('success');
 			reset({ email: '', password: '' });

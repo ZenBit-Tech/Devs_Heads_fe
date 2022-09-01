@@ -96,7 +96,7 @@ const JobPost = () => {
 						</SkillsButtonsBlock>
 					</div>
 					<div>
-						<Title>{`${t('JobPostPage.durationTitle')}`}</Title>
+						<Title>{`${t('JobPostPage.hourTitle')}`}</Title>
 						<CurrencyColumn>
 							<label>From</label>
 							<div className="input-group-prepend">

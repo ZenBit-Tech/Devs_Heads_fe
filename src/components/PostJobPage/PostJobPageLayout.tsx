@@ -14,14 +14,17 @@ import {
 	ImageStyled,
 } from './PostJobLayout.styles';
 import { useGetPostJobQuery } from 'service/httpService';
+import { RootState } from 'redux/store';
 
 const PostJobPageLayout: FC = () => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 	const [hasPublished, setPublished] = useState(false);
-	const currentUser = useAppSelector(state => state.user.id);
-	console.log(currentUser);
-	const { data: post } = useGetPostJobQuery(currentUser);
+	const { user } = useAppSelector<RootState>(state => state);
+	const userId = user.id;
+	const { data: post } = useGetPostJobQuery(userId);
+	console.log(userId);
+	console.log(post);
 
 	useEffect(() => {
 		if (post) {

@@ -54,7 +54,6 @@ const signUp = () => {
 			try {
 				const res = await signUp({ email, password }).unwrap();
 				dispatch(saveUserId(res.id));
-				console.log(res.id);
 				dispatch(saveEmail(email));
 				reset({ email: '', createPassword: '', password: '' });
 				navigate('/role-selection');
