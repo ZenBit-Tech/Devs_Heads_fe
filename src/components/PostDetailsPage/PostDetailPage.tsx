@@ -38,7 +38,7 @@ function DescriptionPage() {
 	const { data: post, isFetching, isSuccess } = useGetJobsDetailQuery(params.id);
 
 	const proposalId = {
-		userId: userId.userId || userId.id,
+		userId: userId.userId || userId,
 		jobId: Number(params.id),
 	};
 	const { data: id, isLoading, isError } = useGetProposalDetailQuery(proposalId);

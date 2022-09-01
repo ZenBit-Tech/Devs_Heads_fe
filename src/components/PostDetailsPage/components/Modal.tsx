@@ -63,14 +63,12 @@ export const Modal: FunctionComponent<ModalProps> = ({ isShown, hide, setDisable
 	};
 
 	const handleForm = async (data: ProposalForm) => {
-		await sendForm({ ...data, jobPost: jobPostId, userId: userId.userId || userId.id })
+		await sendForm({ ...data, jobPost: jobPostId, userId: userId.userId || userId })
 			.unwrap()
 			.then(() => {
 				openNotificationWithIcon('success');
 			})
 			.catch(() => openNotificationWithIcon('error'));
-		console.log(data);
-
 		setDisable(true);
 		openNotificationWithIcon('success');
 	};
