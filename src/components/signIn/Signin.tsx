@@ -60,6 +60,7 @@ const signIn = () => {
 		try {
 			const res = await signIn({ email, password }).unwrap();
 			dispatch(saveEmail(values.email));
+			localStorage.setItem('userId', JSON.stringify(res));
 			dispatch(saveUserId(res.userId));
 			alert('success');
 			reset({ email: '', password: '' });
