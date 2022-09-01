@@ -41,7 +41,7 @@ export const authApi = createApi({
 				},
 			}),
 		}),
-		signIn: build.mutation<{ email: string; password: string }, FormData>({
+		signIn: build.mutation<{ email: string; password: string; userId: number }, FormData>({
 			query: body => ({
 				url: 'auth/sign-in',
 				method: 'post',
@@ -110,3 +110,47 @@ export const profileApi = createApi({
 	}),
 });
 export const { usePostProfileInfoMutation, usePostProfileMutation } = profileApi;
+
+export const jobPostApi = createApi({
+	reducerPath: 'jobPost',
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	endpoints: build => ({
+		postJob: build.mutation({
+			query: body => ({
+				url: '/jobPost',
+				method: 'POST',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
+		getJobsDetail: build.query({
+			query: id => `/jobPost/${id}`,
+		}),
+	}),
+});
+
+export const { usePostJobMutation, useGetJobsDetailQuery } = jobPostApi;
+
+export const proposalPostApi = createApi({
+	reducerPath: 'jobProposal',
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	endpoints: build => ({
+		postProposal: build.mutation({
+			query: body => ({
+				url: '/jobProposal',
+				method: 'POST',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
+		getProposalDetail: build.query({
+			query: proposalId => `/jobProposal/proposal/${proposalId.userId}/${proposalId.jobId}`,
+		}),
+	}),
+});
+
+export const { usePostProposalMutation, useGetProposalDetailQuery } = proposalPostApi;

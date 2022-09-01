@@ -20,6 +20,8 @@ const RoleSelection = lazy(() => import('./pages/RoleSelection'));
 
 const SignIn = lazy(() => import('pages/SigninPage'));
 
+const JobPostPage = lazy(() => import('pages/JobPostPage'));
+
 const ForgotPassword = lazy(() => import('components/forgotPassword/forgotPassword'));
 
 const RestorePassword = lazy(() => import('components/restorePassword/restorePassword'));
@@ -46,6 +48,7 @@ const App: FC = () => {
 							<Route path={'/restore-password/:token'} element={<RestorePassword />} />
 							<Route path="/sign-up" element={<SignUp />} />
 							<Route path="/welcome" element={<WelcomePage />} />
+							<Route path="/create-job-post" element={<JobPostPage />} />
 							<Route path="*" element={<Navigate to="/" />} />
 							<Route path="/role-selection" element={<RoleSelection />} />
 							<Route path="post-job" element={<PostJobPage />} />

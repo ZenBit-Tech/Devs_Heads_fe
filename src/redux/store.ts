@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { authApi, profileApi } from 'service/httpService';
+import { authApi, jobPostApi, profileApi, proposalPostApi } from 'service/httpService';
 import sampleReducer from './reducers/sampleSlice';
 import { userReducer } from './reducers/userSlice';
 
@@ -9,9 +9,16 @@ export const store = configureStore({
 		user: userReducer,
 		[authApi.reducerPath]: authApi.reducer,
 		[profileApi.reducerPath]: profileApi.reducer,
+		[jobPostApi.reducerPath]: jobPostApi.reducer,
+		[proposalPostApi.reducerPath]: proposalPostApi.reducer,
 	},
 	middleware: getDefaultMiddleware =>
-		getDefaultMiddleware().concat([authApi.middleware, profileApi.middleware]),
+		getDefaultMiddleware().concat([
+			authApi.middleware,
+			profileApi.middleware,
+			jobPostApi.middleware,
+			proposalPostApi.middleware,
+		]),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
