@@ -15,12 +15,14 @@ import {
 	P,
 } from 'components/PostDetailsPage/components/Modal.styles';
 import { t } from 'i18next';
+import { usePostProposalMutation } from 'service/httpService';
 import { notification } from 'antd';
 
 interface ModalProps {
 	isShown: boolean;
 	hide: () => void;
 	setDisable: (disable: boolean) => void;
+	jobPostId: number;
 }
 
 type ProposalForm = {
@@ -38,7 +40,7 @@ const Schema = Yup.object().shape({
 		.max(50, `${t('PostDetailPage.maxLength')}`),
 });
 
-export const Modal: FunctionComponent<ModalProps> = ({ isShown, hide, setDisable }) => {
+export const Modal: FunctionComponent<ModalProps> = ({ isShown, hide, setDisable, jobPostId }) => {
 	const {
 		register,
 		handleSubmit,
@@ -46,6 +48,8 @@ export const Modal: FunctionComponent<ModalProps> = ({ isShown, hide, setDisable
 	} = useForm<ProposalForm>({
 		resolver: yupResolver(Schema),
 	});
+	const [sendForm] = usePostProposalMutation();
+	const userId = JSON.parse(localStorage.getItem('userId') || '{}');
 
 	const openNotificationWithIcon = (type: NotificationType) => {
 		notification[type]({
@@ -58,8 +62,13 @@ export const Modal: FunctionComponent<ModalProps> = ({ isShown, hide, setDisable
 		});
 	};
 
-	const handleForm = (data: ProposalForm) => {
-		//console.log(data);
+	const handleForm = async (data: ProposalForm) => {
+		await sendForm({ ...data, jobPost: jobPostId, userId: userId.userId || userId })
+			.unwrap()
+			.then(() => {
+				openNotificationWithIcon('success');
+			})
+			.catch(() => openNotificationWithIcon('error'));
 		setDisable(true);
 		openNotificationWithIcon('success');
 	};
