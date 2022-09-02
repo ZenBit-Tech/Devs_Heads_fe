@@ -62,7 +62,7 @@ const resetPassword = () => {
 			} catch (e) {
 				reset({ createPassword: '', password: '' });
 				alert('error');
-				console.log(e);
+				// console.log(e);
 			}
 		}
 	};

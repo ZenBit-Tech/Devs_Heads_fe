@@ -61,7 +61,7 @@ const signUp = () => {
 				navigate('/role-selection');
 			} catch (e) {
 				alert('error');
-				console.log(e);
+				// console.log(e);
 				reset({ email: '', createPassword: '', password: '' });
 			}
 		}

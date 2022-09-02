@@ -34,7 +34,7 @@ const forgotPassword = () => {
 			reset({ email: '' });
 		} catch (e) {
 			reset({ email: '' });
-			console.log(e);
+			// console.log(e);
 		}
 	};
 

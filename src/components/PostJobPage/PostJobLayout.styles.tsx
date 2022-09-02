@@ -18,7 +18,7 @@ export const DescriptionDataStyled = styled.p`
 
 export const DateStyled = styled.div`
 	width: ${props => props.theme.spacing(40)};
-	height: ${props => props.theme.spacing(8)};
+	height: ${props => props.theme.spacing(10)};
 	display: flex;
 	align-items: center;
 	background-color: ${props => props.theme.colors.gray};

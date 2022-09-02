@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 
 const WelcomePageLayout: FC = () => {
 	const role = useSelector((state: RootState) => state.user.role);
-	console.log(role);
 	const { t } = useTranslation();
 
 	const Role = {
