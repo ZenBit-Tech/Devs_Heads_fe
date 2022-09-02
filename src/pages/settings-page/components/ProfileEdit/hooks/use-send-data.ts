@@ -51,7 +51,7 @@ export const useSendData = () => {
 			openNotificationWithIcon('success');
 		} catch (e) {
 			openNotificationWithIcon('error');
-			console.log(e);
+			// console.log(e);
 		}
 	};
 	return { sendData };

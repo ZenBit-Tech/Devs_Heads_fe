@@ -21,7 +21,7 @@ export const getDataEffect = () => {
 				return { dateStart: e.startDate, dateEnd: e.endDate, info: e.description, error: false };
 			}),
 		};
-		console.log(newObj);
+		// console.log(newObj);
 		return newObj;
 	};
 	return { getData };
