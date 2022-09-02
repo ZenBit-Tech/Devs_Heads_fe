@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -54,13 +54,16 @@ const signIn = () => {
 		});
 	};
 
+	const { token } = useParams<{ token: string }>();
+	localStorage.setItem('token', token || '');
+
 	const onSubmit: SubmitHandler<FormData> = async values => {
 		const { email, password } = values;
 
 		try {
 			const res = await signIn({ email, password }).unwrap();
+			localStorage.setItem('userId', JSON.stringify(res.userId));
 			dispatch(saveEmail(values.email));
-			localStorage.setItem('userId', JSON.stringify(res));
 			dispatch(saveUserId(res.userId));
 			alert('success');
 			reset({ email: '', password: '' });
@@ -91,10 +94,10 @@ const signIn = () => {
 					control={control}
 					defaultValue=""
 				/>
+				<ErrorP>{errors.password?.message}</ErrorP>
 				<LinkStyle>
 					<Link to="/forgot-password">{`${t('SignIn.forgotPassword')}`}</Link>
 				</LinkStyle>
-				<ErrorP>{errors.password?.message}</ErrorP>
 				<Button type="submit">{`${t('SignIn.buttonSignin')}`}</Button>
 			</Form>
 			<Div2>

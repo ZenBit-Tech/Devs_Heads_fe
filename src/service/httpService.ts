@@ -12,12 +12,16 @@ interface ISignUpResponse {
 	id: number;
 }
 
+interface ISignInResponse {
+	token: string;
+	userId: number;
+}
+
 type FormPass = {
 	password: string;
 	token: string;
 };
 
-const BASE_URL = 'http://localhost:3000';
 interface IContactInfoForm {
 	firstName: string;
 	lastName: string;
@@ -26,6 +30,7 @@ interface IContactInfoForm {
 	id: number | undefined;
 }
 
+const BASE_URL = 'http://localhost:3000';
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
 	reducerPath: 'auth',
@@ -41,7 +46,7 @@ export const authApi = createApi({
 				},
 			}),
 		}),
-		signIn: build.mutation<{ email: string; password: string; userId: number }, FormData>({
+		signIn: build.mutation<ISignInResponse, FormData>({
 			query: body => ({
 				url: 'auth/sign-in',
 				method: 'post',
@@ -73,6 +78,12 @@ export const authApi = createApi({
 				},
 			}),
 		}),
+		getUser: build.query({
+			query: () => ({
+				url: `auth/user`,
+				responseHandler: response => response.json(),
+			}),
+		}),
 	}),
 });
 export const {
@@ -80,6 +91,7 @@ export const {
 	useSignInMutation,
 	useForgotPasswordMutation,
 	useResetPasswordMutation,
+	useGetUserQuery,
 } = authApi;
 
 /*TODO when backend is ready*/
@@ -128,10 +140,13 @@ export const jobPostApi = createApi({
 		getJobsDetail: build.query({
 			query: id => `/jobPost/${id}`,
 		}),
+		getPostJob: build.query({
+			query: id => `/jobPost/user/${id}`,
+		}),
 	}),
 });
 
-export const { usePostJobMutation, useGetJobsDetailQuery } = jobPostApi;
+export const { usePostJobMutation, useGetJobsDetailQuery, useGetPostJobQuery } = jobPostApi;
 
 export const proposalPostApi = createApi({
 	reducerPath: 'jobProposal',
