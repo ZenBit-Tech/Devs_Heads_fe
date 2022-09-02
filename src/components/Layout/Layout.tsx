@@ -1,39 +1,38 @@
 import React, { FC } from 'react';
+import { useAppSelector } from 'redux/hooks';
 import { NavLink, Outlet } from 'react-router-dom';
+import { RootState } from 'redux/store';
 import { Image, Nav, Ul, Li } from './Layout.styles';
+import Header from '../header/header';
 import Home from 'assets/home.png';
-import Settings from 'assets/settings.png';
 
 const Layout: FC = () => {
+	const { user } = useAppSelector<RootState>(state => state);
+
 	return (
 		<div>
-			<Nav>
-				<Ul>
-					<Li>
-						<NavLink to="/">
-							<Image src={Home} />
-						</NavLink>
-					</Li>
-					<Li>
-						<NavLink to="post-job">MY JOBS</NavLink>
-					</Li>
-					<Li>
-						<NavLink to="/create-job-post">CREATE JOB POST</NavLink>
-					</Li>
-					<Li>
-						<NavLink to="/sign-up">SIGN UP</NavLink>
-					</Li>
-					<Li>
-						<NavLink to="/sign-in">LOGIN</NavLink>
-					</Li>
-					<Li>
-						<NavLink to="/settings">
-							<Image src={Settings} />
-						</NavLink>
-					</Li>
-				</Ul>
-			</Nav>
-			<Outlet />
+			{!user.id ? (
+				<>
+					<Nav>
+						<Ul>
+							<Li>
+								<NavLink to="/">
+									<Image src={Home} />
+								</NavLink>
+							</Li>
+							<Li>
+								<NavLink to="/sign-up">SIGN UP</NavLink>
+							</Li>
+							<Li>
+								<NavLink to="/sign-in">LOGIN</NavLink>
+							</Li>
+						</Ul>
+					</Nav>
+					<Outlet />
+				</>
+			) : (
+				<Header />
+			)}
 		</div>
 	);
 };

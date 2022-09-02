@@ -63,8 +63,8 @@ const signIn = () => {
 		try {
 			const res = await signIn({ email, password }).unwrap();
 			localStorage.setItem('userId', JSON.stringify(res.userId));
-			dispatch(saveUserId(res.userId));
 			dispatch(saveEmail(values.email));
+			dispatch(saveUserId(res.userId));
 			alert('success');
 			reset({ email: '', password: '' });
 			navigate('/welcome');
