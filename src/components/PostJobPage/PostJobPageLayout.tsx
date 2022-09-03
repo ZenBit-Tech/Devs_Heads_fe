@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 // import { useAppSelector } from 'redux/hooks';
 import { useTranslation } from 'react-i18next';
 import DirImage from 'assets/greenDir.jpg';
@@ -31,8 +31,16 @@ const PostJobPageLayout: FC = () => {
 
 	const userId = JSON.parse(localStorage.getItem('userId') || '{}');
 	// console.log(userId);
-	const { data: post, isLoading } = useGetPostJobQuery(userId);
+	const { data: post = [], isLoading } = useGetPostJobQuery(userId);
 	// console.log(post);
+
+	const sortedPosts = useMemo(() => {
+		const sortedPosts = post.slice();
+		sortedPosts.sort((a: { dateTime: string }, b: { dateTime: string }) =>
+			b.dateTime.localeCompare(a.dateTime),
+		);
+		return sortedPosts;
+	}, [post]);
 
 	return (
 		<Wrapper>
@@ -40,7 +48,7 @@ const PostJobPageLayout: FC = () => {
 			{isLoading && <div>Loading..</div>}
 			{post?.length > 0 ? (
 				<ul>
-					{post.map((postData: IPost) => (
+					{sortedPosts.map((postData: IPost) => (
 						<li key={postData.id}>
 							<Link to={`/post-job/${postData.id}`}>
 								<TitleStyled>{postData.jobTitle}</TitleStyled>
