@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Div, Register, Form, ControlStyle, Input, P } from './signup.styled';
+import { Div, Register, Form, ControlStyle, Input, P, ErrorP } from './signup.styled';
 import { useTranslation } from 'react-i18next';
 import { useSignUpMutation } from 'service/httpService';
 import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
@@ -81,7 +81,7 @@ const signUp = () => {
 					control={control}
 					defaultValue=""
 				/>
-				<P>{errors.email?.message}</P>
+				<ErrorP>{errors.email?.message}</ErrorP>
 				<ControlStyle>{`${t('SignUp.createPassword')}`}</ControlStyle>
 				<Controller
 					render={({ field }: any) => <Input type="password" {...field} />}
@@ -89,7 +89,7 @@ const signUp = () => {
 					control={control}
 					defaultValue=""
 				/>
-				<P>{errors.createPassword?.message}</P>
+				<ErrorP>{errors.createPassword?.message}</ErrorP>
 				<ControlStyle>{`${t('SignUp.password')}`}</ControlStyle>
 				<Controller
 					render={({ field }: any) => <Input type="password" {...field} />}
@@ -97,7 +97,7 @@ const signUp = () => {
 					control={control}
 					defaultValue=""
 				/>
-				<P>{errors.password?.message}</P>
+				<ErrorP>{errors.password?.message}</ErrorP>
 				<Register type="submit">{`${t('SignUp.register')}`}</Register>
 			</Form>
 		</Div>

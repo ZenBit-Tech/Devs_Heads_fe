@@ -1,13 +1,6 @@
 import styled from 'styled-components';
-import {
-	BLUE,
-	LIGHT_GREY,
-	GREY,
-	DARK_GREY,
-	FONT_SMALL,
-	FONT_MEDIUM,
-	WHITE,
-} from 'constants/styles';
+import { RED_COLOR, BLUE, GREY, WHITE } from 'constants/colors';
+import { SMALL_FONT_SIZE, FONT_MEDIUM } from 'constants/fonts';
 
 export const Div = styled.div`
 	margin-left: 400px;
@@ -32,19 +25,20 @@ export const H2 = styled.h3`
 `;
 
 export const P = styled.p`
-	font-size: ${FONT_SMALL};
+	color: ${GREY};
+	font-size: ${SMALL_FONT_SIZE};
 	font-weight: bold;
 	margin-top: 2px;
 	margin-left: 70px;
 `;
 
 export const ErrorP = styled.p`
-color: ${GREY}
-font-size: ${FONT_SMALL}`;
+	color: ${RED_COLOR};
+	font-size: ${SMALL_FONT_SIZE};
+`;
 
 export const Form = styled.form`
 	align-content: center;
-	background: ${LIGHT_GREY};
 	border: solid 1px ${GREY};
 	display: flex;
 	flex-flow: column wrap;
@@ -66,7 +60,7 @@ export const Input = styled.input`
 `;
 
 export const ControlStyle = styled.label`
-	color: ${DARK_GREY};
+	color: ${GREY};
 	display: flex;
 	flex-flow: column wrap;
 	margin-top: 30px;

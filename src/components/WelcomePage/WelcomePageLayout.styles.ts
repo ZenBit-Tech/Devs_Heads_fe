@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FONT_H1 } from 'constants/styles';
+import { FONT_H1 } from 'constants/fonts';
 
 export const WelcomePageLayoutWrapper = styled.div`
 	text-align: center;

@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Div, Form, Input, Button, ControlStyle, ErrorP } from './Forgot.styles';
+import { Div, Form, Input, Button, H4, Message } from './Forgot.styles';
 import { useTranslation } from 'react-i18next';
 import { useForgotPasswordMutation } from 'service/httpService';
 
@@ -17,12 +17,7 @@ const schema = Yup.object({
 const forgotPassword = () => {
 	const [forgot] = useForgotPasswordMutation();
 
-	const {
-		handleSubmit,
-		control,
-		reset,
-		formState: { errors },
-	} = useForm<FormEmail>({
+	const { handleSubmit, control, reset } = useForm<FormEmail>({
 		resolver: yupResolver(schema),
 	});
 
@@ -40,17 +35,17 @@ const forgotPassword = () => {
 
 	return (
 		<Div>
+			<H4>{`${t('ForgotPassword.title')}`}</H4>
 			<Form onSubmit={handleSubmit(onSubmit)}>
-				<ControlStyle>{`${t('ForgotPassword.email')}`}</ControlStyle>
 				<Controller
 					render={({ field }) => <Input type="email" {...field} />}
 					name="email"
 					control={control}
 					defaultValue=""
 				/>
-				<ErrorP>{errors.email?.message}</ErrorP>
 				<Button type="submit">{`${t('ForgotPassword.sendButton')}`}</Button>
 			</Form>
+			<Message>{`${t('ForgotPassword.message')}`}</Message>
 		</Div>
 	);
 };

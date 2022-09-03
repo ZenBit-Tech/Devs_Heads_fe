@@ -22,9 +22,6 @@ const Header: FC = () => {
 						<NavLink to="/create-job-post">CREATE JOB POST</NavLink>
 					</Li>
 					<Li>
-						<NavLink to="/sign-up">SIGN UP</NavLink>
-					</Li>
-					<Li>
 						<NavLink to="/settings">
 							<Image src={Settings} />
 						</NavLink>

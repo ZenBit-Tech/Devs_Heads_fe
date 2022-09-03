@@ -1,32 +1,25 @@
-import image from 'image/google.jpg';
 import styled from 'styled-components';
-import { GREY, BLUE, WHITE, FONT_SMALL, FONT_LARGE } from 'constants/styles';
+import { SMALL_FONT_SIZE, FONT_LARGE } from 'constants/fonts';
+import { GREY, BLUE, WHITE, RED_COLOR } from 'constants/colors';
 
 export const Div = styled.div`
 	border: solid 1px ${GREY};
-	margin-left: 400px;
+	margin-top: 80px;
+	margin-left: 450px;
 	width: 400px;
 `;
 
-export const Button = styled.button`
-	text-align: right;
-	background: ${BLUE};
-	background-image: url(${image});
-	background-repeat: no-repeat;
-	background-size: 40px;
-	border: 2px ${BLUE};
-	border-radius: 6px;
-	color: ${WHITE};
-	margin-left: 40px;
-	padding: 8px;
-	padding-right: 20px;
-	height: 40px;
-	width: 200px;
+export const ErrorP = styled.p`
+	color: ${RED_COLOR};
+	font-size: ${SMALL_FONT_SIZE};
+	text-align: center;
+	margin-top: 5px;
+	margin-bottom: 3px;
 `;
 
 export const P = styled.p`
 	color: ${GREY};
-	font-size: ${FONT_SMALL};
+	font-size: ${SMALL_FONT_SIZE};
 	text-align: center;
 	margin-top: 5px;
 	margin-bottom: 3px;

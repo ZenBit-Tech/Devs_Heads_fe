@@ -1,13 +1,6 @@
 import styled from 'styled-components';
-import {
-	BLUE,
-	LIGHT_GREY,
-	GREY,
-	WHITE,
-	FONT_SMALL,
-	FONT_MEDIUM,
-	FONT_LARGE,
-} from 'constants/styles';
+import { FONT_MEDIUM, FONT_LARGE } from 'constants/fonts';
+import { BLUE, LIGHT_GREY, GREY, WHITE } from 'constants/colors';
 
 export const Div1 = styled.div`
 	align-content: center;
@@ -16,6 +9,7 @@ export const Div1 = styled.div`
 `;
 export const H1 = styled.h1`
 	text-align: center;
+	margin-top: 30px;
 `;
 
 export const Div2 = styled.div`
@@ -35,7 +29,7 @@ export const Div3 = styled.div`
 
 export const P = styled.p`
 	text-align: center;
-	font-size: ${FONT_SMALL};
+	font-size: ${FONT_MEDIUM};
 	color: ${GREY};
 	margin-bottom: 30px;
 	margin-top: 30px;
@@ -45,6 +39,7 @@ export const LabelStyled = styled.label`
 	border: 1px solid ${GREY};
 	border-radius: 6px;
 	font-size: ${FONT_MEDIUM};
+	margin-top: 20px;
 	padding: 30px;
 	width: 235px;
 `;

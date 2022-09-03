@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { LIGHTBLUE_COLOR } from 'constants/colors';
+import { BLUE } from 'constants/colors';
 
 export const Nav = styled.nav`
 	display: flex;
-	background: ${LIGHTBLUE_COLOR};
+	background: ${BLUE};
 	margin-bottom: 10px;
 `;
 
@@ -14,8 +14,8 @@ export const Image = styled.img`
 `;
 
 export const Ul = styled.ul`
+	align-items: center;
 	align-content: space-between;
-	align-item: center;
 	display: flex;
 	flex-flow: row;
 	margin-left: 10px;
