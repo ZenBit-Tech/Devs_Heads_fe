@@ -5,6 +5,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Div, Form, Input, Button, H4, Message } from './Forgot.styles';
 import { useTranslation } from 'react-i18next';
 import { useForgotPasswordMutation } from 'service/httpService';
+import { saveUserId } from 'redux/reducers/userSlice';
+import { useAppDispatch } from 'redux/hooks';
 
 export type FormEmail = {
 	email: string;
@@ -16,6 +18,7 @@ const schema = Yup.object({
 
 const forgotPassword = () => {
 	const [forgot] = useForgotPasswordMutation();
+	const dispatch = useAppDispatch();
 
 	const { handleSubmit, control, reset } = useForm<FormEmail>({
 		resolver: yupResolver(schema),
@@ -26,6 +29,8 @@ const forgotPassword = () => {
 	const onSubmit: SubmitHandler<FormEmail> = async values => {
 		try {
 			await forgot(values).unwrap();
+			const userId = JSON.parse(localStorage.getItem('userId') || '');
+			dispatch(saveUserId(userId));
 			reset({ email: '' });
 		} catch (e) {
 			reset({ email: '' });
