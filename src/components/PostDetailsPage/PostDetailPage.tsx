@@ -57,6 +57,11 @@ function DescriptionPage() {
 		buttonDisable();
 	}, [id]);
 
+	const Role = {
+		Freelancer: 'freelancer',
+		Client: 'client',
+	};
+
 	let content;
 	if (isFetching) {
 		content = <Suspense fallback={<div>{`${t('PostDetailPage.loading')}`}</div>}></Suspense>;
@@ -64,7 +69,7 @@ function DescriptionPage() {
 		content = (
 			<Wrapper>
 				<TitleStyled>{post.jobTitle}</TitleStyled>
-				{role === 'freelancer' ? (
+				{role === Role.Freelancer ? (
 					<>
 						<Column>
 							<CategoryStyled color={'black'}>

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { LIGHTBLUE_COLOR } from 'constants/colors';
+import { MEDIUM_FONT_SIZE } from 'constants/fonts';
 
 export const Nav = styled.nav`
 	display: flex;
@@ -25,5 +26,5 @@ export const Li = styled.li`
 	margin-top: 10px;
 	margin-left: 30px;
 	color: ${LIGHTBLUE_COLOR};
-	font-size: 1.5vw;
+	font-size: ${MEDIUM_FONT_SIZE};
 `;

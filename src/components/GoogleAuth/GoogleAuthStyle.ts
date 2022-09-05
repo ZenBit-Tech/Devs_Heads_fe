@@ -1,3 +1,4 @@
+import { MEDIUM_FONT_SIZE } from 'constants/fonts';
 import styled from 'styled-components';
 import { BLUE, LIGHT_BLUE, WHITE } from './colors';
 
@@ -26,5 +27,5 @@ export const Typography = styled.div`
 	font-family: Roboto, sans-serif;
 	margin: auto;
 	font-weight: 400;
-	font-size: 1.5vw;
+	font-size: ${MEDIUM_FONT_SIZE};
 `;

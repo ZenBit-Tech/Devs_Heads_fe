@@ -42,9 +42,14 @@ const PostJobPageLayout: FC = () => {
 	}, [post]);
 	const { data: posts } = useGetJobPostsQuery(role);
 
+	const Role = {
+		Freelancer: 'freelancer',
+		Client: 'client',
+	};
+
 	return (
 		<Wrapper>
-			{role === 'client' ? (
+			{role === Role.Client ? (
 				<>
 					<h1>{`${t('PostJobPage.clientTitle')}`}</h1>
 					{isLoading && <div>Loading..</div>}

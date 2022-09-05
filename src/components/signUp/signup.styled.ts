@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { GREY, BLUE, WHITE } from 'constants/styles';
 import { RED_COLOR } from 'constants/colors';
+import { LARGE_FONT_SIZE, MEDIUM_FONT_SIZE, SMALL_FONT_SIZE } from 'constants/fonts';
 
 export const Div = styled.div`
 	margin: auto;
@@ -12,12 +13,12 @@ export const Div = styled.div`
 
 export const ErrorP = styled.p`
 	color: ${RED_COLOR};
-	font-size: 1.2vw;
+	font-size: ${SMALL_FONT_SIZE};
 `;
 
 export const P = styled.p`
 	color: ${GREY};
-	font-size: 1.2vw;
+	font-size: ${SMALL_FONT_SIZE};
 	text-align: center;
 	margin-top: 5px;
 	margin-bottom: 3px;
@@ -28,7 +29,7 @@ export const Register = styled.button`
 	border: none;
 	border-radius: 6px;
 	color: ${WHITE};
-	font-size: 1.5vw;
+	font-size: ${LARGE_FONT_SIZE};
 	margin: auto;
 	margin-top: 2%;
 	margin-bottom: 2%;
@@ -49,7 +50,7 @@ export const ControlStyle = styled.label`
 	display: flex;
 	flex-flow: column wrap;
 	margin-top: 30px;
-	font-size: 1.2vw;
+	font-size: ${MEDIUM_FONT_SIZE};
 `;
 
 export const Input = styled.input`

@@ -20,6 +20,11 @@ const Layout: FC = () => {
 		localStorage.clear();
 	};
 
+	const Role = {
+		Freelancer: 'freelancer',
+		Client: 'client',
+	};
+
 	return (
 		<div>
 			{id && user ? (
@@ -29,7 +34,7 @@ const Layout: FC = () => {
 							<Li>
 								<NavLink to="/">{`${t('Layout.home')}`}</NavLink>
 							</Li>
-							{role === 'client' && (
+							{role === Role.Client && (
 								<>
 									<Li>
 										<NavLink to="post-job">{`${t('Layout.clientTitle')}`}</NavLink>
@@ -39,7 +44,7 @@ const Layout: FC = () => {
 									</Li>
 								</>
 							)}
-							{role === 'freelancer' && (
+							{role === Role.Freelancer && (
 								<>
 									<Li>
 										<NavLink to="post-job">{`${t('Layout.freelancerTitle')}`}</NavLink>

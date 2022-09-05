@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { BLUE, GREY, WHITE } from 'constants/styles';
 import { RED_COLOR } from 'constants/colors';
+import { LARGE_FONT_SIZE, MEDIUM_FONT_SIZE, SMALL_FONT_SIZE } from 'constants/fonts';
 
 export const Div = styled.div`
 	margin: auto;
@@ -26,7 +27,7 @@ export const H2 = styled.h3`
 `;
 
 export const P = styled.p`
-	font-size: 1vw;
+	font-size: ${SMALL_FONT_SIZE};
 	font-weight: bold;
 	margin-top: 2px;
 	margin-left: 70px;
@@ -34,7 +35,7 @@ export const P = styled.p`
 
 export const ErrorP = styled.p`
 	color: ${RED_COLOR};
-	font-size: 1.2vw;
+	font-size: ${SMALL_FONT_SIZE};
 `;
 
 export const Form = styled.form`
@@ -61,7 +62,7 @@ export const ControlStyle = styled.label`
 	display: flex;
 	flex-flow: column wrap;
 	margin-top: 30px;
-	font-size: 1.2vw;
+	font-size: ${MEDIUM_FONT_SIZE};
 `;
 
 export const LinkStyle = styled.div`
@@ -74,7 +75,7 @@ export const Button = styled.button`
 	border: none;
 	border-radius: 6px;
 	color: ${WHITE};
-	font-size: 1.5vw;
+	font-size: ${LARGE_FONT_SIZE};
 	margin: auto;
 	margin-top: 2%;
 	margin-bottom: 2%;
