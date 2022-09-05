@@ -22,7 +22,8 @@ import Modal from 'components/PostDetailsPage/components/Modal';
 function DescriptionPage() {
 	const { t } = useTranslation();
 	const params = useParams();
-	const userId = JSON.parse(localStorage.getItem('userId') || '{}');
+	const userId = JSON.parse(localStorage.getItem('userId') as string);
+	const role = JSON.parse(localStorage.getItem('role') as string);
 	const [disable, setDisable] = useState(false);
 
 	const useModal = () => {
@@ -38,7 +39,7 @@ function DescriptionPage() {
 	const { data: post, isFetching, isSuccess } = useGetJobsDetailQuery(params.id);
 
 	const proposalId = {
-		userId: userId.userId || userId,
+		userId,
 		jobId: Number(params.id),
 	};
 	const { data: id, isLoading, isError } = useGetProposalDetailQuery(proposalId);
@@ -56,6 +57,11 @@ function DescriptionPage() {
 		buttonDisable();
 	}, [id]);
 
+	const Role = {
+		Freelancer: 'freelancer',
+		Client: 'client',
+	};
+
 	let content;
 	if (isFetching) {
 		content = <Suspense fallback={<div>{`${t('PostDetailPage.loading')}`}</div>}></Suspense>;
@@ -63,20 +69,28 @@ function DescriptionPage() {
 		content = (
 			<Wrapper>
 				<TitleStyled>{post.jobTitle}</TitleStyled>
-				<Column>
+				{role === Role.Freelancer ? (
+					<>
+						<Column>
+							<CategoryStyled color={'black'}>
+								{`${t('PostDetailPage.category')}`} {post.jobCategory.name}
+							</CategoryStyled>
+						</Column>
+						<SendProposal onClick={toggle} className="btn btn-success" disabled={disable}>
+							{`${t('PostDetailPage.sendPrpBtn')}`}
+						</SendProposal>
+						<Modal
+							isShown={isShown}
+							hide={toggle}
+							setDisable={setDisable}
+							jobPostId={Number(params.id)}
+						/>
+					</>
+				) : (
 					<CategoryStyled color={'black'}>
 						{`${t('PostDetailPage.category')}`} {post.jobCategory.name}
 					</CategoryStyled>
-				</Column>
-				<SendProposal onClick={toggle} className="btn btn-success" disabled={disable}>
-					{`${t('PostDetailPage.sendPrpBtn')}`}
-				</SendProposal>
-				<Modal
-					isShown={isShown}
-					hide={toggle}
-					setDisable={setDisable}
-					jobPostId={Number(params.id)}
-				/>
+				)}
 				<DescriptionStyled>{post.jobDescription}</DescriptionStyled>
 				<BorderStyled></BorderStyled>
 				<WrapperSkillsStyled>

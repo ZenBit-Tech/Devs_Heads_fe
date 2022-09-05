@@ -3,18 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Div, Register, Form, ControlStyle, Input, P } from './signup.styled';
+import { Div, Register, Form, ControlStyle, Input, P, ErrorP } from './signup.styled';
 import { useTranslation } from 'react-i18next';
 import { useSignUpMutation } from 'service/httpService';
 import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
-import { useAppDispatch } from 'redux/hooks';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { saveEmail, saveUserId } from 'redux/reducers/userSlice';
 import { notification } from 'antd';
+import { RootState } from 'redux/store';
 
 export type FormData = {
 	email: string;
 	createPassword: string;
 	password: string;
+	role: string;
 };
 
 type Alert = 'success' | 'error';
@@ -45,20 +47,23 @@ const signUp = () => {
 		});
 	};
 
+	const { user } = useAppSelector<RootState>(state => state);
+
 	const onSubmit: SubmitHandler<FormData> = async values => {
 		const { email, password } = values;
+		values = { ...values, role: user.role };
 		if (values.createPassword !== values.password) {
 			alert('success');
 			reset({ email: '', createPassword: '', password: '' });
 		} else {
 			try {
-				const res = await signUp({ email, password }).unwrap();
+				const res = await signUp({ email, password, role: user.role }).unwrap();
 				localStorage.setItem('userId', JSON.stringify(res.id));
 				dispatch(saveUserId(res.id));
 				dispatch(saveEmail(email));
 				localStorage.setItem('userId', JSON.stringify(res.id));
 				reset({ email: '', createPassword: '', password: '' });
-				navigate('/role-selection');
+				navigate('/welcome');
 			} catch (e) {
 				alert('error');
 				// console.log(e);
@@ -69,11 +74,11 @@ const signUp = () => {
 
 	return (
 		<Div>
+			<P>{`${t('SignUp.quickSign')}`}</P>
+			<GoogleAuth />
+			<P>{`${t('SignUp.or')}`}</P>
+			<P>{`${t('SignUp.textEmail')}`}</P>
 			<Form onSubmit={handleSubmit(onSubmit)}>
-				<P>{`${t('SignUp.quickSign')}`}</P>
-				<GoogleAuth />
-				<P>{`${t('SignUp.or')}`}</P>
-				<P>{`${t('SignUp.textEmail')}`}</P>
 				<ControlStyle>{`${t('SignUp.email')}`}</ControlStyle>
 				<Controller
 					render={({ field }: any) => <Input type="email" {...field} />}
@@ -81,7 +86,7 @@ const signUp = () => {
 					control={control}
 					defaultValue=""
 				/>
-				<P>{errors.email?.message}</P>
+				<ErrorP>{errors.email?.message}</ErrorP>
 				<ControlStyle>{`${t('SignUp.createPassword')}`}</ControlStyle>
 				<Controller
 					render={({ field }: any) => <Input type="password" {...field} />}
@@ -89,7 +94,7 @@ const signUp = () => {
 					control={control}
 					defaultValue=""
 				/>
-				<P>{errors.createPassword?.message}</P>
+				<ErrorP>{errors.createPassword?.message}</ErrorP>
 				<ControlStyle>{`${t('SignUp.password')}`}</ControlStyle>
 				<Controller
 					render={({ field }: any) => <Input type="password" {...field} />}
@@ -97,7 +102,7 @@ const signUp = () => {
 					control={control}
 					defaultValue=""
 				/>
-				<P>{errors.password?.message}</P>
+				<ErrorP>{errors.password?.message}</ErrorP>
 				<Register type="submit">{`${t('SignUp.register')}`}</Register>
 			</Form>
 		</Div>

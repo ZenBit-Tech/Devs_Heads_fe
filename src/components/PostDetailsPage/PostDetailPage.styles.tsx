@@ -49,8 +49,8 @@ export const WrapperSkillsStyled = styled.div`
 `;
 
 export const CategorySkillsBlock = styled.div`
-	margin: ${props => props.theme.spacing(0)} ${props => props.theme.spacing(12)}
-		${props => props.theme.spacing(8)};
+	margin: ${props => props.theme.spacing(0)} ${props => props.theme.spacing(12)};
+	${props => props.theme.spacing(8)};
 	font-weight: bold;
 
 	&:nth-child(1) {

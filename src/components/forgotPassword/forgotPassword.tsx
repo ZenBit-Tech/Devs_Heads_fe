@@ -2,16 +2,19 @@ import React from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Div, Form, Input, Button, ControlStyle, ErrorP } from './Forgot.styles';
+import { Div, Form, Input, Button, ControlStyle, ErrorP, H1, P } from './Forgot.styles';
 import { useTranslation } from 'react-i18next';
 import { useForgotPasswordMutation } from 'service/httpService';
+import { t } from 'i18next';
 
 export type FormEmail = {
 	email: string;
 };
 
 const schema = Yup.object({
-	email: Yup.string().email().required(),
+	email: Yup.string()
+		.email()
+		.required(`${t('ForgotPassword.emailReq')}`),
 }).required();
 
 const forgotPassword = () => {
@@ -40,6 +43,8 @@ const forgotPassword = () => {
 
 	return (
 		<Div>
+			<H1>{`${t('ForgotPassword.title')}`}</H1>
+			<P>{`${t('ForgotPassword.instruction')}`}</P>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				<ControlStyle>{`${t('ForgotPassword.email')}`}</ControlStyle>
 				<Controller

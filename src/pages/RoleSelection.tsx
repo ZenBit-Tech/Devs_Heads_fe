@@ -1,13 +1,11 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Div1, H1, P, Div2, Div3, Button2 } from './RoleSelection.styles';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { setUser } from 'redux/reducers/userSlice';
-import { useDispatch } from 'react-redux';
-import { Radio } from 'antd';
-import { RadioChangeEvent } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { Radio, RadioChangeEvent } from 'antd';
 import { RootState } from 'redux/store';
-import { useSelector } from 'react-redux';
+import { saveRole } from 'redux/reducers/userSlice';
 
 const RoleSelection: FC = () => {
 	const { t } = useTranslation();
@@ -21,10 +19,10 @@ const RoleSelection: FC = () => {
 	};
 
 	const handleChange = (event: RadioChangeEvent) => {
-		dispatch(setUser(event.target.value));
+		dispatch(saveRole(event.target.value));
 	};
-	const handleClick = () => {
-		navigate('/welcome');
+	const handleClick = async () => {
+		navigate('/sign-up');
 	};
 
 	return (
