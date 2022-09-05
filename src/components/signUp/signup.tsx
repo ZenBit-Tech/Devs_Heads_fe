@@ -5,10 +5,9 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Div, Register, Form, ControlStyle, Input, P, ErrorP } from './signup.styled';
 import { useTranslation } from 'react-i18next';
-import { useSignUpMutation } from 'service/httpService';
 import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { saveEmail, saveUserId } from 'redux/reducers/userSlice';
+import { saveEmail, savePassword } from 'redux/reducers/userSlice';
 import { notification } from 'antd';
 import { RootState } from 'redux/store';
 
@@ -30,7 +29,6 @@ const schema = Yup.object({
 const signUp = () => {
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
-	const [signUp] = useSignUpMutation();
 	const navigate = useNavigate();
 	const {
 		control,
@@ -56,19 +54,9 @@ const signUp = () => {
 			alert('success');
 			reset({ email: '', createPassword: '', password: '' });
 		} else {
-			try {
-				const res = await signUp({ email, password, role: user.role }).unwrap();
-				localStorage.setItem('userId', JSON.stringify(res.id));
-				dispatch(saveUserId(res.id));
-				dispatch(saveEmail(email));
-				localStorage.setItem('userId', JSON.stringify(res.id));
-				reset({ email: '', createPassword: '', password: '' });
-				navigate('/welcome');
-			} catch (e) {
-				alert('error');
-				// console.log(e);
-				reset({ email: '', createPassword: '', password: '' });
-			}
+			dispatch(saveEmail(email));
+			dispatch(savePassword(password));
+			navigate('/role-selection');
 		}
 	};
 

@@ -2,16 +2,21 @@ import { FC } from 'react';
 import { Div1, H1, P, Div2, Div3, Button2 } from './RoleSelection.styles';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Radio, RadioChangeEvent } from 'antd';
 import { RootState } from 'redux/store';
-import { saveRole } from 'redux/reducers/userSlice';
+import { saveRole, saveUserId } from 'redux/reducers/userSlice';
+import { useAppDispatch } from 'redux/hooks';
+import { useSignUpMutation } from 'service/httpService';
 
 const RoleSelection: FC = () => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
+	const [signUp] = useSignUpMutation();
 	const role = useSelector((state: RootState) => state.user.role);
+	const email = useSelector((state: RootState) => state.user.email);
+	const password = useSelector((state: RootState) => state.user.password);
 
 	const Role = {
 		Freelancer: 'freelancer',
@@ -21,8 +26,18 @@ const RoleSelection: FC = () => {
 	const handleChange = (event: RadioChangeEvent) => {
 		dispatch(saveRole(event.target.value));
 	};
-	const handleClick = async () => {
-		navigate('/sign-up');
+	const handleClick = async (role: string) => {
+		try {
+			console.log(password);
+			const res = await signUp({ email, password, role: role }).unwrap();
+			console.log(res);
+			localStorage.setItem('userId', JSON.stringify(res.id));
+			dispatch(saveUserId(res.id));
+			localStorage.setItem('userId', JSON.stringify(res.id));
+			navigate('/welcome');
+		} catch (e) {
+			alert('error');
+		}
 	};
 
 	return (
@@ -39,7 +54,7 @@ const RoleSelection: FC = () => {
 						<Radio.Button value={Role.Client}>{`${t('Registration.buttonText2')}`}</Radio.Button>
 					</Radio.Group>
 				</Div3>
-				<Button2 onClick={() => handleClick()}>{`${t('Registration.buttonAccount')}`}</Button2>
+				<Button2 onClick={() => handleClick(role)}>{`${t('Registration.buttonAccount')}`}</Button2>
 			</Div2>
 		</Div1>
 	);
