@@ -16,13 +16,17 @@
 	},
 	"ForgotPassword": {
 		"email": "Email",
-		"sendButton": "Send"
+		"sendButton": "Send",
+		"emailReq": "This field is required!",
+		"title": "Restore Password",
+		"instruction": "If your email is correct, we will send you an email with password recovery instructions!"
 	},
 	"ResetPassword": {
 		"newPassword": "New password",
 		"password": "Confirm password",
 		"success": "You have sucessfully logged in",
-		"error": "Invalid password"
+		"error": "Invalid password",
+		"title": "Recover Password"
 	},
 	"SignUp": {
 		"quickSign": "Quick Sign Up",
@@ -125,7 +129,8 @@
 		"dataHasBeenSaved": "Your data has been saved"
 	},
 	"PostJobPage": {
-		"title": "Your Postings",
+		"freelancerTitle": "Available Jobs",
+		"clientTitle": "Your Postings",
 		"description": "No active job posts",
 		"button": "Post a Job"
 	},
@@ -148,5 +153,15 @@
 		"priceError": "This field must be a positive number!",
 		"minLength": "Must be at least 6 characters",
 		"maxLength": "Maximum length is 50 symbols"
+	},
+	"Layout": {
+		"clientTitle": "My Jobs",
+		"freelancerTitle": "Jobs",
+		"home": "Home",
+		"settings": "Settings",
+		"logout": "Log Out",
+		"login": "Sign In",
+		"signup": "Sign Up",
+		"create": "Create Job Post"
 	}
 }

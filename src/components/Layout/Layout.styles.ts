@@ -3,8 +3,8 @@ import { LIGHTBLUE_COLOR } from 'constants/colors';
 
 export const Nav = styled.nav`
 	display: flex;
-	background: ${LIGHTBLUE_COLOR};
 	margin-bottom: 10px;
+	border-bottom: 2px solid ${LIGHTBLUE_COLOR};
 `;
 
 export const Image = styled.img`
@@ -24,4 +24,6 @@ export const Ul = styled.ul`
 export const Li = styled.li`
 	margin-top: 10px;
 	margin-left: 30px;
+	color: ${LIGHTBLUE_COLOR};
+	font-size: 1.5vw;
 `;

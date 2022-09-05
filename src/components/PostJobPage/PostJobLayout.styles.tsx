@@ -9,11 +9,13 @@ export const Wrapper = styled.div`
 
 export const TitleStyled = styled.p`
 	font-weight: ${props => props.theme.font_weight.bold};
+	font-size: 1.7vw;
 `;
 
 export const DescriptionDataStyled = styled.p`
 	height: ${props => props.theme.spacing(10)};
 	overflow: hidden;
+	font-size: 1.3vw;
 `;
 
 export const DateStyled = styled.div`
@@ -26,6 +28,7 @@ export const DateStyled = styled.div`
 	border-radius: ${props => props.theme.spacing(1)};
 	padding-left: ${props => props.theme.spacing(3)};
 	margin-left: auto;
+	font-size: 1.1vw;
 `;
 export const NonPostWrapper = styled.div`
 	text-align: center;
