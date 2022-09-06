@@ -1,7 +1,12 @@
 import styled from 'styled-components';
+<<<<<<< HEAD
+import { RED_COLOR, BLUE, GREY, WHITE } from 'constants/colors';
+import { SMALL_FONT_SIZE, FONT_MEDIUM } from 'constants/fonts';
+=======
 import { BLUE, GREY, WHITE } from 'constants/styles';
 import { RED_COLOR } from 'constants/colors';
 import { LARGE_FONT_SIZE, MEDIUM_FONT_SIZE, SMALL_FONT_SIZE } from 'constants/fonts';
+>>>>>>> d792929983f74b16d4beebcb95791a88883b87e9
 
 export const Div = styled.div`
 	margin: auto;
@@ -27,6 +32,10 @@ export const H2 = styled.h3`
 `;
 
 export const P = styled.p`
+<<<<<<< HEAD
+	color: ${GREY};
+=======
+>>>>>>> d792929983f74b16d4beebcb95791a88883b87e9
 	font-size: ${SMALL_FONT_SIZE};
 	font-weight: bold;
 	margin-top: 2px;
@@ -59,6 +68,10 @@ export const Input = styled.input`
 `;
 
 export const ControlStyle = styled.label`
+<<<<<<< HEAD
+	color: ${GREY};
+=======
+>>>>>>> d792929983f74b16d4beebcb95791a88883b87e9
 	display: flex;
 	flex-flow: column wrap;
 	margin-top: 30px;

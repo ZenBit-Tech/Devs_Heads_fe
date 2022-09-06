@@ -5,6 +5,7 @@ export const theme = {
 		black: 'black',
 		green: '#19543E',
 		ligntGreen: '#C1E1C1',
+		blue: '#1E90FFFF',
 	},
 
 	font_weight: {
