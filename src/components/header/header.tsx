@@ -3,7 +3,6 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { Image, Nav, Ul, Li } from './header.style';
 import Home from 'assets/home.png';
 import Settings from 'assets/settings.png';
-import LogOut from 'components/Layout/Logout';
 
 const Header: FC = () => {
 	return (
@@ -25,9 +24,6 @@ const Header: FC = () => {
 						<NavLink to="/settings">
 							<Image src={Settings} />
 						</NavLink>
-					</Li>
-					<Li>
-						<LogOut />
 					</Li>
 				</Ul>
 			</Nav>

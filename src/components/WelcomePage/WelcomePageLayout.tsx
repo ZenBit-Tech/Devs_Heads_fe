@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 
 const WelcomePageLayout: FC = () => {
 	const role = useSelector((state: RootState) => state.user.role);
-	console.log(role);
 	const { t } = useTranslation();
 
 	const Role = {
@@ -23,7 +22,7 @@ const WelcomePageLayout: FC = () => {
 			<p>{`${t('WelcomePage.pointerToLink')}`}</p>
 			<ImageStyled src={ArrowDowm} alt="arrowDown" />
 			{role === Role.Freelancer ? (
-				<Link to="/settings">{`${t('WelcomePage.linkDescription')}`}</Link>
+				<Link to="/settings/edit-profile">{`${t('WelcomePage.linkDescription')}`}</Link>
 			) : (
 				<Link to="/post-job">{`${t('WelcomePage.linkDescription')}`}</Link>
 			)}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -19,12 +19,13 @@ import {
 } from './Signin.styles';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'redux/hooks';
-import { saveEmail, saveUserId } from 'redux/reducers/userSlice';
+import { saveEmail, saveRole, saveToken, saveUserId } from 'redux/reducers/userSlice';
 import { useSignInMutation } from 'service/httpService';
 
 export type FormData = {
 	email: string;
 	password: string;
+	role: string;
 };
 
 type Alert = 'success' | 'error';
@@ -54,18 +55,18 @@ const signIn = () => {
 		});
 	};
 
-	const { token } = useParams<{ token: string }>();
-	localStorage.setItem('token', token || '');
-
 	const onSubmit: SubmitHandler<FormData> = async values => {
-		const { email, password } = values;
+		const { email, password, role } = values;
 
 		try {
-			const res = await signIn({ email, password }).unwrap();
-			localStorage.setItem('userId', JSON.stringify(res.userId));
-			localStorage.setItem('token', JSON.stringify(res.token));
-			dispatch(saveEmail(values.email));
+			const res = await signIn({ email, password, role }).unwrap();
+			dispatch(saveToken(res.access_token));
+			localStorage.setItem('access_token', JSON.stringify(res.access_token));
 			dispatch(saveUserId(res.userId));
+			localStorage.setItem('userId', JSON.stringify(res.userId));
+			dispatch(saveRole(res.role));
+			localStorage.setItem('role', JSON.stringify(res.role));
+			dispatch(saveEmail(values.email));
 			alert('success');
 			reset({ email: '', password: '' });
 			navigate('/welcome');
@@ -78,8 +79,12 @@ const signIn = () => {
 
 	return (
 		<Div>
-			<H1>{`${t('SignIn.title')}`}</H1>
-			<H2>{`${t('SignIn.upperText')}`}</H2>
+			<div>
+				<H1>{`${t('SignIn.title')}`}</H1>
+			</div>
+			<div>
+				<H2>{`${t('SignIn.upperText')}`}</H2>
+			</div>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				<ControlStyle>{`${t('SignIn.email')}`}</ControlStyle>
 				<Controller
@@ -88,6 +93,7 @@ const signIn = () => {
 					control={control}
 					defaultValue=""
 				/>
+				<ErrorP>{errors.email?.message}</ErrorP>
 				<ControlStyle>{`${t('SignIn.password')}`}</ControlStyle>
 				<Controller
 					render={({ field }) => <Input type="password" {...field} />}

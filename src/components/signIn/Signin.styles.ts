@@ -1,19 +1,26 @@
 import styled from 'styled-components';
+<<<<<<< HEAD
 import { RED_COLOR, BLUE, GREY, WHITE } from 'constants/colors';
 import { SMALL_FONT_SIZE, FONT_MEDIUM } from 'constants/fonts';
+=======
+import { BLUE, GREY, WHITE } from 'constants/styles';
+import { RED_COLOR } from 'constants/colors';
+import { LARGE_FONT_SIZE, MEDIUM_FONT_SIZE, SMALL_FONT_SIZE } from 'constants/fonts';
+>>>>>>> d792929983f74b16d4beebcb95791a88883b87e9
 
 export const Div = styled.div`
-	margin-left: 400px;
-	width: 500px;
+	margin: auto;
+	width: 50%;
+	@media screen and (max-width: 600px) {
+		width: 90%;
+	}
 `;
 
 export const Div2 = styled.div`
 	display: flex;
 	text-align: center;
 	justify-content: space-around;
-	margin-top: 5px;
-	margin-left: 30px;
-	width: 350px;
+	margin: auto;
 `;
 
 export const H1 = styled.h2`
@@ -25,7 +32,10 @@ export const H2 = styled.h3`
 `;
 
 export const P = styled.p`
+<<<<<<< HEAD
 	color: ${GREY};
+=======
+>>>>>>> d792929983f74b16d4beebcb95791a88883b87e9
 	font-size: ${SMALL_FONT_SIZE};
 	font-weight: bold;
 	margin-top: 2px;
@@ -40,12 +50,10 @@ export const ErrorP = styled.p`
 export const Form = styled.form`
 	align-content: center;
 	border: solid 1px ${GREY};
+	border-radius: 10px;
 	display: flex;
 	flex-flow: column wrap;
-	margin-top: 20px;
-	margin-left: 30px;
-	height: 400px;
-	width: 450px;
+	margin: auto;
 `;
 
 export const Input = styled.input`
@@ -56,19 +64,23 @@ export const Input = styled.input`
 	border-radius: 6px;
 	border: solid 1px ${GREY};
 	height: 35px;
-	width: 300px;
+	width: 80%;
 `;
 
 export const ControlStyle = styled.label`
+<<<<<<< HEAD
 	color: ${GREY};
+=======
+>>>>>>> d792929983f74b16d4beebcb95791a88883b87e9
 	display: flex;
 	flex-flow: column wrap;
 	margin-top: 30px;
+	font-size: ${MEDIUM_FONT_SIZE};
 `;
 
 export const LinkStyle = styled.div`
 	margin-top: 10px;
-	margin-left: 150px;
+	margin-left: 55%;
 `;
 
 export const Button = styled.button`
@@ -76,11 +88,10 @@ export const Button = styled.button`
 	border: none;
 	border-radius: 6px;
 	color: ${WHITE};
-	font-size: ${FONT_MEDIUM};
-	height: 40px;
-	margin-left: 60px;
-	margin-top: 60px;
-	margin-bottom: 5px;
+	font-size: ${LARGE_FONT_SIZE};
+	margin: auto;
+	margin-top: 2%;
+	margin-bottom: 2%;
 	height: 50px;
-	width: 150px;
+	width: 50%;
 `;

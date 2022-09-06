@@ -1,15 +1,24 @@
 import styled from 'styled-components';
+<<<<<<< HEAD
 import { FONT_MEDIUM, FONT_LARGE } from 'constants/fonts';
 import { BLUE, LIGHT_GREY, GREY, WHITE } from 'constants/colors';
+=======
+import { BLUE, LIGHT_GREY, GREY, WHITE } from 'constants/styles';
+import { LARGE_FONT_SIZE, MEDIUM_FONT_SIZE } from 'constants/fonts';
+>>>>>>> d792929983f74b16d4beebcb95791a88883b87e9
 
 export const Div1 = styled.div`
 	align-content: center;
 	display: flex;
 	flex-flow: column wrap;
 `;
-export const H1 = styled.h1`
+export const H1 = styled.label`
 	text-align: center;
+<<<<<<< HEAD
 	margin-top: 30px;
+=======
+	font-size: ${LARGE_FONT_SIZE};
+>>>>>>> d792929983f74b16d4beebcb95791a88883b87e9
 `;
 
 export const Div2 = styled.div`
@@ -17,7 +26,7 @@ export const Div2 = styled.div`
 	flex-flow: column wrap;
 	border: solid 1px ${LIGHT_GREY};
 	justify-content: space-around;
-	width: 480px;
+	width: 50%;
 `;
 
 export const Div3 = styled.div`
@@ -25,16 +34,22 @@ export const Div3 = styled.div`
 	text-align: center;
 	justify-content: space-around;
 	margin-bottom: 50px;
+	font-size: ${LARGE_FONT_SIZE};
 `;
 
 export const P = styled.p`
 	text-align: center;
+<<<<<<< HEAD
 	font-size: ${FONT_MEDIUM};
+=======
+	font-size: ${MEDIUM_FONT_SIZE};
+>>>>>>> d792929983f74b16d4beebcb95791a88883b87e9
 	color: ${GREY};
 	margin-bottom: 30px;
 	margin-top: 30px;
 `;
 
+<<<<<<< HEAD
 export const LabelStyled = styled.label`
 	border: 1px solid ${GREY};
 	border-radius: 6px;
@@ -44,15 +59,16 @@ export const LabelStyled = styled.label`
 	width: 235px;
 `;
 
+=======
+>>>>>>> d792929983f74b16d4beebcb95791a88883b87e9
 export const Button2 = styled.button`
 	background: ${BLUE};
 	border: none;
 	border-radius: 6px;
 	color: ${WHITE};
-	font-size: ${FONT_LARGE};
-	height: 40px;
-	margin-left: 30px;
-	margin-top: 20px;
-	margin-bottom: 20px;
-	width: 420px;
+	font-size: ${LARGE_FONT_SIZE};
+	height: 5%;
+	margin: auto;
+	margin-bottom: 2%;
+	width: 60%;
 `;

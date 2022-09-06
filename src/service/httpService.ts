@@ -4,6 +4,7 @@ import { FormEmail } from 'components/forgotPassword/forgotPassword';
 type FormData = {
 	email: string;
 	password: string;
+	role: string;
 };
 interface ISignUpResponse {
 	email: string;
@@ -13,8 +14,9 @@ interface ISignUpResponse {
 }
 
 interface ISignInResponse {
-	token: string;
+	access_token: string;
 	userId: number;
+	role: string;
 }
 
 type FormPass = {
@@ -137,6 +139,11 @@ export const jobPostApi = createApi({
 				},
 			}),
 		}),
+		getJobPosts: build.query({
+			query: () => ({
+				url: `/jobPost`,
+			}),
+		}),
 		getJobsDetail: build.query({
 			query: id => `/jobPost/${id}`,
 		}),
@@ -146,7 +153,12 @@ export const jobPostApi = createApi({
 	}),
 });
 
-export const { usePostJobMutation, useGetJobsDetailQuery, useGetPostJobQuery } = jobPostApi;
+export const {
+	usePostJobMutation,
+	useGetJobsDetailQuery,
+	useGetPostJobQuery,
+	useGetJobPostsQuery,
+} = jobPostApi;
 
 export const proposalPostApi = createApi({
 	reducerPath: 'jobProposal',

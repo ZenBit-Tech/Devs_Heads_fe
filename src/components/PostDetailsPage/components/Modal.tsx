@@ -70,7 +70,6 @@ export const Modal: FunctionComponent<ModalProps> = ({ isShown, hide, setDisable
 			})
 			.catch(() => openNotificationWithIcon('error'));
 		setDisable(true);
-		openNotificationWithIcon('success');
 	};
 
 	const modal = (

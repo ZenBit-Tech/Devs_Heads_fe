@@ -1,12 +1,13 @@
 import styled from 'styled-components';
-import { SMALL_FONT_SIZE, FONT_LARGE } from 'constants/fonts';
+import { SMALL_FONT_SIZE, FONT_LARGE, MEDIUM_FONT_SIZE } from 'constants/fonts';
 import { GREY, BLUE, WHITE, RED_COLOR } from 'constants/colors';
 
 export const Div = styled.div`
-	border: solid 1px ${GREY};
-	margin-top: 80px;
-	margin-left: 450px;
-	width: 400px;
+	margin: auto;
+	width: 50%;
+	@media screen and (max-width: 600px) {
+		width: 90%;
+	}
 `;
 
 export const ErrorP = styled.p`
@@ -31,24 +32,27 @@ export const Register = styled.button`
 	border-radius: 6px;
 	color: ${WHITE};
 	font-size: ${FONT_LARGE};
-	height: 40px;
-	margin-left: 50px;
-	margin-top: 20px;
-	margin-bottom: 10px;
-	width: 200px;
+	margin: auto;
+	margin-top: 2%;
+	margin-bottom: 2%;
+	height: 50px;
+	width: 50%;
 `;
 
 export const Form = styled.form`
 	align-content: center;
+	border: solid 1px ${GREY};
+	border-radius: 10px;
 	display: flex;
 	flex-flow: column wrap;
+	margin: auto;
 `;
 
 export const ControlStyle = styled.label`
-	color: ${GREY};
 	display: flex;
 	flex-flow: column wrap;
-	margin-top: 10px;
+	margin-top: 30px;
+	font-size: ${MEDIUM_FONT_SIZE};
 `;
 
 export const Input = styled.input`
@@ -58,6 +62,6 @@ export const Input = styled.input`
 	}
 	border-radius: 6px;
 	border: solid 1px ${GREY};
-	height: 30px;
-	width: 300px;
+	height: 35px;
+	width: 80%;
 `;
