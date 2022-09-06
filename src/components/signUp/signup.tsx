@@ -33,7 +33,6 @@ const signUp = () => {
 	const {
 		control,
 		handleSubmit,
-		reset,
 		formState: { errors },
 	} = useForm<FormData>({
 		resolver: yupResolver(schema),
@@ -49,14 +48,13 @@ const signUp = () => {
 
 	const onSubmit: SubmitHandler<FormData> = async values => {
 		const { email, password } = values;
-		values = { ...values, role: user.role };
-		if (values.createPassword !== values.password) {
-			alert('success');
-			reset({ email: '', createPassword: '', password: '' });
-		} else {
+		try {
 			dispatch(saveEmail(email));
 			dispatch(savePassword(password));
 			navigate('/role-selection');
+			alert('success');
+		} catch (error) {
+			alert('error');
 		}
 	};
 

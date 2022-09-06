@@ -11,6 +11,7 @@ interface ISignUpResponse {
 	password: string;
 	googleId: string;
 	id: number;
+	role: string;
 }
 
 interface ISignInResponse {

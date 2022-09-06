@@ -28,12 +28,10 @@ const RoleSelection: FC = () => {
 	};
 	const handleClick = async (role: string) => {
 		try {
-			console.log(password);
 			const res = await signUp({ email, password, role: role }).unwrap();
-			console.log(res);
 			localStorage.setItem('userId', JSON.stringify(res.id));
 			dispatch(saveUserId(res.id));
-			localStorage.setItem('userId', JSON.stringify(res.id));
+			localStorage.setItem('role', JSON.stringify(res.role));
 			navigate('/welcome');
 		} catch (e) {
 			alert('error');
