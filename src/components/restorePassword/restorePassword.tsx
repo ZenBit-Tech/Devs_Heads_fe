@@ -57,7 +57,7 @@ const resetPassword = () => {
 		const userId = localStorage.getItem('userId');
 		dispatch(saveUserId(Number(userId)));
 		if (token === userToken) {
-			navigate('/welcome');
+			navigate('/search-post');
 		}
 	}, []);
 

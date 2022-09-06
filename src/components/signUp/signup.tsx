@@ -56,7 +56,6 @@ const signUp = () => {
 				localStorage.setItem('userId', JSON.stringify(res.id));
 				dispatch(saveUserId(res.id));
 				dispatch(saveEmail(email));
-				localStorage.setItem('userId', JSON.stringify(res.id));
 				reset({ email: '', createPassword: '', password: '' });
 				navigate('/role-selection');
 			} catch (e) {

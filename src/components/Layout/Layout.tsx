@@ -8,10 +8,11 @@ import Home from 'assets/home.png';
 
 const Layout: FC = () => {
 	const { user } = useAppSelector<RootState>(state => state);
+	const google = localStorage.getItem('google');
 
 	return (
 		<div>
-			{!user.id ? (
+			{!user.id && !google ? (
 				<>
 					<Nav>
 						<Ul>
