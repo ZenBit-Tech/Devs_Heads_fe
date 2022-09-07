@@ -8,10 +8,6 @@ import { saveEmail, saveToken, saveUserId } from 'redux/reducers/userSlice';
 
 const Layout: FC = () => {
 	const { user } = useAppSelector<RootState>(state => state);
-	const google = localStorage.getItem('google');
-	const id = JSON.parse(localStorage.getItem('userId') as string);
-	const role = JSON.parse(localStorage.getItem('role') as string);
-
 	const dispatch = useAppDispatch();
 
 	const handleClick = () => {
