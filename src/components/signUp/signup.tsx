@@ -9,6 +9,7 @@ import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
 import { useAppDispatch } from 'redux/hooks';
 import { saveEmail, savePassword } from 'redux/reducers/userSlice';
 import { notification } from 'antd';
+import { useSignUpMutation } from 'service/httpService';
 
 export type FormData = {
 	email: string;
@@ -28,6 +29,7 @@ const schema = Yup.object({
 const signUp = () => {
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
+	const [signUp] = useSignUpMutation();
 	const navigate = useNavigate();
 	const {
 		control,
@@ -46,14 +48,15 @@ const signUp = () => {
 	const onSubmit: SubmitHandler<FormData> = async values => {
 		const { email, password } = values;
 		try {
+			const res = await signUp({ email, password }).unwrap();
 			dispatch(saveEmail(email));
 			dispatch(savePassword(password));
 			navigate('/role-selection');
-			alert('success');
 		} catch (error) {
 			alert('error');
 		}
 	};
+
 	return (
 		<Div>
 			<P>{`${t('SignUp.quickSign')}`}</P>
