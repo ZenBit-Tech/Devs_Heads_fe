@@ -47,6 +47,7 @@ const signUp = () => {
 
 	const onSubmit: SubmitHandler<FormData> = async values => {
 		const { email, password } = values;
+<<<<<<< HEAD
 		try {
 			const res = await signUp({ email, password }).unwrap();
 			dispatch(saveEmail(email));
@@ -54,6 +55,25 @@ const signUp = () => {
 			navigate('/role-selection');
 		} catch (error) {
 			alert('error');
+=======
+		values = { ...values, role: user.role };
+		if (values.createPassword !== values.password) {
+			alert('success');
+			reset({ email: '', createPassword: '', password: '' });
+		} else {
+			try {
+				const res = await signUp({ email, password, role: user.role }).unwrap();
+				localStorage.setItem('userId', JSON.stringify(res.id));
+				dispatch(saveUserId(res.id));
+				dispatch(saveEmail(email));
+				reset({ email: '', createPassword: '', password: '' });
+				navigate('/welcome');
+			} catch (e) {
+				alert('error');
+				console.log(e);
+				reset({ email: '', createPassword: '', password: '' });
+			}
+>>>>>>> dddedbf830e7f3bd0806a5ae7418b18dd3b28ed7
 		}
 	};
 
