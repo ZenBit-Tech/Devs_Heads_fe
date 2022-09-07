@@ -49,6 +49,6 @@ export const ButtonStyled = styled.button`
 	min-width: ${props => props.theme.spacing(38)};
 	border-radius: ${props => props.theme.spacing(6)};
 	height: ${props => props.theme.spacing(10)};
-	background-color: ${props => props.theme.colors.black};
+	background-color: ${props => props.theme.colors.blue};
 	color: ${props => props.theme.colors.white};
 `;

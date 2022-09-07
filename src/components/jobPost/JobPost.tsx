@@ -53,7 +53,7 @@ const JobPost = () => {
 	};
 
 	useEffect(() => {
-		if (skills.length < 3) {
+		if (skills.length < 3 && btn) {
 			setRedColor(true);
 		} else {
 			setRedColor(false);

@@ -70,7 +70,7 @@ const signIn = () => {
 		} catch (e) {
 			reset({ email: '', password: '' });
 			alert('error');
-			// console.log(e);
+			console.log(e);
 		}
 	};
 

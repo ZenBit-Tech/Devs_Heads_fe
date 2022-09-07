@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { BLUE, LIGHTBLUE_COLOR } from 'constants/colors';
-import { MEDIUM_FONT_SIZE } from 'constants/fonts';
+import { BLUE } from 'constants/colors';
 
 export const Nav = styled.nav`
 	display: flex;
 	background: ${BLUE};
+	margin-bottom: 10px;
 `;
 
 export const Image = styled.img`
@@ -14,8 +14,8 @@ export const Image = styled.img`
 `;
 
 export const Ul = styled.ul`
-	align-content: space-between;
 	align-items: center;
+	align-content: space-between;
 	display: flex;
 	flex-flow: row;
 	margin-left: 10px;
@@ -24,6 +24,4 @@ export const Ul = styled.ul`
 export const Li = styled.li`
 	margin-top: 10px;
 	margin-left: 30px;
-	color: ${LIGHTBLUE_COLOR};
-	font-size: ${MEDIUM_FONT_SIZE};
 `;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -15,6 +15,8 @@ import {
 } from 'components/restorePassword/restorePassword.style';
 import { useTranslation } from 'react-i18next';
 import { useResetPasswordMutation } from 'service/httpService';
+import { saveUserId } from 'redux/reducers/userSlice';
+import { useAppDispatch } from 'redux/hooks';
 
 export type FormPass = {
 	createPassword: string;
@@ -31,6 +33,7 @@ const schema = Yup.object({
 const resetPassword = () => {
 	const [setPassword] = useResetPasswordMutation();
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 	const {
 		handleSubmit,
 		control,
@@ -50,6 +53,15 @@ const resetPassword = () => {
 
 	const { token } = useParams<{ token: string }>();
 
+	useEffect(() => {
+		const userToken = localStorage.getItem('hash');
+		const userId = localStorage.getItem('userId');
+		dispatch(saveUserId(Number(userId)));
+		if (token === userToken) {
+			navigate('/search-post');
+		}
+	}, []);
+
 	const onSubmit: SubmitHandler<FormPass> = async values => {
 		const { password } = values;
 		if (values.createPassword !== values.password) {
@@ -57,7 +69,7 @@ const resetPassword = () => {
 		} else {
 			try {
 				await setPassword({ password, token: token || '' }).unwrap();
-				alert('success');
+				localStorage.setItem('hash', token || '');
 				reset({ createPassword: '', password: '' });
 				navigate('/sign-in');
 			} catch (e) {

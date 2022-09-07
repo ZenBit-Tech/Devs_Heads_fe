@@ -15,11 +15,17 @@
 		"error": "Invalid email or username"
 	},
 	"ForgotPassword": {
+<<<<<<< HEAD
+		"message": "If your email is correct, we just sent you an email with password recovery instructions!",
+		"sendButton": "Send",
+		"title": "Please, send your email to restore your password"
+=======
 		"email": "Email",
 		"sendButton": "Send",
 		"emailReq": "This field is required!",
 		"title": "Restore Password",
 		"instruction": "If your email is correct, we will send you an email with password recovery instructions!"
+>>>>>>> d792929983f74b16d4beebcb95791a88883b87e9
 	},
 	"ResetPassword": {
 		"newPassword": "New password",
