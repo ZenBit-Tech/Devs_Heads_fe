@@ -1,5 +1,4 @@
 import React, { FC, useMemo } from 'react';
-// import { useAppSelector } from 'redux/hooks';
 import { useTranslation } from 'react-i18next';
 import DirImage from 'assets/greenDir.jpg';
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,9 +13,8 @@ import {
 	ImageStyled,
 } from './PostJobLayout.styles';
 import { useGetPostJobQuery, useGetJobPostsQuery } from 'service/httpService';
-// import { RootState } from 'redux/store';
-// import { IPostJob } from './interface';
-// IJobPostBE
+import { useAppSelector } from 'redux/hooks';
+import { RootState } from 'redux/store';
 
 interface IPost {
 	id: number;
@@ -28,11 +26,9 @@ interface IPost {
 const PostJobPageLayout: FC = () => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
+	const { user } = useAppSelector<RootState>(state => state);
 
-	const userId = JSON.parse(localStorage.getItem('userId') as string);
-	const role = JSON.parse(localStorage.getItem('role') as string);
-	// console.log(userId);
-	const { data: post = [], isLoading } = useGetPostJobQuery(userId);
+	const { data: post = [], isLoading } = useGetPostJobQuery(user.id);
 	const sortedPosts = useMemo(() => {
 		const sortedPosts = post.slice();
 		sortedPosts.sort((a: { dateTime: string }, b: { dateTime: string }) =>
@@ -40,7 +36,7 @@ const PostJobPageLayout: FC = () => {
 		);
 		return sortedPosts;
 	}, [post]);
-	const { data: posts } = useGetJobPostsQuery(role);
+	const { data: posts } = useGetJobPostsQuery(user.role);
 
 	const Role = {
 		Freelancer: 'freelancer',
@@ -48,9 +44,9 @@ const PostJobPageLayout: FC = () => {
 	};
 
 	return (
-		<Wrapper>
-			{role === Role.Client ? (
-				<>
+		<>
+			{user.role === Role.Client && (
+				<Wrapper>
 					<h1>{`${t('PostJobPage.clientTitle')}`}</h1>
 					{isLoading && <div>Loading..</div>}
 					{post?.length > 0 ? (
@@ -76,8 +72,9 @@ const PostJobPageLayout: FC = () => {
 							)}`}</ButtonStyled>
 						</NonPostWrapper>
 					)}
-				</>
-			) : (
+				</Wrapper>
+			)}
+			{user.role === Role.Freelancer && (
 				<>
 					{posts?.length > 0 && (
 						<>
@@ -99,7 +96,7 @@ const PostJobPageLayout: FC = () => {
 					)}
 				</>
 			)}
-		</Wrapper>
+		</>
 	);
 };
 

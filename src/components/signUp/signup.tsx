@@ -6,10 +6,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Div, Register, Form, ControlStyle, Input, P, ErrorP } from './signup.styled';
 import { useTranslation } from 'react-i18next';
 import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { useAppDispatch } from 'redux/hooks';
 import { saveEmail, savePassword } from 'redux/reducers/userSlice';
 import { notification } from 'antd';
-import { RootState } from 'redux/store';
 
 export type FormData = {
 	email: string;
@@ -44,8 +43,6 @@ const signUp = () => {
 		});
 	};
 
-	const { user } = useAppSelector<RootState>(state => state);
-
 	const onSubmit: SubmitHandler<FormData> = async values => {
 		const { email, password } = values;
 		try {
@@ -57,7 +54,6 @@ const signUp = () => {
 			alert('error');
 		}
 	};
-
 	return (
 		<Div>
 			<P>{`${t('SignUp.quickSign')}`}</P>

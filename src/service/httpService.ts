@@ -1,12 +1,24 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { FormEmail } from 'components/forgotPassword/forgotPassword';
 
-type FormData = {
+type FormDataWithoutRole = {
+	email: string;
+	password: string;
+};
+
+type FormDataWithRole = {
 	email: string;
 	password: string;
 	role: string;
 };
-interface ISignUpResponse {
+interface ISignUpResponseWithoutRole {
+	email: string;
+	password: string;
+	googleId: string;
+	id: number;
+}
+
+interface ISignUpResponseWithRole {
 	email: string;
 	password: string;
 	googleId: string;
@@ -39,7 +51,7 @@ export const authApi = createApi({
 	reducerPath: 'auth',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
 	endpoints: build => ({
-		signUp: build.mutation<ISignUpResponse, FormData>({
+		signUp: build.mutation<ISignUpResponseWithoutRole, FormDataWithoutRole>({
 			query: body => ({
 				url: 'auth/sign-up',
 				method: 'post',
@@ -49,7 +61,17 @@ export const authApi = createApi({
 				},
 			}),
 		}),
-		signIn: build.mutation<ISignInResponse, FormData>({
+		signUpUpdate: build.mutation<ISignUpResponseWithRole, FormDataWithRole>({
+			query: body => ({
+				url: `auth/sign-up/`,
+				method: 'put',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
+		signIn: build.mutation<ISignInResponse, FormDataWithRole>({
 			query: body => ({
 				url: 'auth/sign-in',
 				method: 'post',
@@ -91,6 +113,7 @@ export const authApi = createApi({
 });
 export const {
 	useSignUpMutation,
+	useSignUpUpdateMutation,
 	useSignInMutation,
 	useForgotPasswordMutation,
 	useResetPasswordMutation,
