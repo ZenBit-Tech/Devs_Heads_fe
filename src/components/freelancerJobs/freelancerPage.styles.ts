@@ -21,7 +21,7 @@ export const DescriptionStyled = styled.p`
 
 export const ColumnSmall = styled.div`
 	float: left;
-	width: 40%;
+	width: 30%;
 	padding: 10px;
 	@media screen and (max-width: 600px) {
 		width: 100%;
@@ -30,7 +30,7 @@ export const ColumnSmall = styled.div`
 
 export const ColumnBig = styled.div`
 	float: left;
-	width: 60%;
+	width: 70%;
 	padding: 20px;
 	@media screen and (max-width: 600px) {
 		width: 100%;
@@ -38,7 +38,7 @@ export const ColumnBig = styled.div`
 `;
 
 export const Li = styled.li`
-	margin-left: 10%;
+	margin-left: 5%;
 	font-size: ${MEDIUM_FONT_SIZE};
 `;
 
@@ -76,7 +76,7 @@ export const SkillsButtonsBlock = styled.div`
 `;
 
 export const Label = styled.label`
-	width: 170px;
+	width: 150px;
 	margin: 5px;
 	height: 30px;
 `;
@@ -117,10 +117,12 @@ export const SearchInput = styled.input`
 	padding: 12px 20px;
 	margin: 2% 10% 2% 0%;
 	box-sizing: border-box;
-	border: 3px solid #ccc;
+	border: 1px solid ${props => props.theme.colors.gray};
+	border-radius: 5px;
 	-webkit-transition: 0.5s;
 	transition: 0.5s;
 	outline: none;
+	font-size: ${MEDIUM_FONT_SIZE};
 	&:focus {
 		border: 3px solid #555;
 	}
@@ -128,9 +130,8 @@ export const SearchInput = styled.input`
 
 export const CustomSelect = styled(ReactSelect)`
 	font-size: ${MEDIUM_FONT_SIZE};
-	& .Select__indicator Select__dropdown-indicator {
-		border-color: transparent transparent red;
-	}
+	border: 1px solid ${props => props.theme.colors.gray};
+	border-radius: 5px;
 `;
 
 export const P = styled.p`

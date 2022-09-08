@@ -163,7 +163,7 @@ const FreelancerPage: FC = () => {
 					<ColumnBig>
 						<SearchInput
 							type="text"
-							placeholder="Search for jobs"
+							placeholder={`${t('FreelancerPage.search')}`}
 							value={search}
 							onChange={e => setSearch(e.target.value)}
 						/>

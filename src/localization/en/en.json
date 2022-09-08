@@ -166,7 +166,7 @@
 	"FreelancerPage": {
 		"filter": "Filter by",
 		"clear": "Clear filters",
-		"search": "Search for jobs",
+		"search": "Search for jobs...",
 		"skills": "Skills",
 		"price": "Price Range",
 		"hours": "Available hours/per day",
