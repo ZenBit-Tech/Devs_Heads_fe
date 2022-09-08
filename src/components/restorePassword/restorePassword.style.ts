@@ -1,24 +1,32 @@
 import styled from 'styled-components';
-import { SMALL_FONT_SIZE, FONT_LARGE } from 'constants/fonts';
-import { BLUE, GREY, RED_COLOR, WHITE } from 'constants/colors';
+import { BLUE, GREY, DARK_GREY, WHITE } from 'constants/colors';
+import { RED_COLOR } from 'constants/colors';
+import { MEDIUM_FONT_SIZE, SMALL_FONT_SIZE } from 'constants/fonts';
 
 export const Div = styled.div`
-	margin-left: 300px;
-	width: 500px;
+	margin: auto;
+	width: 50%;
+	@media screen and (max-width: 600px) {
+		width: 90%;
+	}
+`;
+
+export const H1 = styled.h2`
+	text-align: center;
 `;
 
 export const ErrorP = styled.p`
-	margin-left: 60px;
 	color: ${RED_COLOR};
 	font-size: ${SMALL_FONT_SIZE};
 `;
 
 export const Form = styled.form`
+	align-content: center;
 	border: solid 1px ${GREY};
-	margin-top: 80px;
-	margin-left: 150px;
-	height: 380px;
-	width: 400px;
+	border-radius: 10px;
+	display: flex;
+	flex-flow: column wrap;
+	margin: auto;
 `;
 
 export const Input = styled.input`
@@ -28,17 +36,15 @@ export const Input = styled.input`
 	}
 	border-radius: 6px;
 	border: solid 1px ${GREY};
-	height: 30px;
-	margin-left: 50px;
-	width: 300px;
+	height: 35px;
+	width: 80%;
 `;
 
 export const ControlStyle = styled.label`
-	color: ${GREY};
+	color: ${DARK_GREY};
 	display: flex;
 	flex-flow: column wrap;
-	margin-top: 40px;
-	margin-left: 50px;
+	margin-left: 1%;
 `;
 
 export const Button = styled.button`
@@ -46,11 +52,10 @@ export const Button = styled.button`
 	border: none;
 	border-radius: 6px;
 	color: ${WHITE};
-	font-size: ${FONT_LARGE};
-	height: 40px;
-	margin-left: 120px;
-	margin-top: 50px;
-	margin-bottom: 20px;
+	font-size: ${MEDIUM_FONT_SIZE};
+	margin: auto;
+	margin-top: 2%;
+	margin-bottom: 2%;
 	height: 50px;
-	width: 150px;
+	width: 50%;
 `;

@@ -1,3 +1,4 @@
+import { MEDIUM_FONT_SIZE } from 'constants/fonts';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -5,6 +6,7 @@ export const Wrapper = styled.div`
 	border-radius: ${props => props.theme.spacing(5)};
 	margin: ${props => props.theme.spacing(5)};
 	padding: ${props => props.theme.spacing(5)};
+	font-size: ${MEDIUM_FONT_SIZE};
 `;
 
 export const TitleStyled = styled.p`
@@ -18,7 +20,7 @@ export const DescriptionDataStyled = styled.p`
 
 export const DateStyled = styled.div`
 	width: ${props => props.theme.spacing(40)};
-	height: ${props => props.theme.spacing(8)};
+	height: ${props => props.theme.spacing(10)};
 	display: flex;
 	align-items: center;
 	background-color: ${props => props.theme.colors.gray};
@@ -45,6 +47,6 @@ export const ButtonStyled = styled.button`
 	min-width: ${props => props.theme.spacing(38)};
 	border-radius: ${props => props.theme.spacing(6)};
 	height: ${props => props.theme.spacing(10)};
-	background-color: ${props => props.theme.colors.blue};
+	background-color: ${props => props.theme.colors.black};
 	color: ${props => props.theme.colors.white};
 `;

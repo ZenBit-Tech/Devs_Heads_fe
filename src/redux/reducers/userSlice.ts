@@ -2,14 +2,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ISliceState {
 	email: string;
+	password: string;
 	id: number | undefined;
-	role?: 'freelancer' | 'client';
+	role: string;
+	access_token: string;
 }
 
 const initialState: ISliceState = {
 	email: '',
+	password: '',
 	id: undefined,
-	role: undefined,
+	role: '',
+	access_token: '',
 };
 
 export const userSlice = createSlice({
@@ -22,11 +26,14 @@ export const userSlice = createSlice({
 		saveUserId: (state, action: PayloadAction<number>) => {
 			state.id = action.payload;
 		},
-		setUser: (state, action: PayloadAction<'freelancer' | 'client'>) => {
+		saveToken: (state, action: PayloadAction<string>) => {
+			state.access_token = action.payload;
+		},
+		saveRole: (state, action: PayloadAction<string>) => {
 			state.role = action.payload;
 		},
 	},
 });
 
-export const { saveEmail, saveUserId, setUser } = userSlice.actions;
+export const { saveEmail, saveUserId, saveToken, saveRole } = userSlice.actions;
 export const userReducer = userSlice.reducer;

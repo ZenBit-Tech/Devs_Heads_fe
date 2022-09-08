@@ -11,7 +11,7 @@ import {
 	Span,
 	P,
 } from './JobPost.styles';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Select from 'react-select';
@@ -47,13 +47,18 @@ const JobPost = () => {
 	}, [skillsOptions]);
 
 	const [redColor, setRedColor] = useState(false);
+	const [btn, setBtn] = useState(false);
 	const onSkillsTrue = () => {
-		if (skills.length < 3) {
+		setBtn(true);
+	};
+
+	useEffect(() => {
+		if (skills.length < 3 && btn) {
 			setRedColor(true);
 		} else {
 			setRedColor(false);
 		}
-	};
+	}, [skills, btn]);
 
 	return (
 		<Container>
@@ -176,17 +181,16 @@ const JobPost = () => {
 				</Column>
 				<div>
 					<Title>{`${t('JobPostPage.descriptionTitle')}`}</Title>
-					<input
-						type="text"
+					<textarea
 						{...register('description')}
 						className={`form-control ${errors.description ? 'is-invalid' : ''}`}
 					/>
 					{errors.description && <P>{errors.description?.message}</P>}
 				</div>
 				<div style={{ display: 'flex' }}>
-					<CreateButton type="submit" onClick={onSkillsTrue}>{`${t(
-						'JobPostPage.buttonTitle',
-					)}`}</CreateButton>
+					<CreateButton type="submit" onClick={onSkillsTrue}>
+						{`${t('JobPostPage.buttonTitle')}`}
+					</CreateButton>
 				</div>
 			</form>
 		</Container>
