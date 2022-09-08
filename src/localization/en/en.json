@@ -15,15 +15,18 @@
 		"error": "Invalid email or username"
 	},
 	"ForgotPassword": {
-		"message": "If your email is correct, we just sent you an email with password recovery instructions!",
+		"email": "Email",
 		"sendButton": "Send",
-		"title": "Please, send your email to restore your password"
+		"emailReq": "This field is required!",
+		"title": "Restore Password",
+		"instruction": "If your email is correct, we will send you an email with password recovery instructions!"
 	},
 	"ResetPassword": {
 		"newPassword": "New password",
 		"password": "Confirm password",
 		"success": "You have sucessfully logged in",
-		"error": "Invalid password"
+		"error": "Invalid password",
+		"title": "Recover Password"
 	},
 	"SignUp": {
 		"quickSign": "Quick Sign Up",
@@ -149,5 +152,31 @@
 		"priceError": "This field must be a positive number!",
 		"minLength": "Must be at least 6 characters",
 		"maxLength": "Maximum length is 50 symbols"
-	}
+	},
+	"Layout": {
+		"clientTitle": "My Jobs",
+		"freelancerTitle": "Jobs",
+		"home": "Home",
+		"settings": "Settings",
+		"logout": "Log Out",
+		"login": "Sign In",
+		"signup": "Sign Up",
+		"create": "Create Job Post"
+	},
+	"FreelancerPage": {
+		"filter": "Filter by",
+		"clear": "Clear filters",
+		"search": "Search for jobs",
+		"skills": "Skills",
+		"price": "Price Range",
+		"hours": "Available hours/per day",
+		"min": "min",
+		"max": "max",
+		"engLevelTitle": "English level",
+		"engLevel": {
+		  "pre": "Pre-Intermediate",
+		  "inter": "Intermediate",
+		  "upper": "Upper-Intermediate"
+		}
+	  }
 }

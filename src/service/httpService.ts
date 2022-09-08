@@ -3,18 +3,22 @@ import { FormEmail } from 'components/forgotPassword/forgotPassword';
 
 type FormData = {
 	email: string;
-	password: string;
+	password?: string;
+	role?: string;
 };
+
 interface ISignUpResponse {
 	email: string;
 	password: string;
 	googleId: string;
 	id: number;
+	role?: string;
 }
 
 interface ISignInResponse {
-	token: string;
+	access_token: string;
 	userId: number;
+	role: string;
 }
 
 type FormPass = {
@@ -40,6 +44,16 @@ export const authApi = createApi({
 			query: body => ({
 				url: 'auth/sign-up',
 				method: 'post',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
+		signUpUpdate: build.mutation<ISignUpResponse, FormData>({
+			query: body => ({
+				url: `auth/sign-up/`,
+				method: 'put',
 				body,
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
@@ -88,6 +102,7 @@ export const authApi = createApi({
 });
 export const {
 	useSignUpMutation,
+	useSignUpUpdateMutation,
 	useSignInMutation,
 	useForgotPasswordMutation,
 	useResetPasswordMutation,
@@ -137,6 +152,11 @@ export const jobPostApi = createApi({
 				},
 			}),
 		}),
+		getJobPosts: build.query({
+			query: () => ({
+				url: `/jobPost`,
+			}),
+		}),
 		getJobsDetail: build.query({
 			query: id => `/jobPost/${id}`,
 		}),
@@ -146,7 +166,12 @@ export const jobPostApi = createApi({
 	}),
 });
 
-export const { usePostJobMutation, useGetJobsDetailQuery, useGetPostJobQuery } = jobPostApi;
+export const {
+	usePostJobMutation,
+	useGetJobsDetailQuery,
+	useGetPostJobQuery,
+	useGetJobPostsQuery,
+} = jobPostApi;
 
 export const proposalPostApi = createApi({
 	reducerPath: 'jobProposal',

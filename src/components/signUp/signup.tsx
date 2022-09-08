@@ -15,6 +15,7 @@ export type FormData = {
 	email: string;
 	createPassword: string;
 	password: string;
+	role: string;
 };
 
 type Alert = 'success' | 'error';
@@ -33,7 +34,6 @@ const signUp = () => {
 	const {
 		control,
 		handleSubmit,
-		reset,
 		formState: { errors },
 	} = useForm<FormData>({
 		resolver: yupResolver(schema),
@@ -48,31 +48,26 @@ const signUp = () => {
 	const onSubmit: SubmitHandler<FormData> = async values => {
 		const { email, password } = values;
 		if (values.createPassword !== values.password) {
-			alert('success');
-			reset({ email: '', createPassword: '', password: '' });
+			alert('error');
 		} else {
 			try {
 				const res = await signUp({ email, password }).unwrap();
-				localStorage.setItem('userId', JSON.stringify(res.id));
 				dispatch(saveUserId(res.id));
 				dispatch(saveEmail(email));
-				reset({ email: '', createPassword: '', password: '' });
 				navigate('/role-selection');
 			} catch (e) {
 				alert('error');
-				console.log(e);
-				reset({ email: '', createPassword: '', password: '' });
 			}
 		}
 	};
 
 	return (
 		<Div>
+			<P>{`${t('SignUp.quickSign')}`}</P>
+			<GoogleAuth />
+			<P>{`${t('SignUp.or')}`}</P>
+			<P>{`${t('SignUp.textEmail')}`}</P>
 			<Form onSubmit={handleSubmit(onSubmit)}>
-				<P>{`${t('SignUp.quickSign')}`}</P>
-				<GoogleAuth />
-				<P>{`${t('SignUp.or')}`}</P>
-				<P>{`${t('SignUp.textEmail')}`}</P>
 				<ControlStyle>{`${t('SignUp.email')}`}</ControlStyle>
 				<Controller
 					render={({ field }: any) => <Input type="email" {...field} />}
