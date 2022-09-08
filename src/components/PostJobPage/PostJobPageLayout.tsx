@@ -15,6 +15,7 @@ import {
 import { useGetPostJobQuery, useGetJobPostsQuery } from 'service/httpService';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
+import FreelancerPage from 'components/freelancerJobs/freelancerPage';
 
 interface IPost {
 	id: number;
@@ -74,7 +75,7 @@ const PostJobPageLayout: FC = () => {
 					)}
 				</Wrapper>
 			)}
-			{/* {user.role === Role.Freelancer && <FreelancerPage />} */}
+			{user.role === Role.Freelancer && <FreelancerPage />}
 		</>
 	);
 };

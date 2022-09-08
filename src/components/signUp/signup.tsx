@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useSignUpMutation } from 'service/httpService';
 import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
 import { useAppDispatch } from 'redux/hooks';
-import { saveEmail, saveUserId } from 'redux/reducers/userSlice';
+import { saveEmail, savePassword, saveUserId } from 'redux/reducers/userSlice';
 import { notification } from 'antd';
 
 export type FormData = {
@@ -54,6 +54,7 @@ const signUp = () => {
 				const res = await signUp({ email, password }).unwrap();
 				dispatch(saveUserId(res.id));
 				dispatch(saveEmail(email));
+				dispatch(savePassword(password));
 				navigate('/role-selection');
 			} catch (e) {
 				alert('error');
