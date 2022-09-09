@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BLUE, GREY, DARK_GREY, WHITE } from 'constants/styles';
+import { BLUE, GREY, DARK_GREY, WHITE } from 'constants/colors';
 import { RED_COLOR } from 'constants/colors';
 import { MEDIUM_FONT_SIZE } from 'constants/fonts';
 

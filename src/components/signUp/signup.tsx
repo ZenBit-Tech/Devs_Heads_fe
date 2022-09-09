@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useSignUpMutation } from 'service/httpService';
 import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { saveEmail, saveUserId } from 'redux/reducers/userSlice';
+import { saveEmail, saveUserId, savePassword } from 'redux/reducers/userSlice';
 import { notification } from 'antd';
 import { RootState } from 'redux/store';
 
@@ -35,7 +35,6 @@ const signUp = () => {
 	const {
 		control,
 		handleSubmit,
-		reset,
 		formState: { errors },
 	} = useForm<FormData>({
 		resolver: yupResolver(schema),
@@ -53,21 +52,16 @@ const signUp = () => {
 		const { email, password } = values;
 		values = { ...values, role: user.role };
 		if (values.createPassword !== values.password) {
-			alert('success');
-			reset({ email: '', createPassword: '', password: '' });
+			alert('error');
 		} else {
 			try {
-				const res = await signUp({ email, password, role: user.role }).unwrap();
-				localStorage.setItem('userId', JSON.stringify(res.id));
+				const res = await signUp({ email, password }).unwrap();
 				dispatch(saveUserId(res.id));
 				dispatch(saveEmail(email));
-				localStorage.setItem('userId', JSON.stringify(res.id));
-				reset({ email: '', createPassword: '', password: '' });
-				navigate('/welcome');
+				dispatch(savePassword(password));
+				navigate('/role-selection');
 			} catch (e) {
 				alert('error');
-				// console.log(e);
-				reset({ email: '', createPassword: '', password: '' });
 			}
 		}
 	};

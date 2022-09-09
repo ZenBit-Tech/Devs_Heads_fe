@@ -163,5 +163,45 @@
 		"login": "Sign In",
 		"signup": "Sign Up",
 		"create": "Create Job Post"
+	},
+	"FreelancerPage": {
+		"filter": "Filter by",
+		"clear": "Clear filters",
+		"search": "Search for jobs",
+		"skills": "Skills",
+		"price": "Price Range",
+		"hours": "Available hours/per day",
+		"min": "min",
+		"max": "max",
+		"engLevelTitle": "English level",
+		"engLevel": {
+			"pre": "Pre-Intermediate",
+			"inter": "Intermediate",
+			"upper": "Upper-Intermediate"
+		}
+	},
+	"ClientPage": {
+		"clientTitle": "My Jobs",
+		"clientTitleDrop": "Jobs",
+		"freelancerTitle": "Jobs",
+		"home": "Home",
+		"settings": "Settings",
+		"chat": "Messages",
+		"contracts": "My Contracts",
+		"talent": "Talent",
+		"logout": "Log Out",
+		"login": "Sign In",
+		"signup": "Sign Up",
+		"create": "Post a Job"
+	},
+	"TalentCompanyPage": {
+		"title": "Find a talent for your Job",
+		"discover": "Discover",
+		"hires": "My Hires",
+		"saved": "Saved Talents",
+		"filter": "Filters",
+		"results": "Results by Your Search",
+		"skill": "Skills",
+		"rate": "Hourly Rate"
 	}
 }

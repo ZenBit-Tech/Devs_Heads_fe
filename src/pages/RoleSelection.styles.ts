@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BLUE, LIGHT_GREY, GREY, WHITE } from 'constants/styles';
+import { BLUE, LIGHT_GREY, GREY, WHITE } from 'constants/colors';
 import { LARGE_FONT_SIZE, MEDIUM_FONT_SIZE } from 'constants/fonts';
 
 export const Div1 = styled.div`

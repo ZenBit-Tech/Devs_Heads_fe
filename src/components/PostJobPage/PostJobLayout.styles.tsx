@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
 	border-radius: ${props => props.theme.spacing(5)};
 	margin: ${props => props.theme.spacing(5)};
 	padding: ${props => props.theme.spacing(5)};
+	font-size: ${MEDIUM_FONT_SIZE};
 `;
 
 export const TitleStyled = styled.p`

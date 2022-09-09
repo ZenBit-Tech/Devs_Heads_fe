@@ -2,16 +2,19 @@ import { FC } from 'react';
 import { Div1, H1, P, Div2, Div3, Button2 } from './RoleSelection.styles';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Radio, RadioChangeEvent } from 'antd';
 import { RootState } from 'redux/store';
-import { saveRole } from 'redux/reducers/userSlice';
+import { saveRole, saveUserId } from 'redux/reducers/userSlice';
+import { useAppDispatch } from 'redux/hooks';
+import { useSignUpUpdateMutation } from 'service/httpService';
 
 const RoleSelection: FC = () => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
-	const role = useSelector((state: RootState) => state.user.role);
+	const dispatch = useAppDispatch();
+	const [signUpUpdate] = useSignUpUpdateMutation();
+	const user = useSelector((state: RootState) => state.user);
 
 	const Role = {
 		Freelancer: 'freelancer',
@@ -22,7 +25,17 @@ const RoleSelection: FC = () => {
 		dispatch(saveRole(event.target.value));
 	};
 	const handleClick = async () => {
-		navigate('/sign-up');
+		try {
+			const res = await signUpUpdate({
+				email: user.email,
+				password: user.password,
+				role: user.role,
+			}).unwrap();
+			dispatch(saveUserId(res.id));
+			navigate('/welcome');
+		} catch (e) {
+			alert('error');
+		}
 	};
 
 	return (
@@ -32,7 +45,7 @@ const RoleSelection: FC = () => {
 			<Div2>
 				<P>{`${t('Registration.text')}`}</P>
 				<Div3>
-					<Radio.Group buttonStyle="solid" onChange={handleChange} value={role}>
+					<Radio.Group buttonStyle="solid" onChange={handleChange} value={user.role}>
 						<Radio.Button value={Role.Freelancer}>{`${t(
 							'Registration.buttonText1',
 						)}`}</Radio.Button>

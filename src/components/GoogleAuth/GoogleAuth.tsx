@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 function GoogleAuth() {
 	const { t } = useTranslation();
+
 	const googleAuth = () => {
 		window.open(`http://localhost:3000/auth/redirect`, '_self');
 	};

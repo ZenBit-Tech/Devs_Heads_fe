@@ -18,12 +18,13 @@ import { useGetJobsDetailQuery, useGetProposalDetailQuery } from 'service/httpSe
 import { Suspense, useEffect, useState } from 'react';
 import { JobSkills } from 'components/PostDetailsPage/interfaces';
 import Modal from 'components/PostDetailsPage/components/Modal';
+import { useAppSelector } from 'redux/hooks';
+import { RootState } from 'redux/store';
 
 function DescriptionPage() {
 	const { t } = useTranslation();
 	const params = useParams();
-	const userId = JSON.parse(localStorage.getItem('userId') as string);
-	const role = JSON.parse(localStorage.getItem('role') as string);
+	const { user } = useAppSelector<RootState>(state => state);
 	const [disable, setDisable] = useState(false);
 
 	const useModal = () => {
@@ -39,7 +40,7 @@ function DescriptionPage() {
 	const { data: post, isFetching, isSuccess } = useGetJobsDetailQuery(params.id);
 
 	const proposalId = {
-		userId,
+		userId: user.id,
 		jobId: Number(params.id),
 	};
 	const { data: id, isLoading, isError } = useGetProposalDetailQuery(proposalId);
@@ -69,7 +70,7 @@ function DescriptionPage() {
 		content = (
 			<Wrapper>
 				<TitleStyled>{post.jobTitle}</TitleStyled>
-				{role === Role.Freelancer ? (
+				{user.role === Role.Freelancer && (
 					<>
 						<Column>
 							<CategoryStyled color={'black'}>
@@ -86,7 +87,8 @@ function DescriptionPage() {
 							jobPostId={Number(params.id)}
 						/>
 					</>
-				) : (
+				)}
+				{user.role === Role.Client && (
 					<CategoryStyled color={'black'}>
 						{`${t('PostDetailPage.category')}`} {post.jobCategory.name}
 					</CategoryStyled>

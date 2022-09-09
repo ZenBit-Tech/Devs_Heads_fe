@@ -61,11 +61,8 @@ const signIn = () => {
 		try {
 			const res = await signIn({ email, password, role }).unwrap();
 			dispatch(saveToken(res.access_token));
-			localStorage.setItem('access_token', JSON.stringify(res.access_token));
 			dispatch(saveUserId(res.userId));
-			localStorage.setItem('userId', JSON.stringify(res.userId));
 			dispatch(saveRole(res.role));
-			localStorage.setItem('role', JSON.stringify(res.role));
 			dispatch(saveEmail(values.email));
 			alert('success');
 			reset({ email: '', password: '' });

@@ -3,14 +3,25 @@ import { FormEmail } from 'components/forgotPassword/forgotPassword';
 
 type FormData = {
 	email: string;
-	password: string;
-	role: string;
+	password?: string;
+	role?: string;
 };
+
 interface ISignUpResponse {
 	email: string;
 	password: string;
+	id: number;
+	role?: string;
+}
+type FormDataGoogle = {
+	email: string;
+	role?: string;
+};
+interface ISignUpResponseGoogle {
+	email: string;
 	googleId: string;
 	id: number;
+	role?: string;
 }
 
 interface ISignInResponse {
@@ -42,6 +53,16 @@ export const authApi = createApi({
 			query: body => ({
 				url: 'auth/sign-up',
 				method: 'post',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
+		signUpUpdate: build.mutation<ISignUpResponseGoogle, FormDataGoogle>({
+			query: body => ({
+				url: `auth/sign-up`,
+				method: 'put',
 				body,
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
@@ -90,6 +111,7 @@ export const authApi = createApi({
 });
 export const {
 	useSignUpMutation,
+	useSignUpUpdateMutation,
 	useSignInMutation,
 	useForgotPasswordMutation,
 	useResetPasswordMutation,
