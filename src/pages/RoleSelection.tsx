@@ -1,11 +1,11 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Div1, H1, P, Div2, Div3, Button2 } from './RoleSelection.styles';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Radio, RadioChangeEvent } from 'antd';
 import { RootState } from 'redux/store';
-import { saveRole, saveUserId } from 'redux/reducers/userSlice';
+import { saveEmail, saveRole, saveUserId } from 'redux/reducers/userSlice';
 import { useAppDispatch } from 'redux/hooks';
 import { useSignUpUpdateMutation } from 'service/httpService';
 
@@ -15,6 +15,13 @@ const RoleSelection: FC = () => {
 	const dispatch = useAppDispatch();
 	const [signUpUpdate] = useSignUpUpdateMutation();
 	const user = useSelector((state: RootState) => state.user);
+	const params = useParams();
+
+	useEffect(() => {
+		if (params.user) {
+			dispatch(saveEmail(String(params.user)));
+		}
+	}, []);
 
 	const Role = {
 		Freelancer: 'freelancer',
@@ -27,8 +34,7 @@ const RoleSelection: FC = () => {
 	const handleClick = async () => {
 		try {
 			const res = await signUpUpdate({
-				email: user.email,
-				password: user.password,
+				email: String(params.user) ?? user.email,
 				role: user.role,
 			}).unwrap();
 			dispatch(saveUserId(res.id));
