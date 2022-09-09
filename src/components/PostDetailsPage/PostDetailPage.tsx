@@ -25,29 +25,16 @@ import { JobSkills } from 'components/PostDetailsPage/interfaces';
 import Modal from 'components/PostDetailsPage/components/Modal';
 import { Button } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-// import DeleteModal from './components/DeleteModal';
+import { useAppSelector } from 'redux/hooks';
+import { RootState } from 'redux/store';
 
 const DescriptionPage: FC = () => {
 	const { t } = useTranslation();
 	const params = useParams();
-	const userId = JSON.parse(localStorage.getItem('userId') as string);
-	const role = JSON.parse(localStorage.getItem('role') as string);
+	const { user } = useAppSelector<RootState>(state => state);
 	const [disable, setDisable] = useState(false);
 	const [deleteJobPost, {}] = useDeleteJobPostMutation();
 	const navigate = useNavigate();
-	// const [isModalOpen, setIsModalOpen] = useState(false);
-
-	// const showModal = () => {
-	// 	setIsModalOpen(true);
-	// };
-
-	// const handleOk = () => {
-	// 	setIsModalOpen(false);
-	// };
-
-	// const handleCancel = () => {
-	// 	setIsModalOpen(false);
-	// };
 
 	const handleRemove = () => {
 		deleteJobPost(Number(params.id));
@@ -71,7 +58,7 @@ const DescriptionPage: FC = () => {
 	const { data: post, isFetching, isSuccess } = useGetJobsDetailQuery(params.id);
 
 	const proposalId = {
-		userId,
+		userId: user.id,
 		jobId: Number(params.id),
 	};
 	const { data: id, isLoading, isError } = useGetProposalDetailQuery(proposalId);
@@ -101,7 +88,7 @@ const DescriptionPage: FC = () => {
 		content = (
 			<Wrapper>
 				<TitleStyled>{post.jobTitle}</TitleStyled>
-				{role === Role.Freelancer ? (
+				{user.role === Role.Freelancer && (
 					<>
 						<Column>
 							<CategoryStyled color={'black'}>
@@ -118,7 +105,8 @@ const DescriptionPage: FC = () => {
 							jobPostId={Number(params.id)}
 						/>
 					</>
-				) : (
+				)}
+				{user.role === Role.Client && (
 					<CategoryStyled color={'black'}>
 						{`${t('PostDetailPage.category')}`} {post.jobCategory.name}
 					</CategoryStyled>

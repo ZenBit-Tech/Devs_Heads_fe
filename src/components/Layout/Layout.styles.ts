@@ -16,7 +16,7 @@ export const Image = styled.img`
 
 export const Ul = styled.ul`
 	align-content: space-between;
-	align-item: center;
+	align-items: center;
 	display: flex;
 	flex-flow: row;
 	margin-left: 10px;

@@ -8,9 +8,6 @@ import { saveEmail, saveToken, saveUserId } from 'redux/reducers/userSlice';
 
 const Layout: FC = () => {
 	const { user } = useAppSelector<RootState>(state => state);
-	const id = JSON.parse(localStorage.getItem('userId') as string);
-	const role = JSON.parse(localStorage.getItem('role') as string);
-
 	const dispatch = useAppDispatch();
 
 	const handleClick = () => {
@@ -27,14 +24,14 @@ const Layout: FC = () => {
 
 	return (
 		<div>
-			{id && user ? (
+			{user.id && user ? (
 				<>
 					<Nav>
 						<Ul>
 							<Li>
 								<NavLink to="/">{`${t('Layout.home')}`}</NavLink>
 							</Li>
-							{role === Role.Client && (
+							{user.role === Role.Client && (
 								<>
 									<Li>
 										<NavLink to="post-job">{`${t('Layout.clientTitle')}`}</NavLink>
@@ -44,7 +41,7 @@ const Layout: FC = () => {
 									</Li>
 								</>
 							)}
-							{role === Role.Freelancer && (
+							{user.role === Role.Freelancer && (
 								<>
 									<Li>
 										<NavLink to="post-job">{`${t('Layout.freelancerTitle')}`}</NavLink>
@@ -71,7 +68,7 @@ const Layout: FC = () => {
 								<NavLink to="/">{`${t('Layout.home')}`}</NavLink>
 							</Li>
 							<Li>
-								<NavLink to="/role-selection">{`${t('Layout.signup')}`}</NavLink>
+								<NavLink to="/sign-up">{`${t('Layout.signup')}`}</NavLink>
 							</Li>
 							<Li>
 								<NavLink to="/sign-in">{`${t('Layout.login')}`}</NavLink>

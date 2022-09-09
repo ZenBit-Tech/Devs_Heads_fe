@@ -17,6 +17,8 @@ import {
 import { t } from 'i18next';
 import { usePostProposalMutation } from 'service/httpService';
 import { notification } from 'antd';
+import { useAppSelector } from 'redux/hooks';
+import { RootState } from 'redux/store';
 
 interface ModalProps {
 	isShown: boolean;
@@ -54,7 +56,7 @@ export const HandleModal: FunctionComponent<ModalProps> = ({
 		resolver: yupResolver(Schema),
 	});
 	const [sendForm] = usePostProposalMutation();
-	const userId = JSON.parse(localStorage.getItem('userId') || '{}');
+	const { user } = useAppSelector<RootState>(state => state);
 
 	const openNotificationWithIcon = (type: NotificationType) => {
 		notification[type]({
@@ -68,7 +70,7 @@ export const HandleModal: FunctionComponent<ModalProps> = ({
 	};
 
 	const handleForm = async (data: ProposalForm) => {
-		await sendForm({ ...data, jobPost: jobPostId, userId: userId.userId || userId })
+		await sendForm({ ...data, jobPost: jobPostId, userId: user.id })
 			.unwrap()
 			.then(() => {
 				openNotificationWithIcon('success');

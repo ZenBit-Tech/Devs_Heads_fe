@@ -6,6 +6,9 @@ import { Div, Form, Input, Button, ControlStyle, ErrorP, H1, P } from './Forgot.
 import { useTranslation } from 'react-i18next';
 import { useForgotPasswordMutation } from 'service/httpService';
 import { t } from 'i18next';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { saveUserId } from 'redux/reducers/userSlice';
+import { RootState } from 'redux/store';
 
 export type FormEmail = {
 	email: string;
@@ -19,6 +22,9 @@ const schema = Yup.object({
 
 const forgotPassword = () => {
 	const [forgot] = useForgotPasswordMutation();
+	const dispatch = useAppDispatch();
+
+	const { user } = useAppSelector<RootState>(state => state);
 
 	const {
 		handleSubmit,
@@ -34,6 +40,7 @@ const forgotPassword = () => {
 	const onSubmit: SubmitHandler<FormEmail> = async values => {
 		try {
 			await forgot(values).unwrap();
+			dispatch(saveUserId(user.id as number));
 			reset({ email: '' });
 		} catch (e) {
 			reset({ email: '' });
@@ -53,7 +60,7 @@ const forgotPassword = () => {
 					control={control}
 					defaultValue=""
 				/>
-				<ErrorP>{errors.email?.message}</ErrorP>
+				{errors.email?.message && <ErrorP>{`${t('ForgotPassword.message')}`}</ErrorP>}
 				<Button type="submit">{`${t('ForgotPassword.sendButton')}`}</Button>
 			</Form>
 		</Div>

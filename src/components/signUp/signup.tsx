@@ -35,7 +35,6 @@ const signUp = () => {
 	const {
 		control,
 		handleSubmit,
-		reset,
 		formState: { errors },
 	} = useForm<FormData>({
 		resolver: yupResolver(schema),
@@ -47,27 +46,18 @@ const signUp = () => {
 		});
 	};
 
-	const { user } = useAppSelector<RootState>(state => state);
-
 	const onSubmit: SubmitHandler<FormData> = async values => {
 		const { email, password } = values;
-		values = { ...values, role: user.role };
 		if (values.createPassword !== values.password) {
-			alert('success');
-			reset({ email: '', createPassword: '', password: '' });
+			alert('error');
 		} else {
 			try {
-				const res = await signUp({ email, password, role: user.role }).unwrap();
-				localStorage.setItem('userId', JSON.stringify(res.id));
+				const res = await signUp({ email, password }).unwrap();
 				dispatch(saveUserId(res.id));
 				dispatch(saveEmail(email));
-				localStorage.setItem('userId', JSON.stringify(res.id));
-				reset({ email: '', createPassword: '', password: '' });
-				navigate('/welcome');
+				navigate('/role-selection');
 			} catch (e) {
 				alert('error');
-				// console.log(e);
-				reset({ email: '', createPassword: '', password: '' });
 			}
 		}
 	};

@@ -129,8 +129,7 @@
 		"dataHasBeenSaved": "Your data has been saved"
 	},
 	"PostJobPage": {
-		"freelancerTitle": "Available Jobs",
-		"clientTitle": "Your Postings",
+		"title": "Your Postings",
 		"description": "No active job posts",
 		"button": "Post a Job"
 	},
@@ -152,9 +151,7 @@
 		"proposalSent": "Your proposal has been sent successfully!",
 		"priceError": "This field must be a positive number!",
 		"minLength": "Must be at least 6 characters",
-		"maxLength": "Maximum length is 50 symbols",
-		"editButton": "Edit posting",
-		"removeButton": "Remove postings"
+		"maxLength": "Maximum length is 50 symbols"
 	},
 	"Layout": {
 		"clientTitle": "My Jobs",
@@ -165,5 +162,21 @@
 		"login": "Sign In",
 		"signup": "Sign Up",
 		"create": "Create Job Post"
+	},
+	"FreelancerPage": {
+		"filter": "Filter by",
+		"clear": "Clear filters",
+		"search": "Search for jobs",
+		"skills": "Skills",
+		"price": "Price Range",
+		"hours": "Available hours/per day",
+		"min": "min",
+		"max": "max",
+		"engLevelTitle": "English level",
+		"engLevel": {
+			"pre": "Pre-Intermediate",
+			"inter": "Intermediate",
+			"upper": "Upper-Intermediate"
+		}
 	}
 }

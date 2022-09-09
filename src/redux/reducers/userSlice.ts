@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ISliceState {
 	email: string;
+	password: string;
 	id: number | undefined;
 	role: string;
 	access_token: string;
@@ -9,6 +10,7 @@ interface ISliceState {
 
 const initialState: ISliceState = {
 	email: '',
+	password: '',
 	id: undefined,
 	role: '',
 	access_token: '',
