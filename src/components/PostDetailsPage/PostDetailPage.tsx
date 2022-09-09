@@ -1,3 +1,4 @@
+import React, { FC } from 'react';
 import {
 	TitleStyled,
 	DescriptionStyled,
@@ -13,18 +14,49 @@ import {
 } from './PostDetailPage.styles';
 import { useTranslation } from 'react-i18next';
 import { Checkbox } from 'antd';
-import { useParams } from 'react-router-dom';
-import { useGetJobsDetailQuery, useGetProposalDetailQuery } from 'service/httpService';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+	useGetJobsDetailQuery,
+	useGetProposalDetailQuery,
+	useDeleteJobPostMutation,
+} from 'service/httpService';
 import { Suspense, useEffect, useState } from 'react';
 import { JobSkills } from 'components/PostDetailsPage/interfaces';
 import Modal from 'components/PostDetailsPage/components/Modal';
+import { Button } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+// import DeleteModal from './components/DeleteModal';
 
-function DescriptionPage() {
+const DescriptionPage: FC = () => {
 	const { t } = useTranslation();
 	const params = useParams();
 	const userId = JSON.parse(localStorage.getItem('userId') as string);
 	const role = JSON.parse(localStorage.getItem('role') as string);
 	const [disable, setDisable] = useState(false);
+	const [deleteJobPost, {}] = useDeleteJobPostMutation();
+	const navigate = useNavigate();
+	// const [isModalOpen, setIsModalOpen] = useState(false);
+
+	// const showModal = () => {
+	// 	setIsModalOpen(true);
+	// };
+
+	// const handleOk = () => {
+	// 	setIsModalOpen(false);
+	// };
+
+	// const handleCancel = () => {
+	// 	setIsModalOpen(false);
+	// };
+
+	const handleRemove = () => {
+		deleteJobPost(Number(params.id));
+		navigate('/post-job');
+	};
+
+	const handleNavigate = () => {
+		navigate(`/post-job/${params.id}/edit`);
+	};
 
 	const useModal = () => {
 		const [isShown, setIsShown] = useState<boolean>(false);
@@ -111,12 +143,25 @@ function DescriptionPage() {
 						<CategoryStyled>{`${t('PostDetailPage.project')}`}</CategoryStyled>
 						<Checkbox defaultChecked>{post.jobDuration}</Checkbox>
 					</CategorySkillsBlock>
+					<div>
+						<Button type="link" icon={<EditOutlined />} onClick={handleNavigate}>{`${t(
+							'PostDetailPage.editButton',
+						)}`}</Button>
+						<Button type="link" icon={<DeleteOutlined />} onClick={handleRemove}>{`${t(
+							'PostDetailPage.removeButton',
+						)}`}</Button>
+						{/* <DeleteModal
+							isModalOpen={isModalOpen}
+							handleOk={handleOk}
+							handleCancel={handleCancel}
+						/> */}
+					</div>
 				</WrapperSkillsStyled>
 			</Wrapper>
 		);
 	}
 
 	return <div>{content}</div>;
-}
+};
 
 export default DescriptionPage;

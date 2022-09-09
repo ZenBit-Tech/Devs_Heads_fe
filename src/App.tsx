@@ -27,6 +27,7 @@ const ForgotPassword = lazy(() => import('components/forgotPassword/forgotPasswo
 const RestorePassword = lazy(() => import('components/restorePassword/restorePassword'));
 const PostJobPage = lazy(() => import('pages/PostJobPage'));
 const JobDescriptionPage = lazy(() => import('pages/JobDescriptionPage'));
+const JobDescriptionEditPage = lazy(() => import('pages/JobDescriptionEditPage'));
 
 const App: FC = () => {
 	Cookies.set('name', 'value');
@@ -50,6 +51,7 @@ const App: FC = () => {
 							<Route path="/welcome" element={<WelcomePage />} />
 							<Route path="/create-job-post" element={<JobPostPage />} />
 							<Route path="/role-selection" element={<RoleSelection />} />
+							<Route path="post-job/:id/edit" element={<JobDescriptionEditPage />} />
 							<Route path="post-job/:id" element={<JobDescriptionPage />} />
 							<Route path="post-job" element={<PostJobPage />} />
 							<Route path="settings/" element={<SettingsPage />}>

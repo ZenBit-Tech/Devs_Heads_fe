@@ -71,7 +71,7 @@ const Layout: FC = () => {
 								<NavLink to="/">{`${t('Layout.home')}`}</NavLink>
 							</Li>
 							<Li>
-								<NavLink to="/sign-up">{`${t('Layout.signup')}`}</NavLink>
+								<NavLink to="/role-selection">{`${t('Layout.signup')}`}</NavLink>
 							</Li>
 							<Li>
 								<NavLink to="/sign-in">{`${t('Layout.login')}`}</NavLink>

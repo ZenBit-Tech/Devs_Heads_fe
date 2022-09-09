@@ -128,6 +128,7 @@ export const { usePostProfileInfoMutation, usePostProfileMutation } = profileApi
 export const jobPostApi = createApi({
 	reducerPath: 'jobPost',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	tagTypes: ['JobPost'],
 	endpoints: build => ({
 		postJob: build.mutation({
 			query: body => ({
@@ -138,17 +139,34 @@ export const jobPostApi = createApi({
 					'Content-type': 'application/json; charset=UTF-8',
 				},
 			}),
+			invalidatesTags: ['JobPost'],
 		}),
 		getJobPosts: build.query({
 			query: () => ({
 				url: `/jobPost`,
 			}),
+			providesTags: ['JobPost'],
 		}),
 		getJobsDetail: build.query({
 			query: id => `/jobPost/${id}`,
 		}),
 		getPostJob: build.query({
 			query: id => `/jobPost/user/${id}`,
+		}),
+		updateJobPost: build.mutation({
+			query: ({ id, post }) => ({
+				url: `/jobPost/${id}`,
+				method: 'PATCH',
+				body: post,
+			}),
+			invalidatesTags: ['JobPost'],
+		}),
+		deleteJobPost: build.mutation({
+			query: id => ({
+				url: `/jobPost/${id}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: ['JobPost'],
 		}),
 	}),
 });
@@ -158,6 +176,8 @@ export const {
 	useGetJobsDetailQuery,
 	useGetPostJobQuery,
 	useGetJobPostsQuery,
+	useDeleteJobPostMutation,
+	useUpdateJobPostMutation,
 } = jobPostApi;
 
 export const proposalPostApi = createApi({
