@@ -32,8 +32,11 @@ export const userSlice = createSlice({
 		saveRole: (state, action: PayloadAction<string>) => {
 			state.role = action.payload;
 		},
+		savePassword: (state, action: PayloadAction<string>) => {
+			state.role = action.payload;
+		},
 	},
 });
 
-export const { saveEmail, saveUserId, saveToken, saveRole } = userSlice.actions;
+export const { saveEmail, saveUserId, saveToken, saveRole, savePassword } = userSlice.actions;
 export const userReducer = userSlice.reducer;

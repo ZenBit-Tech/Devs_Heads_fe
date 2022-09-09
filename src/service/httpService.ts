@@ -52,7 +52,7 @@ export const authApi = createApi({
 		}),
 		signUpUpdate: build.mutation<ISignUpResponse, FormData>({
 			query: body => ({
-				url: `auth/sign-up/`,
+				url: `auth/sign-up/update`,
 				method: 'put',
 				body,
 				headers: {
