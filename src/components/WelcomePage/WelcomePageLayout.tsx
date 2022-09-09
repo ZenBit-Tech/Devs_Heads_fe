@@ -18,7 +18,7 @@ const WelcomePageLayout: FC = () => {
 	};
 
 	useEffect(() => {
-		if (user.role === null) {
+		if (!user.role) {
 			navigate('/role-selection');
 		}
 	}, []);

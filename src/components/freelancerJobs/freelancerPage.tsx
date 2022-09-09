@@ -34,6 +34,11 @@ import {
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
 
+const intitialState = {
+	value: '',
+	label: '',
+};
+
 const FreelancerPage: FC = () => {
 	const { t } = useTranslation();
 	const { user } = useAppSelector<RootState>(state => state);
@@ -41,7 +46,6 @@ const FreelancerPage: FC = () => {
 
 	const [skillsOptions, setSkillsOptions] = useState<ISkill[]>(skillsMock);
 	const filteredSkills = skillsOptions.filter(s => s.value);
-
 	const skills = filteredSkills.map(skill => {
 		return skill.name;
 	});
@@ -71,24 +75,19 @@ const FreelancerPage: FC = () => {
 		));
 	}, [skillsOptions]);
 
-	const intitialState = {
-		value: '',
-		label: '',
-	};
+	const [search, setSearch] = useState<string>('');
 
-	const [slider, setSlider] = useState([0, 10000]);
-	const [search, setSearch]: [string, (search: string) => void] = useState('');
-	const [userChoice, setUserChoice] = useState(intitialState);
-	const [radio, setRadio] = useState('');
-
+	const [slider, setSlider] = useState<number[]>([0, 10000]);
 	const rangeSelector = (event: React.ChangeEvent<unknown>, newValue: number | number[]) => {
 		setSlider(newValue as number[]);
 	};
 
+	const [userChoice, setUserChoice] = useState<Category>(intitialState);
 	useEffect(() => {
 		setUserChoice(userChoice);
 	}, [userChoice]);
 
+	const [radio, setRadio] = useState<string>('');
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setRadio(event.target.value);
 	};
@@ -122,8 +121,9 @@ const FreelancerPage: FC = () => {
 						</div>
 						<CategoryDiv>
 							<CustomSelect
-								options={selection || ''}
+								options={selection}
 								onChange={choice => setUserChoice(choice as Category)}
+								isClearable
 							/>
 						</CategoryDiv>
 						<div>
