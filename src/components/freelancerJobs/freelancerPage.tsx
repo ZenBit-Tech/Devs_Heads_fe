@@ -1,8 +1,6 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
 import { useGetJobPostsQuery } from 'service/httpService';
 import {
 	TitleStyled,
@@ -10,41 +8,40 @@ import {
 	ColumnSmall,
 	ColumnBig,
 	FilterLabel,
-	SkillsLabel,
-	SkillsButtonsBlock,
 	ClearBtn,
-	CategoryDiv,
-	SearchInput,
-	CustomSelect,
-	P,
 	Li,
-	CheckLabel,
-	Span,
-	Column,
+	CategoryDiv,
+	CustomSelect,
 	Label,
 } from 'components/freelancerJobs/freelancerPage.styles';
-import {
-	Category,
-	checkList,
-	IPost,
-	ISkill,
-	selection,
-	skillsMock,
-} from 'components/freelancerJobs/changes';
+import { ICategory, IPost, ISkill } from 'components/freelancerJobs/interfaces';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
-
-const intitialState = {
-	value: '',
-	label: '',
-};
+import Skills from 'components/freelancerJobs/components/skills';
+import RadioButtons from 'components/freelancerJobs/components/radio';
+import SliderSearch from 'components/freelancerJobs/components/slider';
+import Search from 'components/freelancerJobs/components/search';
+import { initialState, selection, skillsMock } from 'components/freelancerJobs/constants';
 
 const FreelancerPage: FC = () => {
 	const { t } = useTranslation();
 	const { user } = useAppSelector<RootState>(state => state);
 	const { data: posts } = useGetJobPostsQuery(user.id);
 
+	const [search, setSearch] = useState<string>('');
+	const [userChoice, setUserChoice] = useState<ICategory>(initialState);
 	const [skillsOptions, setSkillsOptions] = useState<ISkill[]>(skillsMock);
+	const [radio, setRadio] = useState<string>('');
+	const [slider, setSlider] = useState<number[]>([0, 10000]);
+
+	const rangeSelector = (event: React.ChangeEvent<unknown>, newValue: number | number[]) => {
+		setSlider(newValue as number[]);
+	};
+
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setRadio(event.target.value);
+	};
+
 	const filteredSkills = skillsOptions.filter(s => s.value);
 	const skills = filteredSkills.map(skill => {
 		return skill.name;
@@ -75,28 +72,11 @@ const FreelancerPage: FC = () => {
 		));
 	}, [skillsOptions]);
 
-	const [search, setSearch] = useState<string>('');
-
-	const [slider, setSlider] = useState<number[]>([0, 10000]);
-	const rangeSelector = (event: React.ChangeEvent<unknown>, newValue: number | number[]) => {
-		setSlider(newValue as number[]);
-	};
-
-	const [userChoice, setUserChoice] = useState<Category>(intitialState);
-	useEffect(() => {
-		setUserChoice(userChoice);
-	}, [userChoice]);
-
-	const [radio, setRadio] = useState<string>('');
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setRadio(event.target.value);
-	};
-
 	const ClearFilters = () => {
 		setSearch('');
-		setUserChoice(intitialState);
-		setSlider([0, 10000]);
 		setSkillsOptions(skillsMock);
+		setUserChoice(initialState);
+		setSlider([0, 10000]);
 		setRadio('');
 	};
 
@@ -108,65 +88,18 @@ const FreelancerPage: FC = () => {
 						<div>
 							<FilterLabel>{`${t('FreelancerPage.filter')}`}</FilterLabel>
 						</div>
-						<div>
-							<SkillsLabel>{`${t('FreelancerPage.skills')}`}</SkillsLabel>
-						</div>
-						<div>
-							<SkillsButtonsBlock
-								data-toggle="buttons"
-								className="btn-group btn-group-toggle flex-wrap"
-							>
-								{optionButtons}
-							</SkillsButtonsBlock>
-						</div>
+						<Skills optionButtons={optionButtons} />
 						<CategoryDiv>
 							<CustomSelect
 								options={selection}
-								onChange={choice => setUserChoice(choice as Category)}
-								isClearable
+								onChange={choice => setUserChoice(choice as ICategory)}
 							/>
 						</CategoryDiv>
-						<div>
-							<SkillsLabel>{`${t('FreelancerPage.price')}`}</SkillsLabel>
-							<P>
-								${slider[0]}-{slider[1]}
-							</P>
-							<Typography id="range-slider" gutterBottom></Typography>
-							<Slider
-								value={slider}
-								onChange={rangeSelector}
-								valueLabelDisplay="auto"
-								min={0}
-								max={10000}
-							/>
-						</div>
-						<div>
-							<Column>
-								<ul>
-									<Li>{`${t('JobPostPage.shortDuration')}`}</Li>
-									<Li>{`${t('JobPostPage.mediumDuration')}`}</Li>
-									<Li>{`${t('JobPostPage.longDuration')}`}</Li>
-								</ul>
-							</Column>
-							<Column>
-								<CheckLabel>
-									{checkList.map((item: string, index: number) => (
-										<div key={index}>
-											<input value={item} type="radio" name="gender" onChange={handleChange} />
-											<Span>{item}</Span>
-										</div>
-									))}
-								</CheckLabel>
-							</Column>
-						</div>
+						<SliderSearch slider={slider} rangeSelector={rangeSelector} />
+						<RadioButtons handleChange={handleChange} />
 					</ColumnSmall>
 					<ColumnBig>
-						<SearchInput
-							type="text"
-							placeholder={`${t('FreelancerPage.search')}`}
-							value={search}
-							onChange={e => setSearch(e.target.value)}
-						/>
+						<Search search={search} setSearch={setSearch} />
 						<ClearBtn onClick={ClearFilters}>{`${t('FreelancerPage.clear')}`}</ClearBtn>
 						<ul>
 							{posts

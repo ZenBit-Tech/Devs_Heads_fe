@@ -6,6 +6,7 @@ import ArrowDowm from 'assets/arrowDown.jpg';
 import { RootState } from 'redux/store';
 import { useAppSelector } from 'redux/hooks';
 import { useNavigate } from 'react-router-dom';
+import { RoleSelection } from 'constants/routes';
 
 const WelcomePageLayout: FC = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -19,7 +20,7 @@ const WelcomePageLayout: FC = () => {
 
 	useEffect(() => {
 		if (!user.role) {
-			navigate('/role-selection');
+			navigate(`${RoleSelection}`);
 		}
 	}, []);
 

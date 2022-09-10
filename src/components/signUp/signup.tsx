@@ -10,6 +10,7 @@ import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
 import { useAppDispatch } from 'redux/hooks';
 import { saveEmail, savePassword, saveUserId } from 'redux/reducers/userSlice';
 import { notification } from 'antd';
+import { RoleSelection } from 'constants/routes';
 
 export type FormData = {
 	email: string;
@@ -55,7 +56,7 @@ const signUp = () => {
 				dispatch(saveUserId(res.id));
 				dispatch(saveEmail(email));
 				dispatch(savePassword(password));
-				navigate('/role-selection');
+				navigate(`${RoleSelection}`);
 			} catch (e) {
 				alert('error');
 			}

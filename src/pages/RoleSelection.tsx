@@ -8,6 +8,7 @@ import { RootState } from 'redux/store';
 import { saveRole, saveUserId } from 'redux/reducers/userSlice';
 import { useAppDispatch } from 'redux/hooks';
 import { useSignUpUpdateMutation } from 'service/httpService';
+import { Welcome } from 'constants/routes';
 
 const RoleSelection: FC = () => {
 	const { t } = useTranslation();
@@ -32,7 +33,7 @@ const RoleSelection: FC = () => {
 				role: user.role,
 			}).unwrap();
 			dispatch(saveUserId(res.id));
-			navigate('/welcome');
+			navigate(`${Welcome}`);
 		} catch (e) {
 			alert('error');
 		}

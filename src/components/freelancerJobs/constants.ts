@@ -1,25 +1,9 @@
 import { t } from 'i18next';
 
-export interface ISkill {
-	name: string;
-	value: boolean;
-}
-
-export interface IPost {
-	id: number;
-	jobTitle: string;
-	jobDescription: string;
-	jobCategory: { id: number; name: string };
-	toHourRate: number;
-	fromHourRate: number;
-	jobSkills: { id: number; name: string }[];
-	jobDuration: string;
-}
-
-export interface Category {
-	value: string;
-	label: string;
-}
+export const initialState = {
+	value: '',
+	label: '',
+};
 
 export const skillsMock = [
 	{ name: 'Business analysis', value: false },
