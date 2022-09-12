@@ -7,7 +7,6 @@ function GoogleAuth() {
 	const { t } = useTranslation();
 
 	const googleAuth = () => {
-		localStorage.setItem('google', 'true');
 		window.open(`http://localhost:3000/auth/redirect`, '_self');
 	};
 	return (
