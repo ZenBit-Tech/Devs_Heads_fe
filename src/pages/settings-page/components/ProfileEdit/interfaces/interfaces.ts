@@ -30,6 +30,7 @@ export interface IProfileEdit {
 	wage: number;
 	skills: ISkill[];
 	englishLevel: EnglishLevelEnum;
+	userId: number | undefined;
 	description: string;
 	education: IEducationAndExperienceTemplate[];
 	experience: IEducationAndExperienceTemplate[];
@@ -57,4 +58,5 @@ export interface IBackEndProfileEdit {
 	education: IBackEndExperienceAndEducation[];
 	experience: IBackEndExperienceAndEducation[];
 	skills: IBackEndSkill[];
+	userId: number | undefined;
 }

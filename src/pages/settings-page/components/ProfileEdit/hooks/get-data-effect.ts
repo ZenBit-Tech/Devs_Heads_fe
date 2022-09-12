@@ -7,6 +7,7 @@ export const getDataEffect = () => {
 		const newObj: IProfileEdit = {
 			profilePhoto: data.photo,
 			position: data.position,
+			userId: data.userId,
 			category: data.category.name,
 			wage: data.price,
 			skills: data.skills.map(e => {
@@ -21,7 +22,7 @@ export const getDataEffect = () => {
 				return { dateStart: e.startDate, dateEnd: e.endDate, info: e.description, error: false };
 			}),
 		};
-		// console.log(newObj);
+		console.log(newObj);
 		return newObj;
 	};
 	return { getData };

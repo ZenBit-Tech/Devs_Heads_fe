@@ -10,6 +10,8 @@ import {
 import { useSendData } from './use-send-data';
 import { defaultProfilePhoto } from 'constants/links';
 import { EnglishLevelEnum } from 'enum/english-level-enum';
+import { RootState } from 'redux/store';
+import { useAppSelector } from 'redux/hooks';
 
 const textareaMock = {
 	education: [
@@ -82,6 +84,7 @@ export const useOnDataChange = () => {
 
 	const [file, setFile] = useState<Blob>();
 	const [file64, setFile64] = useState<string>(defaultProfilePhoto);
+	const { user } = useAppSelector<RootState>(state => state);
 	const onChangePhotoHandler = async (e: ChangeEvent<HTMLInputElement>) => {
 		const reader = new FileReader();
 		reader.onloadend = () => {
@@ -262,6 +265,7 @@ export const useOnDataChange = () => {
 			position: position,
 			category: category,
 			wage: price,
+			userId: user.id,
 			skills: filteredSkills,
 			englishLevel: englishOption,
 			description: description,

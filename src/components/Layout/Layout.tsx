@@ -58,52 +58,51 @@ const Layout: FC = () => {
 					<Navigation>
 						{user.role === Role.Client && (
 							<>
-								{toggleMenu ||
-									(screenWidth > 650 && (
-										<UlNav>
-											<Border className="dropdown">
-												<button
-													className="dropdownButton dropdown-toggle"
-													type="button"
-													id="dropdownMenuButton"
-													data-toggle="dropdown"
-													aria-haspopup="true"
-													aria-expanded="false"
-												>
-													{`${t('ClientPage.clientTitleDrop')}`}
-												</button>
-												<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-													<BoderNav>
-														<NavLink className="dropdown-item" to="post-job">{`${t(
-															'ClientPage.clientTitle',
-														)}`}</NavLink>
-													</BoderNav>
-													<BoderNav>
-														<NavLink className="dropdown-item" to="/create-job-post">{`${t(
-															'ClientPage.create',
-														)}`}</NavLink>
-													</BoderNav>
-												</div>
-											</Border>
-											<Border>
-												<NavLink to="/talent">{`${t('ClientPage.talent')}`}</NavLink>
-											</Border>
-											<Border>
-												<NavLink to="/chat">{`${t('ClientPage.chat')}`}</NavLink>
-											</Border>
-											<Border>
-												<NavLink to="/contracts">{`${t('ClientPage.contracts')}`}</NavLink>
-											</Border>
-											<Border>
-												<NavLink onClick={() => handleClick()} to="/sign-in">
-													{`${t('ClientPage.logout')}`}
-												</NavLink>
-											</Border>
-											<NavLink to="/setting">
-												<Image src={SettingPerson} alt="SettingPerson" />
+								{(toggleMenu || screenWidth > 650) && (
+									<UlNav>
+										<Border className="dropdown">
+											<button
+												className="dropdownButton dropdown-toggle"
+												type="button"
+												id="dropdownMenuButton"
+												data-toggle="dropdown"
+												aria-haspopup="true"
+												aria-expanded="false"
+											>
+												{`${t('ClientPage.clientTitleDrop')}`}
+											</button>
+											<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+												<BoderNav>
+													<NavLink className="dropdown-item" to="post-job">{`${t(
+														'ClientPage.clientTitle',
+													)}`}</NavLink>
+												</BoderNav>
+												<BoderNav>
+													<NavLink className="dropdown-item" to="/create-job-post">{`${t(
+														'ClientPage.create',
+													)}`}</NavLink>
+												</BoderNav>
+											</div>
+										</Border>
+										<Border>
+											<NavLink to="/talent">{`${t('ClientPage.talent')}`}</NavLink>
+										</Border>
+										<Border>
+											<NavLink to="/chat">{`${t('ClientPage.chat')}`}</NavLink>
+										</Border>
+										<Border>
+											<NavLink to="/contracts">{`${t('ClientPage.contracts')}`}</NavLink>
+										</Border>
+										<Border>
+											<NavLink onClick={() => handleClick()} to="/sign-in">
+												{`${t('ClientPage.logout')}`}
 											</NavLink>
-										</UlNav>
-									))}
+										</Border>
+										<NavLink to="/setting">
+											<Image src={SettingPerson} alt="SettingPerson" />
+										</NavLink>
+									</UlNav>
+								)}
 								<ButtonText onClick={toggleNav} className="btn">
 									Navigation Menu
 								</ButtonText>
