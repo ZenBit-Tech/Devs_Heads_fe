@@ -174,9 +174,23 @@
 		"max": "max",
 		"engLevelTitle": "English level",
 		"engLevel": {
-		  "pre": "Pre-Intermediate",
-		  "inter": "Intermediate",
-		  "upper": "Upper-Intermediate"
+			"pre": "Pre-Intermediate",
+			"inter": "Intermediate",
+			"upper": "Upper-Intermediate"
 		}
-	  }
+	},
+	"ClientPage": {
+		"clientTitle": "My Jobs",
+		"clientTitleDrop": "Jobs",
+		"freelancerTitle": "Jobs",
+		"home": "Home",
+		"settings": "Settings",
+		"chat": "Messages",
+		"contracts": "My Contracts",
+		"talent": "Talent",
+		"logout": "Log Out",
+		"login": "Sign In",
+		"signup": "Sign Up",
+		"create": "Post a Job"
+	}
 }
