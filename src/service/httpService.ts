@@ -134,9 +134,16 @@ export const profileApi = createApi({
 				},
 			}),
 		}),
+		getFilterProfile: build.query({
+			query: filter => ({
+				url: `profile/filter?category=${filter.select}&sort=asc&page=${filter.page}skills=${filter.skills}&search=${filter.search}`,
+				method: 'get',
+			}),
+		}),
 	}),
 });
-export const { usePostProfileInfoMutation, usePostProfileMutation } = profileApi;
+export const { usePostProfileInfoMutation, usePostProfileMutation, useGetFilterProfileQuery } =
+	profileApi;
 
 export const jobPostApi = createApi({
 	reducerPath: 'jobPost',

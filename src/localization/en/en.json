@@ -163,6 +163,16 @@
 		"signup": "Sign Up",
 		"create": "Create Job Post"
 	},
+	"TalentCompanyPage": {
+		"title": "Find a talent for your Job",
+		"discover": "Discover",
+		"hires": "My Hires",
+		"saved": "Saved Talents",
+		"filter": "Filters",
+		"results": "Results by Your Search",
+		"skill": "Skills",
+		"rate": "Hourly Rate"
+	},
 	"FreelancerPage": {
 		"filter": "Filter by",
 		"clear": "Clear filters",
@@ -174,9 +184,9 @@
 		"max": "max",
 		"engLevelTitle": "English level",
 		"engLevel": {
-		  "pre": "Pre-Intermediate",
-		  "inter": "Intermediate",
-		  "upper": "Upper-Intermediate"
+			"pre": "Pre-Intermediate",
+			"inter": "Intermediate",
+			"upper": "Upper-Intermediate"
 		}
-	  }
+	}
 }
