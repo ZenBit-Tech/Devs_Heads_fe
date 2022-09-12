@@ -5,6 +5,7 @@ import { LARGE_FONT_SIZE, MEDIUM_FONT_SIZE, SMALL_FONT_SIZE } from 'constants/fo
 
 export const Div = styled.div`
 	margin: auto;
+	margin-top: 25px;
 	width: 50%;
 	@media screen and (max-width: 600px) {
 		width: 90%;
