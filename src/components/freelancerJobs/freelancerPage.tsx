@@ -1,7 +1,7 @@
 import { FC, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useGetJobPostsQuery } from 'service/httpService';
+import { useGetJobPostsQuery, useGetJobPostByUserQuery } from 'service/httpService';
 import {
 	TitleStyled,
 	DescriptionDataStyled,
@@ -26,11 +26,35 @@ import { initialState, selection, skillsMock } from 'components/freelancerJobs/c
 const FreelancerPage: FC = () => {
 	const { t } = useTranslation();
 	const { user } = useAppSelector<RootState>(state => state);
+
+	const { data: userInfo, isLoading } = useGetJobPostByUserQuery(user.id);
 	const { data: posts } = useGetJobPostsQuery(user.id);
 
+	const BeCategory = userInfo.jobCategory.name;
+	const categoryValue = { value: BeCategory, label: BeCategory };
+	const BeSkills = userInfo.jobSkills;
+
+	const BESkills = BeSkills.map((skill: { name: string }) => {
+		return skill.name;
+	});
+
+	const skillsBE = skillsMock.map(skill => {
+		let name = '';
+		BESkills.map((skill2: string) => {
+			if (skill.value === false && skill.name === skill2) {
+				name = skill.name;
+			} else return skill2;
+		});
+		if (name !== '') {
+			const abc: { name: string; value: boolean } = { name: name, value: true };
+			name = '';
+			return abc;
+		} else return skill;
+	});
+
 	const [search, setSearch] = useState<string>('');
-	const [userChoice, setUserChoice] = useState<ICategory>(initialState);
-	const [skillsOptions, setSkillsOptions] = useState<ISkill[]>(skillsMock);
+	const [userChoice, setUserChoice] = useState<ICategory>(categoryValue);
+	const [skillsOptions, setSkillsOptions] = useState<ISkill[]>(skillsBE);
 	const [radio, setRadio] = useState<string>('');
 	const [slider, setSlider] = useState<number[]>([0, 10000]);
 
@@ -82,6 +106,7 @@ const FreelancerPage: FC = () => {
 
 	return (
 		<>
+			{isLoading && <div>Loading..</div>}
 			{posts?.length > 0 && (
 				<>
 					<ColumnSmall>
@@ -93,6 +118,7 @@ const FreelancerPage: FC = () => {
 							<CustomSelect
 								options={selection}
 								onChange={choice => setUserChoice(choice as ICategory)}
+								defaultValue={categoryValue}
 							/>
 						</CategoryDiv>
 						<SliderSearch slider={slider} rangeSelector={rangeSelector} />
@@ -124,7 +150,15 @@ const FreelancerPage: FC = () => {
 										JSON.stringify(skill).includes(JSON.stringify(skills))
 									) {
 										return post;
-									} else if (userChoice.label === '' && skills.length === 0) {
+									} else if (
+										radio === '' &&
+										post.jobCategory.name === userChoice.label &&
+										slider[0] <= post.fromHourRate &&
+										slider[1] >= post.fromHourRate &&
+										JSON.stringify(skill).includes(JSON.stringify(skills))
+									) {
+										return post;
+									} else if (userChoice.label === '') {
 										return post;
 									}
 								})

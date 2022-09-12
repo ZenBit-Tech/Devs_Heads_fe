@@ -168,8 +168,11 @@ export const jobPostApi = createApi({
 		getJobsDetail: build.query({
 			query: id => `/jobPost/${id}`,
 		}),
-		getPostJob: build.query({
-			query: id => `/jobPost/user/${id}`,
+		getAllJobPostsByUser: build.query({
+			query: id => `/jobPost/userJobs/${id}`,
+		}),
+		getJobPostByUser: build.query({
+			query: id => `/jobPost/userJob/${id}`,
 		}),
 	}),
 });
@@ -177,7 +180,8 @@ export const jobPostApi = createApi({
 export const {
 	usePostJobMutation,
 	useGetJobsDetailQuery,
-	useGetPostJobQuery,
+	useGetAllJobPostsByUserQuery,
+	useGetJobPostByUserQuery,
 	useGetJobPostsQuery,
 } = jobPostApi;
 
