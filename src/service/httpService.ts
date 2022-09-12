@@ -52,7 +52,7 @@ export const authApi = createApi({
 		}),
 		signUpUpdate: build.mutation<ISignUpResponse, FormData>({
 			query: body => ({
-				url: `auth/sign-up/`,
+				url: `auth/sign-up`,
 				method: 'put',
 				body,
 				headers: {
@@ -153,9 +153,7 @@ export const jobPostApi = createApi({
 			}),
 		}),
 		getJobPosts: build.query({
-			query: () => ({
-				url: `/jobPost`,
-			}),
+			query: () => `/jobPost`,
 		}),
 		getJobsDetail: build.query({
 			query: id => `/jobPost/${id}`,

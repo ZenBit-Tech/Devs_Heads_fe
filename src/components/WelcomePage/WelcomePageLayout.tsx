@@ -1,19 +1,28 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { WelcomePageLayoutWrapper, TitleStyled, ImageStyled } from './WelcomePageLayout.styles';
 import ArrowDowm from 'assets/arrowDown.jpg';
 import { RootState } from 'redux/store';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from 'redux/hooks';
+import { useNavigate } from 'react-router-dom';
+import { RoleSelection } from 'constants/routes';
 
 const WelcomePageLayout: FC = () => {
-	const role = useSelector((state: RootState) => state.user.role);
+	const { user } = useAppSelector<RootState>(state => state);
 	const { t } = useTranslation();
+	const navigate = useNavigate();
 
 	const Role = {
 		Freelancer: 'freelancer',
 		Client: 'client',
 	};
+
+	useEffect(() => {
+		if (!user.role) {
+			navigate(`${RoleSelection}`);
+		}
+	}, []);
 
 	return (
 		<WelcomePageLayoutWrapper>
@@ -21,7 +30,7 @@ const WelcomePageLayout: FC = () => {
 			<p>{`${t('WelcomePage.description')}`}</p>
 			<p>{`${t('WelcomePage.pointerToLink')}`}</p>
 			<ImageStyled src={ArrowDowm} alt="arrowDown" />
-			{role === Role.Freelancer ? (
+			{user.role === Role.Freelancer ? (
 				<Link to="/settings">{`${t('WelcomePage.linkDescription')}`}</Link>
 			) : (
 				<Link to="/post-job">{`${t('WelcomePage.linkDescription')}`}</Link>

@@ -5,6 +5,7 @@ import { RootState } from 'redux/store';
 import { Nav, Ul, Li } from './Layout.styles';
 import { t } from 'i18next';
 import { saveEmail, saveToken, saveUserId } from 'redux/reducers/userSlice';
+import { CreateJobPost, Home, PostJobPage, Settings, SignIn, SignUp } from 'constants/routes';
 
 const Layout: FC = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -29,30 +30,30 @@ const Layout: FC = () => {
 					<Nav>
 						<Ul>
 							<Li>
-								<NavLink to="/">{`${t('Layout.home')}`}</NavLink>
+								<NavLink to={`${Home}`}>{`${t('Layout.home')}`}</NavLink>
 							</Li>
 							{user.role === Role.Client && (
 								<>
 									<Li>
-										<NavLink to="post-job">{`${t('Layout.clientTitle')}`}</NavLink>
+										<NavLink to={`${PostJobPage}`}>{`${t('Layout.clientTitle')}`}</NavLink>
 									</Li>
 									<Li>
-										<NavLink to="/create-job-post">{`${t('Layout.create')}`}</NavLink>
+										<NavLink to={`${CreateJobPost}`}>{`${t('Layout.create')}`}</NavLink>
 									</Li>
 								</>
 							)}
 							{user.role === Role.Freelancer && (
 								<>
 									<Li>
-										<NavLink to="post-job">{`${t('Layout.freelancerTitle')}`}</NavLink>
+										<NavLink to={`${PostJobPage}`}>{`${t('Layout.freelancerTitle')}`}</NavLink>
 									</Li>
 									<Li>
-										<NavLink to="/settings/edit-profile">{`${t('Layout.settings')}`}</NavLink>
+										<NavLink to={`${Settings}`}>{`${t('Layout.settings')}`}</NavLink>
 									</Li>
 								</>
 							)}
 							<Li>
-								<NavLink onClick={() => handleClick()} to="/sign-in">
+								<NavLink onClick={() => handleClick()} to={`${SignIn}`}>
 									{`${t('Layout.logout')}`}
 								</NavLink>
 							</Li>
@@ -65,13 +66,13 @@ const Layout: FC = () => {
 					<Nav>
 						<Ul>
 							<Li>
-								<NavLink to="/">{`${t('Layout.home')}`}</NavLink>
+								<NavLink to={`${Home}`}>{`${t('Layout.home')}`}</NavLink>
 							</Li>
 							<Li>
-								<NavLink to="/sign-up">{`${t('Layout.signup')}`}</NavLink>
+								<NavLink to={`${SignUp}`}>{`${t('Layout.signup')}`}</NavLink>
 							</Li>
 							<Li>
-								<NavLink to="/sign-in">{`${t('Layout.login')}`}</NavLink>
+								<NavLink to={`${SignIn}`}>{`${t('Layout.login')}`}</NavLink>
 							</Li>
 						</Ul>
 					</Nav>
