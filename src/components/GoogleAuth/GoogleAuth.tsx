@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 
 function GoogleAuth() {
 	const { t } = useTranslation();
-	console.log(process.env);
 	const googleAuth = () => {
 		window.open(`${process.env.REACT_APP_GOOGLE_REDIRECT}`, '_self');
 	};
