@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useGetJobPostsQuery, useGetJobPostByUserQuery } from 'service/httpService';
@@ -30,46 +30,26 @@ const FreelancerPage: FC = () => {
 	const { data: userInfo, isLoading } = useGetJobPostByUserQuery(user.id);
 	const { data: posts } = useGetJobPostsQuery(user.id);
 
-	const BeCategory = userInfo.jobCategory.name;
-	const categoryValue = { value: BeCategory, label: BeCategory };
-	const BeSkills = userInfo.jobSkills;
-
-	const BESkills = BeSkills.map((skill: { name: string }) => {
-		return skill.name;
-	});
-
-	const skillsBE = skillsMock.map(skill => {
-		let name = '';
-		BESkills.map((skill2: string) => {
-			if (skill.value === false && skill.name === skill2) {
-				name = skill.name;
-			} else return skill2;
-		});
-		if (name !== '') {
-			const abc: { name: string; value: boolean } = { name: name, value: true };
-			name = '';
-			return abc;
-		} else return skill;
-	});
-
 	const [search, setSearch] = useState<string>('');
-	const [userChoice, setUserChoice] = useState<ICategory>(categoryValue);
-	const [skillsOptions, setSkillsOptions] = useState<ISkill[]>(skillsBE);
-	const [radio, setRadio] = useState<string>('');
-	const [slider, setSlider] = useState<number[]>([0, 10000]);
+	const [categoryValue, setCategoryValue] = useState<ICategory>(initialState);
+	const [skillsOptions, setSkillsOptions] = useState<ISkill[]>(skillsMock);
+	const [durationValue, setDurationValue] = useState<string>('');
+	const [userPrice, setUserPrice] = useState<number[]>([0, 10000]);
 
 	const rangeSelector = (event: React.ChangeEvent<unknown>, newValue: number | number[]) => {
-		setSlider(newValue as number[]);
+		setUserPrice(newValue as number[]);
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setRadio(event.target.value);
+		setDurationValue(event.target.value);
 	};
 
-	const filteredSkills = skillsOptions.filter(s => s.value);
-	const skills = filteredSkills.map(skill => {
-		return skill.name;
-	});
+	useEffect(() => {
+		if (!isLoading) {
+			setSkillsOptions(skills);
+			setCategoryValue(category);
+		}
+	}, [isLoading]);
 
 	const onSkillsChange = (index: number) => {
 		setSkillsOptions(prevState => {
@@ -96,17 +76,28 @@ const FreelancerPage: FC = () => {
 		));
 	}, [skillsOptions]);
 
+	if (isLoading) {
+		return <p>Loading...</p>;
+	}
+
+	const category = { value: userInfo.jobCategory.name, label: userInfo.jobCategory.name };
+	const skills = skillsMock.map(skill => ({
+		...skill,
+		value: userInfo.jobSkills.some((jobSkill: { name: string }) => jobSkill.name === skill.name),
+	}));
+	const filteredSkills = skillsOptions.filter(s => s.value);
+	const userSkills = filteredSkills.map(s => s.name);
+
 	const ClearFilters = () => {
 		setSearch('');
 		setSkillsOptions(skillsMock);
-		setUserChoice(initialState);
-		setSlider([0, 10000]);
-		setRadio('');
+		setCategoryValue(initialState);
+		setUserPrice([0, 10000]);
+		setDurationValue('');
 	};
 
 	return (
 		<>
-			{isLoading && <div>Loading..</div>}
 			{posts?.length > 0 && (
 				<>
 					<ColumnSmall>
@@ -117,11 +108,11 @@ const FreelancerPage: FC = () => {
 						<CategoryDiv>
 							<CustomSelect
 								options={selection}
-								onChange={choice => setUserChoice(choice as ICategory)}
+								onChange={choice => setCategoryValue(choice as ICategory)}
 								defaultValue={categoryValue}
 							/>
 						</CategoryDiv>
-						<SliderSearch slider={slider} rangeSelector={rangeSelector} />
+						<SliderSearch slider={userPrice} rangeSelector={rangeSelector} />
 						<RadioButtons handleChange={handleChange} />
 					</ColumnSmall>
 					<ColumnBig>
@@ -139,26 +130,16 @@ const FreelancerPage: FC = () => {
 									}
 								})
 								.filter((post: IPost) => {
-									const skill = post.jobSkills.map(skill => {
+									const jobSkills = post.jobSkills.map(skill => {
 										return skill.name;
 									});
 									if (
-										post.jobCategory.name === userChoice.label &&
-										slider[0] <= post.fromHourRate &&
-										slider[1] >= post.fromHourRate &&
-										JSON.stringify(radio) === JSON.stringify(post.jobDuration) &&
-										JSON.stringify(skill).includes(JSON.stringify(skills))
+										userPrice[0] <= post.fromHourRate &&
+										userPrice[1] >= post.fromHourRate &&
+										(durationValue.includes(post.jobDuration) || durationValue === '') &&
+										(categoryValue.label === post.jobCategory.name || categoryValue.value === '') &&
+										(jobSkills.some(value => userSkills.includes(value)) || userSkills.length === 0)
 									) {
-										return post;
-									} else if (
-										radio === '' &&
-										post.jobCategory.name === userChoice.label &&
-										slider[0] <= post.fromHourRate &&
-										slider[1] >= post.fromHourRate &&
-										JSON.stringify(skill).includes(JSON.stringify(skills))
-									) {
-										return post;
-									} else if (userChoice.label === '') {
 										return post;
 									}
 								})
