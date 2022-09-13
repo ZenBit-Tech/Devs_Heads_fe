@@ -178,5 +178,13 @@
 		  "inter": "Intermediate",
 		  "upper": "Upper-Intermediate"
 		}
-	  }
+	},
+	"InvitePage": {
+		"button": "Invite",
+		"link": "more"
+	},
+	"InvitePopup": {
+		"title": "Invite Talent",
+		"button": "Send invitation"
+	}
 }

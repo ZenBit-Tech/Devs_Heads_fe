@@ -5,6 +5,7 @@ import { RootState } from 'redux/store';
 import { Nav, Ul, Li } from './Layout.styles';
 import { t } from 'i18next';
 import { saveEmail, saveToken, saveUserId } from 'redux/reducers/userSlice';
+import Home from 'pages/Home';
 
 const Layout: FC = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -78,6 +79,7 @@ const Layout: FC = () => {
 					<Outlet />
 				</>
 			)}
+			<Home />
 		</div>
 	);
 };
