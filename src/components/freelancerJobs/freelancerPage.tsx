@@ -34,7 +34,7 @@ const FreelancerPage: FC = () => {
 	const [categoryValue, setCategoryValue] = useState<ICategory>(initialState);
 	const [skillsOptions, setSkillsOptions] = useState<ISkill[]>(skillsMock);
 	const [durationValue, setDurationValue] = useState<string>('');
-	const [userPrice, setUserPrice] = useState<number[]>([0, 10000]);
+	const [userPrice, setUserPrice] = useState<number[]>([0, 3000]);
 
 	const rangeSelector = (event: React.ChangeEvent<unknown>, newValue: number | number[]) => {
 		setUserPrice(newValue as number[]);
@@ -76,6 +76,9 @@ const FreelancerPage: FC = () => {
 		));
 	}, [skillsOptions]);
 
+	const filteredSkills = useMemo(() => skillsOptions.filter(s => s.value), [skillsOptions]);
+	const userSkills = useMemo(() => filteredSkills.map(s => s.name), [filteredSkills]);
+
 	if (isLoading) {
 		return <p>Loading...</p>;
 	}
@@ -85,14 +88,12 @@ const FreelancerPage: FC = () => {
 		...skill,
 		value: userInfo.jobSkills.some((jobSkill: { name: string }) => jobSkill.name === skill.name),
 	}));
-	const filteredSkills = skillsOptions.filter(s => s.value);
-	const userSkills = filteredSkills.map(s => s.name);
 
 	const ClearFilters = () => {
 		setSearch('');
 		setSkillsOptions(skillsMock);
 		setCategoryValue(initialState);
-		setUserPrice([0, 10000]);
+		setUserPrice([0, 3000]);
 		setDurationValue('');
 	};
 
