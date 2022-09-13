@@ -99,7 +99,7 @@ const Layout: FC = () => {
 											<Image src={SettingPerson} alt="SettingPerson" />
 										</NavLink>
 										<Li>
-											<NavLink onClick={() => handleClick()} to={`${SignIn}`}>
+											<NavLink onClick={handleClick} to={`${SignIn}`}>
 												{`${t('ClientPage.logout')}`}
 											</NavLink>
 										</Li>
@@ -126,7 +126,7 @@ const Layout: FC = () => {
 										<Image src={Person} alt="SettingPerson" />
 									</NavLink>
 									<Li>
-										<NavLink onClick={() => handleClick()} to={`${SignIn}`}>
+										<NavLink onClick={handleClick} to={`${SignIn}`}>
 											{`${t('Layout.logout')}`}
 										</NavLink>
 									</Li>
