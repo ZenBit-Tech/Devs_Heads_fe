@@ -1,16 +1,9 @@
 import styled from 'styled-components';
-import { LIGHTBLUE_COLOR } from 'constants/colors';
 import { MEDIUM_FONT_SIZE } from 'constants/fonts';
 
-export const Nav = styled.nav`
-	display: flex;
-	margin-bottom: 10px;
-	border-bottom: 2px solid ${LIGHTBLUE_COLOR};
-`;
-
 export const Image = styled.img`
-	width: 65px;
-	height: 65px;
+	width: 55px;
+	height: 55px;
 	border-radius: 6px;
 	@media (max-width: 860px) {
 		width: 45px;
@@ -18,34 +11,18 @@ export const Image = styled.img`
 	}
 `;
 
-export const Ul = styled.ul`
-	align-content: space-between;
-	align-items: center;
-	display: flex;
-	flex-flow: row;
-	margin-left: 10px;
-`;
-
-export const Li = styled.li`
-	margin-top: 10px;
-	margin-left: 30px;
-	color: ${LIGHTBLUE_COLOR};
-	font-size: ${MEDIUM_FONT_SIZE};
-`;
-
 export const BoderNav = styled.div`
 	&:nth-child(1) {
 		border-bottom: 2px solid ${props => props.theme.colors.lightGray};
 	}
 `;
-
-export const Border = styled.li`
-	margin: 10px 20px 10px 10px;
+export const Li = styled.li`
+	margin: 10px 20px 10px 20px;
 	cursor: pointer;
 	text-transform: uppercase;
 	font-size: ${MEDIUM_FONT_SIZE};
-	border-radius: ${props => props.theme.spacing(2)};
-	padding: ${props => props.theme.spacing(2)} ${props => props.theme.spacing(5)};
+	border-radius: ${props => props.theme.spacing(1)};
+	padding: ${props => props.theme.spacing(2)} ${props => props.theme.spacing(10)};
 	border: 2px solid ${props => props.theme.colors.lightGray};
 	button:focus {
 		outline: none;
@@ -70,8 +47,8 @@ export const Border = styled.li`
 export const Navigation = styled.nav`
 	top: 0;
 	width: 100%;
-	height: 50px;
-	margin-bottom: 25px;
+	height: 40px;
+	margin: 25px 5px 25px 5px;
 `;
 export const UlNav = styled.ul`
 	list-style-type: none;
@@ -89,17 +66,12 @@ export const UlNav = styled.ul`
 `;
 
 export const ButtonText = styled.button`
-	 {
-		display: none;
-		position: absolute;
-		right: 10px;
-		top: 7px;
-		padding: 5px;
-		color: #000;
-		font-size: 18px;
-		@media screen and (max-width: 650px) {
-			display: block;
-			z-index: 11;
-		}
+	display: none;
+	position: absolute;
+	padding: 5px;
+	font-size: ${MEDIUM_FONT_SIZE};
+	@media screen and (max-width: 650px) {
+		display: block;
+		z-index: 11;
 	}
 `;

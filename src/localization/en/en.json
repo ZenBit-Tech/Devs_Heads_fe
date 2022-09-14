@@ -201,6 +201,12 @@
 		"logout": "Log Out",
 		"login": "Sign In",
 		"signup": "Sign Up",
-		"create": "Post a Job"
-	}
+		"create": "Post a Job",
+		"menu": "Navigation Menu"
+	},
+	"FreelancerLayout": {
+		"chat": "Messages",
+		"contracts": "My Contracts",
+		"search": "Search a Job"
+	  }
 }
