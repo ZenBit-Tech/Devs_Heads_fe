@@ -2,32 +2,22 @@ import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { NavLink, Outlet } from 'react-router-dom';
 import { RootState } from 'redux/store';
-import {
-	Nav,
-	Ul,
-	Li,
-	Navigation,
-	ButtonText,
-	Border,
-	UlNav,
-	BoderNav,
-	Image,
-} from './Layout.styles';
+import { Navigation, ButtonText, Li, UlNav, BoderNav, Image } from './Layout.styles';
 import { t } from 'i18next';
 import { saveEmail, saveToken, saveUserId } from 'redux/reducers/userSlice';
 import {
 	CreateJobPost,
-	Home,
 	PostJobPage,
 	Settings,
 	SignIn,
-	SignUp,
-	SettingsJobOwner,
 	Contracts,
 	Chat,
 	TalentPage,
+	SettingsJobOwner,
 } from 'constants/routes';
-import SettingPerson from '../../image/setting-person.svg';
+import SettingPerson from 'image/setting-person.svg';
+import Person from 'image/profile.png';
+import SignInPage from 'pages/SigninPage';
 
 const Layout: FC = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -72,7 +62,7 @@ const Layout: FC = () => {
 							<>
 								{(toggleMenu || screenWidth > 650) && (
 									<UlNav>
-										<Border className="dropdown">
+										<Li className="dropdown">
 											<button
 												className="dropdownButton dropdown-toggle"
 												type="button"
@@ -95,71 +85,59 @@ const Layout: FC = () => {
 													)}`}</NavLink>
 												</BoderNav>
 											</div>
-										</Border>
-										<Border>
+										</Li>
+										<Li>
 											<NavLink to={`${TalentPage}`}>{`${t('ClientPage.talent')}`}</NavLink>
-										</Border>
-										<Border>
+										</Li>
+										<Li>
 											<NavLink to={`${Chat}`}>{`${t('ClientPage.chat')}`}</NavLink>
-										</Border>
-										<Border>
+										</Li>
+										<Li>
 											<NavLink to={`${Contracts}`}>{`${t('ClientPage.contracts')}`}</NavLink>
-										</Border>
-										<Border>
-											<NavLink onClick={() => handleClick()} to={`${SignIn}`}>
-												{`${t('ClientPage.logout')}`}
-											</NavLink>
-										</Border>
+										</Li>
 										<NavLink to={`${SettingsJobOwner}`}>
 											<Image src={SettingPerson} alt="SettingPerson" />
 										</NavLink>
+										<Li>
+											<NavLink onClick={handleClick} to={`${SignIn}`}>
+												{`${t('ClientPage.logout')}`}
+											</NavLink>
+										</Li>
 									</UlNav>
 								)}
 								<ButtonText onClick={toggleNav} className="btn">
-									Navigation Menu
+									{`${t('ClientPage.menu')}`}
 								</ButtonText>
 							</>
 						)}
-						<Ul>
+						<UlNav>
 							{user.role === Role.Freelancer && (
 								<>
 									<Li>
-										<NavLink to={`${Home}`}>{`${t('Layout.home')}`}</NavLink>
+										<NavLink to={`${Contracts}`}>{`${t('FreelancerLayout.contracts')}`}</NavLink>
 									</Li>
 									<Li>
-										<NavLink to={`${PostJobPage}`}>{`${t('Layout.freelancerTitle')}`}</NavLink>
+										<NavLink to={`${Chat}`}>{`${t('FreelancerLayout.chat')}`}</NavLink>
 									</Li>
 									<Li>
-										<NavLink to={`${Settings}`}>{`${t('Layout.settings')}`}</NavLink>
+										<NavLink to={`${PostJobPage}`}>{`${t('FreelancerLayout.search')}`}</NavLink>
 									</Li>
+									<NavLink to={`${Settings}`}>
+										<Image src={Person} alt="SettingPerson" />
+									</NavLink>
 									<Li>
-										<NavLink onClick={() => handleClick()} to={`${SignIn}`}>
+										<NavLink onClick={handleClick} to={`${SignIn}`}>
 											{`${t('Layout.logout')}`}
 										</NavLink>
 									</Li>
 								</>
 							)}
-						</Ul>
+						</UlNav>
 					</Navigation>
 					<Outlet />
 				</>
 			) : (
-				<>
-					<Nav>
-						<Ul>
-							<Li>
-								<NavLink to={`${Home}`}>{`${t('Layout.home')}`}</NavLink>
-							</Li>
-							<Li>
-								<NavLink to={`${SignUp}`}>{`${t('Layout.signup')}`}</NavLink>
-							</Li>
-							<Li>
-								<NavLink to={`${SignIn}`}>{`${t('Layout.login')}`}</NavLink>
-							</Li>
-						</Ul>
-					</Nav>
-					<Outlet />
-				</>
+				<SignInPage />
 			)}
 		</div>
 	);
