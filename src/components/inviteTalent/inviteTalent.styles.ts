@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BLACK_COLOR, BLUE, WHITE } from 'constants/colors';
+import { BLACK_COLOR, BLUE, WHITE, GREY } from 'constants/colors';
 import { LARGE_FONT_SIZE, MEDIUM_FONT_SIZE } from 'constants/fonts';
 
 export const Container = styled.div`
@@ -47,7 +47,12 @@ export const Image = styled.img`
 `;
 
 export const Save = styled.div`
+	&:focus {
+		box-shadow: 0000;
+		outline: 0;
+	}
 	border: none;
+	cursor: pointer;
 	order: 1;
 	margin-top: 50px;
 	margin-left: 100px;
@@ -56,7 +61,6 @@ export const Save = styled.div`
 `;
 
 export const Img = styled.img`
-	border: none;
 	align-content: center;
 	height: 30px;
 	width: 30px;
@@ -69,10 +73,13 @@ export const H5 = styled.h5`
 `;
 
 export const Invite = styled.button`
+	&:focus {
+		box-shadow: 0000;
+		outline: 0;
+	}
 	margin-top: 100px;
 	margin-left: 40%;
 	background: ${BLUE};
-	border: none;
 	border-radius: 6px;
 	color: ${WHITE};
 	font-size: ${LARGE_FONT_SIZE};
@@ -81,39 +88,105 @@ export const Invite = styled.button`
 `;
 
 export const Modal = styled.div`
-	font-size: 12px;
+	background: ${WHITE};
+	align-content: center;
+	display: block;
+	position: relative;
+	border: 1px solid ${BLACK_COLOR};
+	border-radius: 10px;
+	margin-top: 30px;
+	height: 500px;
+	width: 500px;
 `;
 
 export const Header = styled.header`
-	width: 100%;
-	border-bottom: 1px solid gray;
-	font-size: 18px;
+	border-bottom: 1px solid ${GREY};
+	font-size: ${MEDIUM_FONT_SIZE};
 	text-align: center;
-	padding: 5px;
+	width: 100%;
 `;
 
 export const Content = styled.div`
-	width: 100%;
+	align-content: center;
+	display: flex;
+	flex-flow: column wrap;
+	font-weight: bold;
+	margin-top: 10px;
 	padding: 10px 5px;
+	width: 100%;
+`;
+
+export const TextArea = styled.textarea`
+	&:focus {
+		box-shadow: 0000;
+		outline: 0;
+	}
+	font-weight: normal;
+	border: none;
+	resize: none;
+	margin-top: 10px;
+	height: 300px;
+	width: 350px;
 `;
 
 export const Actions = styled.div`
-	width: 100%;
-	padding: 10px 5px;
-	margin: auto;
+	display: flex;
+	flex-flow: column wrap;
 	text-align: center;
+	width: 100%;
+`;
+
+export const Select = styled.select`
+	&:focus {
+		box-shadow: 0000;
+		outline: 0;
+	}
+	align-self: center;
+	margin-top: -100px;
+	border-radius: 10px;
+	height: 30px;
+	width: 80%;
+`;
+
+export const SendMessage = styled.button`
+	&:focus {
+		box-shadow: 0000;
+		outline: 0;
+	}
+	align-self: center;
+	margin-top: 60px;
+	background: ${BLUE};
+	border-radius: 6px;
+	color: ${WHITE};
+	font-size: ${MEDIUM_FONT_SIZE};
+	height: 50px;
+	width: 300px;
 `;
 
 export const Close = styled.button`
+	&:focus {
+		box-shadow: 0000;
+		outline: 0;
+	}
 	cursor: pointer;
-	position: absolute;
 	display: block;
 	padding: 2px 5px;
-	line-height: 20px;
-	right: -10px;
-	top: -10px;
-	font-size: 24px;
-	background: #ffffff;
-	border-radius: 18px;
-	border: 1px solid #cfcece;
+	margin-top: 10px;
+	margin-left: 450px;
+	font-size: ${LARGE_FONT_SIZE};
+`;
+
+export const JobPost = styled.button`
+	&:focus {
+		box-shadow: 0000;
+		outline: 0;
+	}
+	align-self: center;
+	margin-top: 60px;
+	background: ${BLUE};
+	border-radius: 6px;
+	color: ${WHITE};
+	font-size: ${MEDIUM_FONT_SIZE};
+	height: 50px;
+	width: 200px;
 `;

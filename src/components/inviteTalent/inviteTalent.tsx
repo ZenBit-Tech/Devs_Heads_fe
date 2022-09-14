@@ -17,16 +17,36 @@ import {
 	Modal,
 	Header,
 	Content,
+	TextArea,
 	Actions,
+	SendMessage,
 	Close,
+	Select,
+	JobPost,
 } from './inviteTalent.styles';
 import blackHeartIcon from 'assets/blackHeartIcon.svg';
 import whiteHeartIcon from 'assets/whiteHeartIcon.svg';
+import { useGetJobPostsQuery, useGetPostJobQuery } from 'service/httpService';
+import { useAppSelector } from 'redux/hooks';
+import { RootState } from 'redux/store';
+import { BLUE } from 'constants/colors';
+import { useNavigate } from 'react-router-dom';
+
+interface IPost {
+	jobTitle: string;
+	jobDescription: string;
+}
 
 const InviteTalent: FC = () => {
 	const { t } = useTranslation();
+	const navigate = useNavigate();
+	const [open, setOpen] = useState(false);
+	const [isDisebled, setIsDisebled] = useState(false);
 	const [saveBool, setSaveBool] = useState(false);
 	const [srcIcon, setSrcIcon] = useState(whiteHeartIcon);
+	const { user } = useAppSelector<RootState>(state => state);
+	const { data: post = [] } = useGetPostJobQuery(user.id);
+	const { data: posts } = useGetJobPostsQuery(user.role);
 	const { control } = useForm();
 
 	const handleSrc = () => {
@@ -42,6 +62,14 @@ const InviteTalent: FC = () => {
 			setSaveBool(true);
 		} else {
 			setSaveBool(false);
+		}
+	};
+
+	const handleDisable = () => {
+		if (!isDisebled) {
+			setIsDisebled(true);
+		} else {
+			setIsDisebled(false);
 		}
 	};
 
@@ -80,48 +108,59 @@ const InviteTalent: FC = () => {
 					<Div3>
 						<P>{el.description}</P>
 					</Div3>
-					<Popup
-						trigger={<Invite type="button">{`${t('InvitePage.button')}`}</Invite>}
-						modal
-						nested
-					>
-						{(close: any) => {
-							return (
-								<Modal>
-									<Close onClick={() => close(close)}>&times;</Close>
-									<Header>{`${t('InvitePopup.title')}`}</Header>
-									<Content>
-										<Controller
-											render={() => (
-												<textarea defaultValue="I look for a freelancer to do this job" />
-											)}
-											name="text"
-											control={control}
-										/>
-									</Content>
-									<Actions>
-										<Popup
-											trigger={<button className="button"> Trigger </button>}
-											position="top center"
-											nested
-										>
-											<span>dropdown to choose the job and button to send the invitation</span>
-										</Popup>
-										<button
-											onClick={() => {
-												console.log('modal closed ');
-												close(close);
-											}}
-										>
-											{`${t('InvitePopup.button')}`}
-										</button>
-									</Actions>
-								</Modal>
-							);
-						}}
-					</Popup>
 				</>
 			))}
+			<Invite type="button" onClick={() => setOpen(true)}>{`${t('InvitePage.button')}`}</Invite>
+			{post ? (
+				<Popup open={open} closeOnDocumentClick onClose={() => setOpen(false)}>
+					{open ? (
+						<Modal>
+							<Close type="button" onClick={() => setOpen(false)}>
+								&times;
+							</Close>
+							<Header>{`${t('InvitePopup.title')}`}</Header>
+							<Content>
+								{`${t('InvitePopup.label')}`}
+								<Controller
+									render={() => <TextArea defaultValue={`${t('InvitePopup.message')}`} />}
+									name="text"
+									control={control}
+								/>
+							</Content>
+							<Actions>
+								<Select>
+									{post?.map((el: IPost) => (
+										<option>{el.jobTitle}</option>
+									))}
+								</Select>
+								<SendMessage
+									onClick={() => handleDisable()}
+									className={isDisebled ? 'btn btn-sucess' : BLUE}
+									disabled={isDisebled}
+								>
+									{`${t('InvitePopup.button')}`}
+								</SendMessage>
+							</Actions>
+						</Modal>
+					) : null}
+				</Popup>
+			) : (
+				<Popup open={open} closeOnDocumentClick onClose={() => setOpen(false)}>
+					{open ? (
+						<Modal>
+							<Close type="button" onClick={() => setOpen(false)}>
+								&times;
+							</Close>
+							<Header>{`${t('InvitePopup.noJobs')}`}</Header>
+							<Actions>
+								<JobPost type="button" onClick={() => navigate('/create-job-post')}>{`${t(
+									'InvitePopup.buttonPost',
+								)}`}</JobPost>
+							</Actions>
+						</Modal>
+					) : null}
+				</Popup>
+			)}
 		</Container>
 	);
 };
