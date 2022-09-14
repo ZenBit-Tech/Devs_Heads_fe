@@ -305,6 +305,3 @@ export const useOnDataChange = () => {
 		onSubmit,
 	};
 };
-function str(str: any, type: string | undefined, arg2: string) {
-	throw new Error('Function not implemented.');
-}

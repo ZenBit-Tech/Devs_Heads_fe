@@ -133,11 +133,8 @@ export const profileApi = createApi({
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
 				},
+				providesTags: ['Profile'],
 			}),
-		}),
-		getAllProfile: build.query({
-			query: () => `profile/allProfile`,
-			providesTags: ['Profile'],
 		}),
 		getFilterProfile: build.query({
 			query: filter => ({
@@ -146,28 +143,12 @@ export const profileApi = createApi({
 				}&search=${filter.search ?? ''}`,
 				method: 'get',
 			}),
-			async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
-				const patchResult = dispatch(
-					profileApi.util.updateQueryData('getAllProfile', id, draft => {
-						Object.assign(draft, patch);
-					}),
-				);
-				try {
-					await queryFulfilled;
-				} catch {
-					patchResult.undo();
-				}
-			},
 		}),
 	}),
 });
 
-export const {
-	usePostProfileInfoMutation,
-	usePostProfileMutation,
-	useGetFilterProfileQuery,
-	useGetAllProfileQuery,
-} = profileApi;
+export const { usePostProfileInfoMutation, usePostProfileMutation, useGetFilterProfileQuery } =
+	profileApi;
 
 export const jobPostApi = createApi({
 	reducerPath: 'jobPost',

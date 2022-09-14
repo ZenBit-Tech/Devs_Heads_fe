@@ -91,15 +91,7 @@ const TalentPageLayout: FC = () => {
 		search: search,
 		page: currentPage,
 	};
-	// const { data: profile } = useGetAllProfileQuery('length');
 	const { data, isLoading } = useGetFilterProfileQuery(sendFilter);
-
-	console.log(
-		`profile/filter?category=${sendFilter.select ?? ''}&sort=asc&page=${sendFilter.page}skills=${
-			sendFilter.skills ?? ''
-		}&search=${sendFilter.search ?? ''}`,
-	);
-	console.log(data);
 
 	function getFilterList() {
 		setShowFilterList(!showFilterList);
