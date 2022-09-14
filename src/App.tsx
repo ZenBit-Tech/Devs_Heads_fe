@@ -10,6 +10,7 @@ import GlobalStyle from 'config/GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import { theme } from 'config/theme';
 import TalentPage from 'pages/TalentPage';
+import SingleProfilePage from 'pages/SingleProfilePage';
 
 const WelcomePage = lazy(() => import('./pages/WelcomePage/WelcomePage'));
 
@@ -54,6 +55,7 @@ const App: FC = () => {
 							<Route path="post-job/:id" element={<JobDescriptionPage />} />
 							<Route path="post-job" element={<PostJobPage />} />
 							<Route path="/talent" element={<TalentPage />} />
+							<Route path="profile/:id" element={<SingleProfilePage />} />
 							<Route path="settings/" element={<SettingsPage />}>
 								<Route path="edit-profile" element={<ProfileEdit />} />
 								<Route path="contact-info" element={<ContactInfo />} />

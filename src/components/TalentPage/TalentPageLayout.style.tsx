@@ -113,9 +113,11 @@ export const ProfileBlock = styled.div`
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	gap: ${props => props.theme.spacing(10)};
+	padding-bottom: ${props => props.theme.spacing(5)};
+`;
+export const PaginationBlock = styled.div`
 	width: 60%;
 	margin: ${props => props.theme.spacing(7.5)} auto;
-	padding-bottom: ${props => props.theme.spacing(5)};
 	@media (max-width: 800px) {
 		width: 95%;
 	}
@@ -133,10 +135,16 @@ export const ProfileData = styled.div`
 export const ProfileImage = styled.img`
 	width: ${props => props.theme.spacing(25)};
 	height: ${props => props.theme.spacing(25)};
+	border-radius: 50%;
 	@media (max-width: 800px) {
 		width: ${props => props.theme.spacing(10)};
 		height: ${props => props.theme.spacing(10)};
 	}
+`;
+
+export const ProfilePhoto = styled.div`
+	width: 150px;
+	height: 143px;
 `;
 
 export const ImageWrapperBlock = styled.div`
@@ -153,4 +161,14 @@ export const ImageWrapper = styled.i`
 	border-radius: 50%;
 	display: inline-block;
 	padding: ${props => props.theme.spacing(6.25)};
+`;
+
+export const PhotoWrapper = styled.i`
+	border-radius: ${props => props.theme.spacing(5)};
+	font-size: ${props => props.theme.spacing(6.25)};
+	text-align: center;
+	margin-right: ${props => props.theme.spacing(2.5)};
+	border-radius: 50%;
+	display: inline-block;
+	padding: 25px;
 `;

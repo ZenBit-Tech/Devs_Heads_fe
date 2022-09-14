@@ -4,20 +4,21 @@ import {
 	ImageWrapperBlock,
 	ProfileData,
 	ProfileImage,
+	PhotoWrapper,
 } from './TalentPageLayout.style';
-import Profile from '../../image/profile.png';
-import { FilterData } from './interfaces';
+import { Filter } from './interfaces';
 import { Link } from 'react-router-dom';
 import { t } from 'i18next';
+import Profile from '../../image/profile.png';
 
-const FilterProfileUser: FC<{ item: FilterData }> = ({ item }) => {
+const FilterProfileUser: FC<{ item: Filter }> = ({ item }) => {
 	return (
 		<>
 			<ImageWrapperBlock>
-				{item.profilePhoto ? (
-					<ImageWrapper>
-						<ProfileImage src={item.profilePhoto} alt="profile" />
-					</ImageWrapper>
+				{item.filter.photo ? (
+					<PhotoWrapper>
+						<ProfileImage src={item.filter.photo} alt="profile" />
+					</PhotoWrapper>
 				) : (
 					<ImageWrapper>
 						<ProfileImage src={Profile} alt="profile" />
@@ -25,9 +26,11 @@ const FilterProfileUser: FC<{ item: FilterData }> = ({ item }) => {
 				)}
 			</ImageWrapperBlock>
 			<ProfileData>
-				<Link to={`/profile/${item.id}`}>{item.userName}</Link>
-				<p>{item.title}</p>
-				{`${t('TalentCompanyPage.rate')} ${item.fromHourRate}$ - ${item.toHourRate}$`}
+				<Link to={`/profile/${item.filter.id}`}>
+					{item.user.firstName} {item.user.lastName}
+				</Link>
+				<p>{item.filter.position}</p>
+				{`${t('TalentCompanyPage.rate')} ${item.filter.price}$`}
 			</ProfileData>
 		</>
 	);

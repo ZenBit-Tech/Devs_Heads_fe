@@ -18,13 +18,40 @@ export interface IJobPostBE {
 	userId: number | undefined;
 }
 
-export interface FilterData {
+interface ISkill {
 	id: number;
-	userName: string;
-	profilePhoto: string;
-	title: string;
-	fromHourRate: number;
-	toHourRate: number;
+	name: string;
+}
+
+interface ICategory {
+	id: number;
+	name: string;
+}
+export interface FilterData {
+	category: ICategory;
+	description: string;
+	englishLevel: string;
+	id: number;
+	photo: string;
+	position: string;
+	price: number;
+	skills: ISkill[];
+	userId: number;
+}
+export interface UserProfile {
+	email: string;
+	firstName: string;
+	id: number;
+	lastName: string;
+	phone: string;
+	user: number;
+	userId: number;
+}
+
+export interface Filter {
+	[map: string]: any;
+	filter: FilterData;
+	user: UserProfile;
 }
 
 export interface Paginate {
@@ -32,6 +59,10 @@ export interface Paginate {
 	total: number;
 	paginate: (pageNumber: React.SetStateAction<number>) => void;
 }
+
+// export interface User {
+// 	user: UserProfile;
+// }
 
 export interface ButtonActive {
 	name: string;

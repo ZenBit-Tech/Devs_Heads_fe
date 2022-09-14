@@ -113,6 +113,7 @@ export const {
 export const profileApi = createApi({
 	reducerPath: 'profile',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	tagTypes: ['Profile'],
 	endpoints: build => ({
 		postProfileInfo: build.mutation<IContactInfoForm, IContactInfoForm>({
 			query: ({ id, email, firstName, lastName, phone }) => ({
@@ -134,16 +135,39 @@ export const profileApi = createApi({
 				},
 			}),
 		}),
+		getAllProfile: build.query({
+			query: () => `profile/allProfile`,
+			providesTags: ['Profile'],
+		}),
 		getFilterProfile: build.query({
 			query: filter => ({
-				url: `profile/filter?category=${filter.select}&sort=asc&page=${filter.page}skills=${filter.skills}&search=${filter.search}`,
+				url: `profile/filter?category=${filter.select ?? ''}&sort=asc&page=${filter.page}&skills=${
+					filter.skills ?? ''
+				}&search=${filter.search ?? ''}`,
 				method: 'get',
 			}),
+			async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+				const patchResult = dispatch(
+					profileApi.util.updateQueryData('getAllProfile', id, draft => {
+						Object.assign(draft, patch);
+					}),
+				);
+				try {
+					await queryFulfilled;
+				} catch {
+					patchResult.undo();
+				}
+			},
 		}),
 	}),
 });
-export const { usePostProfileInfoMutation, usePostProfileMutation, useGetFilterProfileQuery } =
-	profileApi;
+
+export const {
+	usePostProfileInfoMutation,
+	usePostProfileMutation,
+	useGetFilterProfileQuery,
+	useGetAllProfileQuery,
+} = profileApi;
 
 export const jobPostApi = createApi({
 	reducerPath: 'jobPost',

@@ -16,15 +16,14 @@ import {
 	InputContainer,
 	IconSearch,
 	ProfileBlock,
+	PaginationBlock,
 } from './TalentPageLayout.style';
 import { ImSearch } from 'react-icons/im';
 import { ISkill } from 'components/jobPost/interfaces';
 import { skillsMock } from 'components/jobPost/dataChanges';
-import { RootState } from 'redux/store';
-import { FilterData, ICategoryBE, SearchSubmitForm } from './interfaces';
+import { Filter, ICategoryBE, SearchSubmitForm } from './interfaces';
 import Select from 'react-select';
 import { selection } from 'components/jobPost/dataChanges';
-import { useAppSelector } from 'redux/hooks';
 import { BsArrowLeftCircle } from 'react-icons/bs';
 import { BsArrowRightCircle } from 'react-icons/bs';
 import MyHiresCompany from './myhires/MyHiresCompany';
@@ -35,15 +34,12 @@ import Pagination from './Pagination';
 
 const TalentPageLayout: FC = () => {
 	const { t } = useTranslation();
-	const { user } = useAppSelector<RootState>(state => state);
-	const userId = user.id;
 	const [skillsOption, setSkillsOptions] = useState<ISkill[]>(skillsMock);
 	const [select, setSelect] = useState<ICategoryBE>();
 	const [search, setSearch] = useState<string>('');
 	const [showFilterList, setShowFilterList] = useState<boolean>(true);
-	const [filter, setFilter] = useState([]);
 	const [active, setActive] = useState<{ [name: string]: string }>();
-	const [currentPage, setCurrentPage] = useState(1);
+	const [currentPage, setCurrentPage] = useState<number>(1);
 
 	const filteredSkills = skillsOption.filter(s => s.value);
 	const skillsBack: string[] = [];
@@ -56,7 +52,6 @@ const TalentPageLayout: FC = () => {
 	});
 
 	const {
-		handleSubmit,
 		control,
 		formState: { errors },
 	} = useForm<SearchSubmitForm>();
@@ -96,92 +91,15 @@ const TalentPageLayout: FC = () => {
 		search: search,
 		page: currentPage,
 	};
-	console.log(sendFilter);
+	// const { data: profile } = useGetAllProfileQuery('length');
+	const { data, isLoading } = useGetFilterProfileQuery(sendFilter);
 
-	const { data, isLoading, isError } = useGetFilterProfileQuery(sendFilter);
+	console.log(
+		`profile/filter?category=${sendFilter.select ?? ''}&sort=asc&page=${sendFilter.page}skills=${
+			sendFilter.skills ?? ''
+		}&search=${sendFilter.search ?? ''}`,
+	);
 	console.log(data);
-
-	console.log(filter);
-	useEffect(() => {
-		const filterProfile = () => {
-			if (data) {
-				const filteredItem = data?.data.profile?.map((item: { userId: number }) => {
-					data?.data.data.map((profile: { userId: number }) => {
-						item.userId === profile.userId;
-					});
-				});
-				console.log(filteredItem);
-				setFilter(filteredItem);
-			}
-		};
-		filterProfile();
-	}, [sendFilter.select, sendFilter.skills, sendFilter.search]);
-
-	console.log(filter);
-
-	// const onSubmit = async (data: SearchSubmitForm) => {
-	// 	const newData = {
-	// 		...data,
-	// 		userId,
-	// 		skills,
-	// 	};
-	// };
-
-	const searchItemKeyWords = (value: string) => {
-		console.log(value);
-		//get serach request
-	};
-
-	// const hardCodeData = [
-	// 	{
-	// 		id: 1,
-	// 		userName: 'John Smith',
-	// 		profilePhoto: '',
-	// 		title: 'frontend developer',
-	// 		fromHourRate: 100,
-	// 		toHourRate: 200,
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		userName: 'John Smith',
-	// 		profilePhoto: '',
-	// 		title: 'frontend developer',
-	// 		fromHourRate: 100,
-	// 		toHourRate: 200,
-	// 	},
-	// 	{
-	// 		id: 3,
-	// 		userName: 'John Smith',
-	// 		profilePhoto: '',
-	// 		title: 'frontend developer',
-	// 		fromHourRate: 100,
-	// 		toHourRate: 200,
-	// 	},
-	// 	{
-	// 		id: 4,
-	// 		userName: 'John Smith',
-	// 		profilePhoto: '',
-	// 		title: 'frontend developer',
-	// 		fromHourRate: 100,
-	// 		toHourRate: 200,
-	// 	},
-	// 	{
-	// 		id: 5,
-	// 		userName: 'John Smith',
-	// 		profilePhoto: '',
-	// 		title: 'frontend developer',
-	// 		fromHourRate: 100,
-	// 		toHourRate: 200,
-	// 	},
-	// 	{
-	// 		id: 6,
-	// 		userName: 'John Smith',
-	// 		profilePhoto: '',
-	// 		title: 'frontend developer',
-	// 		fromHourRate: 100,
-	// 		toHourRate: 200,
-	// 	},
-	// ];
 
 	function getFilterList() {
 		setShowFilterList(!showFilterList);
@@ -278,7 +196,7 @@ const TalentPageLayout: FC = () => {
 							</Title>
 						</div>
 						<InputContainer className="input-group rounded">
-							<IconSearch onClick={() => searchItemKeyWords(search)}>
+							<IconSearch>
 								<ImSearch />
 							</IconSearch>
 							<Input
@@ -287,11 +205,6 @@ const TalentPageLayout: FC = () => {
 									setSearch(event.target.value)
 								}
 								placeholder="Discover"
-								onKeyPress={(event: { key: string }) => {
-									if (event.key === 'Enter') {
-										searchItemKeyWords(search);
-									}
-								}}
 								value={search}
 								aria-label="Discover"
 								aria-describedby="search-addon"
@@ -307,18 +220,20 @@ const TalentPageLayout: FC = () => {
 					</Wrapper>
 				)}
 			</MainBlockWrapper>
-			{active?.discover === 'discover' && filter ? (
-				<ProfileBlock>
-					{/* {filter &&
-						filter?.map((item: FilterData) => {
-							return (
-								<div key={item.id}>
-									<FilterProfileUser item={item} />
-								</div>
-							);
-						})}
-					<Pagination filterPerPage={6} total={10} paginate={paginate} /> */}
-				</ProfileBlock>
+			{active?.discover === 'discover' && data?.profile && !isLoading ? (
+				<PaginationBlock>
+					<ProfileBlock>
+						{data?.profile &&
+							data?.profile.map((item: Filter, index: React.Key | null | undefined) => {
+								return (
+									<div key={index}>
+										<FilterProfileUser item={item} />
+									</div>
+								);
+							})}
+					</ProfileBlock>
+					<Pagination filterPerPage={data.limit} total={data.total} paginate={paginate} />
+				</PaginationBlock>
 			) : (
 				<Suspense fallback={<div>{`${t('PostDetailPage.loading')}`}</div>}></Suspense>
 			)}
