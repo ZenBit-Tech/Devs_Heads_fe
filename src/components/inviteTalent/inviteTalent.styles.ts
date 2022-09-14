@@ -110,24 +110,23 @@ export const Content = styled.div`
 	align-content: center;
 	display: flex;
 	flex-flow: column wrap;
-	font-weight: bold;
-	margin-top: 10px;
+	margin-top: 20px;
 	padding: 10px 5px;
 	width: 100%;
 `;
 
-export const TextArea = styled.textarea`
-	&:focus {
-		box-shadow: 0000;
-		outline: 0;
-	}
-	font-weight: normal;
-	border: none;
-	resize: none;
-	margin-top: 10px;
-	height: 300px;
-	width: 350px;
-`;
+// export const TextArea = styled.textarea`
+// 	&:focus {
+// 		box-shadow: 0000;
+// 		outline: 0;
+// 	}
+// 	font-weight: normal;
+// 	border: none;
+// 	resize: none;
+// 	margin-top: 10px;
+// 	height: 300px;
+// 	width: 350px;
+// `;
 
 export const Actions = styled.div`
 	display: flex;
@@ -142,7 +141,7 @@ export const Select = styled.select`
 		outline: 0;
 	}
 	align-self: center;
-	margin-top: -100px;
+	margin-top: 30px;
 	border-radius: 10px;
 	height: 30px;
 	width: 80%;
@@ -154,7 +153,7 @@ export const SendMessage = styled.button`
 		outline: 0;
 	}
 	align-self: center;
-	margin-top: 60px;
+	margin-top: 40px;
 	background: ${BLUE};
 	border-radius: 6px;
 	color: ${WHITE};

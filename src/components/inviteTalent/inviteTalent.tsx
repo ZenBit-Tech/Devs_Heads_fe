@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
 import Popup from 'reactjs-popup';
-import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
 	Container,
@@ -16,12 +15,8 @@ import {
 	Invite,
 	Modal,
 	Header,
-	Content,
-	TextArea,
 	Actions,
-	SendMessage,
 	Close,
-	Select,
 	JobPost,
 } from './inviteTalent.styles';
 import blackHeartIcon from 'assets/blackHeartIcon.svg';
@@ -29,26 +24,19 @@ import whiteHeartIcon from 'assets/whiteHeartIcon.svg';
 import { useGetJobPostsQuery, useGetPostJobQuery } from 'service/httpService';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
-import { BLUE } from 'constants/colors';
 import { useNavigate } from 'react-router-dom';
 import { RoleSelection } from 'constants/routes';
-
-interface IPost {
-	jobTitle: string;
-	jobDescription: string;
-}
+import InvitePopup from 'components/inviteTalent/component/Invitepopup';
 
 const InviteTalent: FC = () => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 	const [open, setOpen] = useState(false);
-	const [isDisebled, setIsDisebled] = useState(false);
 	const [saveBool, setSaveBool] = useState(false);
 	const [srcIcon, setSrcIcon] = useState(whiteHeartIcon);
 	const { user } = useAppSelector<RootState>(state => state);
 	const { data: post = [] } = useGetPostJobQuery(user.id);
 	const { data: posts } = useGetJobPostsQuery(user.role);
-	const { control } = useForm();
 
 	const handleSrc = () => {
 		if (saveBool) {
@@ -63,14 +51,6 @@ const InviteTalent: FC = () => {
 			setSaveBool(true);
 		} else {
 			setSaveBool(false);
-		}
-	};
-
-	const handleDisable = () => {
-		if (!isDisebled) {
-			setIsDisebled(true);
-		} else {
-			setIsDisebled(false);
 		}
 	};
 
@@ -113,38 +93,7 @@ const InviteTalent: FC = () => {
 			))}
 			<Invite type="button" onClick={() => setOpen(true)}>{`${t('InvitePage.button')}`}</Invite>
 			{post ? (
-				<Popup open={open} closeOnDocumentClick onClose={() => setOpen(false)}>
-					{open ? (
-						<Modal>
-							<Close type="button" onClick={() => setOpen(false)}>
-								&times;
-							</Close>
-							<Header>{`${t('InvitePopup.title')}`}</Header>
-							<Content>
-								{`${t('InvitePopup.label')}`}
-								<Controller
-									render={() => <TextArea defaultValue={`${t('InvitePopup.message')}`} />}
-									name="text"
-									control={control}
-								/>
-							</Content>
-							<Actions>
-								<Select>
-									{post?.map((el: IPost) => (
-										<option>{el.jobTitle}</option>
-									))}
-								</Select>
-								<SendMessage
-									onClick={() => handleDisable()}
-									className={isDisebled ? 'btn btn-sucess' : BLUE}
-									disabled={isDisebled}
-								>
-									{`${t('InvitePopup.button')}`}
-								</SendMessage>
-							</Actions>
-						</Modal>
-					) : null}
-				</Popup>
+				<InvitePopup open={open} setOpen={setOpen} />
 			) : (
 				<Popup open={open} closeOnDocumentClick onClose={() => setOpen(false)}>
 					{open ? (
