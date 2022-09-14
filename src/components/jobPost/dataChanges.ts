@@ -4,6 +4,7 @@ import { useSendData } from 'components/jobPost/dataSend';
 import { useAppSelector } from 'redux/hooks';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from 'redux/store';
+import { PostJobPage } from 'constants/routes';
 
 export const selection = [
 	{ value: 'Legal', label: 'Legal' },
@@ -80,7 +81,7 @@ export const useOnDataChange = () => {
 				skills,
 			};
 			sendData(newData);
-			navigate('/post-job');
+			navigate(`${PostJobPage}`);
 		} else {
 			return;
 		}

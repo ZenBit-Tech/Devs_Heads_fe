@@ -12,9 +12,11 @@ import {
 	NonPostWrapper,
 	ImageStyled,
 } from './PostJobLayout.styles';
-import { useGetPostJobQuery, useGetJobPostsQuery } from 'service/httpService';
+import { useGetPostJobQuery } from 'service/httpService';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
+import FreelancerPage from 'components/freelancerJobs/freelancerPage';
+import { CreateJobPost } from 'constants/routes';
 
 interface IPost {
 	id: number;
@@ -36,7 +38,6 @@ const PostJobPageLayout: FC = () => {
 		);
 		return sortedPosts;
 	}, [post]);
-	const { data: posts } = useGetJobPostsQuery(user.role);
 
 	const Role = {
 		Freelancer: 'freelancer',
@@ -67,14 +68,14 @@ const PostJobPageLayout: FC = () => {
 						<NonPostWrapper>
 							<ImageStyled src={DirImage} alt="DirImage" />
 							<DescriptionStyled>{`${t('PostJobPage.description')}`}</DescriptionStyled>
-							<ButtonStyled onClick={() => navigate('/create-job-post')}>{`${t(
+							<ButtonStyled onClick={() => navigate(`${CreateJobPost}`)}>{`${t(
 								'PostJobPage.button',
 							)}`}</ButtonStyled>
 						</NonPostWrapper>
 					)}
 				</Wrapper>
 			)}
-			{/* {user.role === Role.Freelancer && <FreelancerPage />} */}
+			{user.role === Role.Freelancer && <FreelancerPage />}
 		</>
 	);
 };
