@@ -9,7 +9,7 @@ import {
 import { Filter } from './interfaces';
 import { Link } from 'react-router-dom';
 import { t } from 'i18next';
-import Profile from '../../image/profile.png';
+import Profile from '../../image/profile-talent.png';
 
 const FilterProfileUser: FC<{ item: Filter }> = ({ item }) => {
 	return (

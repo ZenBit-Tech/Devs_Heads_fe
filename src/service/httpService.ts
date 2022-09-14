@@ -39,7 +39,7 @@ type FormDataGoogle = {
 };
 interface ISignUpResponseGoogle {
 	email: string;
-	googleId: string;
+	googleId?: string;
 	id: number;
 	role?: string;
 }
@@ -62,7 +62,7 @@ export const authApi = createApi({
 		}),
 		signUpUpdate: build.mutation<ISignUpResponseGoogle, FormDataGoogle>({
 			query: body => ({
-				url: `auth/sign-up`,
+				url: `auth/sign-up/update`,
 				method: 'put',
 				body,
 				headers: {
