@@ -31,6 +31,7 @@ import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
 import { BLUE } from 'constants/colors';
 import { useNavigate } from 'react-router-dom';
+import { RoleSelection } from 'constants/routes';
 
 interface IPost {
 	jobTitle: string;
@@ -153,7 +154,7 @@ const InviteTalent: FC = () => {
 							</Close>
 							<Header>{`${t('InvitePopup.noJobs')}`}</Header>
 							<Actions>
-								<JobPost type="button" onClick={() => navigate('/create-job-post')}>{`${t(
+								<JobPost type="button" onClick={() => navigate(`${RoleSelection}`)}>{`${t(
 									'InvitePopup.buttonPost',
 								)}`}</JobPost>
 							</Actions>

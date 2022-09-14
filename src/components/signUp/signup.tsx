@@ -5,12 +5,12 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Div, Register, Form, ControlStyle, Input, P, ErrorP } from './signup.styled';
 import { useTranslation } from 'react-i18next';
-import { useSignUpMutation, useSignUpUpdateMutation } from 'service/httpService';
+import { useSignUpMutation } from 'service/httpService';
 import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { saveEmail, saveUserId, savePassword } from 'redux/reducers/userSlice';
+import { useAppDispatch } from 'redux/hooks';
+import { saveEmail, savePassword, saveUserId } from 'redux/reducers/userSlice';
 import { notification } from 'antd';
-import { RootState } from 'redux/store';
+import { RoleSelection } from 'constants/routes';
 
 export type FormData = {
 	email: string;
@@ -28,7 +28,6 @@ const signUp = () => {
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
 	const [signUp] = useSignUpMutation();
-	const [signUpUpdate] = useSignUpUpdateMutation();
 	const navigate = useNavigate();
 	const {
 		control,
@@ -42,20 +41,18 @@ const signUp = () => {
 			message: type === 'success' ? `${t('SignUp.errorPasswords')}` : `${t('SignUp.errorEmail')}`,
 		});
 	};
-	const { user } = useAppSelector<RootState>(state => state);
+
 	const onSubmit: SubmitHandler<FormData> = async values => {
 		const { email, password } = values;
-		values = { ...values, role: user.role };
 		if (values.createPassword !== values.password) {
 			alert('error');
 		} else {
 			try {
 				const res = await signUp({ email, password }).unwrap();
-				await signUpUpdate(values).unwrap();
 				dispatch(saveUserId(res.id));
 				dispatch(saveEmail(email));
 				dispatch(savePassword(password));
-				navigate('/role-selection');
+				navigate(`${RoleSelection}`);
 			} catch (e) {
 				alert('error');
 			}

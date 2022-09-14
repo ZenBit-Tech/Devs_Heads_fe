@@ -166,7 +166,7 @@
 	"FreelancerPage": {
 		"filter": "Filter by",
 		"clear": "Clear filters",
-		"search": "Search for jobs",
+		"search": "Search for jobs...",
 		"skills": "Skills",
 		"price": "Price Range",
 		"hours": "Available hours/per day",
@@ -174,9 +174,9 @@
 		"max": "max",
 		"engLevelTitle": "English level",
 		"engLevel": {
-		  "pre": "Pre-Intermediate",
-		  "inter": "Intermediate",
-		  "upper": "Upper-Intermediate"
+			"pre": "Pre-Intermediate",
+			"inter": "Intermediate",
+			"upper": "Upper-Intermediate"
 		}
 	},
 	"InvitePage": {
@@ -190,5 +190,25 @@
 		"message": "Hello! \n I'd like to invite you to take a look at the job I've posted. \n Please submit a proposal if you're available and interested.",
 		"noJobs": "First you need to create a job post",
 		"buttonPost": "Post a job"
-	}
+	},
+	"ClientPage": {
+		"clientTitle": "My Jobs",
+		"clientTitleDrop": "Jobs",
+		"freelancerTitle": "Jobs",
+		"home": "Home",
+		"settings": "Settings",
+		"chat": "Messages",
+		"contracts": "My Contracts",
+		"talent": "Talent",
+		"logout": "Log Out",
+		"login": "Sign In",
+		"signup": "Sign Up",
+		"create": "Post a Job",
+		"menu": "Navigation Menu"
+	},
+	"FreelancerLayout": {
+		"chat": "Messages",
+		"contracts": "My Contracts",
+		"search": "Search a Job"
+	  }
 }
