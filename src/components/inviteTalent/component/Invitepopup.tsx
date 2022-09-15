@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Popup from 'reactjs-popup';
 import { useForm, Controller } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { ReactI18NextChild, useTranslation } from 'react-i18next';
 import {
 	Actions,
 	Close,
@@ -9,12 +9,9 @@ import {
 	Header,
 	JobPost,
 	Modal,
-	Select,
 	SendMessage,
+	Select,
 } from 'components/inviteTalent/inviteTalent.styles';
-import { useGetPostJobQuery } from 'service/httpService';
-import { useAppSelector } from 'redux/hooks';
-import { RootState } from 'redux/store';
 import { BLUE } from 'constants/colors';
 import TextArea from 'antd/lib/input/TextArea';
 import { RoleSelection } from 'constants/routes';
@@ -25,30 +22,34 @@ interface IPost {
 	jobDescription: string;
 }
 
+interface IProps {
+	Context: {
+		isDisabled: boolean;
+		setIsDisabled: (disabled: boolean) => void;
+		open: boolean;
+		setOpen: (open: boolean) => void;
+		post: IPost[];
+		handleSelect: () => ReactI18NextChild | Iterable<ReactI18NextChild>;
+	};
+}
+
 const TEXTAREA_ROWS_MAX = 16;
 const TEXTAREA_ROWS_MIN = 8;
 const BORDER_RADIUS = 6;
 
-const InvitePopup = () => {
+const InvitePopup = (props: IProps) => {
+	const { isDisabled, setIsDisabled, open, setOpen, post, handleSelect } = props.Context;
 	const { t } = useTranslation();
 	const navigate = useNavigate();
-	const [isDisebled, setIsDisebled] = useState(false);
-	const [open, setOpen] = useState(false);
-	const { user } = useAppSelector<RootState>(state => state);
-	const { data: post = [] } = useGetPostJobQuery(user.id);
 	const { control } = useForm();
 
 	const handleDisable = () => {
-		if (!isDisebled) {
-			setIsDisebled(true);
+		if (!isDisabled) {
+			setIsDisabled(true);
 		} else {
-			setIsDisebled(false);
+			setIsDisabled(false);
 		}
 	};
-
-	useEffect(() => {
-		setOpen(true);
-	}, []);
 
 	return (
 		<div>
@@ -75,15 +76,11 @@ const InvitePopup = () => {
 								/>
 							</Content>
 							<Actions>
-								<Select>
-									{post?.map((el: IPost) => (
-										<option>{el.jobTitle}</option>
-									))}
-								</Select>
+								<Select>{handleSelect()}</Select>
 								<SendMessage
 									onClick={() => handleDisable()}
-									className={isDisebled ? 'btn btn-sucess' : BLUE}
-									disabled={isDisebled}
+									className={isDisabled ? 'btn btn-sucess' : BLUE}
+									disabled={isDisabled}
 								>
 									{`${t('InvitePopup.button')}`}
 								</SendMessage>

@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { ReactI18NextChild, useTranslation } from 'react-i18next';
 import {
 	Container,
 	Div1,
@@ -15,13 +15,35 @@ import {
 } from './inviteTalent.styles';
 import blackHeartIcon from 'assets/blackHeartIcon.svg';
 import whiteHeartIcon from 'assets/whiteHeartIcon.svg';
+import { useGetPostJobQuery } from 'service/httpService';
+import { useAppSelector } from 'redux/hooks';
+import { RootState } from 'redux/store';
+import { hardCode } from 'components/inviteTalent/constants';
 import InvitePopup from 'components/inviteTalent/component/Invitepopup';
+
+interface IPost {
+	jobTitle: string;
+	jobDescription: string;
+}
 
 const InviteTalent: FC = () => {
 	const { t } = useTranslation();
-	const [saveBool, setSaveBool] = useState(false);
-	const [srcIcon, setSrcIcon] = useState(whiteHeartIcon);
-	const [showPopup, setShowPopup] = useState(false);
+	const [saveBool, setSaveBool] = useState<boolean>(false);
+	const [srcIcon, setSrcIcon] = useState<string>(whiteHeartIcon);
+	const [showPopup, setShowPopup] = useState<boolean>(false);
+	const [isDisabled, setIsDisabled] = useState<boolean>(false);
+	const [open, setOpen] = useState<boolean>(false);
+	const { user } = useAppSelector<RootState>(state => state);
+	const { data: post = [] } = useGetPostJobQuery(user.id);
+
+	const Context = {
+		isDisabled,
+		setIsDisabled,
+		open,
+		setOpen,
+		post,
+		handleSelect,
+	};
 
 	const handleSrc = () => {
 		if (saveBool) {
@@ -47,20 +69,18 @@ const InviteTalent: FC = () => {
 		}
 	};
 
+	function handleSelect(): ReactI18NextChild | Iterable<ReactI18NextChild> {
+		return post?.map((el: IPost) => <option>{el.jobTitle}</option>);
+	}
+
+	useEffect(() => {
+		setOpen(true);
+	}, []);
+
 	useEffect(() => {
 		handleSrc();
 	}, [saveBool]);
 
-	const hardCode = [
-		{
-			name: 'Bjarni Kristjan S.',
-			location: 'Iceland',
-			photo: `${blackHeartIcon}`,
-			category: 'Translator',
-			description: "I'm a translator specializing in Icelandic and Swedish.",
-			price: '$50.00/hr',
-		},
-	];
 	return (
 		<Container>
 			{hardCode.map(el => (
@@ -85,7 +105,7 @@ const InviteTalent: FC = () => {
 				</>
 			))}
 			<Invite type="button" onClick={() => handleClick()}>{`${t('InvitePage.button')}`}</Invite>
-			{showPopup ? <InvitePopup /> : null}
+			{showPopup ? <InvitePopup Context={Context} /> : null}
 		</Container>
 	);
 };
