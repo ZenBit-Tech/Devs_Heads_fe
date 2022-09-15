@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from 'react';
-import Popup from 'reactjs-popup';
 import { useTranslation } from 'react-i18next';
 import {
 	Container,
@@ -13,30 +12,16 @@ import {
 	Img,
 	H5,
 	Invite,
-	Modal,
-	Header,
-	Actions,
-	Close,
-	JobPost,
 } from './inviteTalent.styles';
 import blackHeartIcon from 'assets/blackHeartIcon.svg';
 import whiteHeartIcon from 'assets/whiteHeartIcon.svg';
-import { useGetJobPostsQuery, useGetPostJobQuery } from 'service/httpService';
-import { useAppSelector } from 'redux/hooks';
-import { RootState } from 'redux/store';
-import { useNavigate } from 'react-router-dom';
-import { RoleSelection } from 'constants/routes';
 import InvitePopup from 'components/inviteTalent/component/Invitepopup';
 
 const InviteTalent: FC = () => {
 	const { t } = useTranslation();
-	const navigate = useNavigate();
-	const [open, setOpen] = useState(false);
 	const [saveBool, setSaveBool] = useState(false);
 	const [srcIcon, setSrcIcon] = useState(whiteHeartIcon);
-	const { user } = useAppSelector<RootState>(state => state);
-	const { data: post = [] } = useGetPostJobQuery(user.id);
-	const { data: posts } = useGetJobPostsQuery(user.role);
+	const [showPopup, setShowPopup] = useState(false);
 
 	const handleSrc = () => {
 		if (saveBool) {
@@ -51,6 +36,14 @@ const InviteTalent: FC = () => {
 			setSaveBool(true);
 		} else {
 			setSaveBool(false);
+		}
+	};
+
+	const handleClick = () => {
+		if (!showPopup) {
+			setShowPopup(true);
+		} else {
+			setShowPopup(false);
 		}
 	};
 
@@ -91,26 +84,8 @@ const InviteTalent: FC = () => {
 					</Div3>
 				</>
 			))}
-			<Invite type="button" onClick={() => setOpen(true)}>{`${t('InvitePage.button')}`}</Invite>
-			{post ? (
-				<InvitePopup open={open} setOpen={setOpen} />
-			) : (
-				<Popup open={open} closeOnDocumentClick onClose={() => setOpen(false)}>
-					{open ? (
-						<Modal>
-							<Close type="button" onClick={() => setOpen(false)}>
-								&times;
-							</Close>
-							<Header>{`${t('InvitePopup.noJobs')}`}</Header>
-							<Actions>
-								<JobPost type="button" onClick={() => navigate(`${RoleSelection}`)}>{`${t(
-									'InvitePopup.buttonPost',
-								)}`}</JobPost>
-							</Actions>
-						</Modal>
-					) : null}
-				</Popup>
-			)}
+			<Invite type="button" onClick={() => handleClick()}>{`${t('InvitePage.button')}`}</Invite>
+			{showPopup ? <InvitePopup /> : null}
 		</Container>
 	);
 };
