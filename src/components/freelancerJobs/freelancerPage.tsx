@@ -21,7 +21,12 @@ import Skills from 'components/freelancerJobs/components/skills';
 import RadioButtons from 'components/freelancerJobs/components/radio';
 import SliderSearch from 'components/freelancerJobs/components/slider';
 import Search from 'components/freelancerJobs/components/search';
-import { initialState, selection, skillsMock } from 'components/freelancerJobs/constants';
+import {
+	initialCategory,
+	selection,
+	skillsMock,
+	initialPrice,
+} from 'components/freelancerJobs/constants';
 
 const FreelancerPage: FC = () => {
 	const { t } = useTranslation();
@@ -31,10 +36,10 @@ const FreelancerPage: FC = () => {
 	const { data: posts } = useGetJobPostsQuery(user.id);
 
 	const [search, setSearch] = useState<string>('');
-	const [categoryValue, setCategoryValue] = useState<ICategory>(initialState);
+	const [categoryValue, setCategoryValue] = useState<ICategory>(initialCategory);
 	const [skillsOptions, setSkillsOptions] = useState<ISkill[]>(skillsMock);
 	const [durationValue, setDurationValue] = useState<string>('');
-	const [userPrice, setUserPrice] = useState<number[]>([0, 3000]);
+	const [userPrice, setUserPrice] = useState<number[]>(initialPrice);
 
 	const rangeSelector = (event: React.ChangeEvent<unknown>, newValue: number | number[]) => {
 		setUserPrice(newValue as number[]);
@@ -92,8 +97,8 @@ const FreelancerPage: FC = () => {
 	const ClearFilters = () => {
 		setSearch('');
 		setSkillsOptions(skillsMock);
-		setCategoryValue(initialState);
-		setUserPrice([0, 3000]);
+		setCategoryValue(initialCategory);
+		setUserPrice(initialPrice);
 		setDurationValue('');
 	};
 

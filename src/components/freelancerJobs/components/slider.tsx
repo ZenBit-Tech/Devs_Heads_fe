@@ -17,7 +17,13 @@ const SliderSearch = (props: Props) => {
 				${slider[0]}-{slider[1]}
 			</P>
 			<Typography id="range-slider" gutterBottom></Typography>
-			<Slider value={slider} onChange={rangeSelector} valueLabelDisplay="auto" min={0} max={3000} />
+			<Slider
+				value={slider}
+				onChange={rangeSelector}
+				valueLabelDisplay="auto"
+				min={0}
+				max={10000}
+			/>
 		</div>
 	);
 };
