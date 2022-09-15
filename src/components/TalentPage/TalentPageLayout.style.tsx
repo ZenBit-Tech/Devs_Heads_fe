@@ -86,9 +86,9 @@ export const Label = styled.label`
 export const Button = styled.div`
 	margin-bottom: ${props => props.theme.spacing(2.5)};
 	cursor: pointer;
-	// &.defaultActive > span {
-	// 	border-bottom: 1px solid black;
-	// }
+	&.defaultActive > span {
+		border-bottom: 1px solid black;
+	}
 `;
 export const ButtonBlock = styled.div`
 	display: block;
