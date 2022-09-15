@@ -102,7 +102,6 @@ export const useOnDataChange = () => {
 		setFile(undefined);
 		setFile64(defaultProfilePhoto);
 	};
-
 	const [textAreaWithDatesState, setTextAreaWithDatesState] =
 		useState<ITextareaWithDatesMainState>(textareaMock);
 	const onChangeTextareaWithDates = (args: ITextareaWithDatesOnChange) => {

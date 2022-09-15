@@ -38,11 +38,14 @@ const TalentPageLayout: FC = () => {
 	const [select, setSelect] = useState<ICategoryBE>();
 	const [search, setSearch] = useState<string>('');
 	const [showFilterList, setShowFilterList] = useState<boolean>(true);
-	const [active, setActive] = useState<{ [name: string]: string }>();
+	const [active, setActive] = useState<{ [name: string]: string }>({ ['discover']: 'discover' });
 	const [currentPage, setCurrentPage] = useState<number>(1);
 
 	const filteredSkills = skillsOption.filter(s => s.value);
 	const skillsBack: string[] = [];
+	const discover = 'discover';
+	const hires = 'hires';
+	const saved = 'save';
 	const paginate = (pageNumber: React.SetStateAction<number>) => setCurrentPage(pageNumber);
 	const skills = filteredSkills.map(({ value, ...rest }) => {
 		return rest;
@@ -55,10 +58,6 @@ const TalentPageLayout: FC = () => {
 		control,
 		formState: { errors },
 	} = useForm<SearchSubmitForm>();
-
-	useEffect(() => {
-		setActive({ ['discover']: 'discover' });
-	}, []);
 
 	const onSkillsChange = (index: number) => {
 		setSkillsOptions(prevState => {
@@ -139,7 +138,7 @@ const TalentPageLayout: FC = () => {
 								<span id="save"> {`${t('TalentCompanyPage.saved')}`}</span>
 							</Button>
 						</ButtonBlock>
-						{active?.discover === 'discover' && (
+						{active?.discover === discover && (
 							<>
 								<Title className="filterTitle">
 									{`${t('TalentCompanyPage.filter')}`}{' '}
@@ -177,7 +176,7 @@ const TalentPageLayout: FC = () => {
 						)}
 					</WrapperSidePanel>
 				)}
-				{(showFilterList || matchesQuery) && active?.discover === 'discover' && (
+				{(showFilterList || matchesQuery) && active?.discover === discover && (
 					<Wrapper>
 						<div>
 							<Title>
@@ -212,7 +211,7 @@ const TalentPageLayout: FC = () => {
 					</Wrapper>
 				)}
 			</MainBlockWrapper>
-			{active?.discover === 'discover' && data?.profile && !isLoading ? (
+			{active?.discover === discover && data?.profile && !isLoading ? (
 				<PaginationBlock>
 					<ProfileBlock>
 						{data?.profile &&
@@ -229,8 +228,8 @@ const TalentPageLayout: FC = () => {
 			) : (
 				<Suspense fallback={<div>{`${t('PostDetailPage.loading')}`}</div>}></Suspense>
 			)}
-			{active?.hires === 'hires' && <MyHiresCompany />}
-			{active?.save === 'save' && <MySavedTalent />}
+			{active?.hires === hires && <MyHiresCompany />}
+			{active?.save === saved && <MySavedTalent />}
 		</div>
 	);
 };

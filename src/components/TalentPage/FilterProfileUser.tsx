@@ -9,7 +9,7 @@ import {
 import { Filter } from './interfaces';
 import { Link } from 'react-router-dom';
 import { t } from 'i18next';
-import Profile from '../../image/profile-talent.png';
+import Profile from 'image/profile-talent.png';
 
 const FilterProfileUser: FC<{ item: Filter }> = ({ item }) => {
 	return (
@@ -26,7 +26,11 @@ const FilterProfileUser: FC<{ item: Filter }> = ({ item }) => {
 				)}
 			</ImageWrapperBlock>
 			<ProfileData>
-				<Link to={`/profile/${item.filter.id}`}>
+				<Link
+					to={{
+						pathname: `/profile/${item.filter.id}`,
+					}}
+				>
 					{item.user.firstName} {item.user.lastName}
 				</Link>
 				<p>{item.filter.position}</p>
