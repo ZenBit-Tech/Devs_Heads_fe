@@ -41,7 +41,6 @@ const TalentPageLayout: FC = () => {
 	const [showFilterList, setShowFilterList] = useState<boolean>(true);
 	const [active, setActive] = useState<{ [name: string]: string }>({ ['discover']: 'discover' });
 	const [currentPage, setCurrentPage] = useState<number>(1);
-	const filteredSkills = skillsOption.filter(s => s.value);
 	const discover = 'discover';
 	const hires = 'hires';
 	const saved = 'save';
@@ -51,14 +50,8 @@ const TalentPageLayout: FC = () => {
 		formState: { errors },
 	} = useForm<SearchSubmitForm>();
 
-	useEffect(() => {
-		const filteredSkills = skillsOption.filter(s => s.value);
-		console.log(filteredSkills);
-		const skills = filteredSkills.map(({ value, ...rest }) => {
-			return rest.name;
-		});
-		setFilter(skills.toString());
-	}, [filteredSkills]);
+	const filteredSkills = useMemo(() => skillsOption.filter(s => s.value), [skillsOption]);
+	const userSkills = useMemo(() => filteredSkills.map(s => s.name), [filteredSkills]);
 
 	const onSkillsChange = (index: number) => {
 		setSkillsOptions(prevState => {
@@ -87,7 +80,7 @@ const TalentPageLayout: FC = () => {
 
 	const sendFilter = {
 		select: select?.name,
-		skills: filter,
+		skills: userSkills.toString(),
 		search: search,
 		page: currentPage,
 	};
