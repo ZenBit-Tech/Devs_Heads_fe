@@ -27,8 +27,8 @@ export const Li = styled.li`
 	button:focus {
 		outline: none;
 	}
-	@media (max-width: 840px) {
-		padding: ${props => props.theme.spacing(2)} ${props => props.theme.spacing(2.5)};
+	@media (max-width: 1070px) {
+		padding: ${props => props.theme.spacing(2)} ${props => props.theme.spacing(1.5)};
 		text-transform: capitalize;
 	}
 	@media (max-width: 650px) {
@@ -38,8 +38,7 @@ export const Li = styled.li`
 		margin-right: 0px;
 		padding: 20px 0;
 		&:nth-child(1) {
-			border-top: 1px solid rgba(255, 255, 255, 0.555);
-			margin-top: 50px;
+			border-top: unset;
 		}
 	}
 `;
@@ -49,6 +48,9 @@ export const Navigation = styled.nav`
 	width: 100%;
 	height: 40px;
 	margin: 25px 5px 25px 5px;
+	@media (max-width: 650px) {
+		margin-top: unset;
+	}
 `;
 export const UlNav = styled.ul`
 	list-style-type: none;

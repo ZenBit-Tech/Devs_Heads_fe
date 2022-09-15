@@ -53,6 +53,7 @@ const TalentPageLayout: FC = () => {
 
 	useEffect(() => {
 		const filteredSkills = skillsOption.filter(s => s.value);
+		console.log(filteredSkills);
 		const skills = filteredSkills.map(({ value, ...rest }) => {
 			return rest.name;
 		});
@@ -113,7 +114,6 @@ const TalentPageLayout: FC = () => {
 	}
 
 	const matchesQuery = useMediaQuery('(min-width: 1017px)');
-	console.log(matchesQuery);
 
 	const handleChangeActive = (e: FormEvent<HTMLDivElement>) => {
 		const target = e.target as HTMLDivElement;
