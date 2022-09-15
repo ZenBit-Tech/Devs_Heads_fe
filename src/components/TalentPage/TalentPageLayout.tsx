@@ -37,7 +37,6 @@ const TalentPageLayout: FC = () => {
 	const [skillsOption, setSkillsOptions] = useState<ISkill[]>(skillsMock);
 	const [select, setSelect] = useState<ICategoryBE>();
 	const [search, setSearch] = useState<string>('');
-	const [filter, setFilter] = useState<string>('');
 	const [showFilterList, setShowFilterList] = useState<boolean>(true);
 	const [active, setActive] = useState<{ [name: string]: string }>({ ['discover']: 'discover' });
 	const [currentPage, setCurrentPage] = useState<number>(1);
@@ -122,13 +121,13 @@ const TalentPageLayout: FC = () => {
 								className={active?.discover ? 'defaultActive' : ''}
 								onClick={handleChangeActive}
 							>
-								<span id="discover">{`${t('TalentCompanyPage.discover')}`}</span>
+								<span id={discover}>{`${t('TalentCompanyPage.discover')}`}</span>
 							</Button>
 							<Button className={active?.hires ? 'defaultActive' : ''} onClick={handleChangeActive}>
-								<span id="hires"> {`${t('TalentCompanyPage.hires')}`}</span>
+								<span id={hires}> {`${t('TalentCompanyPage.hires')}`}</span>
 							</Button>
 							<Button className={active?.save ? 'defaultActive' : ''} onClick={handleChangeActive}>
-								<span id="save"> {`${t('TalentCompanyPage.saved')}`}</span>
+								<span id={saved}> {`${t('TalentCompanyPage.saved')}`}</span>
 							</Button>
 						</ButtonBlock>
 						{active?.discover === discover && (

@@ -12,7 +12,8 @@ export const Wrapper = styled.div`
 `;
 export const WrapperSidePanel = styled.div`
 	margin: ${props => props.theme.spacing(2.5)} auto;
-	margin: 0 ${props => props.theme.spacing(3.75)} 0 ${props => props.theme.spacing(3.75)};
+	margin: ${props => props.theme.spacing(7.5)} ${props => props.theme.spacing(3.75)} 0
+		${props => props.theme.spacing(3.75)};
 	width: 20%;
 	justify-content: flex-start;
 	display: flex;
