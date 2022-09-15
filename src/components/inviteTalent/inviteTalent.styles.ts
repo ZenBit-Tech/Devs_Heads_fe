@@ -115,19 +115,6 @@ export const Content = styled.div`
 	width: 100%;
 `;
 
-// export const TextArea = styled.textarea`
-// 	&:focus {
-// 		box-shadow: 0000;
-// 		outline: 0;
-// 	}
-// 	font-weight: normal;
-// 	border: none;
-// 	resize: none;
-// 	margin-top: 10px;
-// 	height: 300px;
-// 	width: 350px;
-// `;
-
 export const Actions = styled.div`
 	display: flex;
 	flex-flow: column wrap;
