@@ -18,15 +18,12 @@ export type FormData = {
 	password: string;
 	role: string;
 };
-
 type Alert = 'success' | 'error';
-
 const schema = Yup.object({
 	email: Yup.string().email().required(),
 	createPassword: Yup.string().min(8).required(),
 	password: Yup.string().min(8).required(),
 }).required();
-
 const signUp = () => {
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
@@ -39,7 +36,6 @@ const signUp = () => {
 	} = useForm<FormData>({
 		resolver: yupResolver(schema),
 	});
-
 	const alert = (type: Alert) => {
 		notification[type]({
 			message: type === 'success' ? `${t('SignUp.errorPasswords')}` : `${t('SignUp.errorEmail')}`,
@@ -62,7 +58,6 @@ const signUp = () => {
 			}
 		}
 	};
-
 	return (
 		<Div>
 			<P>{`${t('SignUp.quickSign')}`}</P>
@@ -99,5 +94,4 @@ const signUp = () => {
 		</Div>
 	);
 };
-
 export default signUp;

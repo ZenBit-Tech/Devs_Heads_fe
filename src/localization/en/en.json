@@ -189,6 +189,18 @@
 			"upper": "Upper-Intermediate"
 		}
 	},
+	"InvitePage": {
+		"button": "Invite",
+		"link": "more"
+	},
+	"InvitePopup": {
+		"title": "Message to invite to a job",
+		"label": "Message",
+		"button": "Send invitation message",
+		"message": "Hello! \n I'd like to invite you to take a look at the job I've posted. \n Please submit a proposal if you're available and interested.",
+		"noJobs": "First you need to create a job post",
+		"buttonPost": "Post a job"
+	},
 	"ClientPage": {
 		"clientTitle": "My Jobs",
 		"clientTitleDrop": "Jobs",

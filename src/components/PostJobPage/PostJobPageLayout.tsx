@@ -12,7 +12,7 @@ import {
 	NonPostWrapper,
 	ImageStyled,
 } from './PostJobLayout.styles';
-import { useGetPostJobQuery } from 'service/httpService';
+import { useGetAllJobPostsByUserQuery } from 'service/httpService';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
 import FreelancerPage from 'components/freelancerJobs/freelancerPage';
@@ -30,7 +30,7 @@ const PostJobPageLayout: FC = () => {
 	const navigate = useNavigate();
 	const { user } = useAppSelector<RootState>(state => state);
 
-	const { data: post = [], isLoading } = useGetPostJobQuery(user.id);
+	const { data: post = [], isLoading } = useGetAllJobPostsByUserQuery(user.id);
 	const sortedPosts = useMemo(() => {
 		const sortedPosts = post.slice();
 		sortedPosts.sort((a: { dateTime: string }, b: { dateTime: string }) =>
