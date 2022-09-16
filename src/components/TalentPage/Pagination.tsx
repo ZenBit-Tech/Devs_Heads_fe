@@ -3,23 +3,24 @@ import { Paginate } from './interfaces';
 
 const Pagination: FC<Paginate> = ({ filterPerPage, total, paginate }: Paginate) => {
 	const [pageNumber, setPageNumber] = useState<Array<number>>([1]);
-	const page = Math.ceil(total / filterPerPage);
 	useEffect(() => {
-		for (let i = 1; i <= page; i++) {
-			setPageNumber([i]);
+		const page: Array<number> = [];
+		for (let i = 1; i <= Math.ceil(total / filterPerPage); i++) {
+			page.push(i);
 		}
-	}, [page]);
-
+		setPageNumber(page);
+	}, [total]);
 	return (
 		<div>
 			<ul className="pagination destination">
-				{pageNumber.map(number => (
-					<li className="page-item" key={number}>
-						<p className="page-link" onClick={() => paginate(number)}>
-							{number}
-						</p>
-					</li>
-				))}
+				{pageNumber.length > 1 &&
+					pageNumber.map(number => (
+						<li className="page-item" key={number}>
+							<p className="page-link" onClick={() => paginate(number)}>
+								{number}
+							</p>
+						</li>
+					))}
 			</ul>
 		</div>
 	);
