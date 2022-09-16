@@ -1,15 +1,19 @@
-import { FC } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { Paginate } from './interfaces';
 
 const Pagination: FC<Paginate> = ({ filterPerPage, total, paginate }: Paginate) => {
-	const pageNumbers = [];
-	for (let i = 1; i <= Math.ceil(total / filterPerPage); i++) {
-		pageNumbers.push(i);
-	}
+	const [pageNumber, setPageNumber] = useState<Array<number>>([1]);
+	const page = Math.ceil(total / filterPerPage);
+	useEffect(() => {
+		for (let i = 1; i <= Math.ceil(total / filterPerPage); i++) {
+			setPageNumber([i]);
+		}
+	}, [page]);
+
 	return (
 		<div>
 			<ul className="pagination destination">
-				{pageNumbers.map(number => (
+				{pageNumber.map(number => (
 					<li className="page-item" key={number}>
 						<p className="page-link" onClick={() => paginate(number)}>
 							{number}

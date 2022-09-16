@@ -31,6 +31,9 @@ import MySavedTalent from './mysaved/MySavedTalent';
 import FilterProfileUser from './FilterProfileUser';
 import { useGetFilterProfileQuery } from 'service/httpService';
 import Pagination from './Pagination';
+const discover = 'discover';
+const hires = 'hires';
+const saved = 'save';
 
 const TalentPageLayout: FC = () => {
 	const { t } = useTranslation();
@@ -40,54 +43,12 @@ const TalentPageLayout: FC = () => {
 	const [showFilterList, setShowFilterList] = useState<boolean>(true);
 	const [active, setActive] = useState<{ [name: string]: string }>({ ['discover']: 'discover' });
 	const [currentPage, setCurrentPage] = useState<number>(1);
-	const discover = 'discover';
-	const hires = 'hires';
-	const saved = 'save';
 	const paginate = (pageNumber: React.SetStateAction<number>) => setCurrentPage(pageNumber);
 	const {
 		control,
 		formState: { errors },
 	} = useForm<SearchSubmitForm>();
 
-	const filteredSkills = useMemo(() => skillsOption.filter(s => s.value), [skillsOption]);
-	const userSkills = useMemo(() => filteredSkills.map(s => s.name), [filteredSkills]);
-
-	const onSkillsChange = (index: number) => {
-		setSkillsOptions(prevState => {
-			return prevState.map((e, i) => {
-				if (index === i) {
-					return { ...e, value: !e.value };
-				}
-				return e;
-			});
-		});
-	};
-
-	const optionButtons = useMemo(() => {
-		return skillsOption.map((e, i) => (
-			<Label key={e.name} className={`btn btn-${e.value ? 'primary' : 'light'}`}>
-				<input
-					type="checkbox"
-					checked={e.value}
-					autoComplete="off"
-					onChange={() => onSkillsChange(i)}
-				/>
-				{e.name}
-			</Label>
-		));
-	}, [skillsOption]);
-
-	const sendFilter = {
-		select: select?.name,
-		skills: userSkills.toString(),
-		search: search,
-		page: currentPage,
-	};
-	const { data, isLoading } = useGetFilterProfileQuery(sendFilter);
-
-	function getFilterList() {
-		setShowFilterList(!showFilterList);
-	}
 	function useMediaQuery(query: string, defaultMatches = window.matchMedia(query).matches) {
 		const [matches, setMatches] = useState(window.matchMedia(defaultMatches.toString()).matches);
 
@@ -104,13 +65,52 @@ const TalentPageLayout: FC = () => {
 		}, [query, matches]);
 		return matches;
 	}
-
 	const matchesQuery = useMediaQuery('(min-width: 1017px)');
+
+	const filteredSkills = useMemo(() => skillsOption.filter(s => s.value), [skillsOption]);
+	const userSkills = useMemo(() => filteredSkills.map(s => s.name), [filteredSkills]);
+
+	const optionButtons = useMemo(() => {
+		return skillsOption.map((e, i) => (
+			<Label key={e.name} className={`btn btn-${e.value ? 'primary' : 'light'}`}>
+				<input
+					type="checkbox"
+					checked={e.value}
+					autoComplete="off"
+					onChange={() => onSkillsChange(i)}
+				/>
+				{e.name}
+			</Label>
+		));
+	}, [skillsOption]);
+
+	const onSkillsChange = (index: number) => {
+		setSkillsOptions(prevState => {
+			return prevState.map((e, i) => {
+				if (index === i) {
+					return { ...e, value: !e.value };
+				}
+				return e;
+			});
+		});
+	};
+
+	function getFilterList() {
+		setShowFilterList(!showFilterList);
+	}
 
 	const handleChangeActive = (e: FormEvent<HTMLDivElement>) => {
 		const target = e.target as HTMLDivElement;
 		setActive({ [target.id]: target.id });
 	};
+
+	const sendFilter = {
+		select: select?.name,
+		skills: userSkills.toString(),
+		search: search,
+		page: currentPage,
+	};
+	const { data, isLoading } = useGetFilterProfileQuery(sendFilter);
 	return (
 		<div>
 			<MainBlockWrapper>
