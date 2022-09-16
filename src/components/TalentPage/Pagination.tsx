@@ -5,7 +5,7 @@ const Pagination: FC<Paginate> = ({ filterPerPage, total, paginate }: Paginate) 
 	const [pageNumber, setPageNumber] = useState<Array<number>>([1]);
 	const page = Math.ceil(total / filterPerPage);
 	useEffect(() => {
-		for (let i = 1; i <= Math.ceil(total / filterPerPage); i++) {
+		for (let i = 1; i <= page; i++) {
 			setPageNumber([i]);
 		}
 	}, [page]);
