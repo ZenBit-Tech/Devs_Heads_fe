@@ -28,6 +28,8 @@ const RestorePassword = lazy(() => import('components/restorePassword/restorePas
 const PostJobPage = lazy(() => import('pages/PostJobPage'));
 const JobDescriptionPage = lazy(() => import('pages/JobDescriptionPage'));
 
+const InviteTalent = lazy(() => import('pages/InviteTalentPage'));
+
 const App: FC = () => {
 	Cookies.set('name', 'value');
 	const a = Cookies.get('accessToken'); // TODO delete mock token when sign up/sign in will be completed
@@ -53,6 +55,7 @@ const App: FC = () => {
 							<Route path="/role-selection/:user" element={<RoleSelection />} />
 							<Route path="post-job/:id" element={<JobDescriptionPage />} />
 							<Route path="post-job" element={<PostJobPage />} />
+							<Route path="invite-talent" element={<InviteTalent />} />
 							<Route path="settings/" element={<SettingsPage />}>
 								<Route path="edit-profile" element={<ProfileEdit />} />
 								<Route path="contact-info" element={<ContactInfo />} />
