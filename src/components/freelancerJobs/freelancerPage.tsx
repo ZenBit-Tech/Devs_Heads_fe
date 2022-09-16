@@ -1,7 +1,7 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useGetJobPostsQuery } from 'service/httpService';
+import { useGetJobPostsQuery, useGetJobPostByUserQuery } from 'service/httpService';
 import {
 	TitleStyled,
 	DescriptionDataStyled,
@@ -21,31 +21,40 @@ import Skills from 'components/freelancerJobs/components/skills';
 import RadioButtons from 'components/freelancerJobs/components/radio';
 import SliderSearch from 'components/freelancerJobs/components/slider';
 import Search from 'components/freelancerJobs/components/search';
-import { initialState, selection, skillsMock } from 'components/freelancerJobs/constants';
+import {
+	initialCategory,
+	selection,
+	skillsMock,
+	initialPrice,
+} from 'components/freelancerJobs/constants';
 
 const FreelancerPage: FC = () => {
 	const { t } = useTranslation();
 	const { user } = useAppSelector<RootState>(state => state);
+
+	const { data: userInfo, isLoading } = useGetJobPostByUserQuery(user.id);
 	const { data: posts } = useGetJobPostsQuery(user.id);
 
 	const [search, setSearch] = useState<string>('');
-	const [userChoice, setUserChoice] = useState<ICategory>(initialState);
+	const [categoryValue, setCategoryValue] = useState<ICategory>(initialCategory);
 	const [skillsOptions, setSkillsOptions] = useState<ISkill[]>(skillsMock);
-	const [radio, setRadio] = useState<string>('');
-	const [slider, setSlider] = useState<number[]>([0, 10000]);
+	const [durationValue, setDurationValue] = useState<string>('');
+	const [userPrice, setUserPrice] = useState<number[]>(initialPrice);
 
 	const rangeSelector = (event: React.ChangeEvent<unknown>, newValue: number | number[]) => {
-		setSlider(newValue as number[]);
+		setUserPrice(newValue as number[]);
 	};
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setRadio(event.target.value);
+		setDurationValue(event.target.value);
 	};
 
-	const filteredSkills = skillsOptions.filter(s => s.value);
-	const skills = filteredSkills.map(skill => {
-		return skill.name;
-	});
+	useEffect(() => {
+		if (!isLoading) {
+			setSkillsOptions(skills);
+			setCategoryValue(category);
+		}
+	}, [isLoading]);
 
 	const onSkillsChange = (index: number) => {
 		setSkillsOptions(prevState => {
@@ -72,12 +81,31 @@ const FreelancerPage: FC = () => {
 		));
 	}, [skillsOptions]);
 
+	const filteredSkills = useMemo(() => skillsOptions.filter(s => s.value), [skillsOptions]);
+	const userSkills = useMemo(() => filteredSkills.map(s => s.name), [filteredSkills]);
+
+	if (isLoading) {
+		return <p>Loading...</p>;
+	}
+
+	const category = { value: userInfo.jobCategory.name, label: userInfo.jobCategory.name };
+	const skills = useMemo(
+		() =>
+			skillsMock.map(skill => ({
+				...skill,
+				value: userInfo.jobSkills.some(
+					(jobSkill: { name: string }) => jobSkill.name === skill.name,
+				),
+			})),
+		[skillsMock],
+	);
+
 	const ClearFilters = () => {
 		setSearch('');
 		setSkillsOptions(skillsMock);
-		setUserChoice(initialState);
-		setSlider([0, 10000]);
-		setRadio('');
+		setCategoryValue(initialCategory);
+		setUserPrice(initialPrice);
+		setDurationValue('');
 	};
 
 	return (
@@ -92,10 +120,11 @@ const FreelancerPage: FC = () => {
 						<CategoryDiv>
 							<CustomSelect
 								options={selection}
-								onChange={choice => setUserChoice(choice as ICategory)}
+								onChange={choice => setCategoryValue(choice as ICategory)}
+								defaultValue={categoryValue}
 							/>
 						</CategoryDiv>
-						<SliderSearch slider={slider} rangeSelector={rangeSelector} />
+						<SliderSearch slider={userPrice} rangeSelector={rangeSelector} />
 						<RadioButtons handleChange={handleChange} />
 					</ColumnSmall>
 					<ColumnBig>
@@ -113,18 +142,16 @@ const FreelancerPage: FC = () => {
 									}
 								})
 								.filter((post: IPost) => {
-									const skill = post.jobSkills.map(skill => {
+									const jobSkills = post.jobSkills.map(skill => {
 										return skill.name;
 									});
 									if (
-										post.jobCategory.name === userChoice.label &&
-										slider[0] <= post.fromHourRate &&
-										slider[1] >= post.fromHourRate &&
-										JSON.stringify(radio) === JSON.stringify(post.jobDuration) &&
-										JSON.stringify(skill).includes(JSON.stringify(skills))
+										userPrice[0] <= post.fromHourRate &&
+										userPrice[1] >= post.fromHourRate &&
+										(durationValue.includes(post.jobDuration) || durationValue === '') &&
+										(categoryValue.label === post.jobCategory.name || categoryValue.value === '') &&
+										(jobSkills.some(value => userSkills.includes(value)) || userSkills.length === 0)
 									) {
-										return post;
-									} else if (userChoice.label === '' && skills.length === 0) {
 										return post;
 									}
 								})

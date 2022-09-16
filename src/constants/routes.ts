@@ -13,3 +13,4 @@ export const SettingsJobOwner = '/setting';
 export const Contracts = '/contracts';
 export const Chat = '/chat';
 export const TalentPage = '/talent';
+export const inviteTalent = 'invite-talent';
