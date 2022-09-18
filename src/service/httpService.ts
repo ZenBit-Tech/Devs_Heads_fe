@@ -148,9 +148,9 @@ export const profileApi = createApi({
 		}),
 		getFilterProfile: build.query({
 			query: filter => ({
-				url: `profile/filter?category=${filter.select ?? ''}&sort=asc&page=${filter.page}&skills=${
+				url: `profile/filter?category=${filter.select ?? ''}&sort=asc&skills=${
 					filter.skills ?? ''
-				}&search=${filter.search ?? ''}`,
+				}&search=${filter.search ?? ''}&page=${filter.page}`,
 				method: 'get',
 			}),
 		}),

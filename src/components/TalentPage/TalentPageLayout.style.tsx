@@ -1,4 +1,11 @@
 import styled from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
+
+export const GlobalStyle = createGlobalStyle`
+  body {
+  overflow-x: hidden;
+  }
+`;
 
 export const MainBlockWrapper = styled.div`
 	display: flex;
@@ -7,8 +14,12 @@ export const MainBlockWrapper = styled.div`
 `;
 
 export const Wrapper = styled.div`
-	margin: ${props => props.theme.spacing(3.75)} 10% 0 5%;
+	margin: 15px 30% 0 15%;
 	width: 80%;
+
+	@media (max-width: 800px) {
+		margin: 15px 10px 0 10px;
+	}
 `;
 export const WrapperSidePanel = styled.div`
 	margin: ${props => props.theme.spacing(2.5)} auto;
@@ -97,7 +108,8 @@ export const ButtonBlock = styled.div`
 	margin: 0 auto;
 `;
 export const InputContainer = styled.div`
-	position: relative;
+	display: flex;
+	justify-content: center;
 `;
 export const IconSearch = styled.div`
 	height: 1.5rem;

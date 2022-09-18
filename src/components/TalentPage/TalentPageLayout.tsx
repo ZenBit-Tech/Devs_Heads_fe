@@ -5,8 +5,8 @@ import { useMemo } from 'react';
 import {
 	Wrapper,
 	Title,
-	Input,
 	BorderStyled,
+	GlobalStyle,
 	MainBlockWrapper,
 	Label,
 	Button,
@@ -14,11 +14,10 @@ import {
 	SkillsButtonsBlock,
 	WrapperSidePanel,
 	InputContainer,
-	IconSearch,
 	ProfileBlock,
 	PaginationBlock,
 } from './TalentPageLayout.style';
-import { ImSearch } from 'react-icons/im';
+import Search from 'components/freelancerJobs/components/search';
 import { ISkill } from 'components/jobPost/interfaces';
 import { skillsMock } from 'components/jobPost/dataChanges';
 import { Filter, ICategoryBE, SearchSubmitForm } from './interfaces';
@@ -114,6 +113,7 @@ const TalentPageLayout: FC = () => {
 	return (
 		<div>
 			<MainBlockWrapper>
+				<GlobalStyle />
 				{(!showFilterList || matchesQuery) && (
 					<WrapperSidePanel>
 						<ButtonBlock>
@@ -161,9 +161,6 @@ const TalentPageLayout: FC = () => {
 										);
 									}}
 								/>
-								<BorderStyled className="borderResults">{`${t(
-									'TalentCompanyPage.results',
-								)}`}</BorderStyled>
 							</>
 						)}
 					</WrapperSidePanel>
@@ -179,18 +176,11 @@ const TalentPageLayout: FC = () => {
 							</Title>
 						</div>
 						<InputContainer className="input-group rounded">
-							<IconSearch>
-								<ImSearch />
-							</IconSearch>
-							<Input
-								type="search"
-								onChange={(event: { target: { value: React.SetStateAction<string> } }) =>
-									setSearch(event.target.value)
-								}
-								placeholder="Discover"
-								value={search}
-								aria-label="Discover"
-								aria-describedby="search-addon"
+							<Search
+								search={search}
+								setSearch={setSearch}
+								placeholder={`${t('TalentCompanyPage.discover')}`}
+								searchSize={'0'}
 							/>
 						</InputContainer>
 						<BorderStyled>{`${t('TalentCompanyPage.skill')}`}</BorderStyled>
