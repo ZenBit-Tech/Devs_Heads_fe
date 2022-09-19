@@ -154,11 +154,12 @@ export const profileApi = createApi({
 				method: 'get',
 			}),
 		}),
+		getUserProfile: build.query({
+			query: id => `/profile/${id}`,
+		}),
 	}),
 });
-
-export const { usePostProfileInfoMutation, usePostProfileMutation, useGetFilterProfileQuery } =
-	profileApi;
+export const { usePostProfileInfoMutation, usePostProfileMutation, useGetFilterProfileQuery, useGetUserProfileQuery } = profileApi;
 
 export const jobPostApi = createApi({
 	reducerPath: 'jobPost',
@@ -180,11 +181,8 @@ export const jobPostApi = createApi({
 		getJobsDetail: build.query({
 			query: id => `/jobPost/${id}`,
 		}),
-		getAllJobPostsByUser: build.query({
-			query: id => `/jobPost/userJobs/${id}`,
-		}),
-		getJobPostByUser: build.query({
-			query: id => `/jobPost/userJob/${id}`,
+		getPostJob: build.query({
+			query: id => `/jobPost/user/${id}`,
 		}),
 	}),
 });
@@ -192,8 +190,7 @@ export const jobPostApi = createApi({
 export const {
 	usePostJobMutation,
 	useGetJobsDetailQuery,
-	useGetAllJobPostsByUserQuery,
-	useGetJobPostByUserQuery,
+	useGetPostJobQuery,
 	useGetJobPostsQuery,
 } = jobPostApi;
 

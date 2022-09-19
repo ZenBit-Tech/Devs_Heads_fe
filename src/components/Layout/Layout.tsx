@@ -19,7 +19,6 @@ import {
 } from 'constants/routes';
 import SettingPerson from 'image/setting-person.svg';
 import Person from 'image/profile.png';
-import SignInPage from 'pages/SigninPage';
 
 const Layout: FC = () => {
 	const { user } = useAppSelector<RootState>(state => state);

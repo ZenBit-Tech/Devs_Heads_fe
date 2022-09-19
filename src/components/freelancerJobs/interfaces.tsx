@@ -7,11 +7,13 @@ export interface IPost {
 	id: number;
 	jobTitle: string;
 	jobDescription: string;
-	jobCategory: { id: number; name: string };
+	category: { id: number; name: string };
 	toHourRate: number;
 	fromHourRate: number;
-	jobSkills: { id: number; name: string }[];
+	skills: { id: number; name: string }[];
 	jobDuration: string;
+	jobCategory: { id: number; name: string };
+	jobSkills: { id: number; name: string }[];
 }
 
 export interface ICategory {

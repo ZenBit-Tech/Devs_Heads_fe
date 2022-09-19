@@ -3,11 +3,12 @@ import { checkList } from 'components/freelancerJobs/constants';
 import { Column, Li, CheckLabel, Span } from 'components/freelancerJobs/freelancerPage.styles';
 
 interface Props {
+	radio: string;
 	handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const RadioButtons = (props: Props) => {
-	const { handleChange } = props;
+	const { handleChange, radio } = props;
 	return (
 		<div>
 			<Column>
@@ -21,7 +22,13 @@ const RadioButtons = (props: Props) => {
 				<CheckLabel>
 					{checkList.map((item: string, index: number) => (
 						<div key={index}>
-							<input value={item} type="radio" name="gender" onChange={handleChange} />
+							<input
+								value={item}
+								type="radio"
+								name="gender"
+								onChange={handleChange}
+								checked={item === radio}
+							/>
 							<Span>{item}</Span>
 						</div>
 					))}
