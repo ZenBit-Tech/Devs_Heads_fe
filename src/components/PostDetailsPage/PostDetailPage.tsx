@@ -15,11 +15,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Checkbox } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-	useGetJobsDetailQuery,
-	useGetProposalDetailQuery,
-	useDeleteJobPostMutation,
-} from 'service/httpService';
+import { useGetJobsDetailQuery, useGetProposalDetailQuery } from 'service/httpService';
 import { Suspense, useEffect, useState } from 'react';
 import { JobSkills } from 'components/PostDetailsPage/interfaces';
 import Modal from 'components/PostDetailsPage/components/Modal';
@@ -27,18 +23,19 @@ import { Button } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
+import DeleteModal from './components/DeleteModal';
 
 const DescriptionPage: FC = () => {
 	const { t } = useTranslation();
 	const params = useParams();
 	const { user } = useAppSelector<RootState>(state => state);
 	const [disable, setDisable] = useState(false);
-	const [deleteJobPost, {}] = useDeleteJobPostMutation();
+
 	const navigate = useNavigate();
+	const [toggleModal, setToggleModal] = useState<boolean>(false);
 
 	const handleRemove = () => {
-		deleteJobPost(Number(params.id));
-		navigate('/post-job');
+		setToggleModal(!toggleModal);
 	};
 
 	const handleNavigate = () => {
@@ -138,11 +135,7 @@ const DescriptionPage: FC = () => {
 						<Button type="link" icon={<DeleteOutlined />} onClick={handleRemove}>{`${t(
 							'PostDetailPage.removeButton',
 						)}`}</Button>
-						{/* <DeleteModal
-							isModalOpen={isModalOpen}
-							handleOk={handleOk}
-							handleCancel={handleCancel}
-						/> */}
+						<DeleteModal toggleModal={handleRemove} openModal={toggleModal} id={params.id} />
 					</div>
 				</WrapperSkillsStyled>
 			</Wrapper>

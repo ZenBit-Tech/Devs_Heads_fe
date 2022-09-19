@@ -151,7 +151,14 @@
 		"proposalSent": "Your proposal has been sent successfully!",
 		"priceError": "This field must be a positive number!",
 		"minLength": "Must be at least 6 characters",
-		"maxLength": "Maximum length is 50 symbols"
+		"maxLength": "Maximum length is 50 symbols",
+		"editButton": "Edit",
+		"removeButton": "Delete"
+	},
+	"EditPostDetailPage": {
+		"title": "Re-write a title for your job post",
+		"descriptionTitle": "Re-describe your job",
+		"updateButton": "Update"
 	},
 	"Layout": {
 		"clientTitle": "My Jobs",

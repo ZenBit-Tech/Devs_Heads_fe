@@ -160,11 +160,6 @@ export const jobPostApi = createApi({
 			}),
 			providesTags: ['JobPost'],
 		}),
-		getJobPosts: build.query({
-			query: () => ({
-				url: `/jobPost`,
-			}),
-		}),
 		getJobsDetail: build.query({
 			query: id => `/jobPost/${id}`,
 		}),
@@ -172,10 +167,10 @@ export const jobPostApi = createApi({
 			query: id => `/jobPost/user/${id}`,
 		}),
 		updateJobPost: build.mutation({
-			query: ({ id, post }) => ({
-				url: `/jobPost/${id}`,
+			query: ({ data, postId }) => ({
+				url: `/jobPost/${postId}`,
 				method: 'PATCH',
-				body: post,
+				body: data,
 			}),
 			invalidatesTags: ['JobPost'],
 		}),
