@@ -33,6 +33,16 @@ interface IContactInfoForm {
 	phone: string;
 	id: number | undefined;
 }
+type FormDataGoogle = {
+	email: string;
+	role?: string;
+};
+interface ISignUpResponseGoogle {
+	email: string;
+	googleId: string;
+	id: number;
+	role?: string;
+}
 
 const BASE_URL = 'http://localhost:3000';
 // Define a service using a base URL and expected endpoints
@@ -50,9 +60,9 @@ export const authApi = createApi({
 				},
 			}),
 		}),
-		signUpUpdate: build.mutation<ISignUpResponse, FormData>({
+		signUpUpdate: build.mutation<ISignUpResponseGoogle, FormDataGoogle>({
 			query: body => ({
-				url: `auth/sign-up/`,
+				url: `auth/sign-up/update`,
 				method: 'put',
 				body,
 				headers: {
@@ -134,9 +144,13 @@ export const profileApi = createApi({
 				},
 			}),
 		}),
+		getUserProfile: build.query({
+			query: id => `/profile/${id}`,
+		}),
 	}),
 });
-export const { usePostProfileInfoMutation, usePostProfileMutation } = profileApi;
+export const { usePostProfileInfoMutation, usePostProfileMutation, useGetUserProfileQuery } =
+	profileApi;
 
 export const jobPostApi = createApi({
 	reducerPath: 'jobPost',

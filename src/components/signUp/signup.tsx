@@ -7,10 +7,10 @@ import { Div, Register, Form, ControlStyle, Input, P, ErrorP } from './signup.st
 import { useTranslation } from 'react-i18next';
 import { useSignUpMutation } from 'service/httpService';
 import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { saveEmail, saveUserId } from 'redux/reducers/userSlice';
+import { useAppDispatch } from 'redux/hooks';
+import { saveEmail, savePassword, saveUserId } from 'redux/reducers/userSlice';
 import { notification } from 'antd';
-import { RootState } from 'redux/store';
+import { RoleSelection } from 'constants/routes';
 
 export type FormData = {
 	email: string;
@@ -18,15 +18,12 @@ export type FormData = {
 	password: string;
 	role: string;
 };
-
 type Alert = 'success' | 'error';
-
 const schema = Yup.object({
 	email: Yup.string().email().required(),
 	createPassword: Yup.string().min(8).required(),
 	password: Yup.string().min(8).required(),
 }).required();
-
 const signUp = () => {
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
@@ -39,7 +36,6 @@ const signUp = () => {
 	} = useForm<FormData>({
 		resolver: yupResolver(schema),
 	});
-
 	const alert = (type: Alert) => {
 		notification[type]({
 			message: type === 'success' ? `${t('SignUp.errorPasswords')}` : `${t('SignUp.errorEmail')}`,
@@ -55,13 +51,13 @@ const signUp = () => {
 				const res = await signUp({ email, password }).unwrap();
 				dispatch(saveUserId(res.id));
 				dispatch(saveEmail(email));
-				navigate('/role-selection');
+				dispatch(savePassword(password));
+				navigate(`${RoleSelection}`);
 			} catch (e) {
 				alert('error');
 			}
 		}
 	};
-
 	return (
 		<Div>
 			<P>{`${t('SignUp.quickSign')}`}</P>
@@ -98,5 +94,4 @@ const signUp = () => {
 		</Div>
 	);
 };
-
 export default signUp;
