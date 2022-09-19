@@ -28,6 +28,15 @@
 		"error": "Invalid password",
 		"title": "Recover Password"
 	},
+	"ChangePassword": {
+		"changePassword": "Change Password",
+		"oldPassword": "Old Password",
+		"newPassword": "New Password",
+		"showPassword": "Show password",
+		"confirmPassword": "Confirm New Password",
+		"saveButton": "Save",
+		"cancel": "Cancel"
+	},
 	"SignUp": {
 		"quickSign": "Quick Sign Up",
 		"buttonGoogle": "Sign Up With Google",
@@ -210,5 +219,5 @@
 		"chat": "Messages",
 		"contracts": "My Contracts",
 		"search": "Search a Job"
-	  }
+	}
 }

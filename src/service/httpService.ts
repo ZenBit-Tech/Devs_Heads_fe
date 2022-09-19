@@ -26,6 +26,12 @@ type FormPass = {
 	token: string;
 };
 
+type FormChangePasswordPass = {
+	oldPassword: string;
+	newPassword: string;
+	token: string;
+};
+
 interface IContactInfoForm {
 	firstName: string;
 	lastName: string;
@@ -102,6 +108,16 @@ export const authApi = createApi({
 				},
 			}),
 		}),
+		passwordChange: build.mutation<{ message?: string }, FormChangePasswordPass>({
+			query: body => ({
+				url: `auth/change-password`,
+				method: 'put',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
 		getUser: build.query({
 			query: () => ({
 				url: `auth/user`,
@@ -116,6 +132,7 @@ export const {
 	useSignInMutation,
 	useForgotPasswordMutation,
 	useResetPasswordMutation,
+	usePasswordChangeMutation,
 	useGetUserQuery,
 } = authApi;
 
