@@ -9,7 +9,7 @@ export const TitleStyled = styled.p`
 `;
 
 export const DescriptionDataStyled = styled.p`
-	height: 40px;
+	height: 30px;
 	overflow: hidden;
 	font-size: ${MEDIUM_FONT_SIZE};
 `;

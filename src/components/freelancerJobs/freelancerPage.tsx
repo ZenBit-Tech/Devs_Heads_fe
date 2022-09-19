@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useGetJobPostsQuery, useGetJobPostByUserQuery } from 'service/httpService';
+import { useGetJobPostsQuery, useGetUserProfileQuery } from 'service/httpService';
 import {
 	TitleStyled,
 	DescriptionDataStyled,
@@ -32,7 +32,7 @@ const FreelancerPage: FC = () => {
 	const { t } = useTranslation();
 	const { user } = useAppSelector<RootState>(state => state);
 
-	const { data: userInfo, isLoading } = useGetJobPostByUserQuery(user.id);
+	const { data: userInfo, isLoading } = useGetUserProfileQuery(user.id);
 	const { data: posts } = useGetJobPostsQuery(user.id);
 
 	const [search, setSearch] = useState<string>('');
@@ -88,17 +88,11 @@ const FreelancerPage: FC = () => {
 		return <p>Loading...</p>;
 	}
 
-	const category = { value: userInfo.jobCategory.name, label: userInfo.jobCategory.name };
-	const skills = useMemo(
-		() =>
-			skillsMock.map(skill => ({
-				...skill,
-				value: userInfo.jobSkills.some(
-					(jobSkill: { name: string }) => jobSkill.name === skill.name,
-				),
-			})),
-		[skillsMock],
-	);
+	const category = { value: userInfo.category.name, label: userInfo.category.name };
+	const skills = skillsMock.map(skill => ({
+		...skill,
+		value: userInfo.skills.some((jobSkill: { name: string }) => jobSkill.name === skill.name),
+	}));
 
 	const ClearFilters = () => {
 		setSearch('');
@@ -121,11 +115,11 @@ const FreelancerPage: FC = () => {
 							<CustomSelect
 								options={selection}
 								onChange={choice => setCategoryValue(choice as ICategory)}
-								defaultValue={categoryValue}
+								value={categoryValue}
 							/>
 						</CategoryDiv>
 						<SliderSearch slider={userPrice} rangeSelector={rangeSelector} />
-						<RadioButtons handleChange={handleChange} />
+						<RadioButtons handleChange={handleChange} radio={durationValue} />
 					</ColumnSmall>
 					<ColumnBig>
 						<Search
@@ -136,6 +130,7 @@ const FreelancerPage: FC = () => {
 						/>
 						<ClearBtn onClick={ClearFilters}>{`${t('FreelancerPage.clear')}`}</ClearBtn>
 						<ul>
+							{(!userInfo || !posts) && <p>Loading...</p>}
 							{posts
 								.filter((post: IPost) => {
 									if (search === '') {

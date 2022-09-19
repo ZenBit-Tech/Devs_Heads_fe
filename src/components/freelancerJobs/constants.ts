@@ -5,7 +5,7 @@ export const initialCategory = {
 	label: '',
 };
 
-export const initialPrice = [0, 10000];
+export const initialPrice = [0, 3000];
 
 export const skillsMock = [
 	{ name: 'Business analysis', value: false },
