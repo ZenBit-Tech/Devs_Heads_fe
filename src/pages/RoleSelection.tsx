@@ -34,7 +34,7 @@ const RoleSelection: FC = () => {
 	const handleClick = async () => {
 		try {
 			const res = await signUpUpdate({
-				email: String(params.user) ?? user.email,
+				email: user.email ?? String(params.user),
 				role: user.role,
 			}).unwrap();
 			dispatch(saveUserId(res.id));
