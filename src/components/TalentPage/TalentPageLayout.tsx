@@ -30,7 +30,6 @@ import FilterProfileUser from './FilterProfileUser';
 import { useGetFilterProfileQuery } from 'service/httpService';
 import Pagination from './Pagination';
 import Skills from 'components/freelancerJobs/components/skills';
-import { useMediaQuery } from 'usehooks-ts';
 const discover = 'discover';
 const hires = 'hires';
 const saved = 'save';
@@ -49,7 +48,23 @@ const TalentPageLayout: FC = () => {
 		formState: { errors },
 	} = useForm<SearchSubmitForm>();
 
-	const matches = useMediaQuery('(min-width: 1017px)');
+	function useMediaQuery(query: string, defaultMatches = window.matchMedia(query).matches) {
+		const [matches, setMatches] = useState(window.matchMedia(defaultMatches.toString()).matches);
+
+		useEffect(() => {
+			const media = window.matchMedia(query);
+
+			if (media.matches !== matches) setMatches(media.matches);
+
+			const listener = () => setMatches(media.matches);
+
+			media.addEventListener('change', listener);
+
+			return () => media.removeEventListener('change', listener);
+		}, [query, matches]);
+		return matches;
+	}
+	const matchesQuery = useMediaQuery('(min-width: 1017px)');
 
 	const filteredSkills = useMemo(() => skillsOption.filter(s => s.value), [skillsOption]);
 	const userSkills = useMemo(() => filteredSkills.map(s => s.name), [filteredSkills]);
@@ -99,7 +114,7 @@ const TalentPageLayout: FC = () => {
 		<div>
 			<MainBlockWrapper>
 				<GlobalStyle />
-				{(!showFilterList || matches) && (
+				{(!showFilterList || matchesQuery) && (
 					<WrapperSidePanel>
 						<ButtonBlock>
 							<Button
@@ -153,7 +168,7 @@ const TalentPageLayout: FC = () => {
 						)}
 					</WrapperSidePanel>
 				)}
-				{(showFilterList || matches) && active?.discover === discover && (
+				{(showFilterList || matchesQuery) && active?.discover === discover && (
 					<Wrapper>
 						<div>
 							<Title>
