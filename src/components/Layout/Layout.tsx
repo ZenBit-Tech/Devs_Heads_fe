@@ -14,6 +14,8 @@ import {
 	Chat,
 	TalentPage,
 	SettingsJobOwner,
+	SignUp,
+	Home,
 } from 'constants/routes';
 import SettingPerson from 'image/setting-person.svg';
 import Person from 'image/profile.png';
@@ -55,7 +57,7 @@ const Layout: FC = () => {
 
 	return (
 		<div>
-			{user.id && user ? (
+			{/* {user.id && user ? (
 				<>
 					<Navigation>
 						{user.role === Role.Client && (
@@ -136,9 +138,28 @@ const Layout: FC = () => {
 					</Navigation>
 					<Outlet />
 				</>
-			) : (
-				<SignInPage />
-			)}
+			) : ()} */}
+			<>
+				<Navigation>
+					<UlNav>
+						<Li>
+							<NavLink to={`${Home}`}>{`${t('Layout.home')}`}</NavLink>
+						</Li>
+						<Li>
+							<NavLink to={`${SignUp}`}>{`${t('Layout.signup')}`}</NavLink>
+						</Li>
+						<Li>
+							<NavLink to={`${SignIn}`}>{`${t('Layout.login')}`}</NavLink>
+						</Li>
+						<Li>
+							<NavLink onClick={handleClick} to={`${SignIn}`}>
+								{`${t('Layout.logout')}`}
+							</NavLink>
+						</Li>
+					</UlNav>
+				</Navigation>
+				<Outlet />
+			</>
 		</div>
 	);
 };
