@@ -5,13 +5,12 @@ import { useMemo } from 'react';
 import {
 	Wrapper,
 	Title,
-	BorderStyled,
+	SkillsBlock,
 	GlobalStyle,
 	MainBlockWrapper,
 	Label,
 	Button,
 	ButtonBlock,
-	SkillsButtonsBlock,
 	WrapperSidePanel,
 	InputContainer,
 	ProfileBlock,
@@ -30,6 +29,8 @@ import MySavedTalent from './mysaved/MySavedTalent';
 import FilterProfileUser from './FilterProfileUser';
 import { useGetFilterProfileQuery } from 'service/httpService';
 import Pagination from './Pagination';
+import Skills from 'components/freelancerJobs/components/skills';
+import { useMediaQuery } from 'usehooks-ts';
 const discover = 'discover';
 const hires = 'hires';
 const saved = 'save';
@@ -48,23 +49,7 @@ const TalentPageLayout: FC = () => {
 		formState: { errors },
 	} = useForm<SearchSubmitForm>();
 
-	function useMediaQuery(query: string, defaultMatches = window.matchMedia(query).matches) {
-		const [matches, setMatches] = useState(window.matchMedia(defaultMatches.toString()).matches);
-
-		useEffect(() => {
-			const media = window.matchMedia(query);
-
-			if (media.matches !== matches) setMatches(media.matches);
-
-			const listener = () => setMatches(media.matches);
-
-			media.addEventListener('change', listener);
-
-			return () => media.removeEventListener('change', listener);
-		}, [query, matches]);
-		return matches;
-	}
-	const matchesQuery = useMediaQuery('(min-width: 1017px)');
+	const matches = useMediaQuery('(min-width: 1017px)');
 
 	const filteredSkills = useMemo(() => skillsOption.filter(s => s.value), [skillsOption]);
 	const userSkills = useMemo(() => filteredSkills.map(s => s.name), [filteredSkills]);
@@ -114,7 +99,7 @@ const TalentPageLayout: FC = () => {
 		<div>
 			<MainBlockWrapper>
 				<GlobalStyle />
-				{(!showFilterList || matchesQuery) && (
+				{(!showFilterList || matches) && (
 					<WrapperSidePanel>
 						<ButtonBlock>
 							<Button
@@ -161,11 +146,14 @@ const TalentPageLayout: FC = () => {
 										);
 									}}
 								/>
+								<SkillsBlock>
+									<Skills optionButtons={optionButtons} />
+								</SkillsBlock>
 							</>
 						)}
 					</WrapperSidePanel>
 				)}
-				{(showFilterList || matchesQuery) && active?.discover === discover && (
+				{(showFilterList || matches) && active?.discover === discover && (
 					<Wrapper>
 						<div>
 							<Title>
@@ -183,33 +171,26 @@ const TalentPageLayout: FC = () => {
 								searchSize={'0'}
 							/>
 						</InputContainer>
-						<BorderStyled>{`${t('TalentCompanyPage.skill')}`}</BorderStyled>
-						<SkillsButtonsBlock
-							data-toggle="buttons"
-							className="btn-group btn-group-toggle flex-wrap"
-						>
-							{optionButtons}
-						</SkillsButtonsBlock>
+						{active?.discover === discover && data?.profile && !isLoading ? (
+							<PaginationBlock>
+								<ProfileBlock>
+									{data?.profile &&
+										data?.profile.map((item: Filter, index: React.Key | null | undefined) => {
+											return (
+												<div key={index}>
+													<FilterProfileUser item={item} />
+												</div>
+											);
+										})}
+								</ProfileBlock>
+								<Pagination filterPerPage={data.limit} total={data.total} paginate={paginate} />
+							</PaginationBlock>
+						) : (
+							<Suspense fallback={<div>{`${t('PostDetailPage.loading')}`}</div>}></Suspense>
+						)}
 					</Wrapper>
 				)}
 			</MainBlockWrapper>
-			{active?.discover === discover && data?.profile && !isLoading ? (
-				<PaginationBlock>
-					<ProfileBlock>
-						{data?.profile &&
-							data?.profile.map((item: Filter, index: React.Key | null | undefined) => {
-								return (
-									<div key={index}>
-										<FilterProfileUser item={item} />
-									</div>
-								);
-							})}
-					</ProfileBlock>
-					<Pagination filterPerPage={data.limit} total={data.total} paginate={paginate} />
-				</PaginationBlock>
-			) : (
-				<Suspense fallback={<div>{`${t('PostDetailPage.loading')}`}</div>}></Suspense>
-			)}
 			{active?.hires === hires && <MyHiresCompany />}
 			{active?.save === saved && <MySavedTalent />}
 		</div>

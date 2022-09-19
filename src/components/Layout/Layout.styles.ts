@@ -46,10 +46,9 @@ export const Li = styled.li`
 export const Navigation = styled.nav`
 	top: 0;
 	width: 100%;
-	height: 40px;
 	margin: 25px 5px 25px 5px;
 	@media (max-width: 650px) {
-		margin-top: unset;
+		margin: unset;
 	}
 `;
 export const UlNav = styled.ul`
@@ -69,7 +68,6 @@ export const UlNav = styled.ul`
 
 export const ButtonText = styled.button`
 	display: none;
-	position: absolute;
 	padding: 5px;
 	font-size: ${MEDIUM_FONT_SIZE};
 	@media screen and (max-width: 650px) {

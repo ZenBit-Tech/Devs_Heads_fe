@@ -9,23 +9,27 @@ export const GlobalStyle = createGlobalStyle`
 
 export const MainBlockWrapper = styled.div`
 	display: flex;
-	justify-content: space-around;
-	margin-top: ${props => props.theme.spacing(5)};
+	justify-content: space-between;
+	margin-top: ${props => props.theme.spacing(12.5)};
 `;
 
 export const Wrapper = styled.div`
-	margin: 15px 30% 0 15%;
 	width: 80%;
 
-	@media (max-width: 800px) {
+	@media (max-width: 1000px) {
 		margin: 15px 10px 0 10px;
+		width: 100%;
 	}
 `;
+export const SkillsBlock = styled.div`
+	margin-top: 50px;
+`;
+
 export const WrapperSidePanel = styled.div`
 	margin: ${props => props.theme.spacing(2.5)} auto;
 	margin: ${props => props.theme.spacing(7.5)} ${props => props.theme.spacing(3.75)} 0
 		${props => props.theme.spacing(3.75)};
-	width: 20%;
+	width: 30%;
 	justify-content: flex-start;
 	display: flex;
 	flex-direction: column;
@@ -110,6 +114,8 @@ export const ButtonBlock = styled.div`
 export const InputContainer = styled.div`
 	display: flex;
 	justify-content: center;
+	margin: 0 auto;
+	max-width: 800px;
 `;
 export const IconSearch = styled.div`
 	height: 1.5rem;

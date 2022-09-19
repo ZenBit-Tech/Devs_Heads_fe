@@ -59,10 +59,10 @@ const Layout: FC = () => {
 		<div>
 			{user.id && user ? (
 				<>
-					<Navigation>
-						{user.role === Role.Client && (
-							<>
-								{(toggleMenu || screenWidth > 650) && (
+					{user.role === Role.Client && (
+						<>
+							{(toggleMenu || screenWidth > 650) && (
+								<Navigation>
 									<UlNav>
 										<Li className="dropdown">
 											<button
@@ -106,36 +106,47 @@ const Layout: FC = () => {
 											</NavLink>
 										</Li>
 									</UlNav>
-								)}
-								<ButtonText onClick={toggleNav} className="btn">
-									{`${t('ClientPage.menu')}`}
-								</ButtonText>
-							</>
-						)}
-						<UlNav>
-							{user.role === Role.Freelancer && (
-								<>
-									<Li>
-										<NavLink to={`${Contracts}`}>{`${t('FreelancerLayout.contracts')}`}</NavLink>
-									</Li>
-									<Li>
-										<NavLink to={`${Chat}`}>{`${t('FreelancerLayout.chat')}`}</NavLink>
-									</Li>
-									<Li>
-										<NavLink to={`${PostJobPage}`}>{`${t('FreelancerLayout.search')}`}</NavLink>
-									</Li>
-									<NavLink to={`${Settings}`}>
-										<Image src={Person} alt="SettingPerson" />
-									</NavLink>
-									<Li>
-										<NavLink onClick={handleClick} to={`${SignIn}`}>
-											{`${t('Layout.logout')}`}
-										</NavLink>
-									</Li>
-								</>
+								</Navigation>
 							)}
-						</UlNav>
-					</Navigation>
+							<ButtonText onClick={toggleNav} className="btn">
+								{`${t('ClientPage.menu')}`}
+							</ButtonText>
+						</>
+					)}
+					{user.role === Role.Freelancer && (
+						<>
+							{(toggleMenu || screenWidth > 650) && (
+								<Navigation>
+									<UlNav>
+										<>
+											<Li>
+												<NavLink to={`${Contracts}`}>{`${t(
+													'FreelancerLayout.contracts',
+												)}`}</NavLink>
+											</Li>
+											<Li>
+												<NavLink to={`${Chat}`}>{`${t('FreelancerLayout.chat')}`}</NavLink>
+											</Li>
+											<Li>
+												<NavLink to={`${PostJobPage}`}>{`${t('FreelancerLayout.search')}`}</NavLink>
+											</Li>
+											<NavLink to={`${Settings}`}>
+												<Image src={Person} alt="SettingPerson" />
+											</NavLink>
+											<Li>
+												<NavLink onClick={handleClick} to={`${SignIn}`}>
+													{`${t('Layout.logout')}`}
+												</NavLink>
+											</Li>
+										</>
+									</UlNav>
+								</Navigation>
+							)}
+							<ButtonText onClick={toggleNav} className="btn">
+								{`${t('ClientPage.menu')}`}
+							</ButtonText>
+						</>
+					)}
 					<Outlet />
 				</>
 			) : (
