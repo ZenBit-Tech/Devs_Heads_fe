@@ -159,7 +159,12 @@ export const profileApi = createApi({
 		}),
 	}),
 });
-export const { usePostProfileInfoMutation, usePostProfileMutation, useGetFilterProfileQuery, useGetUserProfileQuery } = profileApi;
+export const {
+	usePostProfileInfoMutation,
+	usePostProfileMutation,
+	useGetFilterProfileQuery,
+	useGetUserProfileQuery,
+} = profileApi;
 
 export const jobPostApi = createApi({
 	reducerPath: 'jobPost',
