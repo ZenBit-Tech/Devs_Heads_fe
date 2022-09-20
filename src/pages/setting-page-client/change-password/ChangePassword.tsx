@@ -3,7 +3,6 @@ import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Checkbox } from 'antd';
-import { TbX } from 'react-icons/tb';
 import { notification } from 'antd';
 import {
 	Form,
