@@ -30,9 +30,27 @@ const DescriptionPage: FC = () => {
 	const params = useParams();
 	const { user } = useAppSelector<RootState>(state => state);
 	const [disable, setDisable] = useState(false);
-
 	const navigate = useNavigate();
 	const [toggleModal, setToggleModal] = useState<boolean>(false);
+	const proposalId = {
+		userId: user.id,
+		jobId: Number(params.id),
+	};
+
+	const { data: id, isLoading, isError } = useGetProposalDetailQuery(proposalId);
+
+	useEffect(() => {
+		const buttonDisable = () => {
+			if (isLoading) {
+				return <Suspense fallback={<div>{`${t('PostDetailPage.loading')}`}</div>}></Suspense>;
+			} else if (isError) {
+				setDisable(false);
+			} else if (id) {
+				setDisable(true);
+			}
+		};
+		buttonDisable();
+	}, [id]);
 
 	const handleRemove = () => {
 		setToggleModal(!toggleModal);
@@ -53,25 +71,6 @@ const DescriptionPage: FC = () => {
 
 	const { isShown, toggle } = useModal();
 	const { data: post, isFetching, isSuccess } = useGetJobsDetailQuery(params.id);
-
-	const proposalId = {
-		userId: user.id,
-		jobId: Number(params.id),
-	};
-	const { data: id, isLoading, isError } = useGetProposalDetailQuery(proposalId);
-
-	useEffect(() => {
-		const buttonDisable = () => {
-			if (isLoading) {
-				return <Suspense fallback={<div>{`${t('PostDetailPage.loading')}`}</div>}></Suspense>;
-			} else if (isError) {
-				setDisable(false);
-			} else if (id) {
-				setDisable(true);
-			}
-		};
-		buttonDisable();
-	}, [id]);
 
 	const Role = {
 		Freelancer: 'freelancer',

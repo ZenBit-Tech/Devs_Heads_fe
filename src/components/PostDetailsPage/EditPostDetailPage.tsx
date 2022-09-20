@@ -33,7 +33,7 @@ const EditPostDetailPage: FC = () => {
 	});
 
 	const onSubmit = async (data: EditJobSubmitForm) => {
-		updatejobPost({ data, postId });
+		await updatejobPost({ data, postId });
 		navigate(`/post-job/${params.id}`);
 	};
 	return (

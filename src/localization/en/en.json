@@ -217,5 +217,10 @@
 		"chat": "Messages",
 		"contracts": "My Contracts",
 		"search": "Search a Job"
+	},
+	"DeleteModal": {
+		"warningText": "Are you sure, that you want to delete you post?",
+		"agree": "Yes",
+		"disagree": "No"
 	}
 }

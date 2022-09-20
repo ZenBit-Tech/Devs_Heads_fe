@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDeleteJobPostMutation } from 'service/httpService';
 import { Wrapper, Backdrop, StyledModal, Content } from './Modal.styles';
 import { ButtonStyled, ModalWrapper, CloseButton } from './DeleteModal.styled';
+import { useTranslation } from 'react-i18next';
 
 interface DeleteModalProps {
 	toggleModal: () => void;
@@ -12,6 +13,7 @@ interface DeleteModalProps {
 }
 
 const DeleteModal: FC<DeleteModalProps> = ({ toggleModal, openModal, id }) => {
+	const { t } = useTranslation();
 	const [deleteJobPost, {}] = useDeleteJobPostMutation();
 	const navigate = useNavigate();
 
@@ -27,10 +29,10 @@ const DeleteModal: FC<DeleteModalProps> = ({ toggleModal, openModal, id }) => {
 					<CloseButton onClick={toggleModal} />
 					<Content>
 						<ModalWrapper>
-							<p>Are you sure, that you want to delete you post?</p>
+							<p>{`${t('DeleteModal.warningText')}`}</p>
 							<div>
-								<ButtonStyled onClick={handleRemove}>Yes</ButtonStyled>
-								<ButtonStyled onClick={toggleModal}>No</ButtonStyled>
+								<ButtonStyled onClick={handleRemove}>{`${t('DeleteModal.agree')}`}</ButtonStyled>
+								<ButtonStyled onClick={toggleModal}>{`${t('DeleteModal.disagree')}`}</ButtonStyled>
 							</div>
 						</ModalWrapper>
 					</Content>
