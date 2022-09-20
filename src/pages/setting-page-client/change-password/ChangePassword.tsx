@@ -71,6 +71,10 @@ const ChangePassword = () => {
 		setPasswordShown(e.target.checked);
 	};
 
+	const onCancelButton = () => {
+		reset({ oldPassword: '', newPassword: '', confirmPassword: '' });
+	};
+
 	const onSubmit: SubmitHandler<FormPass> = async values => {
 		const { oldPassword, newPassword } = values;
 		if (values.newPassword !== values.confirmPassword) {
@@ -131,7 +135,7 @@ const ChangePassword = () => {
 			<ErrorP>{errors.confirmPassword?.message}</ErrorP>
 			<ButtonBlock>
 				<Button type="submit">{`${t('ChangePassword.saveButton')}`}</Button>
-				<Cancel>{`${t('ChangePassword.cancel')}`}</Cancel>
+				<Cancel onClick={onCancelButton}>{`${t('ChangePassword.cancel')}`}</Cancel>
 			</ButtonBlock>
 		</Form>
 	);
