@@ -15,9 +15,9 @@ const FilterProfileUser: FC<{ item: Filter }> = ({ item }) => {
 	return (
 		<>
 			<ImageWrapperBlock>
-				{item.filter.photo ? (
+				{item.photo ? (
 					<PhotoWrapper>
-						<ProfileImage src={item.filter.photo} alt="profile" />
+						<ProfileImage src={item.photo} alt="profile" />
 					</PhotoWrapper>
 				) : (
 					<ImageWrapper>
@@ -28,13 +28,13 @@ const FilterProfileUser: FC<{ item: Filter }> = ({ item }) => {
 			<ProfileData>
 				<Link
 					to={{
-						pathname: `/profile/${item.filter.id}`,
+						pathname: `/profile/${item.id}`,
 					}}
 				>
-					{item.user.firstName} {item.user.lastName}
+					{item.userId.firstName} {item.userId.lastName}
 				</Link>
-				<p>{item.filter.position}</p>
-				{`${t('TalentCompanyPage.rate')} ${item.filter.price}$`}
+				<p>{item.position}</p>
+				{`${t('TalentCompanyPage.rate')} ${item.price}$`}
 			</ProfileData>
 		</>
 	);
