@@ -23,10 +23,11 @@ import {
 	Chat,
 	TalentPage,
 	SettingsJobOwner,
+	Home,
+	SignUp,
 } from 'constants/routes';
 import SettingPerson from 'image/setting-person.svg';
 import Person from 'image/profile.png';
-import SignInPage from 'pages/SigninPage';
 
 const Layout: FC = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -164,7 +165,22 @@ const Layout: FC = () => {
 					<Outlet />
 				</>
 			) : (
-				<SignInPage />
+				<>
+					<Navigation>
+						<UlNav>
+							<Li>
+								<NavLink to={`${Home}`}>{`${t('Layout.home')}`}</NavLink>
+							</Li>
+							<Li>
+								<NavLink to={`${SignUp}`}>{`${t('Layout.signup')}`}</NavLink>
+							</Li>
+							<Li>
+								<NavLink to={`${SignIn}`}>{`${t('Layout.login')}`}</NavLink>
+							</Li>
+						</UlNav>
+					</Navigation>
+					<Outlet />
+				</>
 			)}
 		</div>
 	);
