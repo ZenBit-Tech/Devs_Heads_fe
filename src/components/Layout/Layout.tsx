@@ -52,10 +52,10 @@ const Layout: FC = () => {
 		};
 	}, []);
 
-	const handleClick = async () => {
+	const handleClick = () => {
 		dispatch(saveEmail(''));
 		dispatch(saveToken(''));
-		dispatch(saveUserId(0));
+		dispatch(saveUserId(undefined));
 		localStorage.clear();
 	};
 
