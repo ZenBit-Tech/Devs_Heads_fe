@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Checkbox } from 'antd';
 import { notification } from 'antd';
@@ -21,6 +20,7 @@ import { useTranslation } from 'react-i18next';
 import { usePasswordChangeMutation } from 'service/httpService';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
+import ValidationSchema from './ValidationSchema';
 
 export type FormPass = {
 	oldPassword: string;
@@ -29,21 +29,13 @@ export type FormPass = {
 	email: string;
 };
 
+export type Alert = 'success' | 'error';
+
 export interface Error {
 	data: {
 		message: string;
 	};
 }
-type Alert = 'success' | 'error';
-const schema = Yup.object({
-	oldPassword: Yup.string().required(),
-	newPassword: Yup.string()
-		.required()
-		.matches(/^(?=.{8,})/, 'Must Contain at least 8 digits')
-		.matches(/^(?=.*[0-9])/, 'Must Contain at least one Number')
-		.matches(/^(?=.*[!@#\$%\^&\*])/, 'Must Contain at least one Symbols'),
-	confirmPassword: Yup.string().required(),
-}).required();
 
 const ChangePassword = () => {
 	const [passwordShown, setPasswordShown] = useState<boolean>(false);
@@ -55,10 +47,14 @@ const ChangePassword = () => {
 		reset,
 		formState: { errors },
 	} = useForm<FormPass>({
-		resolver: yupResolver(schema),
+		resolver: yupResolver(ValidationSchema),
 	});
 
 	const { t } = useTranslation();
+
+	const resetInput = () => {
+		return reset({ oldPassword: '', newPassword: '', confirmPassword: '' });
+	};
 
 	const alert = (type: Alert, message: string) => {
 		notification[type]({
@@ -71,7 +67,7 @@ const ChangePassword = () => {
 	};
 
 	const onCancelButton = () => {
-		reset({ oldPassword: '', newPassword: '', confirmPassword: '' });
+		resetInput();
 	};
 
 	const onSubmit: SubmitHandler<FormPass> = async values => {
@@ -85,10 +81,10 @@ const ChangePassword = () => {
 					newPassword: newPassword,
 					email: user.email || '',
 				}).unwrap();
-				reset({ oldPassword: '', newPassword: '', confirmPassword: '' });
+				resetInput();
 				alert('success', 'Password changed successfully!');
 			} catch (e) {
-				reset({ oldPassword: '', newPassword: '', confirmPassword: '' });
+				resetInput();
 				console.log(e);
 				alert('error', (e as Error).data.message);
 			}
