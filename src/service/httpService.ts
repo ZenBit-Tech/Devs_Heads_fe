@@ -45,7 +45,7 @@ type FormDataGoogle = {
 };
 interface ISignUpResponseGoogle {
 	email: string;
-	googleId: string;
+	googleId?: string;
 	id: number;
 	role?: string;
 }
@@ -140,6 +140,7 @@ export const {
 export const profileApi = createApi({
 	reducerPath: 'profile',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	tagTypes: ['Profile'],
 	endpoints: build => ({
 		postProfileInfo: build.mutation<IContactInfoForm, IContactInfoForm>({
 			query: ({ id, email, firstName, lastName, phone }) => ({
@@ -159,6 +160,15 @@ export const profileApi = createApi({
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
 				},
+				providesTags: ['Profile'],
+			}),
+		}),
+		getFilterProfile: build.query({
+			query: filter => ({
+				url: `profile/filter?category=${filter.select ?? ''}&sort=asc&skills=${
+					filter.skills ?? ''
+				}&search=${filter.search ?? ''}&page=${filter.page}`,
+				method: 'get',
 			}),
 		}),
 		getUserProfile: build.query({
@@ -166,8 +176,12 @@ export const profileApi = createApi({
 		}),
 	}),
 });
-export const { usePostProfileInfoMutation, usePostProfileMutation, useGetUserProfileQuery } =
-	profileApi;
+export const {
+	usePostProfileInfoMutation,
+	usePostProfileMutation,
+	useGetFilterProfileQuery,
+	useGetUserProfileQuery,
+} = profileApi;
 
 export const jobPostApi = createApi({
 	reducerPath: 'jobPost',
