@@ -11,11 +11,13 @@ export const Wrapper = styled.div`
 
 export const TitleStyled = styled.p`
 	font-weight: ${props => props.theme.font_weight.bold};
+	font-size: ${MEDIUM_FONT_SIZE};
 `;
 
 export const DescriptionDataStyled = styled.p`
 	height: ${props => props.theme.spacing(8)};
 	overflow: hidden;
+	font-size: ${MEDIUM_FONT_SIZE};
 `;
 
 export const DateStyled = styled.div`
@@ -28,6 +30,7 @@ export const DateStyled = styled.div`
 	border-radius: ${props => props.theme.spacing(1)};
 	padding-left: ${props => props.theme.spacing(3)};
 	margin-left: auto;
+	font-size: ${MEDIUM_FONT_SIZE};
 `;
 export const NonPostWrapper = styled.div`
 	text-align: center;

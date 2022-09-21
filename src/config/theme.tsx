@@ -8,6 +8,7 @@ export const theme = {
 		blue: '#1E90FFFF',
 		grayLight: '#cccccc',
 		lightGray: '#D3D3D3',
+		transparentGrey: 'rgba(0, 0, 0, 0.5)',
 	},
 
 	font_weight: {

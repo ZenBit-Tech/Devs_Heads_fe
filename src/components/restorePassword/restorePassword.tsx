@@ -11,6 +11,7 @@ import {
 	Button,
 	ControlStyle,
 	ErrorP,
+	H1,
 } from 'components/restorePassword/restorePassword.style';
 import { useTranslation } from 'react-i18next';
 import { useResetPasswordMutation } from 'service/httpService';
@@ -74,13 +75,14 @@ const resetPassword = () => {
 			} catch (e) {
 				reset({ createPassword: '', password: '' });
 				alert('error');
-				console.log(e);
+				// console.log(e);
 			}
 		}
 	};
 
 	return (
 		<Div>
+			<H1>{`${t('ForgotPassword.title')}`}</H1>
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				<ControlStyle>{`${t('ResetPassword.newPassword')}`}</ControlStyle>
 				<Controller

@@ -47,7 +47,7 @@ export const skillsMock = [
 ];
 
 export const useOnDataChange = () => {
-	const { sendData } = useSendData();
+	const { sendData, sendUpdatedData } = useSendData();
 
 	const navigate = useNavigate();
 
@@ -87,10 +87,25 @@ export const useOnDataChange = () => {
 		}
 	};
 
+	const handleUpdate = async (data: JobSubmitForm) => {
+		if (skills.length >= 3) {
+			const newData = {
+				...data,
+				userId,
+				skills,
+			};
+			sendUpdatedData(newData);
+			navigate('/post-job');
+		} else {
+			return;
+		}
+	};
+
 	return {
 		skillsOptions,
 		onSkillsChange,
 		skills,
 		onSubmit,
+		handleUpdate,
 	};
 };
