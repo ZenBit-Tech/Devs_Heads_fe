@@ -40,6 +40,7 @@ const RoleSelection: FC = () => {
 			dispatch(saveUserId(res.id));
 			navigate(`${Welcome}`);
 		} catch (e) {
+			console.log(e);
 			alert('error');
 		}
 	};

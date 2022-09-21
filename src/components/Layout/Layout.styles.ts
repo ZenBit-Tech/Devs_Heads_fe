@@ -2,20 +2,28 @@ import styled from 'styled-components';
 import { MEDIUM_FONT_SIZE } from 'constants/fonts';
 
 export const Image = styled.img`
-	width: 55px;
-	height: 55px;
+	width: 60px;
+	height: 60px;
 	border-radius: 6px;
 	@media (max-width: 860px) {
 		width: 45px;
 		height: 45px;
 	}
 `;
-
+export const DropdownMenu = styled.div`
+	padding: unset;
+`;
 export const BoderNav = styled.div`
 	&:nth-child(1) {
 		border-bottom: 2px solid ${props => props.theme.colors.lightGray};
 	}
 `;
+export const LiSetting = styled.li`
+	button:focus {
+		outline: none;
+	}
+`;
+
 export const Li = styled.li`
 	margin: 10px 20px 10px 20px;
 	cursor: pointer;
@@ -73,5 +81,24 @@ export const ButtonText = styled.button`
 	@media screen and (max-width: 650px) {
 		display: block;
 		z-index: 11;
+	}
+`;
+
+export const Div = styled.div`
+	margin: 10px 20px 10px 20px;
+	cursor: pointer;
+	border-radius: ${props => props.theme.spacing(1)};
+	padding: ${props => props.theme.spacing(0)} ${props => props.theme.spacing(5)};
+	border: 2px solid ${props => props.theme.colors.lightGray};
+`;
+
+export const MenuSetting = styled.div`
+	margin-right: 60px;
+`;
+
+export const BtnMenu = styled.button`
+	&:focus {
+		box-shadow: 0000;
+		outline: 0;
 	}
 `;

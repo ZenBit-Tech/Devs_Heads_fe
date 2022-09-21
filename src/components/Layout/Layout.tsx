@@ -2,7 +2,19 @@ import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { NavLink, Outlet } from 'react-router-dom';
 import { RootState } from 'redux/store';
-import { Navigation, ButtonText, Li, UlNav, BoderNav, Image } from './Layout.styles';
+import {
+	Navigation,
+	ButtonText,
+	Li,
+	UlNav,
+	BoderNav,
+	Image,
+	BtnMenu,
+	Div,
+	MenuSetting,
+	DropdownMenu,
+	LiSetting,
+} from './Layout.styles';
 import { t } from 'i18next';
 import { saveEmail, saveToken, saveUserId } from 'redux/reducers/userSlice';
 import {
@@ -13,12 +25,11 @@ import {
 	Contracts,
 	Chat,
 	TalentPage,
-	SettingsJobOwner,
 	Home,
 	SignUp,
 } from 'constants/routes';
 import SettingPerson from 'image/setting-person.svg';
-import Person from 'image/profile.png';
+import JOPopupSettings from 'components/PopupSettings/PopUpJOSettings';
 
 const Layout: FC = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -45,7 +56,7 @@ const Layout: FC = () => {
 	const handleClick = () => {
 		dispatch(saveEmail(''));
 		dispatch(saveToken(''));
-		dispatch(saveUserId(0));
+		dispatch(saveUserId(undefined));
 		localStorage.clear();
 	};
 
@@ -74,7 +85,7 @@ const Layout: FC = () => {
 											>
 												{`${t('ClientPage.clientTitleDrop')}`}
 											</button>
-											<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<DropdownMenu className="dropdown-menu" aria-labelledby="dropdownMenuButton">
 												<BoderNav>
 													<NavLink className="dropdown-item" to={`${PostJobPage}`}>{`${t(
 														'ClientPage.clientTitle',
@@ -85,7 +96,7 @@ const Layout: FC = () => {
 														'ClientPage.create',
 													)}`}</NavLink>
 												</BoderNav>
-											</div>
+											</DropdownMenu>
 										</Li>
 										<Li>
 											<NavLink to={`${TalentPage}`}>{`${t('ClientPage.talent')}`}</NavLink>
@@ -96,14 +107,26 @@ const Layout: FC = () => {
 										<Li>
 											<NavLink to={`${Contracts}`}>{`${t('ClientPage.contracts')}`}</NavLink>
 										</Li>
-										<NavLink to={`${SettingsJobOwner}`}>
-											<Image src={SettingPerson} alt="SettingPerson" />
-										</NavLink>
-										<Li>
-											<NavLink onClick={handleClick} to={`${SignIn}`}>
-												{`${t('ClientPage.logout')}`}
-											</NavLink>
-										</Li>
+										<Div className="dropdown">
+											<BtnMenu
+												className="dropdownButton dropdown-toggle"
+											<button
+												className="dropdownButton"
+												type="button"
+												id="dropdownMenuButton"
+												data-toggle="dropdown"
+												aria-haspopup="true"
+												aria-expanded="false"
+											>
+												<Image src={SettingPerson} alt="SettingPerson" />
+											</BtnMenu>
+											<MenuSetting className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+												<div className="dropdown-item">
+													<JOPopupSettings handleClick={handleClick} />
+												</div>
+											</MenuSetting>
+										</Div>
+											</button>
 									</UlNav>
 								</Navigation>
 							)}
