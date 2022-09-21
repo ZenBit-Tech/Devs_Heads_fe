@@ -52,7 +52,7 @@ const Layout: FC = () => {
 		};
 	}, []);
 
-	const handleClick = () => {
+	const handleClick = async () => {
 		dispatch(saveEmail(''));
 		dispatch(saveToken(''));
 		dispatch(saveUserId(0));
