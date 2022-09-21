@@ -26,7 +26,7 @@ export const userSlice = createSlice({
 		savePassword: (state, action: PayloadAction<string>) => {
 			state.password = action.payload;
 		},
-		saveUserId: (state, action: PayloadAction<number>) => {
+		saveUserId: (state, action: PayloadAction<number | undefined>) => {
 			state.id = action.payload;
 		},
 		saveToken: (state, action: PayloadAction<string>) => {

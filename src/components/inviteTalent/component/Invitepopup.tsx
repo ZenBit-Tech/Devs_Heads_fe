@@ -11,10 +11,13 @@ import {
 	Modal,
 	SendMessage,
 	Select,
+	JobPopup,
+	ClosePopup,
+	Span,
 } from 'components/inviteTalent/inviteTalent.styles';
 import { BLUE } from 'constants/colors';
 import TextArea from 'antd/lib/input/TextArea';
-import { RoleSelection } from 'constants/routes';
+import { CreateJobPost } from 'constants/routes';
 import { useNavigate } from 'react-router-dom';
 
 interface IPost {
@@ -53,7 +56,7 @@ const InvitePopup = (props: IProps) => {
 
 	return (
 		<div>
-			{post ? (
+			{post && post.length !== 0 ? (
 				<Popup open={open} closeOnDocumentClick onClose={() => setOpen(false)}>
 					{open ? (
 						<Modal>
@@ -67,7 +70,7 @@ const InvitePopup = (props: IProps) => {
 									render={() => (
 										<TextArea
 											autoSize={{ minRows: TEXTAREA_ROWS_MIN, maxRows: TEXTAREA_ROWS_MAX }}
-											style={{ borderRadius: BORDER_RADIUS }}
+											style={{ borderRadius: BORDER_RADIUS, marginTop: 10, width: 500 }}
 											defaultValue={`${t('InvitePopup.message')}`}
 										/>
 									)}
@@ -91,17 +94,17 @@ const InvitePopup = (props: IProps) => {
 			) : (
 				<Popup open={open} closeOnDocumentClick onClose={() => setOpen(false)}>
 					{open ? (
-						<Modal>
-							<Close type="button" onClick={() => setOpen(false)}>
+						<JobPopup>
+							<ClosePopup type="button" onClick={() => setOpen(false)}>
 								&times;
-							</Close>
-							<Header>{`${t('InvitePopup.noJobs')}`}</Header>
+							</ClosePopup>
+							<Span>{`${t('InvitePopup.noJobs')}`}</Span>
 							<Actions>
-								<JobPost type="button" onClick={() => navigate(`${RoleSelection}`)}>{`${t(
+								<JobPost type="button" onClick={() => navigate(`${CreateJobPost}`)}>{`${t(
 									'InvitePopup.buttonPost',
 								)}`}</JobPost>
 							</Actions>
-						</Modal>
+						</JobPopup>
 					) : null}
 				</Popup>
 			)}

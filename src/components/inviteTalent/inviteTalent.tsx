@@ -34,7 +34,7 @@ const InviteTalent: FC = () => {
 	const [isDisabled, setIsDisabled] = useState<boolean>(false);
 	const [open, setOpen] = useState<boolean>(false);
 	const { user } = useAppSelector<RootState>(state => state);
-	const { data: post = [] } = useGetPostJobQuery(user.id);
+	const { data: post } = useGetPostJobQuery(user.id);
 
 	const Context = {
 		isDisabled,

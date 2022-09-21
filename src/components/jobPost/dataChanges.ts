@@ -94,7 +94,6 @@ export const useOnDataChange = () => {
 				userId,
 				skills,
 			};
-			console.log(newData);
 			sendUpdatedData(newData);
 			navigate('/post-job');
 		} else {

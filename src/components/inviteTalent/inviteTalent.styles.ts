@@ -94,9 +94,9 @@ export const Modal = styled.div`
 	position: relative;
 	border: 1px solid ${BLACK_COLOR};
 	border-radius: 10px;
-	margin-top: 30px;
-	height: 500px;
-	width: 500px;
+	margin-top: 20px;
+	height: 600px;
+	width: 600px;
 `;
 
 export const Header = styled.header`
@@ -110,7 +110,7 @@ export const Content = styled.div`
 	align-content: center;
 	display: flex;
 	flex-flow: column wrap;
-	margin-top: 20px;
+	margin-top: 10px;
 	padding: 10px 5px;
 	width: 100%;
 `;
@@ -119,6 +119,7 @@ export const Actions = styled.div`
 	display: flex;
 	flex-flow: column wrap;
 	text-align: center;
+	margin-top: 5px;
 	width: 100%;
 `;
 
@@ -140,7 +141,7 @@ export const SendMessage = styled.button`
 		outline: 0;
 	}
 	align-self: center;
-	margin-top: 40px;
+	margin-top: 120px;
 	background: ${BLUE};
 	border-radius: 6px;
 	color: ${WHITE};
@@ -158,7 +159,7 @@ export const Close = styled.button`
 	display: block;
 	padding: 2px 5px;
 	margin-top: 10px;
-	margin-left: 450px;
+	margin-left: 550px;
 	font-size: ${LARGE_FONT_SIZE};
 `;
 
@@ -168,11 +169,41 @@ export const JobPost = styled.button`
 		outline: 0;
 	}
 	align-self: center;
-	margin-top: 60px;
+	margin-top: 100px;
 	background: ${BLUE};
 	border-radius: 6px;
 	color: ${WHITE};
 	font-size: ${MEDIUM_FONT_SIZE};
 	height: 50px;
 	width: 200px;
+`;
+
+export const JobPopup = styled.div`
+	background: ${WHITE};
+	align-content: center;
+	display: block;
+	position: relative;
+	border: 1px solid ${BLACK_COLOR};
+	border-radius: 10px;
+	margin-top: 20px;
+	height: 300px;
+	width: 400px;
+`;
+
+export const ClosePopup = styled.button`
+	&:focus {
+		box-shadow: 0000;
+		outline: 0;
+	}
+	cursor: pointer;
+	display: block;
+	padding: 2px 5px;
+	margin-top: 10px;
+	margin-left: 350px;
+	font-size: ${LARGE_FONT_SIZE};
+`;
+
+export const Span = styled.span`
+	font-size: ${MEDIUM_FONT_SIZE};
+	margin-left: 50px;
 `;

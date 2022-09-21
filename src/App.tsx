@@ -34,9 +34,7 @@ const InviteTalent = lazy(() => import('pages/InviteTalentPage'));
 const App: FC = () => {
 	Cookies.set('name', 'value');
 	const a = Cookies.get('accessToken'); // TODO delete mock token when sign up/sign in will be completed
-	// console.log(Cookies.get('key'));
 	const token: string | null = localStorage.getItem('token');
-	// console.log(a);
 
 	return (
 		<>
@@ -46,9 +44,9 @@ const App: FC = () => {
 					<Routes>
 						<Route path="/" element={<Layout />}>
 							{/*here public routes */}
-							<Route path="/sign-in" element={<SignIn />} />
 							<Route path="/forgot-password" element={<ForgotPassword />} />
 							<Route path={'/restore-password/:token'} element={<RestorePassword />} />
+							<Route path="/sign-in" element={<SignIn />} />
 							<Route path="/sign-up" element={<SignUp />} />
 							<Route path="/welcome" element={<WelcomePage />} />
 							<Route path="/create-job-post" element={<JobPostPage />} />
