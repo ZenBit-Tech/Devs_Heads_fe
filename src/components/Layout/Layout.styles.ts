@@ -10,12 +10,20 @@ export const Image = styled.img`
 		height: 45px;
 	}
 `;
-
+export const DropdownMenu = styled.div`
+	padding: unset;
+`;
 export const BoderNav = styled.div`
 	&:nth-child(1) {
 		border-bottom: 2px solid ${props => props.theme.colors.lightGray};
 	}
 `;
+export const LiSetting = styled.li`
+	button:focus {
+		outline: none;
+	}
+`;
+
 export const Li = styled.li`
 	margin: 10px 20px 10px 20px;
 	cursor: pointer;

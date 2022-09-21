@@ -12,6 +12,8 @@ import {
 	BtnMenu,
 	Div,
 	MenuSetting,
+	DropdownMenu,
+	LiSetting,
 } from './Layout.styles';
 import { t } from 'i18next';
 import { saveEmail, saveToken, saveUserId } from 'redux/reducers/userSlice';
@@ -83,7 +85,7 @@ const Layout: FC = () => {
 											>
 												{`${t('ClientPage.clientTitleDrop')}`}
 											</button>
-											<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<DropdownMenu className="dropdown-menu" aria-labelledby="dropdownMenuButton">
 												<BoderNav>
 													<NavLink className="dropdown-item" to={`${PostJobPage}`}>{`${t(
 														'ClientPage.clientTitle',
@@ -94,7 +96,7 @@ const Layout: FC = () => {
 														'ClientPage.create',
 													)}`}</NavLink>
 												</BoderNav>
-											</div>
+											</DropdownMenu>
 										</Li>
 										<Li>
 											<NavLink to={`${TalentPage}`}>{`${t('ClientPage.talent')}`}</NavLink>
@@ -108,6 +110,8 @@ const Layout: FC = () => {
 										<Div className="dropdown">
 											<BtnMenu
 												className="dropdownButton dropdown-toggle"
+											<button
+												className="dropdownButton"
 												type="button"
 												id="dropdownMenuButton"
 												data-toggle="dropdown"
@@ -122,6 +126,7 @@ const Layout: FC = () => {
 												</div>
 											</MenuSetting>
 										</Div>
+											</button>
 									</UlNav>
 								)}
 								<ButtonText onClick={toggleNav} className="btn">
