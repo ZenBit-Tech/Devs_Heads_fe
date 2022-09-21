@@ -26,7 +26,7 @@ export type FormPass = {
 	oldPassword: string;
 	newPassword: string;
 	confirmPassword: string;
-	token: string;
+	email: string;
 };
 
 export interface Error {
@@ -83,7 +83,7 @@ const ChangePassword = () => {
 				await setPassword({
 					oldPassword: oldPassword,
 					newPassword: newPassword,
-					token: user.access_token || '',
+					email: user.email || '',
 				}).unwrap();
 				reset({ oldPassword: '', newPassword: '', confirmPassword: '' });
 				alert('success', 'Password changed successfully!');

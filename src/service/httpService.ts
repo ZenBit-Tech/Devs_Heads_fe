@@ -29,7 +29,7 @@ type FormPass = {
 type FormChangePasswordPass = {
 	oldPassword: string;
 	newPassword: string;
-	token: string;
+	email: string;
 };
 
 interface IContactInfoForm {
