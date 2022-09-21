@@ -45,9 +45,9 @@ const App: FC = () => {
 					<Routes>
 						<Route path="/" element={<Layout />}>
 							{/*here public routes */}
-							<Route path="/sign-in" element={<SignIn />} />
 							<Route path="/forgot-password" element={<ForgotPassword />} />
 							<Route path={'/restore-password/:token'} element={<RestorePassword />} />
+							<Route path="/sign-in" element={<SignIn />} />
 							<Route path="/sign-up" element={<SignUp />} />
 							<Route path="/welcome" element={<WelcomePage />} />
 							<Route path="/create-job-post" element={<JobPostPage />} />

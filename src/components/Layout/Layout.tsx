@@ -9,6 +9,9 @@ import {
 	UlNav,
 	BoderNav,
 	Image,
+	BtnMenu,
+	Div,
+	MenuSetting,
 	DropdownMenu,
 	LiSetting,
 } from './Layout.styles';
@@ -22,12 +25,11 @@ import {
 	Contracts,
 	Chat,
 	TalentPage,
-	SettingsJobOwner,
 	Home,
 	SignUp,
 } from 'constants/routes';
 import SettingPerson from 'image/setting-person.svg';
-import Person from 'image/profile.png';
+import JOPopupSettings from 'components/PopupSettings/PopUpJOSettings';
 
 const Layout: FC = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -54,7 +56,7 @@ const Layout: FC = () => {
 	const handleClick = () => {
 		dispatch(saveEmail(''));
 		dispatch(saveToken(''));
-		dispatch(saveUserId(0));
+		dispatch(saveUserId(undefined));
 		localStorage.clear();
 	};
 
@@ -105,7 +107,9 @@ const Layout: FC = () => {
 										<Li>
 											<NavLink to={`${Contracts}`}>{`${t('ClientPage.contracts')}`}</NavLink>
 										</Li>
-										<LiSetting className="dropdown">
+										<Div className="dropdown">
+											<BtnMenu
+												className="dropdownButton dropdown-toggle"
 											<button
 												className="dropdownButton"
 												type="button"
@@ -115,22 +119,14 @@ const Layout: FC = () => {
 												aria-expanded="false"
 											>
 												<Image src={SettingPerson} alt="SettingPerson" />
+											</BtnMenu>
+											<MenuSetting className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+												<div className="dropdown-item">
+													<JOPopupSettings handleClick={handleClick} />
+												</div>
+											</MenuSetting>
+										</Div>
 											</button>
-											<DropdownMenu className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-												<BoderNav>
-													<NavLink className="dropdown-item" to={`${SettingsJobOwner}`}>{`${t(
-														'ClientPage.settings',
-													)}`}</NavLink>
-												</BoderNav>
-												<BoderNav>
-													<NavLink
-														className="dropdown-item"
-														onClick={handleClick}
-														to={`${SignIn}`}
-													>{`${t('ClientPage.logout')}`}</NavLink>
-												</BoderNav>
-											</DropdownMenu>
-										</LiSetting>
 									</UlNav>
 								)}
 								<ButtonText onClick={toggleNav} className="btn">
@@ -151,7 +147,7 @@ const Layout: FC = () => {
 										<NavLink to={`${PostJobPage}`}>{`${t('FreelancerLayout.search')}`}</NavLink>
 									</Li>
 									<NavLink to={`${Settings}`}>
-										<Image src={Person} alt="SettingPerson" />
+										<Image src={SettingPerson} alt="SettingPerson" />
 									</NavLink>
 									<Li>
 										<NavLink onClick={handleClick} to={`${SignIn}`}>
