@@ -27,7 +27,6 @@ import {
 	SignUp,
 } from 'constants/routes';
 import SettingPerson from 'image/setting-person.svg';
-import Person from 'image/profile.png';
 import JOPopupSettings from 'components/PopupSettings/PopUpJOSettings';
 
 const Layout: FC = () => {
@@ -143,7 +142,7 @@ const Layout: FC = () => {
 										<NavLink to={`${PostJobPage}`}>{`${t('FreelancerLayout.search')}`}</NavLink>
 									</Li>
 									<NavLink to={`${Settings}`}>
-										<Image src={Person} alt="SettingPerson" />
+										<Image src={SettingPerson} alt="SettingPerson" />
 									</NavLink>
 									<Li>
 										<NavLink onClick={handleClick} to={`${SignIn}`}>
