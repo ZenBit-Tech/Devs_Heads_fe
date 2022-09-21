@@ -110,8 +110,6 @@ const Layout: FC = () => {
 										<Div className="dropdown">
 											<BtnMenu
 												className="dropdownButton dropdown-toggle"
-											<button
-												className="dropdownButton"
 												type="button"
 												id="dropdownMenuButton"
 												data-toggle="dropdown"
@@ -126,7 +124,6 @@ const Layout: FC = () => {
 												</div>
 											</MenuSetting>
 										</Div>
-											</button>
 									</UlNav>
 								</Navigation>
 							)}
@@ -153,7 +150,7 @@ const Layout: FC = () => {
 												<NavLink to={`${PostJobPage}`}>{`${t('FreelancerLayout.search')}`}</NavLink>
 											</Li>
 											<NavLink to={`${Settings}`}>
-												<Image src={Person} alt="SettingPerson" />
+												<Image src={SettingPerson} alt="SettingPerson" />
 											</NavLink>
 											<Li>
 												<NavLink onClick={handleClick} to={`${SignIn}`}>
