@@ -9,6 +9,8 @@ import './App.css';
 import GlobalStyle from 'config/GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import { theme } from 'config/theme';
+import TalentPage from 'pages/TalentPage';
+import SingleProfilePage from 'pages/SingleProfilePage';
 
 const WelcomePage = lazy(() => import('./pages/WelcomePage/WelcomePage'));
 
@@ -27,15 +29,14 @@ const ForgotPassword = lazy(() => import('components/forgotPassword/forgotPasswo
 const RestorePassword = lazy(() => import('components/restorePassword/restorePassword'));
 const PostJobPage = lazy(() => import('pages/PostJobPage'));
 const JobDescriptionPage = lazy(() => import('pages/JobDescriptionPage'));
+const JobDescriptionEditPage = lazy(() => import('pages/JobDescriptionEditPage'));
 
 const InviteTalent = lazy(() => import('pages/InviteTalentPage'));
 
 const App: FC = () => {
 	Cookies.set('name', 'value');
 	const a = Cookies.get('accessToken'); // TODO delete mock token when sign up/sign in will be completed
-	console.log(Cookies.get('key'));
 	const token: string | null = localStorage.getItem('token');
-	console.log(a);
 
 	return (
 		<>
@@ -53,8 +54,11 @@ const App: FC = () => {
 							<Route path="/create-job-post" element={<JobPostPage />} />
 							<Route path="/role-selection" element={<RoleSelection />} />
 							<Route path="/role-selection/:user" element={<RoleSelection />} />
+							<Route path="post-job/:id/edit" element={<JobDescriptionEditPage />} />
 							<Route path="post-job/:id" element={<JobDescriptionPage />} />
 							<Route path="post-job" element={<PostJobPage />} />
+							<Route path="/talent" element={<TalentPage />} />
+							<Route path="profile/:id" element={<SingleProfilePage />} />
 							<Route path="invite-talent" element={<InviteTalent />} />
 							<Route path="settings/" element={<SettingsPage />}>
 								<Route path="edit-profile" element={<ProfileEdit />} />

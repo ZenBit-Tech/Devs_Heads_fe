@@ -4,14 +4,17 @@ import { SearchInput } from 'components/freelancerJobs/freelancerPage.styles';
 interface Props {
 	search: string;
 	setSearch: (search: string) => void;
+	placeholder: string;
+	searchSize: string;
 }
 
 const Search = (props: Props) => {
-	const { search, setSearch } = props;
+	const { search, setSearch, placeholder, searchSize } = props;
 	return (
 		<SearchInput
 			type="text"
-			placeholder={`${t('FreelancerPage.search')}`}
+			style={{ margin: searchSize }}
+			placeholder={placeholder}
 			value={search}
 			onChange={e => setSearch(e.target.value)}
 		/>

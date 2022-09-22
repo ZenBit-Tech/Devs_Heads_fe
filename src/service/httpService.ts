@@ -26,6 +26,12 @@ type FormPass = {
 	token: string;
 };
 
+type FormChangePasswordPass = {
+	oldPassword: string;
+	newPassword: string;
+	email: string;
+};
+
 interface IContactInfoForm {
 	firstName: string;
 	lastName: string;
@@ -39,7 +45,7 @@ type FormDataGoogle = {
 };
 interface ISignUpResponseGoogle {
 	email: string;
-	googleId: string;
+	googleId?: string;
 	id: number;
 	role?: string;
 }
@@ -102,6 +108,16 @@ export const authApi = createApi({
 				},
 			}),
 		}),
+		passwordChange: build.mutation<{ message?: string }, FormChangePasswordPass>({
+			query: body => ({
+				url: `auth/change-password`,
+				method: 'put',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
 		getUser: build.query({
 			query: () => ({
 				url: `auth/user`,
@@ -116,6 +132,7 @@ export const {
 	useSignInMutation,
 	useForgotPasswordMutation,
 	useResetPasswordMutation,
+	usePasswordChangeMutation,
 	useGetUserQuery,
 } = authApi;
 
@@ -123,6 +140,7 @@ export const {
 export const profileApi = createApi({
 	reducerPath: 'profile',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	tagTypes: ['Profile'],
 	endpoints: build => ({
 		postProfileInfo: build.mutation<IContactInfoForm, IContactInfoForm>({
 			query: ({ id, email, firstName, lastName, phone }) => ({
@@ -142,6 +160,15 @@ export const profileApi = createApi({
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
 				},
+				providesTags: ['Profile'],
+			}),
+		}),
+		getFilterProfile: build.query({
+			query: filter => ({
+				url: `profile/filter?category=${filter.select ?? ''}&sort=asc&skills=${
+					filter.skills ?? ''
+				}&search=${filter.search ?? ''}&page=${filter.page}`,
+				method: 'get',
 			}),
 		}),
 		getUserProfile: build.query({
@@ -149,12 +176,17 @@ export const profileApi = createApi({
 		}),
 	}),
 });
-export const { usePostProfileInfoMutation, usePostProfileMutation, useGetUserProfileQuery } =
-	profileApi;
+export const {
+	usePostProfileInfoMutation,
+	usePostProfileMutation,
+	useGetFilterProfileQuery,
+	useGetUserProfileQuery,
+} = profileApi;
 
 export const jobPostApi = createApi({
 	reducerPath: 'jobPost',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	tagTypes: ['JobPost'],
 	endpoints: build => ({
 		postJob: build.mutation({
 			query: body => ({
@@ -165,15 +197,34 @@ export const jobPostApi = createApi({
 					'Content-type': 'application/json; charset=UTF-8',
 				},
 			}),
+			invalidatesTags: ['JobPost'],
 		}),
 		getJobPosts: build.query({
-			query: () => `/jobPost`,
+			query: () => ({
+				url: `/jobPost`,
+			}),
+			providesTags: ['JobPost'],
 		}),
 		getJobsDetail: build.query({
 			query: id => `/jobPost/${id}`,
 		}),
 		getPostJob: build.query({
 			query: id => `/jobPost/user/${id}`,
+		}),
+		updateJobPost: build.mutation({
+			query: ({ data, postId }) => ({
+				url: `/jobPost/${postId}`,
+				method: 'PATCH',
+				body: data,
+			}),
+			invalidatesTags: ['JobPost'],
+		}),
+		deleteJobPost: build.mutation({
+			query: id => ({
+				url: `/jobPost/${id}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: ['JobPost'],
 		}),
 	}),
 });
@@ -183,6 +234,8 @@ export const {
 	useGetJobsDetailQuery,
 	useGetPostJobQuery,
 	useGetJobPostsQuery,
+	useDeleteJobPostMutation,
+	useUpdateJobPostMutation,
 } = jobPostApi;
 
 export const proposalPostApi = createApi({

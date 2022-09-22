@@ -42,7 +42,12 @@ const Schema = Yup.object().shape({
 		.max(50, `${t('PostDetailPage.maxLength')}`),
 });
 
-export const Modal: FunctionComponent<ModalProps> = ({ isShown, hide, setDisable, jobPostId }) => {
+export const HandleModal: FunctionComponent<ModalProps> = ({
+	isShown,
+	hide,
+	setDisable,
+	jobPostId,
+}) => {
 	const {
 		register,
 		handleSubmit,
@@ -113,4 +118,4 @@ export const Modal: FunctionComponent<ModalProps> = ({ isShown, hide, setDisable
 	return isShown ? ReactDOM.createPortal(modal, document.body) : null;
 };
 
-export default Modal;
+export default HandleModal;

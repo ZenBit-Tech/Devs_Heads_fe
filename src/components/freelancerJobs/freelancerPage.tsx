@@ -122,7 +122,12 @@ const FreelancerPage: FC = () => {
 						<RadioButtons handleChange={handleChange} radio={durationValue} />
 					</ColumnSmall>
 					<ColumnBig>
-						<Search search={search} setSearch={setSearch} />
+						<Search
+							search={search}
+							setSearch={setSearch}
+							placeholder={`${t('FreelancerPage.search')}`}
+							searchSize={'2% 10% 2% 0%'}
+						/>
 						<ClearBtn onClick={ClearFilters}>{`${t('FreelancerPage.clear')}`}</ClearBtn>
 						<ul>
 							{(!userInfo || !posts) && <p>Loading...</p>}

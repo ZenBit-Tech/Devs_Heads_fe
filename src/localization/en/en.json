@@ -28,6 +28,15 @@
 		"error": "Invalid password",
 		"title": "Recover Password"
 	},
+	"ChangePassword": {
+		"changePassword": "Change Password",
+		"oldPassword": "Old Password",
+		"newPassword": "New Password",
+		"showPassword": "Show password",
+		"confirmPassword": "Confirm New Password",
+		"saveButton": "Save",
+		"cancel": "Cancel"
+	},
 	"SignUp": {
 		"quickSign": "Quick Sign Up",
 		"buttonGoogle": "Sign Up With Google",
@@ -151,7 +160,14 @@
 		"proposalSent": "Your proposal has been sent successfully!",
 		"priceError": "This field must be a positive number!",
 		"minLength": "Must be at least 6 characters",
-		"maxLength": "Maximum length is 50 symbols"
+		"maxLength": "Maximum length is 50 symbols",
+		"editButton": "Edit",
+		"removeButton": "Delete"
+	},
+	"EditPostDetailPage": {
+		"title": "Re-write a title for your job post",
+		"descriptionTitle": "Re-describe your job",
+		"updateButton": "Update"
 	},
 	"Layout": {
 		"clientTitle": "My Jobs",
@@ -162,6 +178,16 @@
 		"login": "Sign In",
 		"signup": "Sign Up",
 		"create": "Create Job Post"
+	},
+	"TalentCompanyPage": {
+		"title": "Find a talent for your Job",
+		"discover": "Discover",
+		"hires": "My Hires",
+		"saved": "Saved Talents",
+		"filter": "Filters",
+		"results": "Results by Your Search",
+		"skill": "Skills",
+		"rate": "Hourly Rate"
 	},
 	"FreelancerPage": {
 		"filter": "Filter by",
@@ -210,5 +236,10 @@
 		"chat": "Messages",
 		"contracts": "My Contracts",
 		"search": "Search a Job"
-	  }
+	},
+	"DeleteModal": {
+		"warningText": "Are you sure, that you want to delete you post?",
+		"agree": "Yes",
+		"disagree": "No"
+	}
 }
