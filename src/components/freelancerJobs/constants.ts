@@ -1,9 +1,11 @@
 import { t } from 'i18next';
 
-export const initialState = {
+export const initialCategory = {
 	value: '',
 	label: '',
 };
+
+export const initialPrice = [0, 3000];
 
 export const skillsMock = [
 	{ name: 'Business analysis', value: false },

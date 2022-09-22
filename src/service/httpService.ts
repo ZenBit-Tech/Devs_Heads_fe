@@ -62,7 +62,7 @@ export const authApi = createApi({
 		}),
 		signUpUpdate: build.mutation<ISignUpResponseGoogle, FormDataGoogle>({
 			query: body => ({
-				url: `auth/sign-up`,
+				url: `auth/sign-up/update`,
 				method: 'put',
 				body,
 				headers: {
@@ -144,9 +144,13 @@ export const profileApi = createApi({
 				},
 			}),
 		}),
+		getUserProfile: build.query({
+			query: id => `/profile/${id}`,
+		}),
 	}),
 });
-export const { usePostProfileInfoMutation, usePostProfileMutation } = profileApi;
+export const { usePostProfileInfoMutation, usePostProfileMutation, useGetUserProfileQuery } =
+	profileApi;
 
 export const jobPostApi = createApi({
 	reducerPath: 'jobPost',
