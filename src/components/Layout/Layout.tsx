@@ -13,7 +13,6 @@ import {
 	Div,
 	MenuSetting,
 	DropdownMenu,
-	LiSetting,
 } from './Layout.styles';
 import { t } from 'i18next';
 import { saveEmail, saveToken, saveUserId } from 'redux/reducers/userSlice';
