@@ -28,6 +28,15 @@
 		"error": "Invalid password",
 		"title": "Recover Password"
 	},
+	"ChangePassword": {
+		"changePassword": "Change Password",
+		"oldPassword": "Old Password",
+		"newPassword": "New Password",
+		"showPassword": "Show password",
+		"confirmPassword": "Confirm New Password",
+		"saveButton": "Save",
+		"cancel": "Cancel"
+	},
 	"SignUp": {
 		"quickSign": "Quick Sign Up",
 		"buttonGoogle": "Sign Up With Google",
@@ -129,8 +138,7 @@
 		"dataHasBeenSaved": "Your data has been saved"
 	},
 	"PostJobPage": {
-		"freelancerTitle": "Available Jobs",
-		"clientTitle": "Your Postings",
+		"title": "Your Postings",
 		"description": "No active job posts",
 		"button": "Post a Job"
 	},
@@ -152,7 +160,14 @@
 		"proposalSent": "Your proposal has been sent successfully!",
 		"priceError": "This field must be a positive number!",
 		"minLength": "Must be at least 6 characters",
-		"maxLength": "Maximum length is 50 symbols"
+		"maxLength": "Maximum length is 50 symbols",
+		"editButton": "Edit",
+		"removeButton": "Delete"
+	},
+	"EditPostDetailPage": {
+		"title": "Re-write a title for your job post",
+		"descriptionTitle": "Re-describe your job",
+		"updateButton": "Update"
 	},
 	"Layout": {
 		"clientTitle": "My Jobs",
@@ -163,5 +178,68 @@
 		"login": "Sign In",
 		"signup": "Sign Up",
 		"create": "Create Job Post"
+	},
+	"TalentCompanyPage": {
+		"title": "Find a talent for your Job",
+		"discover": "Discover",
+		"hires": "My Hires",
+		"saved": "Saved Talents",
+		"filter": "Filters",
+		"results": "Results by Your Search",
+		"skill": "Skills",
+		"rate": "Hourly Rate"
+	},
+	"FreelancerPage": {
+		"filter": "Filter by",
+		"clear": "Clear filters",
+		"search": "Search for jobs...",
+		"skills": "Skills",
+		"price": "Price Range",
+		"hours": "Available hours/per day",
+		"min": "min",
+		"max": "max",
+		"engLevelTitle": "English level",
+		"engLevel": {
+			"pre": "Pre-Intermediate",
+			"inter": "Intermediate",
+			"upper": "Upper-Intermediate"
+		}
+	},
+	"InvitePage": {
+		"button": "Invite",
+		"link": "more"
+	},
+	"InvitePopup": {
+		"title": "Message to invite to a job",
+		"label": "Message",
+		"button": "Send invitation message",
+		"message": "Hello! \n I'd like to invite you to take a look at the job I've posted. \n Please submit a proposal if you're available and interested.",
+		"noJobs": "First you need to create a job post",
+		"buttonPost": "Post a job"
+	},
+	"ClientPage": {
+		"clientTitle": "My Jobs",
+		"clientTitleDrop": "Jobs",
+		"freelancerTitle": "Jobs",
+		"home": "Home",
+		"settings": "Settings",
+		"chat": "Messages",
+		"contracts": "My Contracts",
+		"talent": "Talent",
+		"logout": "Log Out",
+		"login": "Sign In",
+		"signup": "Sign Up",
+		"create": "Post a Job",
+		"menu": "Navigation Menu"
+	},
+	"FreelancerLayout": {
+		"chat": "Messages",
+		"contracts": "My Contracts",
+		"search": "Search a Job"
+	},
+	"DeleteModal": {
+		"warningText": "Are you sure, that you want to delete you post?",
+		"agree": "Yes",
+		"disagree": "No"
 	}
 }

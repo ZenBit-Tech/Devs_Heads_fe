@@ -7,10 +7,10 @@ import { Div, Register, Form, ControlStyle, Input, P, ErrorP } from './signup.st
 import { useTranslation } from 'react-i18next';
 import { useSignUpMutation } from 'service/httpService';
 import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { saveEmail, saveUserId } from 'redux/reducers/userSlice';
+import { useAppDispatch } from 'redux/hooks';
+import { saveEmail, savePassword, saveUserId } from 'redux/reducers/userSlice';
 import { notification } from 'antd';
-import { RootState } from 'redux/store';
+import { RoleSelection } from 'constants/routes';
 
 export type FormData = {
 	email: string;
@@ -18,15 +18,12 @@ export type FormData = {
 	password: string;
 	role: string;
 };
-
 type Alert = 'success' | 'error';
-
 const schema = Yup.object({
 	email: Yup.string().email().required(),
 	createPassword: Yup.string().min(8).required(),
 	password: Yup.string().min(8).required(),
 }).required();
-
 const signUp = () => {
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
@@ -35,43 +32,32 @@ const signUp = () => {
 	const {
 		control,
 		handleSubmit,
-		reset,
 		formState: { errors },
 	} = useForm<FormData>({
 		resolver: yupResolver(schema),
 	});
-
 	const alert = (type: Alert) => {
 		notification[type]({
 			message: type === 'success' ? `${t('SignUp.errorPasswords')}` : `${t('SignUp.errorEmail')}`,
 		});
 	};
 
-	const { user } = useAppSelector<RootState>(state => state);
-
 	const onSubmit: SubmitHandler<FormData> = async values => {
 		const { email, password } = values;
-		values = { ...values, role: user.role };
 		if (values.createPassword !== values.password) {
-			alert('success');
-			reset({ email: '', createPassword: '', password: '' });
+			alert('error');
 		} else {
 			try {
-				const res = await signUp({ email, password, role: user.role }).unwrap();
-				localStorage.setItem('userId', JSON.stringify(res.id));
+				const res = await signUp({ email, password }).unwrap();
 				dispatch(saveUserId(res.id));
 				dispatch(saveEmail(email));
-				localStorage.setItem('userId', JSON.stringify(res.id));
-				reset({ email: '', createPassword: '', password: '' });
-				navigate('/welcome');
+				dispatch(savePassword(password));
+				navigate(`${RoleSelection}`);
 			} catch (e) {
 				alert('error');
-				// console.log(e);
-				reset({ email: '', createPassword: '', password: '' });
 			}
 		}
 	};
-
 	return (
 		<Div>
 			<P>{`${t('SignUp.quickSign')}`}</P>
@@ -108,5 +94,4 @@ const signUp = () => {
 		</Div>
 	);
 };
-
 export default signUp;

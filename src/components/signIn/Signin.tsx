@@ -21,6 +21,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'redux/hooks';
 import { saveEmail, saveRole, saveToken, saveUserId } from 'redux/reducers/userSlice';
 import { useSignInMutation } from 'service/httpService';
+import { Welcome } from 'constants/routes';
 
 export type FormData = {
 	email: string;
@@ -61,15 +62,12 @@ const signIn = () => {
 		try {
 			const res = await signIn({ email, password, role }).unwrap();
 			dispatch(saveToken(res.access_token));
-			localStorage.setItem('access_token', JSON.stringify(res.access_token));
 			dispatch(saveUserId(res.userId));
-			localStorage.setItem('userId', JSON.stringify(res.userId));
 			dispatch(saveRole(res.role));
-			localStorage.setItem('role', JSON.stringify(res.role));
 			dispatch(saveEmail(values.email));
 			alert('success');
 			reset({ email: '', password: '' });
-			navigate('/welcome');
+			navigate(`${Welcome}`);
 		} catch (e) {
 			reset({ email: '', password: '' });
 			alert('error');

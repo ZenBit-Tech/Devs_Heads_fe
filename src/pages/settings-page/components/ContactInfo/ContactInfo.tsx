@@ -33,7 +33,6 @@ export const ContactInfo = () => {
 	const { user } = useAppSelector<RootState>(state => state);
 	const userEmail = user.email;
 	const userId = user.id;
-	// console.log(userEmail);
 	const {
 		handleSubmit,
 		control,

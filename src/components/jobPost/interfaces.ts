@@ -22,6 +22,14 @@ export type JobSubmitForm = {
 	userId: number | undefined;
 };
 
+export type EditJobSubmitForm = {
+	jobTitle: string;
+	fromHourRate: number;
+	toHourRate: number;
+	jobDuration: string;
+	jobDescription: string;
+};
+
 interface ISkillBE {
 	name: string;
 }

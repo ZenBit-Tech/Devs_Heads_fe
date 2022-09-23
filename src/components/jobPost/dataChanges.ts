@@ -4,6 +4,7 @@ import { useSendData } from 'components/jobPost/dataSend';
 import { useAppSelector } from 'redux/hooks';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from 'redux/store';
+import { PostJobPage } from 'constants/routes';
 
 export const selection = [
 	{ value: 'Legal', label: 'Legal' },
@@ -46,7 +47,7 @@ export const skillsMock = [
 ];
 
 export const useOnDataChange = () => {
-	const { sendData } = useSendData();
+	const { sendData, sendUpdatedData } = useSendData();
 
 	const navigate = useNavigate();
 
@@ -80,6 +81,20 @@ export const useOnDataChange = () => {
 				skills,
 			};
 			sendData(newData);
+			navigate(`${PostJobPage}`);
+		} else {
+			return;
+		}
+	};
+
+	const handleUpdate = async (data: JobSubmitForm) => {
+		if (skills.length >= 3) {
+			const newData = {
+				...data,
+				userId,
+				skills,
+			};
+			sendUpdatedData(newData);
 			navigate('/post-job');
 		} else {
 			return;
@@ -91,5 +106,6 @@ export const useOnDataChange = () => {
 		onSkillsChange,
 		skills,
 		onSubmit,
+		handleUpdate,
 	};
 };

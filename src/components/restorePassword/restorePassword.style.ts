@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { BLUE, GREY, DARK_GREY, WHITE } from 'constants/styles';
+import { BLUE, GREY, DARK_GREY, WHITE } from 'constants/colors';
 import { RED_COLOR } from 'constants/colors';
+import { MEDIUM_FONT_SIZE, SMALL_FONT_SIZE } from 'constants/fonts';
 
 export const Div = styled.div`
 	margin: auto;
@@ -16,7 +17,7 @@ export const H1 = styled.h2`
 
 export const ErrorP = styled.p`
 	color: ${RED_COLOR};
-	font-size: 1vw;
+	font-size: ${SMALL_FONT_SIZE};
 `;
 
 export const Form = styled.form`
@@ -51,7 +52,7 @@ export const Button = styled.button`
 	border: none;
 	border-radius: 6px;
 	color: ${WHITE};
-	font-size: 1.5vw;
+	font-size: ${MEDIUM_FONT_SIZE};
 	margin: auto;
 	margin-top: 2%;
 	margin-bottom: 2%;

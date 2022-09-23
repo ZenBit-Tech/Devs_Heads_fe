@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 function GoogleAuth() {
 	const { t } = useTranslation();
 	const googleAuth = () => {
-		window.open(`http://localhost:3000/auth/redirect`, '_self');
+		window.open(`${process.env.REACT_APP_GOOGLE_REDIRECT}`, '_self');
 	};
 	return (
 		<Container onClick={googleAuth}>

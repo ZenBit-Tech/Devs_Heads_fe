@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-import { BLUE, GREY, WHITE } from 'constants/styles';
+import { BLUE, GREY, WHITE } from 'constants/colors';
 import { RED_COLOR } from 'constants/colors';
 import { LARGE_FONT_SIZE, MEDIUM_FONT_SIZE, SMALL_FONT_SIZE } from 'constants/fonts';
 
 export const Div = styled.div`
 	margin: auto;
+	margin-top: 25px;
 	width: 50%;
 	@media screen and (max-width: 600px) {
 		width: 90%;

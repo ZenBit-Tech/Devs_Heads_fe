@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
 	border-radius: ${props => props.theme.spacing(5)};
 	margin: ${props => props.theme.spacing(5)};
 	padding: ${props => props.theme.spacing(5)};
+	font-size: ${MEDIUM_FONT_SIZE};
 `;
 
 export const TitleStyled = styled.p`
@@ -14,14 +15,14 @@ export const TitleStyled = styled.p`
 `;
 
 export const DescriptionDataStyled = styled.p`
-	height: ${props => props.theme.spacing(10)};
+	height: ${props => props.theme.spacing(8)};
 	overflow: hidden;
 	font-size: ${MEDIUM_FONT_SIZE};
 `;
 
 export const DateStyled = styled.div`
-	width: ${props => props.theme.spacing(40)};
-	height: ${props => props.theme.spacing(10)};
+	width: ${props => props.theme.spacing(60)};
+	height: ${props => props.theme.spacing(8)};
 	display: flex;
 	align-items: center;
 	background-color: ${props => props.theme.colors.gray};

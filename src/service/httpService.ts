@@ -3,14 +3,16 @@ import { FormEmail } from 'components/forgotPassword/forgotPassword';
 
 type FormData = {
 	email: string;
-	password: string;
-	role: string;
+	password?: string;
+	role?: string;
 };
+
 interface ISignUpResponse {
 	email: string;
 	password: string;
 	googleId: string;
 	id: number;
+	role?: string;
 }
 
 interface ISignInResponse {
@@ -24,6 +26,12 @@ type FormPass = {
 	token: string;
 };
 
+type FormChangePasswordPass = {
+	oldPassword: string;
+	newPassword: string;
+	email: string;
+};
+
 interface IContactInfoForm {
 	firstName: string;
 	lastName: string;
@@ -31,8 +39,18 @@ interface IContactInfoForm {
 	phone: string;
 	id: number | undefined;
 }
+type FormDataGoogle = {
+	email: string;
+	role?: string;
+};
+interface ISignUpResponseGoogle {
+	email: string;
+	googleId?: string;
+	id: number;
+	role?: string;
+}
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = process.env.REACT_APP_API_URL;
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
 	reducerPath: 'auth',
@@ -42,6 +60,16 @@ export const authApi = createApi({
 			query: body => ({
 				url: 'auth/sign-up',
 				method: 'post',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
+		signUpUpdate: build.mutation<ISignUpResponseGoogle, FormDataGoogle>({
+			query: body => ({
+				url: `auth/sign-up/update`,
+				method: 'put',
 				body,
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
@@ -80,6 +108,16 @@ export const authApi = createApi({
 				},
 			}),
 		}),
+		passwordChange: build.mutation<{ message?: string }, FormChangePasswordPass>({
+			query: body => ({
+				url: `auth/change-password`,
+				method: 'put',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
 		getUser: build.query({
 			query: () => ({
 				url: `auth/user`,
@@ -90,9 +128,11 @@ export const authApi = createApi({
 });
 export const {
 	useSignUpMutation,
+	useSignUpUpdateMutation,
 	useSignInMutation,
 	useForgotPasswordMutation,
 	useResetPasswordMutation,
+	usePasswordChangeMutation,
 	useGetUserQuery,
 } = authApi;
 
@@ -100,6 +140,7 @@ export const {
 export const profileApi = createApi({
 	reducerPath: 'profile',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	tagTypes: ['Profile'],
 	endpoints: build => ({
 		postProfileInfo: build.mutation<IContactInfoForm, IContactInfoForm>({
 			query: ({ id, email, firstName, lastName, phone }) => ({
@@ -119,15 +160,33 @@ export const profileApi = createApi({
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
 				},
+				providesTags: ['Profile'],
 			}),
+		}),
+		getFilterProfile: build.query({
+			query: filter => ({
+				url: `profile/filter?category=${filter.select ?? ''}&sort=asc&skills=${
+					filter.skills ?? ''
+				}&search=${filter.search ?? ''}&page=${filter.page}`,
+				method: 'get',
+			}),
+		}),
+		getUserProfile: build.query({
+			query: id => `/profile/${id}`,
 		}),
 	}),
 });
-export const { usePostProfileInfoMutation, usePostProfileMutation } = profileApi;
+export const {
+	usePostProfileInfoMutation,
+	usePostProfileMutation,
+	useGetFilterProfileQuery,
+	useGetUserProfileQuery,
+} = profileApi;
 
 export const jobPostApi = createApi({
 	reducerPath: 'jobPost',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	tagTypes: ['JobPost'],
 	endpoints: build => ({
 		postJob: build.mutation({
 			query: body => ({
@@ -138,17 +197,34 @@ export const jobPostApi = createApi({
 					'Content-type': 'application/json; charset=UTF-8',
 				},
 			}),
+			invalidatesTags: ['JobPost'],
 		}),
 		getJobPosts: build.query({
 			query: () => ({
 				url: `/jobPost`,
 			}),
+			providesTags: ['JobPost'],
 		}),
 		getJobsDetail: build.query({
 			query: id => `/jobPost/${id}`,
 		}),
 		getPostJob: build.query({
 			query: id => `/jobPost/user/${id}`,
+		}),
+		updateJobPost: build.mutation({
+			query: ({ data, postId }) => ({
+				url: `/jobPost/${postId}`,
+				method: 'PATCH',
+				body: data,
+			}),
+			invalidatesTags: ['JobPost'],
+		}),
+		deleteJobPost: build.mutation({
+			query: id => ({
+				url: `/jobPost/${id}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: ['JobPost'],
 		}),
 	}),
 });
@@ -158,6 +234,8 @@ export const {
 	useGetJobsDetailQuery,
 	useGetPostJobQuery,
 	useGetJobPostsQuery,
+	useDeleteJobPostMutation,
+	useUpdateJobPostMutation,
 } = jobPostApi;
 
 export const proposalPostApi = createApi({

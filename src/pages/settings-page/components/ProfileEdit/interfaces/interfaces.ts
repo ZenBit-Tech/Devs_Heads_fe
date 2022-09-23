@@ -28,6 +28,7 @@ export interface IProfileEdit {
 	position: string;
 	category: string;
 	wage: number;
+	userId: number | undefined;
 	skills: ISkill[];
 	englishLevel: EnglishLevelEnum;
 	description: string;
@@ -53,6 +54,7 @@ export interface IBackEndProfileEdit {
 	englishLevel: EnglishLevelEnum;
 	price: number;
 	description: string;
+	userId: number | undefined;
 	category: IBackEndCategory;
 	education: IBackEndExperienceAndEducation[];
 	experience: IBackEndExperienceAndEducation[];
