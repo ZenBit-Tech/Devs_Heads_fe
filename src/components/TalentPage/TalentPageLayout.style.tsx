@@ -191,3 +191,15 @@ export const PhotoWrapper = styled.i`
 	display: inline-block;
 	padding: 25px;
 `;
+
+export const TitleDiv = styled.div`
+	display: flex;
+	margin-top: -100px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	@media (max-width: 1017px) {
+		margin-top: 25px;
+	}
+`;

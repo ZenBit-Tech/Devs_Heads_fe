@@ -225,6 +225,9 @@
 		"create": "Post a Job",
 		"menu": "Navigation Menu"
 	},
+	"TalentPage": {
+		"loading": "Loading..."
+	},
 	"FreelancerLayout": {
 		"chat": "Messages",
 		"contracts": "My Contracts",
