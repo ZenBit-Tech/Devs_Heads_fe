@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { authApi, jobPostApi, profileApi, proposalPostApi } from 'service/httpService';
+import { authApi, jobPostApi, profileApi, proposalPostApi, chatApi } from 'service/httpService';
 import sampleReducer from './reducers/sampleSlice';
 import { userReducer } from './reducers/userSlice';
 import storage from 'redux-persist/lib/storage';
@@ -21,6 +21,7 @@ const rootReducer = combineReducers({
 	[profileApi.reducerPath]: profileApi.reducer,
 	[jobPostApi.reducerPath]: jobPostApi.reducer,
 	[proposalPostApi.reducerPath]: proposalPostApi.reducer,
+	[chatApi.reducerPath]: chatApi.reducer,
 });
 
 const persistConfig = {
@@ -43,6 +44,7 @@ export const store = configureStore({
 			profileApi.middleware,
 			jobPostApi.middleware,
 			proposalPostApi.middleware,
+			chatApi.middleware,
 		]),
 });
 

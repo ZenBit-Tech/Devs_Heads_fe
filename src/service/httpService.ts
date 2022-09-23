@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { FormEmail } from 'components/forgotPassword/forgotPassword';
+import { IMessages } from '../components/Chat/interface';
 
 type FormData = {
 	email: string;
@@ -259,3 +260,17 @@ export const proposalPostApi = createApi({
 });
 
 export const { usePostProposalMutation, useGetProposalDetailQuery } = proposalPostApi;
+
+export const chatApi = createApi({
+	reducerPath: 'chat',
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	endpoints: build => ({
+		getMessages: build.query<IMessages[], void>({
+			query: () => ({
+				url: '/chat',
+			}),
+		}),
+	}),
+});
+
+export const { useGetMessagesQuery } = chatApi;

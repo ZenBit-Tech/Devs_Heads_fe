@@ -32,6 +32,7 @@ const JobDescriptionPage = lazy(() => import('pages/JobDescriptionPage'));
 const JobDescriptionEditPage = lazy(() => import('pages/JobDescriptionEditPage'));
 
 const InviteTalent = lazy(() => import('pages/InviteTalentPage'));
+const ChatPage = lazy(() => import('pages/ChatPages'));
 
 const App: FC = () => {
 	Cookies.set('name', 'value');
@@ -64,6 +65,7 @@ const App: FC = () => {
 								<Route path="edit-profile" element={<ProfileEdit />} />
 								<Route path="contact-info" element={<ContactInfo />} />
 							</Route>
+							<Route path="chat" element={<ChatPage />} />
 							<Route path="*" element={<Navigate to="/" />} />
 						</Route>
 						<Route element={<PrivateRoutes token={token} />}>
