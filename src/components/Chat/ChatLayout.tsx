@@ -12,7 +12,6 @@ const ChatLayout: FC = () => {
 	const [messages, setMessages] = useState<IMessages[]>([]);
 	const { user } = useAppSelector(state => state);
 	const { data } = useGetMessagesQuery();
-	console.log(data);
 
 	const userEmail = user.email;
 
@@ -20,6 +19,12 @@ const ChatLayout: FC = () => {
 		const newSocket = io('http://localhost:5009');
 		setSocket(newSocket);
 	}, [setSocket]);
+
+	useEffect(() => {
+		if (data !== undefined) {
+			setMessages(data);
+		}
+	}, [data]);
 
 	const messageListener = (message: any) => {
 		setMessages([...messages, message]);
