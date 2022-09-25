@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { ReactI18NextChild, useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import {
 	Container,
 	Div1,
@@ -15,26 +16,30 @@ import {
 } from './inviteTalent.styles';
 import blackHeartIcon from 'assets/blackHeartIcon.svg';
 import whiteHeartIcon from 'assets/whiteHeartIcon.svg';
-import { useGetPostJobQuery } from 'service/httpService';
+import {
+	useGetPostJobQuery,
+	useGetUserProfileQuery,
+	usePostInvitationMutation,
+} from 'service/httpService';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
-import { hardCode } from 'components/inviteTalent/constants';
 import InvitePopup from 'components/inviteTalent/component/Invitepopup';
-
-interface IPost {
-	jobTitle: string;
-	jobDescription: string;
-}
+import { IPost } from 'components/inviteTalent/interfaces';
 
 const InviteTalent: FC = () => {
 	const { t } = useTranslation();
+	const params = useParams();
 	const [saveBool, setSaveBool] = useState<boolean>(false);
 	const [srcIcon, setSrcIcon] = useState<string>(whiteHeartIcon);
 	const [showPopup, setShowPopup] = useState<boolean>(false);
 	const [isDisabled, setIsDisabled] = useState<boolean>(false);
 	const [open, setOpen] = useState<boolean>(false);
-	const { user } = useAppSelector<RootState>(state => state);
-	const { data: post } = useGetPostJobQuery(user.id);
+	const {
+		user: { id },
+	} = useAppSelector<RootState>(state => state);
+	const { data: post } = useGetPostJobQuery(id);
+	const { data } = useGetUserProfileQuery(Number(params.id));
+	const [postInvitation] = usePostInvitationMutation();
 
 	const Context = {
 		isDisabled,
@@ -43,6 +48,8 @@ const InviteTalent: FC = () => {
 		setOpen,
 		post,
 		handleSelect,
+		postInvitation,
+		data,
 	};
 
 	const handleSrc = () => {
@@ -83,27 +90,28 @@ const InviteTalent: FC = () => {
 
 	return (
 		<Container>
-			{hardCode.map(el => (
+			{
 				<>
-					<Div1 key={el.name}>
+					<Div1>
 						<Div2>
-							<H3>{el.name}</H3>
-							<P>{el.location}</P>
+							<H3>{data?.setting.firstName}</H3>
+							<H3>{data?.setting.lastName}</H3>
+							<P>{data?.setting.phone}</P>
 						</Div2>
-						<Image src={el.photo} />
+						<Image src={data?.profile.photo} />
 						<Save onClick={() => handleSaveClick()}>
 							<Img src={srcIcon} />
 						</Save>
 					</Div1>
-					<Div1 key={el.category}>
-						<H5>{el.category}</H5>
-						<H5>{el.price}</H5>
+					<Div1>
+						<H5>{data?.profile.postion}</H5>
+						<H5>Price: {data?.profile.price}</H5>
 					</Div1>
 					<Div3>
-						<P>{el.description}</P>
+						<P>{data?.profile.description}</P>
 					</Div3>
 				</>
-			))}
+			}
 			<Invite type="button" onClick={() => handleClick()}>{`${t('InvitePage.button')}`}</Invite>
 			{showPopup ? <InvitePopup Context={Context} /> : null}
 		</Container>
