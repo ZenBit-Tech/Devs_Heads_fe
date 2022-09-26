@@ -232,6 +232,10 @@
 		"create": "Post a Job",
 		"menu": "Navigation Menu"
 	},
+	"TalentPage": {
+		"loading": "Loading...",
+		"data": "There are no saved talents yet!"
+	},
 	"FreelancerLayout": {
 		"chat": "Messages",
 		"contracts": "My Contracts",

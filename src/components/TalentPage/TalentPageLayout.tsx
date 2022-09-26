@@ -193,7 +193,7 @@ const TalentPageLayout: FC = () => {
 										data?.profile.map((item: Filter, index: React.Key | null | undefined) => {
 											return (
 												<div key={index}>
-													<FilterProfileUser item={item} />
+													<FilterProfileUser item={item} path={true} />
 												</div>
 											);
 										})}
