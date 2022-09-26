@@ -24,14 +24,17 @@ const MySavedTalent = () => {
 				</TitleDiv>
 				<PaginationBlock>
 					<ProfileBlock>
-						{talent?.profile &&
+						{talent?.profile ? (
 							talent?.profile.map((item: Filter, index: React.Key | null | undefined) => {
 								return (
 									<div key={index}>
 										<FilterProfileUser item={item} path={false} />
 									</div>
 								);
-							})}
+							})
+						) : (
+							<h2>{`${t('TalentPage.data')}`}</h2>
+						)}
 					</ProfileBlock>
 					<Pagination filterPerPage={talent.limit} total={talent.total} paginate={paginate} />
 				</PaginationBlock>

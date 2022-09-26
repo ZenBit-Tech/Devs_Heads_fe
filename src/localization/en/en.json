@@ -226,7 +226,8 @@
 		"menu": "Navigation Menu"
 	},
 	"TalentPage": {
-		"loading": "Loading..."
+		"loading": "Loading...",
+		"data": "There are no saved talents yet!"
 	},
 	"FreelancerLayout": {
 		"chat": "Messages",
