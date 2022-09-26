@@ -12,3 +12,4 @@ export const GREY = 'rgb(153, 152, 152)';
 export const LIGHT_GREY = 'rgb(189, 197, 204)';
 export const DARK_GREY = 'rgb(61, 59, 59)';
 export const GREEN = 'rgb(33, 163, 33)';
+export const LIGHTGREY_COLOR = '#ced4da';

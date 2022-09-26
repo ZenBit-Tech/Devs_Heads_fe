@@ -50,7 +50,21 @@ const FreelancerPage: FC = () => {
 	};
 
 	useEffect(() => {
-		if (!isLoading) {
+		if (!isLoading && userInfo) {
+			const category = {
+				value: userInfo.profile.category.name,
+				label: userInfo.profile.category.name,
+			};
+			const skills = useMemo(
+				() =>
+					skillsMock.map(skill => ({
+						...skill,
+						value: userInfo.profile.skills.some(
+							(jobSkill: { name: string }) => jobSkill.name === skill.name,
+						),
+					})),
+				[skillsMock],
+			);
 			setSkillsOptions(skills);
 			setCategoryValue(category);
 		}
@@ -88,14 +102,6 @@ const FreelancerPage: FC = () => {
 		return <p>Loading...</p>;
 	}
 
-	const category = { value: userInfo.profile.category.name, label: userInfo.profile.category.name };
-	const skills = skillsMock.map(skill => ({
-		...skill,
-		value: userInfo.profile.skills.some(
-			(jobSkill: { name: string }) => jobSkill.name === skill.name,
-		),
-	}));
-
 	const ClearFilters = () => {
 		setSearch('');
 		setSkillsOptions(skillsMock);
@@ -132,7 +138,6 @@ const FreelancerPage: FC = () => {
 						/>
 						<ClearBtn onClick={ClearFilters}>{`${t('FreelancerPage.clear')}`}</ClearBtn>
 						<ul>
-							{(!userInfo || !posts) && <p>Loading...</p>}
 							{posts
 								.filter((post: IPost) => {
 									if (search === '') {

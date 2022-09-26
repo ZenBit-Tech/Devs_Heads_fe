@@ -50,7 +50,7 @@ interface ISignUpResponseGoogle {
 	role?: string;
 }
 
-const BASE_URL = process.env.REACT_APP_API_URL;
+const BASE_URL = `${process.env.REACT_APP_API_URL}`;
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
 	reducerPath: 'auth',
