@@ -13,6 +13,7 @@ import {
 	CategoryDiv,
 	CustomSelect,
 	Label,
+	Column,
 } from 'components/freelancerJobs/freelancerPage.styles';
 import { ICategory, IPost, ISkill } from 'components/freelancerJobs/interfaces';
 import { useAppSelector } from 'redux/hooks';
@@ -26,6 +27,7 @@ import {
 	selection,
 	skillsMock,
 	initialPrice,
+	checkList,
 } from 'components/freelancerJobs/constants';
 
 const FreelancerPage: FC = () => {
@@ -55,16 +57,12 @@ const FreelancerPage: FC = () => {
 				value: userInfo.profile.category.name,
 				label: userInfo.profile.category.name,
 			};
-			const skills = useMemo(
-				() =>
-					skillsMock.map(skill => ({
-						...skill,
-						value: userInfo.profile.skills.some(
-							(jobSkill: { name: string }) => jobSkill.name === skill.name,
-						),
-					})),
-				[skillsMock],
-			);
+			const skills = skillsMock.map(skill => ({
+				...skill,
+				value: userInfo.profile.skills.some(
+					(jobSkill: { name: string }) => jobSkill.name === skill.name,
+				),
+			}));
 			setSkillsOptions(skills);
 			setCategoryValue(category);
 		}
@@ -127,7 +125,16 @@ const FreelancerPage: FC = () => {
 							/>
 						</CategoryDiv>
 						<SliderSearch slider={userPrice} rangeSelector={rangeSelector} />
-						<RadioButtons handleChange={handleChange} radio={durationValue} />
+						<Column>
+							<ul>
+								<Li>{`${t('JobPostPage.shortDuration')}`}</Li>
+								<Li>{`${t('JobPostPage.mediumDuration')}`}</Li>
+								<Li>{`${t('JobPostPage.longDuration')}`}</Li>
+							</ul>
+						</Column>
+						<Column>
+							<RadioButtons handleChange={handleChange} radio={durationValue} value={checkList} />
+						</Column>
 					</ColumnSmall>
 					<ColumnBig>
 						<Search

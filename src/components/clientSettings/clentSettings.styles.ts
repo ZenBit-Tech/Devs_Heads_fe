@@ -88,18 +88,6 @@ export const P = styled.p`
 	color: ${RED_COLOR};
 `;
 
-export const CheckLabel = styled.label`
-	width: 300px;
-	display: inline-block;
-`;
-
-export const Span = styled.span`
-	font-size: ${MEDIUM_FONT_SIZE};
-	margin-left: 5%;
-	justify-content: center;
-	align-items: center;
-`;
-
 export const Div = styled.div`
 	padding: 10px;
 `;

@@ -8,18 +8,18 @@ import {
 	ICountry,
 	initial,
 	initialCountry,
+	password,
 	selection,
+	settings,
 	ValidationSchema,
 } from 'components/clientSettings/data';
 import {
-	CheckLabel,
 	Column,
 	Container,
 	SaveButton,
 	CancelButton,
 	MainTitle,
 	P,
-	Span,
 	Title,
 	Div,
 	Input,
@@ -34,9 +34,7 @@ import countryList from 'react-select-country-list';
 import { FormEvent, useMemo, useState } from 'react';
 import editIcon from 'image/icon-pencil.png';
 import ChangePassword from 'pages/setting-page-client/change-password/ChangePassword';
-
-const settings = 'settings';
-const password = 'password';
+import RadioButtons from 'components/freelancerJobs/components/radio';
 
 const ClientSettings = () => {
 	const { t } = useTranslation();
@@ -151,20 +149,11 @@ const ClientSettings = () => {
 						<Column>
 							<div>
 								<Title>{`${t('ClientSettings.quantity')}`}</Title>
-								<CheckLabel>
-									{checkList.map((item: string, index: number) => (
-										<div key={index}>
-											<input
-												value={item}
-												type="radio"
-												name="gender"
-												onChange={quantityHandleChange}
-												checked={item === quantity}
-											/>
-											<Span>{item}</Span>
-										</div>
-									))}
-								</CheckLabel>
+								<RadioButtons
+									handleChange={quantityHandleChange}
+									radio={quantity}
+									value={checkList}
+								/>
 							</div>
 						</Column>
 						<Div>
