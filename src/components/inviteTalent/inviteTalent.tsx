@@ -66,11 +66,11 @@ const InviteTalent: FC = () => {
 			if (isLoading) {
 				return <Suspense fallback={<div>{`${t('PostDetailPage.loading')}`}</div>}></Suspense>;
 			} else if (data) {
-				setSaveBool(Boolean(eval(data.profile.savedProfile)));
+				setSaveBool(data.profile.saved);
 			}
 		};
 		getSingleProfile();
-	}, [data && data.profile.savedProfile]);
+	}, [data?.profile.saved]);
 
 	const handleSrc = () => {
 		if (saveBool) {
@@ -89,8 +89,9 @@ const InviteTalent: FC = () => {
 			id: Number(params.id),
 			saved: !saveBool,
 		}).unwrap();
-		if (userHeartUpdate) {
-			setSaveBool(Boolean(userHeartUpdate));
+		const { saved } = userHeartUpdate;
+		if (saved) {
+			setSaveBool(!saveBool);
 		}
 	};
 
