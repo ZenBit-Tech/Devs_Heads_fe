@@ -1,3 +1,10 @@
+export const WHITE_COLOR = '#FFFFFF';
+export const BLACK_COLOR = '#000000';
+export const LIGHTBLUE_COLOR = '#687df2';
+export const DODGERBLUE_COLOR = '#0727db';
+export const RED_COLOR = '#DC3545';
+export const GREEN_COLOR = '#5db501';
+export const DEFAULT_COLOR = '';
 export const BLUE = '#1E90FFFF';
 export const LIGHT_BLUE = '#45a2ff';
 export const WHITE = '#f5f5f5';
@@ -5,7 +12,3 @@ export const GREY = 'rgb(153, 152, 152)';
 export const LIGHT_GREY = 'rgb(189, 197, 204)';
 export const DARK_GREY = 'rgb(61, 59, 59)';
 export const GREEN = 'rgb(33, 163, 33)';
-
-export const FONT_SMALL = '12px';
-export const FONT_MEDIUM = '14px';
-export const FONT_LARGE = '20px';

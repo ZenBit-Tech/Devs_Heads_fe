@@ -3,65 +3,114 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Div, Div2, H1, H2, Form, Input, Button, ControlStyle, LinkStyle, P, ErrorP } from './Signin.styles';
+import { notification } from 'antd';
+import {
+	Div,
+	Div2,
+	H1,
+	H2,
+	Form,
+	Input,
+	Button,
+	ControlStyle,
+	LinkStyle,
+	P,
+	ErrorP,
+} from './Signin.styles';
 import { useTranslation } from 'react-i18next';
-import { useSignInMutation } from 'service/signinHttp';
+import { useAppDispatch } from 'redux/hooks';
+import { saveEmail, saveRole, saveToken, saveUserId } from 'redux/reducers/userSlice';
+import { useSignInMutation } from 'service/httpService';
+import { Welcome } from 'constants/routes';
 
-type FormData = {
-  email: string;
-  password: string;
-}
+export type FormData = {
+	email: string;
+	password: string;
+	role: string;
+};
+
+type Alert = 'success' | 'error';
 
 const schema = Yup.object({
-  email: Yup.string().required(),
-  password: Yup.string().min(8).required(),
+	email: Yup.string().required(),
+	password: Yup.string().min(8).required(),
 }).required();
 
 const signIn = () => {
-  const [signIn] = useSignInMutation();
-  const navigate = useNavigate();
-  const { handleSubmit, control, reset, formState: { errors } } = useForm<FormData>({
-    resolver: yupResolver(schema),
-  });
+	const { t } = useTranslation();
+	const dispatch = useAppDispatch();
+	const [signIn] = useSignInMutation();
+	const navigate = useNavigate();
+	const {
+		handleSubmit,
+		control,
+		reset,
+		formState: { errors },
+	} = useForm<FormData>({
+		resolver: yupResolver(schema),
+	});
 
-  const { t } = useTranslation();
+	const alert = (type: Alert) => {
+		notification[type]({
+			message: type === 'success' ? `${t('SignIn.success')}` : `${t('SignIn.error')}`,
+		});
+	};
 
-  const onSubmit: SubmitHandler<FormData> = async (values: object) => {
-    await signIn(values);
-    alert('You have sucessfully logged in');
-    reset({ email: '', password: '' });
-    navigate('/home');
-  };
+	const onSubmit: SubmitHandler<FormData> = async values => {
+		const { email, password, role } = values;
 
-  return (
-    <Div>
-      <H1>{`${t('SignIn.title')}`}</H1>
-      <H2>{`${t('SignIn.upperText')}`}</H2>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <ControlStyle>{`${t('SignIn.email')}`}</ControlStyle>
-          <Controller
-            render={({ field }) => <Input type="text" {...field} />}
-            name="email"
-            control={control}
-            defaultValue="" 
-          />
-        <ControlStyle>{`${t('SignIn.password')}`}</ControlStyle>
-          <Controller
-            render={({ field }) => <Input type="password" {...field} />}
-            name="password"
-            control={control}
-            defaultValue=""
-          />
-          <LinkStyle><Link to="/forgot-passowrd">{`${t('SignIn.forgotPassword')}`}</Link></LinkStyle>
-          <ErrorP>{errors.password?.message}</ErrorP>
-        <Button type="submit">{`${t('SignIn.buttonSignin')}`}</Button>
-      </Form>
-      <Div2>
-        <P>{`${t('SignIn.text')}`}</P>
-        <Link to="/signup">{`${t('SignIn.registerLink')}`}</Link>
-      </Div2>
-    </Div>
-  );
-}
+		try {
+			const res = await signIn({ email, password, role }).unwrap();
+			dispatch(saveToken(res.access_token));
+			dispatch(saveUserId(res.userId));
+			dispatch(saveRole(res.role));
+			dispatch(saveEmail(values.email));
+			alert('success');
+			reset({ email: '', password: '' });
+			navigate(`${Welcome}`);
+		} catch (e) {
+			reset({ email: '', password: '' });
+			alert('error');
+			// console.log(e);
+		}
+	};
+
+	return (
+		<Div>
+			<div>
+				<H1>{`${t('SignIn.title')}`}</H1>
+			</div>
+			<div>
+				<H2>{`${t('SignIn.upperText')}`}</H2>
+			</div>
+			<Form onSubmit={handleSubmit(onSubmit)}>
+				<ControlStyle>{`${t('SignIn.email')}`}</ControlStyle>
+				<Controller
+					render={({ field }) => <Input type="email" {...field} />}
+					name="email"
+					control={control}
+					defaultValue=""
+				/>
+				<ErrorP>{errors.email?.message}</ErrorP>
+				<ControlStyle>{`${t('SignIn.password')}`}</ControlStyle>
+				<Controller
+					render={({ field }) => <Input type="password" {...field} />}
+					name="password"
+					control={control}
+					defaultValue=""
+				/>
+				<ErrorP>{errors.password?.message}</ErrorP>
+				<LinkStyle>
+					<Link to="/forgot-password">{`${t('SignIn.forgotPassword')}`}</Link>
+				</LinkStyle>
+				<Button type="submit">{`${t('SignIn.buttonSignin')}`}</Button>
+			</Form>
+			<Div2>
+				<P>{`${t('SignIn.text')}`}</P>
+				<Link to="/sign-up">{`${t('SignIn.registerLink')}`}</Link>
+			</Div2>
+		</Div>
+	);
+};
 
 export default signIn;
