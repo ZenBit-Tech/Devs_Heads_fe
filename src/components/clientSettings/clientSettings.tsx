@@ -35,8 +35,11 @@ import { FormEvent, useMemo, useState } from 'react';
 import editIcon from 'image/icon-pencil.png';
 import ChangePassword from 'pages/setting-page-client/change-password/ChangePassword';
 import RadioButtons from 'components/freelancerJobs/components/radio';
+import { RootState } from 'redux/store';
+import { useAppSelector } from 'redux/hooks';
 
 const ClientSettings = () => {
+	const { user } = useAppSelector<RootState>(state => state);
 	const { t } = useTranslation();
 	const {
 		register,
@@ -113,7 +116,7 @@ const ClientSettings = () => {
 							</Column>
 							<Column>
 								<Title>{`${t('ClientSettings.email')}`}</Title>
-								<Input type="text" />
+								<Input type="text" value={user.email} />
 							</Column>
 							{errors.name && <P>{errors.name?.message}</P>}
 							<Div>
