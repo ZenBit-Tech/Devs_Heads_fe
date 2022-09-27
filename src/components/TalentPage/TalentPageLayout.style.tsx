@@ -133,6 +133,11 @@ export const ProfileBlock = styled.div`
 	grid-template-columns: 1fr 1fr 1fr;
 	gap: ${props => props.theme.spacing(10)};
 	padding-bottom: ${props => props.theme.spacing(5)};
+
+	&.notFound {
+		display: flex;
+		justify-content: center;
+	}
 `;
 export const PaginationBlock = styled.div`
 	width: 60%;

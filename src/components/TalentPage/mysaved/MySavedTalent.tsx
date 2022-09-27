@@ -23,8 +23,8 @@ const MySavedTalent = () => {
 					<Title>Saved Talents</Title>
 				</TitleDiv>
 				<PaginationBlock>
-					<ProfileBlock>
-						{talent?.profile ? (
+					<ProfileBlock className={talent?.profile.length ? '' : 'notFound'}>
+						{talent?.profile.length ? (
 							talent?.profile.map((item: Filter, index: React.Key | null | undefined) => {
 								return (
 									<div key={index}>
