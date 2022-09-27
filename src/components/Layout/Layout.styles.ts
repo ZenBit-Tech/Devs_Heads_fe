@@ -96,9 +96,9 @@ export const MenuSetting = styled.div`
 	margin-right: 60px;
 
 	&.dropdown-menu:hover {
-		color: #16181b;
+		color: ${props => props.theme.colors.darkBlack};
 		text-decoration: none;
-		background-color: #f8f9fa;
+		background-color: ${props => props.theme.colors.backgroundGray};
 	}
 	& > .dropdown-item:hover {
 		background-color: unset;
