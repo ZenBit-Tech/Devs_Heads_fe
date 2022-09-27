@@ -13,14 +13,15 @@ export interface IProps {
 		setOpen: (open: boolean) => void;
 		post: IPost[];
 		handleSelect: () => ReactI18NextChild | Iterable<ReactI18NextChild>;
-		postInvitation: (text: string, id: number, title: string | IMessage) => Promise<IMessage>;
 		data: {
 			profile: { userId: number };
 		};
 	};
 }
 export interface IMessage {
-	text: string;
+	message: string;
 	userId: number | undefined;
-	title: string;
+	jobTitle: string;
 }
+
+export type Alert = 'success';

@@ -16,11 +16,7 @@ import {
 } from './inviteTalent.styles';
 import blackHeartIcon from 'assets/blackHeartIcon.svg';
 import whiteHeartIcon from 'assets/whiteHeartIcon.svg';
-import {
-	useGetPostJobQuery,
-	useGetUserProfileQuery,
-	usePostInvitationMutation,
-} from 'service/httpService';
+import { useGetPostJobQuery, useGetUserProfileQuery } from 'service/httpService';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
 import InvitePopup from 'components/inviteTalent/component/Invitepopup';
@@ -39,7 +35,6 @@ const InviteTalent: FC = () => {
 	} = useAppSelector<RootState>(state => state);
 	const { data: post } = useGetPostJobQuery(id);
 	const { data } = useGetUserProfileQuery(Number(params.id));
-	const [postInvitation] = usePostInvitationMutation();
 
 	const Context = {
 		isDisabled,
@@ -48,7 +43,6 @@ const InviteTalent: FC = () => {
 		setOpen,
 		post,
 		handleSelect,
-		postInvitation,
 		data,
 	};
 

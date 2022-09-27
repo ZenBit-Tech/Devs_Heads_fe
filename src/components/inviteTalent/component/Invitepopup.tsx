@@ -19,30 +19,38 @@ import { BLUE } from 'constants/colors';
 import TextArea from 'antd/lib/input/TextArea';
 import { CreateJobPost } from 'constants/routes';
 import { useNavigate } from 'react-router-dom';
-import { IMessage, IProps } from 'components/inviteTalent/interfaces';
+import { usePostInvitationMutation } from 'service/httpService';
+import { IMessage, IProps, Alert } from 'components/inviteTalent/interfaces';
+import { notification } from 'antd';
 
 const TEXTAREA_ROWS_MAX = 16;
 const TEXTAREA_ROWS_MIN = 8;
 const BORDER_RADIUS = 6;
 
 const InvitePopup = (props: IProps) => {
-	const { isDisabled, setIsDisabled, open, setOpen, post, handleSelect, postInvitation, data } =
-		props.Context;
+	const { isDisabled, setIsDisabled, open, setOpen, post, handleSelect, data } = props.Context;
 	const { t } = useTranslation();
 	const navigate = useNavigate();
+	const [postInvitation] = usePostInvitationMutation();
 	const { control, handleSubmit } = useForm<IMessage>();
 
+	const alert = (type: Alert) => {
+		notification[type]({
+			message: type === 'success' && `${t('InvitePopup.alert')}`,
+		});
+	};
+
 	const onSubmit: SubmitHandler<IMessage> = async (payload: IMessage) => {
-		const { text, title } = payload;
+		const { message, jobTitle } = payload;
 		const {
 			profile: { userId },
 		} = data;
+
 		if (isDisabled) {
 			setIsDisabled(false);
 		} else {
-			await postInvitation(text, userId, title)
-				.then(payload => console.log('fulfilled', payload))
-				.catch(error => console.error('rejected', error));
+			await postInvitation({ message, userId, jobTitle }).unwrap();
+			alert('success');
 			setIsDisabled(true);
 		}
 	};
@@ -68,7 +76,7 @@ const InvitePopup = (props: IProps) => {
 											defaultValue={`${t('InvitePopup.message')}`}
 										/>
 									)}
-									name="text"
+									name="message"
 									control={control}
 									defaultValue={`${t('InvitePopup.message')}`}
 								/>
@@ -76,7 +84,7 @@ const InvitePopup = (props: IProps) => {
 							<Actions>
 								<Controller
 									render={({ field }) => <Select {...field}>{handleSelect()}</Select>}
-									name="title"
+									name="jobTitle"
 									control={control}
 								/>
 								<SendMessage

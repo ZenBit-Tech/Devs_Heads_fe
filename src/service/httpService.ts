@@ -262,21 +262,24 @@ export const proposalPostApi = createApi({
 export const { usePostProposalMutation, useGetProposalDetailQuery } = proposalPostApi;
 
 export const invitationPostApi = createApi({
-	reducerPath: 'message',
+	reducerPath: 'invite-talent',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
 	endpoints: build => ({
 		postInvitation: build.mutation<
-			{ text: string; userId: number | undefined; title: string },
+			{ message: string; userId: number | undefined; jobTitle: string },
 			IMessage
 		>({
-			query: ({ text, userId, title }) => ({
-				url: 'message/invite-talent',
-				method: 'POST',
-				body: { text, userId, title },
-				headers: {
-					'Content-type': 'application/json; charset=UTF-8',
-				},
-			}),
+			query: ({ message, userId, jobTitle }) => (
+				console.log(message, userId, jobTitle),
+				{
+					url: '/invite-talent',
+					method: 'POST',
+					body: { message, userId, jobTitle },
+					headers: {
+						'Content-type': 'application/json; charset=UTF-8',
+					},
+				}
+			),
 		}),
 	}),
 });
