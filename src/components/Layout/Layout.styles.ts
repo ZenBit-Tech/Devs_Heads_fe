@@ -94,6 +94,15 @@ export const Div = styled.div`
 
 export const MenuSetting = styled.div`
 	margin-right: 60px;
+
+	&.dropdown-menu:hover {
+		color: #16181b;
+		text-decoration: none;
+		background-color: #f8f9fa;
+	}
+	& > .dropdown-item:hover {
+		background-color: unset;
+	}
 `;
 
 export const BtnMenu = styled.button`

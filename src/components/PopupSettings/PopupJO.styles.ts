@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 
 export const Div = styled.div`
-	height: 200px;
-	width: 200px;
+	height: 150px;
+	width: 150px;
 	display: flex;
 	align-items: center;
 	flex-flow: column wrap;
 `;
 
 export const Img = styled.img`
-	height: 80px;
-	width: 80px;
+	height: 60px;
+	width: 60px;
 `;
 
 export const BoderNav = styled.div`
