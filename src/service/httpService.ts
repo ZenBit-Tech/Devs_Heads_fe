@@ -177,8 +177,9 @@ export const profileApi = createApi({
 		}),
 		updateSingleProfile: build.mutation<{ saved?: boolean }, FormPassSingleProfile>({
 			query: ({ id, saved }) => ({
-				url: `profile/${id}/${saved}`,
+				url: `profile/${id}`,
 				method: 'put',
+				body: { saved },
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
 				},
@@ -191,6 +192,7 @@ export const profileApi = createApi({
 		}),
 		getUserProfile: build.query({
 			query: id => `/profile/${id}`,
+			providesTags: ['Profile'],
 		}),
 	}),
 });

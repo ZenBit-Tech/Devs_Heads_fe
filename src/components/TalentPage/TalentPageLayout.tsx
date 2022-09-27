@@ -24,7 +24,6 @@ import Select from 'react-select';
 import { selection } from 'components/jobPost/dataChanges';
 import { BsArrowLeftCircle } from 'react-icons/bs';
 import { BsArrowRightCircle } from 'react-icons/bs';
-import MyHiresCompany from './myhires/MyHiresCompany';
 import MySavedTalent from './mysaved/MySavedTalent';
 import FilterProfileUser from './FilterProfileUser';
 import { useGetFilterProfileQuery } from 'service/httpService';
@@ -206,7 +205,6 @@ const TalentPageLayout: FC = () => {
 					</Wrapper>
 				)}
 			</MainBlockWrapper>
-			{active?.hires === hires && <MyHiresCompany />}
 			{active?.save === saved && <MySavedTalent />}
 		</div>
 	);
