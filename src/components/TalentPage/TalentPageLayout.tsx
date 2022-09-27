@@ -122,9 +122,6 @@ const TalentPageLayout: FC = () => {
 							>
 								<span id={discover}>{`${t('TalentCompanyPage.discover')}`}</span>
 							</Button>
-							<Button className={active?.hires ? 'defaultActive' : ''} onClick={handleChangeActive}>
-								<span id={hires}> {`${t('TalentCompanyPage.hires')}`}</span>
-							</Button>
 							<Button className={active?.save ? 'defaultActive' : ''} onClick={handleChangeActive}>
 								<span id={saved}> {`${t('TalentCompanyPage.saved')}`}</span>
 							</Button>
