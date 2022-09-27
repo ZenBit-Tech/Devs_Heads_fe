@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, Suspense, useEffect, useState } from 'react';
 import { ReactI18NextChild, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import {
@@ -16,11 +16,16 @@ import {
 } from './inviteTalent.styles';
 import blackHeartIcon from 'assets/blackHeartIcon.svg';
 import whiteHeartIcon from 'assets/whiteHeartIcon.svg';
-import { useGetPostJobQuery, useGetUserProfileQuery } from 'service/httpService';
+import { IPost } from 'components/inviteTalent/interfaces';
+import {
+	useGetPostJobQuery,
+	useGetUserProfileQuery,
+	useUpdateSingleProfileMutation,
+} from 'service/httpService';
+import InvitePopup from 'components/inviteTalent/component/Invitepopup';
+import { useParams } from 'react-router-dom';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
-import InvitePopup from 'components/inviteTalent/component/Invitepopup';
-import { IPost } from 'components/inviteTalent/interfaces';
 
 const InviteTalent: FC = () => {
 	const { t } = useTranslation();
@@ -34,7 +39,8 @@ const InviteTalent: FC = () => {
 		user: { id },
 	} = useAppSelector<RootState>(state => state);
 	const { data: post } = useGetPostJobQuery(id);
-	const { data } = useGetUserProfileQuery(Number(params.id));
+	const { data, isLoading } = useGetUserProfileQuery(Number(params.id));
+	const [userUpdate] = useUpdateSingleProfileMutation();
 
 	const Context = {
 		isDisabled,
@@ -46,6 +52,25 @@ const InviteTalent: FC = () => {
 		data,
 	};
 
+	useEffect(() => {
+		setOpen(true);
+	}, []);
+
+	useEffect(() => {
+		handleSrc();
+	}, [saveBool]);
+
+	useEffect(() => {
+		const getSingleProfile = () => {
+			if (isLoading) {
+				return <Suspense fallback={<div>{`${t('PostDetailPage.loading')}`}</div>}></Suspense>;
+			} else if (data) {
+				setSaveBool(data.profile.saved);
+			}
+		};
+		getSingleProfile();
+	}, [data?.profile.saved]);
+
 	const handleSrc = () => {
 		if (saveBool) {
 			setSrcIcon(blackHeartIcon);
@@ -53,12 +78,19 @@ const InviteTalent: FC = () => {
 			setSrcIcon(whiteHeartIcon);
 		}
 	};
-
-	const handleSaveClick = () => {
+	const handleSaveClick = async () => {
 		if (!saveBool) {
 			setSaveBool(true);
 		} else {
 			setSaveBool(false);
+		}
+		const userHeartUpdate = await userUpdate({
+			id: Number(params.id),
+			saved: !saveBool,
+		}).unwrap();
+		const { saved } = userHeartUpdate;
+		if (saved) {
+			setSaveBool(!saveBool);
 		}
 	};
 
@@ -74,14 +106,6 @@ const InviteTalent: FC = () => {
 		return post?.map((el: IPost) => <option>{el.jobTitle}</option>);
 	}
 
-	useEffect(() => {
-		setOpen(true);
-	}, []);
-
-	useEffect(() => {
-		handleSrc();
-	}, [saveBool]);
-
 	return (
 		<Container>
 			{
@@ -93,7 +117,7 @@ const InviteTalent: FC = () => {
 							<P>{data?.setting.phone}</P>
 						</Div2>
 						<Image src={data?.profile.photo} />
-						<Save onClick={() => handleSaveClick()}>
+						<Save onClick={handleSaveClick}>
 							<Img src={srcIcon} />
 						</Save>
 					</Div1>

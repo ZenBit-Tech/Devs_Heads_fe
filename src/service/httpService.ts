@@ -33,6 +33,11 @@ type FormChangePasswordPass = {
 	email: string;
 };
 
+type FormPassSingleProfile = {
+	id: number;
+	saved: boolean;
+};
+
 interface IContactInfoForm {
 	firstName: string;
 	lastName: string;
@@ -51,7 +56,7 @@ interface ISignUpResponseGoogle {
 	role?: string;
 }
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = process.env.REACT_APP_API_URL;
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
 	reducerPath: 'auth',
@@ -161,7 +166,6 @@ export const profileApi = createApi({
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
 				},
-				providesTags: ['Profile'],
 			}),
 		}),
 		getFilterProfile: build.query({
@@ -172,16 +176,34 @@ export const profileApi = createApi({
 				method: 'get',
 			}),
 		}),
+		updateSingleProfile: build.mutation<{ saved?: boolean }, FormPassSingleProfile>({
+			query: ({ id, saved }) => ({
+				url: `profile/${id}`,
+				method: 'put',
+				body: { saved },
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+			invalidatesTags: ['Profile'],
+		}),
+		getTalentProfile: build.query({
+			query: page => `/profile/savedTalent?page=${page}`,
+			providesTags: ['Profile'],
+		}),
 		getUserProfile: build.query({
 			query: id => `/profile/${id}`,
+			providesTags: ['Profile'],
 		}),
 	}),
 });
 export const {
 	usePostProfileInfoMutation,
 	usePostProfileMutation,
+	useUpdateSingleProfileMutation,
 	useGetFilterProfileQuery,
 	useGetUserProfileQuery,
+	useGetTalentProfileQuery,
 } = profileApi;
 
 export const jobPostApi = createApi({

@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { t } from 'i18next';
 import Profile from 'image/profile-talent.png';
 
-const FilterProfileUser: FC<{ item: Filter }> = ({ item }) => {
+const FilterProfileUser: FC<{ item: Filter; path: boolean }> = ({ item, path }) => {
 	return (
 		<>
 			<ImageWrapperBlock>
@@ -26,13 +26,19 @@ const FilterProfileUser: FC<{ item: Filter }> = ({ item }) => {
 				)}
 			</ImageWrapperBlock>
 			<ProfileData>
-				<Link
-					to={{
-						pathname: `/profile/${item.id}`,
-					}}
-				>
-					{item.userId.firstName} {item.userId.lastName}
-				</Link>
+				{path ? (
+					<Link
+						to={{
+							pathname: `/profile/${item.id}`,
+						}}
+					>
+						{item.userId.firstName} {item.userId.lastName}
+					</Link>
+				) : (
+					<>
+						{item.userId.firstName} {item.userId.lastName}
+					</>
+				)}
 				<p>{item.position}</p>
 				{`${t('TalentCompanyPage.rate')} ${item.price}$`}
 			</ProfileData>

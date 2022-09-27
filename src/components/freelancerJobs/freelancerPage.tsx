@@ -88,10 +88,12 @@ const FreelancerPage: FC = () => {
 		return <p>Loading...</p>;
 	}
 
-	const category = { value: userInfo.category.name, label: userInfo.category.name };
+	const category = { value: userInfo.profile.category.name, label: userInfo.profile.category.name };
 	const skills = skillsMock.map(skill => ({
 		...skill,
-		value: userInfo.skills.some((jobSkill: { name: string }) => jobSkill.name === skill.name),
+		value: userInfo.profile.skills.some(
+			(jobSkill: { name: string }) => jobSkill.name === skill.name,
+		),
 	}));
 
 	const ClearFilters = () => {
