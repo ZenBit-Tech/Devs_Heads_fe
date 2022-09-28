@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { FormEmail } from 'components/forgotPassword/forgotPassword';
+import { IMessage } from 'components/inviteTalent/interfaces';
 
 type FormData = {
 	email: string;
@@ -281,3 +282,28 @@ export const proposalPostApi = createApi({
 });
 
 export const { usePostProposalMutation, useGetProposalDetailQuery } = proposalPostApi;
+
+export const invitationPostApi = createApi({
+	reducerPath: 'invite-talent',
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	endpoints: build => ({
+		postInvitation: build.mutation<
+			{ message: string; userId: number | undefined; jobTitle: string },
+			IMessage
+		>({
+			query: ({ message, userId, jobTitle }) => (
+				console.log(message, userId, jobTitle),
+				{
+					url: '/invite-talent',
+					method: 'POST',
+					body: { message, userId, jobTitle },
+					headers: {
+						'Content-type': 'application/json; charset=UTF-8',
+					},
+				}
+			),
+		}),
+	}),
+});
+
+export const { usePostInvitationMutation } = invitationPostApi;

@@ -109,6 +109,7 @@ const TalentPageLayout: FC = () => {
 		page: currentPage,
 	};
 	const { data, isLoading } = useGetFilterProfileQuery(sendFilter);
+
 	return (
 		<div>
 			<MainBlockWrapper>
