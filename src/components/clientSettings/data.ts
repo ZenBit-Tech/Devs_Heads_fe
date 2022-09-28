@@ -78,11 +78,5 @@ export const initialCountry = {
 	label: '',
 };
 
-export const initial = {
-	name: '',
-	country: { value: '', label: '' },
-	description: '',
-};
-
 export const settings = 'settings';
 export const password = 'password';
