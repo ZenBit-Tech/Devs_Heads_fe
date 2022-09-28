@@ -39,10 +39,23 @@ export const ValidationSchema = Yup.object().shape({
 	description: Yup.string().max(160, `${t('JobPostPage.maxLength100')}`),
 });
 
-export type Data = {
+export type DataSchema = {
 	name: string;
 	country: { label: string; value: string };
 	description: string;
+	userId: number;
+	quantity: string | null;
+	website?: string;
+};
+
+export type Data = {
+	name: string;
+	country: ICountry;
+	website?: string;
+	industry?: ICountry;
+	quantity: string | null;
+	description?: string;
+	userId: number | undefined;
 };
 
 export type DataBE = {
@@ -50,8 +63,9 @@ export type DataBE = {
 	country: string;
 	website?: string;
 	industry?: string;
-	quantity?: string;
+	quantity: string | null;
 	description?: string;
+	userId: number | undefined;
 };
 
 export interface ICountry {

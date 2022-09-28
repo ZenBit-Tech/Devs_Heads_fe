@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import { GREY, WHITE, BLACK_COLOR } from 'constants/colors';
+import { GREY, WHITE, BLACK_COLOR, DODGERBLUE_COLOR } from 'constants/colors';
 import { RED_COLOR } from 'constants/colors';
 import { MEDIUM_FONT_SIZE, SMALL_FONT_SIZE } from 'constants/fonts';
 
@@ -69,9 +69,9 @@ export const LabelBlock = styled.div`
 `;
 
 export const Button = styled.button`
-	background: ${BLACK_COLOR};
+	background: ${DODGERBLUE_COLOR};
 	border: none;
-	border-radius: 28px;
+	border-radius: 10px;
 	color: ${WHITE};
 	font-size: ${MEDIUM_FONT_SIZE};
 	padding: 10px 40px;
@@ -85,16 +85,15 @@ export const Button = styled.button`
 
 export const Cancel = styled.button`
 	border: none;
-	border-radius: 28px;
+	border-radius: 10px;
 	font-weight: bold;
 	margin-right: 10px;
-	color: ${BLACK_COLOR};
+	color: ${DODGERBLUE_COLOR};
 	font-size: ${MEDIUM_FONT_SIZE};
 	padding: 10px 40px;
 	height: 50px;
 	box-shadow: 3px 2px 2px ${GREY};
-
 	&:hover {
-		border: 2px solid ${BLACK_COLOR};
+		border: 2px solid ${DODGERBLUE_COLOR};
 	}
 `;

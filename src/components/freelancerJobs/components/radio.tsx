@@ -1,7 +1,7 @@
 import { CheckLabel, Span } from 'components/freelancerJobs/freelancerPage.styles';
 
 interface Props {
-	radio: string;
+	radio: string | null;
 	handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	value: string[];
 }

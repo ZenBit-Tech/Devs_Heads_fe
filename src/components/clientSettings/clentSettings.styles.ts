@@ -1,5 +1,6 @@
 import {
 	DODGERBLUE_COLOR,
+	GREY,
 	LIGHTBLUE_COLOR,
 	LIGHTGREY_COLOR,
 	RED_COLOR,
@@ -31,6 +32,7 @@ export const SaveButton = styled.button`
 	margin: 2% auto;
 	text-align: center;
 	font-size: ${MEDIUM_FONT_SIZE};
+	box-shadow: 3px 2px 2px ${GREY};
 	&:hover {
 		background-color: ${LIGHTBLUE_COLOR};
 	}
@@ -50,6 +52,7 @@ export const CancelButton = styled.button`
 	margin: 2% auto;
 	text-align: center;
 	font-size: ${MEDIUM_FONT_SIZE};
+	box-shadow: 3px 2px 2px ${GREY};
 	&:hover {
 		background-color: ${LIGHTBLUE_COLOR};
 	}
@@ -119,6 +122,7 @@ export const Button = styled.div`
 	margin-right: 10%;
 	text-align: center;
 	font-size: ${MEDIUM_FONT_SIZE};
+	box-shadow: 3px 2px 2px ${GREY};
 	cursor: pointer;
 	&.defaultActive {
 		background-color: ${DODGERBLUE_COLOR};

@@ -5,8 +5,8 @@ import Select from 'react-select';
 import {
 	checkList,
 	Data,
+	DataSchema,
 	ICountry,
-	initial,
 	initialCountry,
 	password,
 	selection,
@@ -31,29 +31,35 @@ import {
 	Img,
 } from 'components/clientSettings/clentSettings.styles';
 import countryList from 'react-select-country-list';
-import { FormEvent, useMemo, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 import editIcon from 'image/icon-pencil.png';
 import ChangePassword from 'pages/setting-page-client/change-password/ChangePassword';
 import RadioButtons from 'components/freelancerJobs/components/radio';
 import { RootState } from 'redux/store';
 import { useAppSelector } from 'redux/hooks';
+import { useSendData } from 'components/clientSettings/dataSend';
+import { useGetClientInfoByUserQuery } from 'service/httpService';
 
 const ClientSettings = () => {
 	const { user } = useAppSelector<RootState>(state => state);
+	const userId = user.id;
+	const { data: clientInfo, isLoading } = useGetClientInfoByUserQuery(userId);
+	const { sendData, sendUpdatedData } = useSendData();
 	const { t } = useTranslation();
 	const {
 		register,
 		handleSubmit,
 		control,
-		reset,
+		setValue,
+		getValues,
 		formState: { errors },
-	} = useForm<Data>({
+	} = useForm<DataSchema>({
 		resolver: yupResolver(ValidationSchema),
 	});
 	const [active, setActive] = useState<{ [name: string]: string }>({ [settings]: settings });
-	const [website, setWebsiteValue] = useState<string>('');
+	const [website, setWebsiteValue] = useState<string | undefined>(undefined);
 	const [industry, setIndustryValue] = useState<ICountry>(initialCountry);
-	const [quantity, setQuantityValue] = useState<string>('');
+	const [quantity, setQuantityValue] = useState<string | null>(null);
 	const options = useMemo(() => countryList().getData(), []);
 
 	const websiteChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,11 +75,24 @@ const ClientSettings = () => {
 		setActive({ [target.id]: target.id });
 	};
 	const cancelHandler = () => {
-		setWebsiteValue('');
-		setIndustryValue(initialCountry);
-		setQuantityValue('');
-		reset(initial);
+		setValue('name', clientInfo.name);
+		setValue('country', { label: clientInfo.country, value: clientInfo.country });
+		setValue('description', clientInfo.description);
+		setWebsiteValue(clientInfo.website);
+		setIndustryValue({ value: clientInfo.industry, label: clientInfo.industry });
+		setQuantityValue(clientInfo.quantity);
 	};
+
+	useEffect(() => {
+		if (clientInfo) {
+			setValue('name', clientInfo.name);
+			setValue('country', { label: clientInfo.country, value: clientInfo.country });
+			setValue('description', clientInfo.description);
+			setWebsiteValue(clientInfo.website);
+			setIndustryValue({ value: clientInfo.industry, label: clientInfo.industry });
+			setQuantityValue(clientInfo.quantity);
+		}
+	}, [clientInfo]);
 
 	const onSubmit = (data: Data) => {
 		const NewData = {
@@ -81,8 +100,17 @@ const ClientSettings = () => {
 			website,
 			industry,
 			quantity,
+			userId,
 		};
+		if (clientInfo) {
+			sendUpdatedData(NewData, clientInfo.id);
+		} else {
+			sendData(NewData);
+		}
 	};
+	if (isLoading) {
+		return <p>Loading...</p>;
+	}
 
 	return (
 		<Container>
@@ -101,9 +129,11 @@ const ClientSettings = () => {
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<MainTitle>
 							{`${t('ClientSettings.title')}`}
-							<button>
-								<Img src={editIcon}></Img>
-							</button>
+							{clientInfo && (
+								<button type="button">
+									<Img src={editIcon}></Img>
+								</button>
+							)}
 						</MainTitle>
 						<div>
 							<Column>
@@ -130,6 +160,7 @@ const ClientSettings = () => {
 												{...field}
 												options={options}
 												className={`${errors.country ? 'is-invalid' : ''}`}
+												value={getValues('country')}
 											/>
 										);
 									}}
@@ -169,7 +200,11 @@ const ClientSettings = () => {
 						</Div>
 						<div style={{ display: 'flex' }}>
 							<SaveButton type="submit">{`${t('ClientSettings.save')}`}</SaveButton>
-							<CancelButton onClick={cancelHandler}>{`${t('ClientSettings.cancel')}`}</CancelButton>
+							{clientInfo && (
+								<CancelButton type="button" onClick={cancelHandler}>{`${t(
+									'ClientSettings.cancel',
+								)}`}</CancelButton>
+							)}
 						</div>
 					</form>
 				)}
