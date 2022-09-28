@@ -24,4 +24,4 @@ export interface IMessage {
 	jobTitle: string;
 }
 
-export type Alert = 'success';
+export type Alert = 'success' | 'error';
