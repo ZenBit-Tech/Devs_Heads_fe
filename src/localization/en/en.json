@@ -247,5 +247,26 @@
 		"warningText": "Are you sure, that you want to delete you post?",
 		"agree": "Yes",
 		"disagree": "No"
+	},
+	"ClientSettings": {
+		"title": "My Info",
+		"name": "Name",
+		"website": "Website",
+		"email": "Email address",
+		"industry": "Select your industry",
+		"country": "Select your country",
+		"quantity": "How many people are in your company?",
+		"description": "Description",
+		"save": "Save",
+		"cancel": "Cancel",
+		"people": {
+			"me": "It's just me",
+			"2-9": "2-9 employees",
+			"10-99": "10-99 employees",
+			"100-1000": "100-1000 employees",
+			"more": "More than 1000"
+		},
+		"settings": "My info",
+		"password": "Password"
 	}
 }
