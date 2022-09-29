@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { FormEmail } from 'components/forgotPassword/forgotPassword';
+import { IMessage } from 'components/inviteTalent/interfaces';
 
 type FormData = {
 	email: string;
@@ -30,6 +31,11 @@ type FormChangePasswordPass = {
 	oldPassword: string;
 	newPassword: string;
 	email: string;
+};
+
+type FormPassSingleProfile = {
+	id: number;
+	saved: boolean;
 };
 
 interface IContactInfoForm {
@@ -160,7 +166,6 @@ export const profileApi = createApi({
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
 				},
-				providesTags: ['Profile'],
 			}),
 		}),
 		getFilterProfile: build.query({
@@ -171,16 +176,34 @@ export const profileApi = createApi({
 				method: 'get',
 			}),
 		}),
+		updateSingleProfile: build.mutation<{ saved?: boolean }, FormPassSingleProfile>({
+			query: ({ id, saved }) => ({
+				url: `profile/${id}`,
+				method: 'put',
+				body: { saved },
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+			invalidatesTags: ['Profile'],
+		}),
+		getTalentProfile: build.query({
+			query: page => `/profile/savedTalent?page=${page}`,
+			providesTags: ['Profile'],
+		}),
 		getUserProfile: build.query({
 			query: id => `/profile/${id}`,
+			providesTags: ['Profile'],
 		}),
 	}),
 });
 export const {
 	usePostProfileInfoMutation,
 	usePostProfileMutation,
+	useUpdateSingleProfileMutation,
 	useGetFilterProfileQuery,
 	useGetUserProfileQuery,
+	useGetTalentProfileQuery,
 } = profileApi;
 
 export const jobPostApi = createApi({
@@ -285,7 +308,7 @@ export const clientSettingsApi = createApi({
 				body: newObj,
 			}),
 			invalidatesTags: ['ClientInfo'],
-		}),
+      }),
 	}),
 });
 
@@ -294,3 +317,29 @@ export const {
 	usePostClientInfoMutation,
 	useUpdateClientInfoMutation,
 } = clientSettingsApi;
+      
+export const invitationPostApi = createApi({
+	reducerPath: 'invite-talent',
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	endpoints: build => ({
+		postInvitation: build.mutation<
+			{ message: string; userId: number | undefined; jobTitle: string },
+			IMessage
+		>({
+			query: ({ message, userId, jobTitle }) => (
+				console.log(message, userId, jobTitle),
+				{
+					url: '/invite-talent',
+					method: 'POST',
+					body: { message, userId, jobTitle },
+					headers: {
+						'Content-type': 'application/json; charset=UTF-8',
+					},
+				}
+			),
+		}),
+	}),
+});
+
+export const { usePostInvitationMutation } = invitationPostApi;
+

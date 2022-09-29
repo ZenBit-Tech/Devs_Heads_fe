@@ -60,10 +60,6 @@ export interface Paginate {
 	paginate: (pageNumber: React.SetStateAction<number>) => void;
 }
 
-// export interface User {
-// 	user: UserProfile;
-// }
-
 export interface ButtonActive {
 	name: string;
 	value: string;

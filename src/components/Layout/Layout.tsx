@@ -13,14 +13,12 @@ import {
 	Div,
 	MenuSetting,
 	DropdownMenu,
-	LiSetting,
 } from './Layout.styles';
 import { t } from 'i18next';
 import { saveEmail, saveToken, saveUserId } from 'redux/reducers/userSlice';
 import {
 	CreateJobPost,
 	PostJobPage,
-	Settings,
 	SignIn,
 	Contracts,
 	Chat,
@@ -65,6 +63,28 @@ const Layout: FC = () => {
 		Client: 'client',
 	};
 
+	const dropdownItem = (role: string) => {
+		return (
+			<Div className="dropdown">
+				<BtnMenu
+					className="dropdownButton dropdown-toggle"
+					type="button"
+					id="dropdownMenuButton"
+					data-toggle="dropdown"
+					aria-haspopup="true"
+					aria-expanded="false"
+				>
+					<Image src={SettingPerson} alt="SettingPerson" />
+				</BtnMenu>
+				<MenuSetting className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<div className="dropdown-item">
+						<JOPopupSettings handleClick={handleClick} role={role} />
+					</div>
+				</MenuSetting>
+			</Div>
+		);
+	};
+
 	return (
 		<div>
 			{user.id && user ? (
@@ -107,23 +127,7 @@ const Layout: FC = () => {
 										<Li>
 											<NavLink to={`${Contracts}`}>{`${t('ClientPage.contracts')}`}</NavLink>
 										</Li>
-										<Div className="dropdown">
-											<BtnMenu
-												className="dropdownButton dropdown-toggle"
-												type="button"
-												id="dropdownMenuButton"
-												data-toggle="dropdown"
-												aria-haspopup="true"
-												aria-expanded="false"
-											>
-												<Image src={SettingPerson} alt="SettingPerson" />
-											</BtnMenu>
-											<MenuSetting className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-												<div className="dropdown-item">
-													<JOPopupSettings handleClick={handleClick} />
-												</div>
-											</MenuSetting>
-										</Div>
+										{dropdownItem(user.role)}
 									</UlNav>
 								</Navigation>
 							)}
@@ -149,14 +153,7 @@ const Layout: FC = () => {
 											<Li>
 												<NavLink to={`${PostJobPage}`}>{`${t('FreelancerLayout.search')}`}</NavLink>
 											</Li>
-											<NavLink to={`${Settings}`}>
-												<Image src={SettingPerson} alt="SettingPerson" />
-											</NavLink>
-											<Li>
-												<NavLink onClick={handleClick} to={`${SignIn}`}>
-													{`${t('Layout.logout')}`}
-												</NavLink>
-											</Li>
+											{dropdownItem(user.role)}
 										</>
 									</UlNav>
 								</Navigation>

@@ -30,9 +30,7 @@ const RestorePassword = lazy(() => import('components/restorePassword/restorePas
 const PostJobPage = lazy(() => import('pages/PostJobPage'));
 const JobDescriptionPage = lazy(() => import('pages/JobDescriptionPage'));
 const JobDescriptionEditPage = lazy(() => import('pages/JobDescriptionEditPage'));
-
 const InviteTalent = lazy(() => import('pages/InviteTalentPage'));
-
 const ClientSettings = lazy(() => import('pages/ClientSettingsPage'));
 
 const App: FC = () => {
@@ -62,7 +60,6 @@ const App: FC = () => {
 							<Route path="/talent" element={<TalentPage />} />
 							<Route path="/client-settings" element={<ClientSettings />} />
 							<Route path="profile/:id" element={<SingleProfilePage />} />
-							<Route path="invite-talent" element={<InviteTalent />} />
 							<Route path="settings/" element={<SettingsPage />}>
 								<Route path="edit-profile" element={<ProfileEdit />} />
 								<Route path="contact-info" element={<ContactInfo />} />
