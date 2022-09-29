@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Popup from 'reactjs-popup';
-import { useForm, Controller } from 'react-hook-form';
-import { ReactI18NextChild, useTranslation } from 'react-i18next';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import io, { Socket } from 'socket.io-client';
+import { useTranslation } from 'react-i18next';
 import {
 	Actions,
 	Close,
@@ -19,39 +20,67 @@ import { BLUE } from 'constants/colors';
 import TextArea from 'antd/lib/input/TextArea';
 import { CreateJobPost } from 'constants/routes';
 import { useNavigate } from 'react-router-dom';
-
-interface IPost {
-	jobTitle: string;
-	jobDescription: string;
-}
-
-interface IProps {
-	Context: {
-		isDisabled: boolean;
-		setIsDisabled: (disabled: boolean) => void;
-		open: boolean;
-		setOpen: (open: boolean) => void;
-		post: IPost[];
-		handleSelect: () => ReactI18NextChild | Iterable<ReactI18NextChild>;
-	};
-}
+import { usePostInvitationMutation } from 'service/httpService';
+import { IMessage, IProps, Alert } from 'components/inviteTalent/interfaces';
+import { notification } from 'antd';
+import { useAppSelector } from 'redux/hooks';
 
 const TEXTAREA_ROWS_MAX = 16;
 const TEXTAREA_ROWS_MIN = 8;
 const BORDER_RADIUS = 6;
 
 const InvitePopup = (props: IProps) => {
-	const { isDisabled, setIsDisabled, open, setOpen, post, handleSelect } = props.Context;
+	const {
+		isDisabled,
+		setIsDisabled,
+		open,
+		setOpen,
+		post,
+		handleSelect,
+		data,
+		firstName,
+		lastName,
+	} = props.Context;
 	const { t } = useTranslation();
 	const navigate = useNavigate();
-	const { control } = useForm();
+	const [socket, setSocket] = useState<Socket>();
+	const [postInvitation] = usePostInvitationMutation();
+	const { user } = useAppSelector(state => state);
+	const userEmail = user.email;
+	const { control, handleSubmit } = useForm<IMessage>();
 
-	const handleDisable = () => {
-		if (!isDisabled) {
-			setIsDisabled(true);
-		} else {
+	const alert = (type: Alert) => {
+		notification[type]({
+			message: type === 'success' && `${t('InvitePopup.alert')}`,
+		});
+	};
+
+	useEffect(() => {
+		const newSocket = io('http://localhost:5009');
+		setSocket(newSocket);
+	}, [setSocket]);
+
+	const onSubmit: SubmitHandler<IMessage> = async (payload: IMessage) => {
+		const { message, clientId } = payload;
+		const singleJobTitle = post.filter(item => item.id === Number(clientId))[0].jobTitle;
+		const {
+			profile: { userId },
+		} = data;
+
+		if (isDisabled) {
 			setIsDisabled(false);
+		} else {
+			await postInvitation({ message, userId, singleJobTitle }).unwrap();
+			alert('success');
+			setIsDisabled(true);
 		}
+		socket?.emit('message', {
+			email: userEmail,
+			text: message,
+			userId: userId,
+			name: firstName + ' ' + lastName,
+			linkJob: `/post-job/${clientId}`,
+		});
 	};
 
 	return (
@@ -67,21 +96,27 @@ const InvitePopup = (props: IProps) => {
 							<Content>
 								{`${t('InvitePopup.label')}`}
 								<Controller
-									render={() => (
+									render={({ field }) => (
 										<TextArea
+											{...field}
 											autoSize={{ minRows: TEXTAREA_ROWS_MIN, maxRows: TEXTAREA_ROWS_MAX }}
 											style={{ borderRadius: BORDER_RADIUS, marginTop: 10, width: 500 }}
 											defaultValue={`${t('InvitePopup.message')}`}
 										/>
 									)}
-									name="text"
+									name="message"
 									control={control}
+									defaultValue={`${t('InvitePopup.message')}`}
 								/>
 							</Content>
 							<Actions>
-								<Select>{handleSelect()}</Select>
+								<Controller
+									render={({ field }) => <Select {...field}>{handleSelect()}</Select>}
+									name="clientId"
+									control={control}
+								/>
 								<SendMessage
-									onClick={() => handleDisable()}
+									onClick={handleSubmit(onSubmit)}
 									className={isDisabled ? 'btn btn-sucess' : BLUE}
 									disabled={isDisabled}
 								>

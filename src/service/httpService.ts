@@ -33,6 +33,11 @@ type FormChangePasswordPass = {
 	email: string;
 };
 
+type FormPassSingleProfile = {
+	id: number;
+	saved: boolean;
+};
+
 interface IContactInfoForm {
 	firstName: string;
 	lastName: string;
@@ -69,7 +74,7 @@ export const authApi = createApi({
 		}),
 		signUpUpdate: build.mutation<ISignUpResponseGoogle, FormDataGoogle>({
 			query: body => ({
-				url: `auth/sign-up/update`,
+				url: `auth/sign-up`,
 				method: 'put',
 				body,
 				headers: {
@@ -161,7 +166,6 @@ export const profileApi = createApi({
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
 				},
-				providesTags: ['Profile'],
 			}),
 		}),
 		getFilterProfile: build.query({
@@ -172,16 +176,34 @@ export const profileApi = createApi({
 				method: 'get',
 			}),
 		}),
+		updateSingleProfile: build.mutation<{ saved?: boolean }, FormPassSingleProfile>({
+			query: ({ id, saved }) => ({
+				url: `profile/${id}`,
+				method: 'put',
+				body: { saved },
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+			invalidatesTags: ['Profile'],
+		}),
+		getTalentProfile: build.query({
+			query: page => `/profile/savedTalent?page=${page}`,
+			providesTags: ['Profile'],
+		}),
 		getUserProfile: build.query({
 			query: id => `/profile/${id}`,
+			providesTags: ['Profile'],
 		}),
 	}),
 });
 export const {
 	usePostProfileInfoMutation,
 	usePostProfileMutation,
+	useUpdateSingleProfileMutation,
 	useGetFilterProfileQuery,
 	useGetUserProfileQuery,
+	useGetTalentProfileQuery,
 } = profileApi;
 
 export const jobPostApi = createApi({
@@ -260,6 +282,28 @@ export const proposalPostApi = createApi({
 });
 
 export const { usePostProposalMutation, useGetProposalDetailQuery } = proposalPostApi;
+
+export const invitationPostApi = createApi({
+	reducerPath: 'invite-talent',
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	endpoints: build => ({
+		postInvitation: build.mutation({
+			query: ({ message, userId, jobTitle }) => ({
+				url: '/invite-talent',
+				method: 'POST',
+				body: { message, userId, jobTitle },
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
+		getInvitation: build.query({
+			query: userId => `/invite-talent/${userId}`,
+		}),
+	}),
+});
+
+export const { usePostInvitationMutation, useGetInvitationQuery } = invitationPostApi;
 
 export const chatApi = createApi({
 	reducerPath: 'chat',

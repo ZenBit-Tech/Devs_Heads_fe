@@ -1,7 +1,8 @@
 import React from 'react';
+import InviteTalent from 'components/inviteTalent/inviteTalent';
 
 function ProfilePage() {
-	return <div>ProfilePage</div>;
+	return <InviteTalent />;
 }
 
 export default ProfilePage;

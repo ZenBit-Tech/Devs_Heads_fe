@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, Suspense, useEffect, useState } from 'react';
 import { ReactI18NextChild, useTranslation } from 'react-i18next';
 import {
 	Container,
@@ -15,26 +15,34 @@ import {
 } from './inviteTalent.styles';
 import blackHeartIcon from 'assets/blackHeartIcon.svg';
 import whiteHeartIcon from 'assets/whiteHeartIcon.svg';
-import { useGetPostJobQuery } from 'service/httpService';
+import { IPost } from 'components/inviteTalent/interfaces';
+import {
+	useGetPostJobQuery,
+	useGetUserProfileQuery,
+	useUpdateSingleProfileMutation,
+} from 'service/httpService';
+import InvitePopup from 'components/inviteTalent/component/Invitepopup';
+import { useParams } from 'react-router-dom';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
-import { hardCode } from 'components/inviteTalent/constants';
-import InvitePopup from 'components/inviteTalent/component/Invitepopup';
-
-interface IPost {
-	jobTitle: string;
-	jobDescription: string;
-}
 
 const InviteTalent: FC = () => {
 	const { t } = useTranslation();
+	const params = useParams();
 	const [saveBool, setSaveBool] = useState<boolean>(false);
 	const [srcIcon, setSrcIcon] = useState<string>(whiteHeartIcon);
 	const [showPopup, setShowPopup] = useState<boolean>(false);
 	const [isDisabled, setIsDisabled] = useState<boolean>(false);
 	const [open, setOpen] = useState<boolean>(false);
-	const { user } = useAppSelector<RootState>(state => state);
-	const { data: post } = useGetPostJobQuery(user.id);
+	const {
+		user: { id },
+	} = useAppSelector<RootState>(state => state);
+	const { data: post } = useGetPostJobQuery(id);
+	const { data, isLoading } = useGetUserProfileQuery(Number(params.id));
+	const [userUpdate] = useUpdateSingleProfileMutation();
+	const firstName = data?.setting.firstName;
+	const lastName = data?.setting.lastName;
+	console.log(post);
 
 	const Context = {
 		isDisabled,
@@ -43,7 +51,29 @@ const InviteTalent: FC = () => {
 		setOpen,
 		post,
 		handleSelect,
+		data,
+		firstName,
+		lastName,
 	};
+
+	useEffect(() => {
+		setOpen(true);
+	}, []);
+
+	useEffect(() => {
+		handleSrc();
+	}, [saveBool]);
+
+	useEffect(() => {
+		const getSingleProfile = () => {
+			if (isLoading) {
+				return <Suspense fallback={<div>{`${t('PostDetailPage.loading')}`}</div>}></Suspense>;
+			} else if (data) {
+				setSaveBool(data.profile.saved);
+			}
+		};
+		getSingleProfile();
+	}, [data?.profile.saved]);
 
 	const handleSrc = () => {
 		if (saveBool) {
@@ -52,12 +82,19 @@ const InviteTalent: FC = () => {
 			setSrcIcon(whiteHeartIcon);
 		}
 	};
-
-	const handleSaveClick = () => {
+	const handleSaveClick = async () => {
 		if (!saveBool) {
 			setSaveBool(true);
 		} else {
 			setSaveBool(false);
+		}
+		const userHeartUpdate = await userUpdate({
+			id: Number(params.id),
+			saved: !saveBool,
+		}).unwrap();
+		const { saved } = userHeartUpdate;
+		if (saved) {
+			setSaveBool(!saveBool);
 		}
 	};
 
@@ -70,40 +107,33 @@ const InviteTalent: FC = () => {
 	};
 
 	function handleSelect(): ReactI18NextChild | Iterable<ReactI18NextChild> {
-		return post?.map((el: IPost) => <option>{el.jobTitle}</option>);
+		return post?.map((el: IPost) => <option value={el.id}>{el.jobTitle}</option>);
 	}
-
-	useEffect(() => {
-		setOpen(true);
-	}, []);
-
-	useEffect(() => {
-		handleSrc();
-	}, [saveBool]);
 
 	return (
 		<Container>
-			{hardCode.map(el => (
+			{
 				<>
-					<Div1 key={el.name}>
+					<Div1>
 						<Div2>
-							<H3>{el.name}</H3>
-							<P>{el.location}</P>
+							<H3>{data?.setting.firstName}</H3>
+							<H3>{data?.setting.lastName}</H3>
+							<P>{data?.setting.phone}</P>
 						</Div2>
-						<Image src={el.photo} />
-						<Save onClick={() => handleSaveClick()}>
+						<Image src={data?.profile.photo} />
+						<Save onClick={handleSaveClick}>
 							<Img src={srcIcon} />
 						</Save>
 					</Div1>
-					<Div1 key={el.category}>
-						<H5>{el.category}</H5>
-						<H5>{el.price}</H5>
+					<Div1>
+						<H5>{data?.profile.postion}</H5>
+						<H5>Price: {data?.profile.price}</H5>
 					</Div1>
 					<Div3>
-						<P>{el.description}</P>
+						<P>{data?.profile.description}</P>
 					</Div3>
 				</>
-			))}
+			}
 			<Invite type="button" onClick={() => handleClick()}>{`${t('InvitePage.button')}`}</Invite>
 			{showPopup ? <InvitePopup Context={Context} /> : null}
 		</Container>

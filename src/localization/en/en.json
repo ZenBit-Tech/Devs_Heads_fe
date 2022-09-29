@@ -215,7 +215,8 @@
 		"button": "Send invitation message",
 		"message": "Hello! \n I'd like to invite you to take a look at the job I've posted. \n Please submit a proposal if you're available and interested.",
 		"noJobs": "First you need to create a job post",
-		"buttonPost": "Post a job"
+		"buttonPost": "Post a job",
+		"alert": "Message sent"
 	},
 	"ClientPage": {
 		"clientTitle": "My Jobs",
@@ -231,6 +232,10 @@
 		"signup": "Sign Up",
 		"create": "Post a Job",
 		"menu": "Navigation Menu"
+	},
+	"TalentPage": {
+		"loading": "Loading...",
+		"data": "There are no saved talents yet!"
 	},
 	"FreelancerLayout": {
 		"chat": "Messages",
