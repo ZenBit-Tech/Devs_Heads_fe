@@ -308,7 +308,7 @@ export const clientSettingsApi = createApi({
 				body: newObj,
 			}),
 			invalidatesTags: ['ClientInfo'],
-      }),
+		}),
 	}),
 });
 
@@ -317,7 +317,7 @@ export const {
 	usePostClientInfoMutation,
 	useUpdateClientInfoMutation,
 } = clientSettingsApi;
-      
+
 export const invitationPostApi = createApi({
 	reducerPath: 'invite-talent',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
@@ -342,4 +342,3 @@ export const invitationPostApi = createApi({
 });
 
 export const { usePostInvitationMutation } = invitationPostApi;
-
