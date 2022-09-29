@@ -28,7 +28,8 @@ const TEXTAREA_ROWS_MIN = 8;
 const BORDER_RADIUS = 6;
 
 const InvitePopup = (props: IProps) => {
-	const { isDisabled, setIsDisabled, open, setOpen, post, handleSelect, data } = props.Context;
+	const { isDisabled, setIsDisabled, open, setOpen, post, handleSelect, data, defaultTitle } =
+		props.Context;
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 	const [postInvitation] = usePostInvitationMutation();
@@ -90,6 +91,7 @@ const InvitePopup = (props: IProps) => {
 									render={({ field }) => <Select {...field}>{handleSelect()}</Select>}
 									name="jobTitle"
 									control={control}
+									defaultValue={`${defaultTitle.jobTitle}`}
 								/>
 								<SendMessage
 									onClick={handleSubmit(onSubmit)}

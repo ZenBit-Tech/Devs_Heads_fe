@@ -36,6 +36,8 @@ const InviteTalent: FC = () => {
 	const { data: post } = useGetPostJobQuery(id);
 	const { data } = useGetUserProfileQuery(Number(params.id));
 
+	const defaultTitle = post?.find((el: IPost) => el.jobTitle);
+
 	const Context = {
 		isDisabled,
 		setIsDisabled,
@@ -44,6 +46,7 @@ const InviteTalent: FC = () => {
 		post,
 		handleSelect,
 		data,
+		defaultTitle,
 	};
 
 	const handleSrc = () => {
