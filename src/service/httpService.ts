@@ -56,7 +56,7 @@ interface ISignUpResponseGoogle {
 	role?: string;
 }
 
-const BASE_URL = process.env.REACT_APP_API_URL;
+const BASE_URL = `${process.env.REACT_APP_API_URL}`;
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
 	reducerPath: 'auth',
@@ -282,6 +282,41 @@ export const proposalPostApi = createApi({
 });
 
 export const { usePostProposalMutation, useGetProposalDetailQuery } = proposalPostApi;
+
+export const clientSettingsApi = createApi({
+	reducerPath: 'clientInfo',
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	tagTypes: ['ClientInfo'],
+	endpoints: build => ({
+		postClientInfo: build.mutation({
+			query: body => ({
+				url: '/clientInfo',
+				method: 'POST',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
+		getClientInfoByUser: build.query({
+			query: id => `/clientInfo/user/${id}`,
+		}),
+		updateClientInfo: build.mutation({
+			query: ({ ClientInfoId, newObj }) => ({
+				url: `/clientInfo/${ClientInfoId}`,
+				method: 'PATCH',
+				body: newObj,
+			}),
+			invalidatesTags: ['ClientInfo'],
+		}),
+	}),
+});
+
+export const {
+	useGetClientInfoByUserQuery,
+	usePostClientInfoMutation,
+	useUpdateClientInfoMutation,
+} = clientSettingsApi;
 
 export const invitationPostApi = createApi({
 	reducerPath: 'invite-talent',

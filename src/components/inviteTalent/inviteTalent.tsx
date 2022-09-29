@@ -22,7 +22,6 @@ import {
 	useUpdateSingleProfileMutation,
 } from 'service/httpService';
 import InvitePopup from 'components/inviteTalent/component/Invitepopup';
-import { useParams } from 'react-router-dom';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
 

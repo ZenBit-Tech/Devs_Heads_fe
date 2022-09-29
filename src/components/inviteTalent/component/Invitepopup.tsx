@@ -51,7 +51,7 @@ const InvitePopup = (props: IProps) => {
 
 	const alert = (type: Alert) => {
 		notification[type]({
-			message: type === 'success' && `${t('InvitePopup.alert')}`,
+			message: type === 'success' ? `${t('InvitePopup.success')}` : `${t('InvitePopup.error')}`,
 		});
 	};
 
@@ -73,6 +73,14 @@ const InvitePopup = (props: IProps) => {
 			await postInvitation({ message, userId, singleJobTitle }).unwrap();
 			alert('success');
 			setIsDisabled(true);
+
+			if (message && jobTitle) {
+				await postInvitation({ message, userId, jobTitle }).unwrap();
+				alert('success');
+				setIsDisabled(true);
+			} else {
+				alert('error');
+			}
 		}
 		socket?.emit('message', {
 			email: userEmail,

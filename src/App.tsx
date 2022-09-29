@@ -32,6 +32,8 @@ const PostJobPage = lazy(() => import('pages/PostJobPage'));
 const JobDescriptionPage = lazy(() => import('pages/JobDescriptionPage'));
 const JobDescriptionEditPage = lazy(() => import('pages/JobDescriptionEditPage'));
 const ChatPage = lazy(() => import('pages/ChatPages'));
+const InviteTalent = lazy(() => import('pages/InviteTalentPage'));
+const ClientSettings = lazy(() => import('pages/ClientSettingsPage'));
 
 const App: FC = () => {
 	Cookies.set('name', 'value');
@@ -59,6 +61,7 @@ const App: FC = () => {
 							<Route path="post-job/:id" element={<JobDescriptionPage />} />
 							<Route path="post-job" element={<PostJobPage />} />
 							<Route path="/talent" element={<TalentPage />} />
+							<Route path="/client-settings" element={<ClientSettings />} />
 							<Route path="profile/:id" element={<SingleProfilePage />} />
 							<Route path="settings/" element={<SettingsPage />}>
 								<Route path="edit-profile" element={<ProfileEdit />} />

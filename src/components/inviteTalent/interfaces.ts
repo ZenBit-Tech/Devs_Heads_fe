@@ -28,4 +28,4 @@ export interface IMessage {
 	clientId: number;
 }
 
-export type Alert = 'success';
+export type Alert = 'success' | 'error';
