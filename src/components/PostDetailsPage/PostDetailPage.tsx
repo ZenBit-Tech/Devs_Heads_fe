@@ -29,15 +29,17 @@ const DescriptionPage: FC = () => {
 	const { t } = useTranslation();
 	const params = useParams();
 	const { user } = useAppSelector<RootState>(state => state);
-	const [disable, setDisable] = useState(false);
-	const navigate = useNavigate();
-	const [toggleModal, setToggleModal] = useState<boolean>(false);
+	const { data: post, isFetching, isSuccess } = useGetJobsDetailQuery(params.id);
+	console.log(post);
 	const proposalId = {
 		userId: user.id,
 		jobId: Number(params.id),
 	};
-
+	console.log(proposalId);
 	const { data: id, isLoading, isError } = useGetProposalDetailQuery(proposalId);
+	const [disable, setDisable] = useState(false);
+	const navigate = useNavigate();
+	const [toggleModal, setToggleModal] = useState<boolean>(false);
 
 	useEffect(() => {
 		const buttonDisable = () => {
@@ -70,7 +72,6 @@ const DescriptionPage: FC = () => {
 	};
 
 	const { isShown, toggle } = useModal();
-	const { data: post, isFetching, isSuccess } = useGetJobsDetailQuery(params.id);
 
 	const Role = {
 		Freelancer: 'freelancer',
@@ -97,6 +98,8 @@ const DescriptionPage: FC = () => {
 						<Modal
 							isShown={isShown}
 							hide={toggle}
+							post={post}
+							profileId={Number(params.id)}
 							setDisable={setDisable}
 							jobPostId={Number(params.id)}
 						/>

@@ -20,12 +20,14 @@ export interface IProps {
 		};
 		firstName: string;
 		lastName: string;
+		defaultTitle: IPost;
 	};
 }
 export interface IMessage {
 	message: string;
 	userId: number | undefined;
 	clientId: number;
+	jobTitle: string;
 }
 
 export type Alert = 'success' | 'error';

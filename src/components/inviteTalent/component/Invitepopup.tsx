@@ -40,6 +40,7 @@ const InvitePopup = (props: IProps) => {
 		data,
 		firstName,
 		lastName,
+		defaultTitle,
 	} = props.Context;
 	const { t } = useTranslation();
 	const navigate = useNavigate();
@@ -61,8 +62,7 @@ const InvitePopup = (props: IProps) => {
 	}, [setSocket]);
 
 	const onSubmit: SubmitHandler<IMessage> = async (payload: IMessage) => {
-		const { message, clientId } = payload;
-		const singleJobTitle = post.filter(item => item.id === Number(clientId))[0].jobTitle;
+		const { message, jobTitle } = payload;
 		const {
 			profile: { userId },
 		} = data;
@@ -70,10 +70,6 @@ const InvitePopup = (props: IProps) => {
 		if (isDisabled) {
 			setIsDisabled(false);
 		} else {
-			await postInvitation({ message, userId, singleJobTitle }).unwrap();
-			alert('success');
-			setIsDisabled(true);
-
 			if (message && jobTitle) {
 				await postInvitation({ message, userId, jobTitle }).unwrap();
 				alert('success');
@@ -87,7 +83,7 @@ const InvitePopup = (props: IProps) => {
 			text: message,
 			userId: userId,
 			name: firstName + ' ' + lastName,
-			linkJob: `/post-job/${clientId}`,
+			linkJob: `/post-job/${jobTitle}`,
 		});
 	};
 
@@ -120,8 +116,9 @@ const InvitePopup = (props: IProps) => {
 							<Actions>
 								<Controller
 									render={({ field }) => <Select {...field}>{handleSelect()}</Select>}
-									name="clientId"
+									name="jobTitle"
 									control={control}
+									defaultValue={`${defaultTitle.jobTitle}`}
 								/>
 								<SendMessage
 									onClick={handleSubmit(onSubmit)}

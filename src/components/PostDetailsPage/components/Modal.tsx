@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -19,12 +19,28 @@ import { usePostProposalMutation } from 'service/httpService';
 import { notification } from 'antd';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
+import io, { Socket } from 'socket.io-client';
+
+interface jopPost {
+	dateTime: string;
+	fromHourRate: number;
+	id: number;
+	jobCategory: { id: number; name: string };
+	jobDescription: string;
+	jobDuration: string;
+	skills: { name: string }[];
+	jobTitle: string;
+	toHourRate: number;
+	userId: 138;
+}
 
 interface ModalProps {
 	isShown: boolean;
 	hide: () => void;
 	setDisable: (disable: boolean) => void;
 	jobPostId: number;
+	profileId: number;
+	post: jopPost;
 }
 
 type ProposalForm = {
@@ -47,6 +63,8 @@ export const HandleModal: FunctionComponent<ModalProps> = ({
 	hide,
 	setDisable,
 	jobPostId,
+	profileId,
+	post,
 }) => {
 	const {
 		register,
@@ -57,6 +75,13 @@ export const HandleModal: FunctionComponent<ModalProps> = ({
 	});
 	const [sendForm] = usePostProposalMutation();
 	const { user } = useAppSelector<RootState>(state => state);
+	const [socket, setSocket] = useState<Socket>();
+	const userEmail = user.email;
+
+	useEffect(() => {
+		const newSocket = io('http://localhost:5009');
+		setSocket(newSocket);
+	}, [setSocket]);
 
 	const openNotificationWithIcon = (type: NotificationType) => {
 		notification[type]({
@@ -70,13 +95,19 @@ export const HandleModal: FunctionComponent<ModalProps> = ({
 	};
 
 	const handleForm = async (data: ProposalForm) => {
-		await sendForm({ ...data, jobPost: jobPostId, userId: user.id })
+		await sendForm({ ...data, jobPost: jobPostId, userId: user.id, userIdClient: post?.userId })
 			.unwrap()
 			.then(() => {
 				openNotificationWithIcon('success');
 			})
 			.catch(() => openNotificationWithIcon('error'));
 		setDisable(true);
+		socket?.emit('message', {
+			email: userEmail,
+			text: data.message,
+			userId: post?.userId,
+			linkJob: `/post-job/${profileId}`,
+		});
 	};
 
 	const modal = (

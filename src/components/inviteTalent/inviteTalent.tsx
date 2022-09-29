@@ -1,4 +1,4 @@
-import React, { FC, Suspense, useEffect, useState } from 'react';
+import React, { FC, Suspense, useEffect, useMemo, useState } from 'react';
 import { ReactI18NextChild, useTranslation } from 'react-i18next';
 import {
 	Container,
@@ -24,6 +24,7 @@ import {
 import InvitePopup from 'components/inviteTalent/component/Invitepopup';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
+import { useParams } from 'react-router-dom';
 
 const InviteTalent: FC = () => {
 	const { t } = useTranslation();
@@ -41,7 +42,7 @@ const InviteTalent: FC = () => {
 	const [userUpdate] = useUpdateSingleProfileMutation();
 	const firstName = data?.setting.firstName;
 	const lastName = data?.setting.lastName;
-	console.log(post);
+	const defaultTitle = useMemo(() => post?.find((el: IPost) => el.jobTitle), [post]);
 
 	const Context = {
 		isDisabled,
@@ -53,6 +54,7 @@ const InviteTalent: FC = () => {
 		data,
 		firstName,
 		lastName,
+		defaultTitle,
 	};
 
 	useEffect(() => {
