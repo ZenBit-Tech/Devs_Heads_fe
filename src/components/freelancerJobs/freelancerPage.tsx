@@ -14,6 +14,10 @@ import {
 	CustomSelect,
 	Label,
 	Column,
+	Img,
+	H3,
+	H5,
+	ImgSpinner,
 } from 'components/freelancerJobs/freelancerPage.styles';
 import { ICategory, IPost, ISkill } from 'components/freelancerJobs/interfaces';
 import { useAppSelector } from 'redux/hooks';
@@ -29,6 +33,8 @@ import {
 	initialPrice,
 	checkList,
 } from 'components/freelancerJobs/constants';
+import Image from 'image/no_result.png';
+import Spinner from 'assets/spinner.gif';
 
 const FreelancerPage: FC = () => {
 	const { t } = useTranslation();
@@ -96,9 +102,34 @@ const FreelancerPage: FC = () => {
 	const filteredSkills = useMemo(() => skillsOptions.filter(s => s.value), [skillsOptions]);
 	const userSkills = useMemo(() => filteredSkills.map(s => s.name), [filteredSkills]);
 
-	if (isLoading) {
-		return <p>Loading...</p>;
-	}
+	const filteredList = useMemo(
+		() =>
+			posts
+				?.filter((post: IPost) => {
+					if (search === '') {
+						return post;
+					} else if (post.jobTitle.toLowerCase().includes(search.toLowerCase())) {
+						return post;
+					} else if (post.jobDescription.toLowerCase().includes(search.toLowerCase())) {
+						return post;
+					}
+				})
+				?.filter((post: IPost) => {
+					const jobSkills = post.jobSkills.map(skill => {
+						return skill.name;
+					});
+					if (
+						userPrice[0] <= post.fromHourRate &&
+						userPrice[1] >= post.fromHourRate &&
+						(durationValue.includes(post.jobDuration) || durationValue === '') &&
+						(categoryValue.label === post.jobCategory.name || categoryValue.value === '') &&
+						(jobSkills.some(value => userSkills.includes(value)) || userSkills.length === 0)
+					) {
+						return post;
+					}
+				}),
+		[posts, categoryValue, skillsOptions, search, durationValue, userPrice],
+	);
 
 	const ClearFilters = () => {
 		setSearch('');
@@ -110,6 +141,7 @@ const FreelancerPage: FC = () => {
 
 	return (
 		<>
+			{isLoading && <ImgSpinner src={Spinner} />}
 			{posts?.length > 0 && (
 				<>
 					<ColumnSmall>
@@ -145,38 +177,21 @@ const FreelancerPage: FC = () => {
 						/>
 						<ClearBtn onClick={ClearFilters}>{`${t('FreelancerPage.clear')}`}</ClearBtn>
 						<ul>
-							{posts
-								.filter((post: IPost) => {
-									if (search === '') {
-										return post;
-									} else if (post.jobTitle.toLowerCase().includes(search.toLowerCase())) {
-										return post;
-									} else if (post.jobDescription.toLowerCase().includes(search.toLowerCase())) {
-										return post;
-									}
-								})
-								.filter((post: IPost) => {
-									const jobSkills = post.jobSkills.map(skill => {
-										return skill.name;
-									});
-									if (
-										userPrice[0] <= post.fromHourRate &&
-										userPrice[1] >= post.fromHourRate &&
-										(durationValue.includes(post.jobDuration) || durationValue === '') &&
-										(categoryValue.label === post.jobCategory.name || categoryValue.value === '') &&
-										(jobSkills.some(value => userSkills.includes(value)) || userSkills.length === 0)
-									) {
-										return post;
-									}
-								})
-								.map((postData: IPost) => (
-									<Li key={postData.id}>
-										<Link to={`/post-job/${postData.id}`}>
-											<TitleStyled>{postData.jobTitle}</TitleStyled>
-											<DescriptionDataStyled>{postData.jobDescription}</DescriptionDataStyled>
-										</Link>
-									</Li>
-								))}
+							{filteredList.map((postData: IPost) => (
+								<Li key={postData.id}>
+									<Link to={`/post-job/${postData.id}`}>
+										<TitleStyled>{postData.jobTitle}</TitleStyled>
+										<DescriptionDataStyled>{postData.jobDescription}</DescriptionDataStyled>
+									</Link>
+								</Li>
+							))}
+							{filteredList.length === 0 && (
+								<>
+									<Img src={Image}></Img>
+									<H3>{`${t('FreelancerPage.noResult1')}`}</H3>
+									<H5>{`${t('FreelancerPage.noResult2')}`}</H5>
+								</>
+							)}
 						</ul>
 					</ColumnBig>
 				</>
