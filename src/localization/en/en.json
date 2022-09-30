@@ -203,7 +203,9 @@
 			"pre": "Pre-Intermediate",
 			"inter": "Intermediate",
 			"upper": "Upper-Intermediate"
-		}
+		},
+		"noResult1":"Sorry! No result found :(",
+		"noResult2":"We're sorry what you are looking for. Please try another way"
 	},
 	"InvitePage": {
 		"button": "Invite",

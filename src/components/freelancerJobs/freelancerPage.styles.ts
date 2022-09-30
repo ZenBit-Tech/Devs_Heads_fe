@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import ReactSelect from 'react-select';
-import { LIGHTBLUE_COLOR } from 'constants/colors';
+import { GREY_BLUE_COLOR, GREY_LIGHT_COLOR, LIGHTBLUE_COLOR } from 'constants/colors';
 import { LARGE_FONT_SIZE, MEDIUM_FONT_SIZE } from 'constants/fonts';
 
 export const TitleStyled = styled.p`
@@ -21,6 +21,7 @@ export const DescriptionStyled = styled.p`
 
 export const ColumnSmall = styled.div`
 	float: left;
+	margin-left: 1%;
 	width: 30%;
 	padding: 10px;
 	@media screen and (max-width: 600px) {
@@ -30,7 +31,9 @@ export const ColumnSmall = styled.div`
 
 export const ColumnBig = styled.div`
 	float: left;
-	width: 70%;
+	margin-left: 1%;
+	margin-right: 5%;
+	width: 62%;
 	padding: 20px;
 	@media screen and (max-width: 600px) {
 		width: 100%;
@@ -38,7 +41,7 @@ export const ColumnBig = styled.div`
 `;
 
 export const Li = styled.li`
-	margin-left: 5%;
+	margin-left: 1%;
 	font-size: ${MEDIUM_FONT_SIZE};
 `;
 
@@ -157,4 +160,25 @@ export const Column = styled.div`
 	@media screen and (max-width: 600px) {
 		width: 100%;
 	}
+`;
+export const Img = styled.img`
+	width: 30%;
+	height: 30%;
+	display: block;
+	margin: auto;
+`;
+
+export const H3 = styled.h3`
+	text-align: center;
+	color: ${GREY_BLUE_COLOR};
+`;
+
+export const H5 = styled.h5`
+	text-align: center;
+	color: ${GREY_LIGHT_COLOR};
+`;
+
+export const ImgSpinner = styled.img`
+	display: block;
+	margin: auto;
 `;

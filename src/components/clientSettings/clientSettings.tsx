@@ -39,6 +39,8 @@ import { RootState } from 'redux/store';
 import { useAppSelector } from 'redux/hooks';
 import { useSendData } from 'components/clientSettings/dataSend';
 import { useGetClientInfoByUserQuery } from 'service/httpService';
+import { ImgSpinner } from 'components/freelancerJobs/freelancerPage.styles';
+import Spinner from 'assets/spinner.gif';
 
 const ClientSettings = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -108,9 +110,6 @@ const ClientSettings = () => {
 			sendData(NewData);
 		}
 	};
-	if (isLoading) {
-		return <p>Loading...</p>;
-	}
 
 	return (
 		<Container>
@@ -125,6 +124,7 @@ const ClientSettings = () => {
 				</ButtonBlock>
 			</MinColumn>
 			<MaxColumn>
+				{isLoading && <ImgSpinner src={Spinner} />}
 				{active?.settings === settings && (
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<MainTitle>

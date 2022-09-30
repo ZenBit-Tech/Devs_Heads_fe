@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from 'redux/hooks';
 import { saveEmail, saveRole, saveToken, saveUserId } from 'redux/reducers/userSlice';
 import { useSignInMutation } from 'service/httpService';
-import { Welcome } from 'constants/routes';
+import { CreateJobPost, PostJobPage, Welcome } from 'constants/routes';
 
 export type FormData = {
 	email: string;
@@ -30,6 +30,11 @@ export type FormData = {
 };
 
 type Alert = 'success' | 'error';
+
+const Role = {
+	Freelancer: 'freelancer',
+	Client: 'client',
+};
 
 const schema = Yup.object({
 	email: Yup.string().required(),
@@ -67,7 +72,11 @@ const signIn = () => {
 			dispatch(saveEmail(values.email));
 			alert('success');
 			reset({ email: '', password: '' });
-			navigate(`${Welcome}`);
+			if (res.role === Role.Client) {
+				navigate(`${CreateJobPost}`);
+			} else if (res.role === Role.Freelancer) {
+				navigate(`${PostJobPage}`);
+			} else navigate(`${Welcome}`);
 		} catch (e) {
 			reset({ email: '', password: '' });
 			alert('error');
