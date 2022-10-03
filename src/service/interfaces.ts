@@ -31,6 +31,11 @@ export interface IContactInfoForm {
 	id: number | undefined;
 }
 
+export type FormPassSingleProfile = {
+	id: number;
+	saved: boolean;
+};
+
 export type FormDataGoogle = {
 	email: string;
 	role?: string;

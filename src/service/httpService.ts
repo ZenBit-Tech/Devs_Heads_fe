@@ -10,6 +10,7 @@ import {
 	FormDataGoogle,
 	ISignUpResponseGoogle,
 	FormData,
+	FormPassSingleProfile,
 } from './interfaces';
 
 const BASE_URL = `${process.env.REACT_APP_API_URL}`;
