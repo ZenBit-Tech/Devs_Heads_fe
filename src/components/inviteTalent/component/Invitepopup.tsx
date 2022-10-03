@@ -43,15 +43,14 @@ const InvitePopup = (props: IProps) => {
 
 	const onSubmit: SubmitHandler<IMessage> = async (payload: IMessage) => {
 		const { message, jobTitle } = payload;
-		const {
-			profile: { userId },
-		} = data;
+		const { userId, id } = data.profile;
 
 		if (isDisabled) {
 			setIsDisabled(false);
 		} else {
 			if (message && jobTitle) {
-				await postInvitation({ message, userId, jobTitle }).unwrap();
+				await postInvitation({ message, userId, profileId: id, jobTitle }).unwrap();
+				setOpen(false);
 				alert('success');
 				setIsDisabled(true);
 			} else {
