@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import {
 	authApi,
+	clientSettingsApi,
 	invitationPostApi,
 	jobPostApi,
 	profileApi,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
 	[profileApi.reducerPath]: profileApi.reducer,
 	[jobPostApi.reducerPath]: jobPostApi.reducer,
 	[proposalPostApi.reducerPath]: proposalPostApi.reducer,
+	[clientSettingsApi.reducerPath]: clientSettingsApi.reducer,
 	[invitationPostApi.reducerPath]: invitationPostApi.reducer,
 });
 
@@ -50,6 +52,7 @@ export const store = configureStore({
 			profileApi.middleware,
 			jobPostApi.middleware,
 			proposalPostApi.middleware,
+			clientSettingsApi.middleware,
 			invitationPostApi.middleware,
 		]),
 });

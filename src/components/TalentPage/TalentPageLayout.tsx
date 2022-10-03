@@ -24,7 +24,6 @@ import Select from 'react-select';
 import { selection } from 'components/jobPost/dataChanges';
 import { BsArrowLeftCircle } from 'react-icons/bs';
 import { BsArrowRightCircle } from 'react-icons/bs';
-import MyHiresCompany from './myhires/MyHiresCompany';
 import MySavedTalent from './mysaved/MySavedTalent';
 import FilterProfileUser from './FilterProfileUser';
 import { useGetFilterProfileQuery } from 'service/httpService';
@@ -124,9 +123,6 @@ const TalentPageLayout: FC = () => {
 							>
 								<span id={discover}>{`${t('TalentCompanyPage.discover')}`}</span>
 							</Button>
-							<Button className={active?.hires ? 'defaultActive' : ''} onClick={handleChangeActive}>
-								<span id={hires}> {`${t('TalentCompanyPage.hires')}`}</span>
-							</Button>
 							<Button className={active?.save ? 'defaultActive' : ''} onClick={handleChangeActive}>
 								<span id={saved}> {`${t('TalentCompanyPage.saved')}`}</span>
 							</Button>
@@ -194,7 +190,7 @@ const TalentPageLayout: FC = () => {
 										data?.profile.map((item: Filter, index: React.Key | null | undefined) => {
 											return (
 												<div key={index}>
-													<FilterProfileUser item={item} />
+													<FilterProfileUser item={item} path={true} />
 												</div>
 											);
 										})}
@@ -207,7 +203,6 @@ const TalentPageLayout: FC = () => {
 					</Wrapper>
 				)}
 			</MainBlockWrapper>
-			{active?.hires === hires && <MyHiresCompany />}
 			{active?.save === saved && <MySavedTalent />}
 		</div>
 	);

@@ -12,7 +12,7 @@ import {
 	FormData,
 } from './interfaces';
 
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = `${process.env.REACT_APP_API_URL}`;
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
 	reducerPath: 'auth',
@@ -122,7 +122,6 @@ export const profileApi = createApi({
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
 				},
-				providesTags: ['Profile'],
 			}),
 		}),
 		getFilterProfile: build.query({
@@ -133,16 +132,34 @@ export const profileApi = createApi({
 				method: 'get',
 			}),
 		}),
+		updateSingleProfile: build.mutation<{ saved?: boolean }, FormPassSingleProfile>({
+			query: ({ id, saved }) => ({
+				url: `profile/${id}`,
+				method: 'put',
+				body: { saved },
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+			invalidatesTags: ['Profile'],
+		}),
+		getTalentProfile: build.query({
+			query: page => `/profile/savedTalent?page=${page}`,
+			providesTags: ['Profile'],
+		}),
 		getUserProfile: build.query({
 			query: id => `/profile/${id}`,
+			providesTags: ['Profile'],
 		}),
 	}),
 });
 export const {
 	usePostProfileInfoMutation,
 	usePostProfileMutation,
+	useUpdateSingleProfileMutation,
 	useGetFilterProfileQuery,
 	useGetUserProfileQuery,
+	useGetTalentProfileQuery,
 } = profileApi;
 
 export const jobPostApi = createApi({
@@ -221,6 +238,41 @@ export const proposalPostApi = createApi({
 });
 
 export const { usePostProposalMutation, useGetProposalDetailQuery } = proposalPostApi;
+
+export const clientSettingsApi = createApi({
+	reducerPath: 'clientInfo',
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	tagTypes: ['ClientInfo'],
+	endpoints: build => ({
+		postClientInfo: build.mutation({
+			query: body => ({
+				url: '/clientInfo',
+				method: 'POST',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
+		getClientInfoByUser: build.query({
+			query: id => `/clientInfo/user/${id}`,
+		}),
+		updateClientInfo: build.mutation({
+			query: ({ ClientInfoId, newObj }) => ({
+				url: `/clientInfo/${ClientInfoId}`,
+				method: 'PATCH',
+				body: newObj,
+			}),
+			invalidatesTags: ['ClientInfo'],
+		}),
+	}),
+});
+
+export const {
+	useGetClientInfoByUserQuery,
+	usePostClientInfoMutation,
+	useUpdateClientInfoMutation,
+} = clientSettingsApi;
 
 export const invitationPostApi = createApi({
 	reducerPath: 'invite-talent',
