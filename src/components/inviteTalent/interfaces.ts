@@ -16,6 +16,7 @@ export interface IProps {
 		data: {
 			profile: { userId: number };
 		};
+		defaultTitle: IPost;
 	};
 }
 export interface IMessage {
