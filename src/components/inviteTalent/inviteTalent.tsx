@@ -41,6 +41,8 @@ const InviteTalent: FC = () => {
 	const { data, isLoading } = useGetUserProfileQuery(Number(params.id));
 	const [userUpdate] = useUpdateSingleProfileMutation();
 
+	const defaultTitle = post?.find((el: IPost) => el.jobTitle);
+
 	const Context = {
 		isDisabled,
 		setIsDisabled,
@@ -49,6 +51,7 @@ const InviteTalent: FC = () => {
 		post,
 		handleSelect,
 		data,
+		defaultTitle,
 	};
 
 	useEffect(() => {

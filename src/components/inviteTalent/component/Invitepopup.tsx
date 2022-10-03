@@ -28,7 +28,8 @@ const TEXTAREA_ROWS_MIN = 8;
 const BORDER_RADIUS = 6;
 
 const InvitePopup = (props: IProps) => {
-	const { isDisabled, setIsDisabled, open, setOpen, post, handleSelect, data } = props.Context;
+	const { isDisabled, setIsDisabled, open, setOpen, post, handleSelect, data, defaultTitle } =
+		props.Context;
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 	const [postInvitation] = usePostInvitationMutation();
@@ -42,15 +43,14 @@ const InvitePopup = (props: IProps) => {
 
 	const onSubmit: SubmitHandler<IMessage> = async (payload: IMessage) => {
 		const { message, jobTitle } = payload;
-		const {
-			profile: { userId },
-		} = data;
+		const { userId, id } = data.profile;
 
 		if (isDisabled) {
 			setIsDisabled(false);
 		} else {
 			if (message && jobTitle) {
-				await postInvitation({ message, userId, jobTitle }).unwrap();
+				await postInvitation({ message, userId, profileId: id, jobTitle }).unwrap();
+				setOpen(false);
 				alert('success');
 				setIsDisabled(true);
 			} else {
@@ -90,6 +90,7 @@ const InvitePopup = (props: IProps) => {
 									render={({ field }) => <Select {...field}>{handleSelect()}</Select>}
 									name="jobTitle"
 									control={control}
+									defaultValue={`${defaultTitle.jobTitle}`}
 								/>
 								<SendMessage
 									onClick={handleSubmit(onSubmit)}
