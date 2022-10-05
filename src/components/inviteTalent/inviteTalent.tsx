@@ -1,4 +1,4 @@
-import React, { FC, Suspense, useEffect, useMemo, useState } from 'react';
+import React, { FC, Suspense, useEffect, useState } from 'react';
 import { ReactI18NextChild, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import {
@@ -44,7 +44,7 @@ const InviteTalent: FC = () => {
 	const { data, isLoading } = useGetUserProfileQuery(profile);
 	const [userUpdate] = useUpdateSingleProfileMutation();
 
-	const defaultTitle = useMemo(() => post?.find((el: IPost) => el.jobTitle), [post]);
+	const defaultTitle = post?.find((el: IPost) => el.jobTitle);
 
 	const Context = {
 		isDisabled,

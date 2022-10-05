@@ -162,7 +162,8 @@
 		"minLength": "Must be at least 6 characters",
 		"maxLength": "Maximum length is 50 symbols",
 		"editButton": "Edit",
-		"removeButton": "Delete"
+		"removeButton": "Delete",
+		"clientInfo": "About the client"
 	},
 	"EditPostDetailPage": {
 		"title": "Re-write a title for your job post",
@@ -204,8 +205,8 @@
 			"inter": "Intermediate",
 			"upper": "Upper-Intermediate"
 		},
-		"noResult1":"Sorry! No result found :(",
-		"noResult2":"We're sorry what you are looking for. Please try another way"
+		"noResult1": "Sorry! No result found :(",
+		"noResult2": "We're sorry what you are looking for. Please try another way"
 	},
 	"InvitePage": {
 		"button": "Invite",

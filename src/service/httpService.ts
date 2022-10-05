@@ -1,61 +1,17 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { FormEmail } from 'components/forgotPassword/forgotPassword';
 import { IMessage } from 'components/inviteTalent/interfaces';
-
-type FormData = {
-	email: string;
-	password?: string;
-	role?: string;
-};
-
-interface ISignUpResponse {
-	email: string;
-	password: string;
-	googleId: string;
-	id: number;
-	role?: string;
-}
-
-interface ISignInResponse {
-	access_token: string;
-	userId: number;
-	role: string;
-}
-
-type FormPass = {
-	password: string;
-	token: string;
-};
-
-type FormChangePasswordPass = {
-	oldPassword: string;
-	newPassword: string;
-	email: string;
-};
-
-type FormPassSingleProfile = {
-	id: number;
-	saved: boolean;
-	clientId: number | undefined;
-};
-
-interface IContactInfoForm {
-	firstName: string;
-	lastName: string;
-	email: string;
-	phone: string;
-	id: number | undefined;
-}
-type FormDataGoogle = {
-	email: string;
-	role?: string;
-};
-interface ISignUpResponseGoogle {
-	email: string;
-	googleId?: string;
-	id: number;
-	role?: string;
-}
+import {
+	ISignUpResponse,
+	ISignInResponse,
+	FormPass,
+	FormChangePasswordPass,
+	IContactInfoForm,
+	FormDataGoogle,
+	ISignUpResponseGoogle,
+	FormData,
+	FormPassSingleProfile,
+} from './interfaces';
 
 const BASE_URL = `${process.env.REACT_APP_API_URL}`;
 // Define a service using a base URL and expected endpoints
@@ -324,13 +280,18 @@ export const invitationPostApi = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
 	endpoints: build => ({
 		postInvitation: build.mutation<
-			{ message: string; userId: number | undefined; jobTitle: string },
+			{
+				message: string;
+				userId: number | undefined;
+				profileId: number | undefined;
+				jobTitle: string;
+			},
 			IMessage
 		>({
-			query: ({ message, userId, jobTitle }) => ({
+			query: ({ message, userId, profileId, jobTitle }) => ({
 				url: '/invite-talent',
 				method: 'POST',
-				body: { message, userId, jobTitle },
+				body: { message, userId, profileId, jobTitle },
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
 				},

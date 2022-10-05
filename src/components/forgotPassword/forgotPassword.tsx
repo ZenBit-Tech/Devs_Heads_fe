@@ -60,7 +60,7 @@ const forgotPassword = () => {
 					control={control}
 					defaultValue=""
 				/>
-				{errors.email?.message && <ErrorP>{`${t('ForgotPassword.message')}`}</ErrorP>}
+				{<ErrorP>{errors.email?.message}</ErrorP>}
 				<Button type="submit">{`${t('ForgotPassword.sendButton')}`}</Button>
 			</Form>
 		</Div>
