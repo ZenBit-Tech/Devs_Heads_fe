@@ -11,6 +11,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from 'config/theme';
 import TalentPage from 'pages/TalentPage';
 import SingleProfilePage from 'pages/SingleProfilePage';
+import FreelancerOfferPopup from 'components/FreelancerOffer/FreeOfferPopup';
 
 const WelcomePage = lazy(() => import('./pages/WelcomePage/WelcomePage'));
 
@@ -45,11 +46,6 @@ const App: FC = () => {
 				<Suspense fallback={<div>Loading...</div>}>
 					<Routes>
 						<Route path="/" element={<Layout />}>
-							{/*here public routes */}
-							<Route path="/forgot-password" element={<ForgotPassword />} />
-							<Route path={'/restore-password/:token'} element={<RestorePassword />} />
-							<Route path="/sign-in" element={<SignIn />} />
-							<Route path="/sign-up" element={<SignUp />} />
 							<Route path="/welcome" element={<WelcomePage />} />
 							<Route path="/create-job-post" element={<JobPostPage />} />
 							<Route path="/role-selection" element={<RoleSelection />} />
@@ -64,6 +60,7 @@ const App: FC = () => {
 								<Route path="edit-profile" element={<ProfileEdit />} />
 								<Route path="contact-info" element={<ContactInfo />} />
 							</Route>
+							<Route path="/test" element={<FreelancerOfferPopup />} />
 							<Route path="*" element={<Navigate to="/" />} />
 						</Route>
 						<Route element={<PrivateRoutes token={token} />}>
