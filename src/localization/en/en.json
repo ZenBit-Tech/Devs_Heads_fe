@@ -268,5 +268,14 @@
 		},
 		"settings": "My info",
 		"password": "Password"
+	},
+	"FreeOfferPopup": {
+		"title": "Offer",
+		"company": "Company Name",
+		"price": "Price",
+		"start": "Start Date",
+		"end": "End Date",
+		"btnAccept": "Accept",
+		"btnDecline": "Decline"
 	}
 }
