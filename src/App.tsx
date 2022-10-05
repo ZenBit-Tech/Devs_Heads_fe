@@ -1,4 +1,4 @@
-import React, { FC, lazy, Suspense } from 'react';
+import React, { FC, lazy, Suspense, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from 'components/Layout/Layout';
 import PrivateRoutes from './hoc/PrivateRoutes';
@@ -11,6 +11,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from 'config/theme';
 import TalentPage from 'pages/TalentPage';
 import SingleProfilePage from 'pages/SingleProfilePage';
+import SendOfferPopup from 'components/chat/components/sendOfferPopup';
 
 const WelcomePage = lazy(() => import('./pages/WelcomePage/WelcomePage'));
 
@@ -38,6 +39,17 @@ const App: FC = () => {
 	const a = Cookies.get('accessToken'); // TODO delete mock token when sign up/sign in will be completed
 	const token: string | null = localStorage.getItem('token');
 
+	// const useModal = () => {
+	// 	const [isShown, setIsShown] = useState<boolean>(false);
+	// 	const toggle = () => setIsShown(!isShown);
+	// 	return {
+	// 		isShown,
+	// 		toggle,
+	// 	};
+	// };
+
+	// const { isShown, toggle } = useModal();
+
 	return (
 		<>
 			<ThemeProvider theme={theme}>
@@ -59,6 +71,12 @@ const App: FC = () => {
 							<Route path="post-job" element={<PostJobPage />} />
 							<Route path="/talent" element={<TalentPage />} />
 							<Route path="/client-settings" element={<ClientSettings />} />
+							{/* <Route
+								path="/send-offer"
+								element={
+									<SendOfferPopup hide={toggle} isShown={true} freelancerId={128} jopPostId={24} />
+								}
+							/> */}
 							<Route path="profile/:id" element={<SingleProfilePage />} />
 							<Route path="settings/" element={<SettingsPage />}>
 								<Route path="edit-profile" element={<ProfileEdit />} />

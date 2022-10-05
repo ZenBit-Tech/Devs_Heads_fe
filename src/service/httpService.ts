@@ -209,7 +209,7 @@ export const {
 export const jobPostApi = createApi({
 	reducerPath: 'jobPost',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
-	tagTypes: ['JobPost'],
+	tagTypes: ['JobPost', 'JobOffer'],
 	endpoints: build => ({
 		postJob: build.mutation({
 			query: body => ({
@@ -221,6 +221,17 @@ export const jobPostApi = createApi({
 				},
 			}),
 			invalidatesTags: ['JobPost'],
+		}),
+		postOffer: build.mutation({
+			query: body => ({
+				url: '/jobPost/offer',
+				method: 'POST',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+			invalidatesTags: ['JobOffer'],
 		}),
 		getJobPosts: build.query({
 			query: () => ({
@@ -256,6 +267,7 @@ export const {
 	usePostJobMutation,
 	useGetJobsDetailQuery,
 	useGetPostJobQuery,
+	usePostOfferMutation,
 	useGetJobPostsQuery,
 	useDeleteJobPostMutation,
 	useUpdateJobPostMutation,

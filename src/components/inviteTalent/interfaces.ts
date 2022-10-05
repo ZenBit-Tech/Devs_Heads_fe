@@ -1,6 +1,7 @@
 import { ReactI18NextChild } from 'react-i18next';
 
 export interface IPost {
+	id: number;
 	jobTitle: string;
 	jobDescription: string;
 }

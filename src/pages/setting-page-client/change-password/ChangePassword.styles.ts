@@ -94,6 +94,6 @@ export const Cancel = styled.button`
 	height: 50px;
 	box-shadow: 3px 2px 2px ${GREY};
 	&:hover {
-		border: 2px solid ${DODGERBLUE_COLOR};
+		outline: 2px solid ${DODGERBLUE_COLOR};
 	}
 `;
