@@ -116,6 +116,7 @@ const DescriptionPage: FC = () => {
 								<Modal
 									isShown={isShown}
 									hide={toggle}
+									clientId={post.userId}
 									setDisable={setDisable}
 									jobPostId={Number(params.id)}
 								/>
