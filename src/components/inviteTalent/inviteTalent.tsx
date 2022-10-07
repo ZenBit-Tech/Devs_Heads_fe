@@ -107,9 +107,9 @@ const InviteTalent: FC = () => {
 				<>
 					<Div1>
 						<Div2>
-							<H3>{data?.setting.firstName}</H3>
-							<H3>{data?.setting.lastName}</H3>
-							<P>{data?.setting.phone}</P>
+							<H3>{data?.setting?.firstName}</H3>
+							<H3>{data?.setting?.lastName}</H3>
+							<P>{data?.setting?.phone}</P>
 						</Div2>
 						<Image src={data?.profile.photo} />
 						<Save onClick={handleSaveClick}>
