@@ -74,7 +74,7 @@ export const authApi = createApi({
 		}),
 		signUpUpdate: build.mutation<ISignUpResponseGoogle, FormDataGoogle>({
 			query: body => ({
-				url: `auth/sign-up/update`,
+				url: `auth/sign-up`,
 				method: 'put',
 				body,
 				headers: {
