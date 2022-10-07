@@ -21,7 +21,6 @@ import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
 import { useForm } from 'react-hook-form';
 import { ModalProps, NotificationType, OfferForm, Schema } from './data';
-import { date } from 'yup/lib/locale';
 
 export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 	isShown,
@@ -81,7 +80,7 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 							<Title>{`${t('SendOfferPopup.offer')}`}</Title>
 							<div>
 								<Label>{`${t('SendOfferPopup.companyName')}`}</Label>
-								<Input type="text" defaultValue={clientInfo?.name} />
+								<Input type="text" {...register('name')} defaultValue={clientInfo?.name} />
 							</div>
 							<div>
 								<Label>{`${t('SendOfferPopup.price')}`}</Label>
