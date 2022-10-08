@@ -8,7 +8,8 @@ export const Div = styled.div`
 	flex-flow: row wrap;
 `;
 
-export const H4 = styled.h4`
+export const P2 = styled.h4`
+	font-size: ${FONT_MEDIUM};
 	font-weight: bold;
 `;
 
@@ -25,7 +26,7 @@ export const Modal = styled.div`
 	border: 1px solid ${BLACK_COLOR};
 	border-radius: 10px;
 	margin-top: 20px;
-	height: 200px;
+	height: 220px;
 	width: 400px;
 `;
 
@@ -38,9 +39,16 @@ export const Header = styled.header`
 
 export const Content = styled.div`
 	align-content: center;
+	& p {
+		margin-left: 0;
+	}
+	& h4 {
+		margin-top: -20px;
+		margin-left: 120px;
+	}
 	display: flex;
 	flex-flow: column wrap;
-	padding: 10px 5px;
+	padding: 10px;
 	width: 100%;
 `;
 

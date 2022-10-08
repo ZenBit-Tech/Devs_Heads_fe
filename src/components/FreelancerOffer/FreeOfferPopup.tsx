@@ -10,9 +10,17 @@ import {
 	P,
 	Header,
 	Modal,
+	P2,
 } from 'components/FreelancerOffer/FreeOfferPopup.styles';
 
 const FreelancerOfferPopup = () => {
+	const hardCode = {
+		companyName: 'ZenBit',
+		price: '$500',
+		dateStart: '2022/10/15',
+		dateEnd: '2023/01/20',
+	};
+
 	const open = true;
 	return (
 		<Div>
@@ -21,9 +29,13 @@ const FreelancerOfferPopup = () => {
 					<Header>{`${t('FreeOfferPopup.title')}`}</Header>
 					<Content>
 						<P>{`${t('FreeOfferPopup.company')}:`}</P>
+						<P2>{hardCode.companyName}</P2>
 						<P>{`${t('FreeOfferPopup.price')}:`}</P>
+						<P2>{hardCode.price}</P2>
 						<P>{`${t('FreeOfferPopup.start')}:`}</P>
+						<P2>{hardCode.dateStart}</P2>
 						<P>{`${t('FreeOfferPopup.end')}:`}</P>
+						<P2>{hardCode.dateEnd}</P2>
 					</Content>
 					<Actions>
 						<BtnAccept type="button">{`${t('FreeOfferPopup.btnAccept')}`}</BtnAccept>
