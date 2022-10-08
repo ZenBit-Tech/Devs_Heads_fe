@@ -282,16 +282,18 @@ export const invitationPostApi = createApi({
 		postInvitation: build.mutation<
 			{
 				message: string;
-				userId: number | undefined;
+				clientId: number | undefined;
+				freelancerId: number | undefined;
 				profileId: number | undefined;
+				jobPostId: number | undefined;
 				jobTitle: string;
 			},
 			IMessage
 		>({
-			query: ({ message, userId, profileId, jobTitle }) => ({
+			query: ({ message, clientId, freelancerId, profileId, jobPostId, jobTitle }) => ({
 				url: '/invite-talent',
 				method: 'POST',
-				body: { message, userId, profileId, jobTitle },
+				body: { message, clientId, freelancerId, profileId, jobPostId, jobTitle },
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
 				},
