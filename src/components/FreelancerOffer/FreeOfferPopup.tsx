@@ -13,14 +13,14 @@ import {
 	P2,
 } from 'components/FreelancerOffer/FreeOfferPopup.styles';
 
-const FreelancerOfferPopup = () => {
-	const hardCode = {
-		companyName: 'ZenBit',
-		price: '$500',
-		dateStart: '2022/10/15',
-		dateEnd: '2023/01/20',
-	};
+const hardCode = {
+	companyName: 'ZenBit',
+	price: '$500',
+	dateStart: '2022/10/15',
+	dateEnd: '2023/01/20',
+};
 
+const FreelancerOfferPopup = () => {
 	const open = true;
 	return (
 		<Div>
