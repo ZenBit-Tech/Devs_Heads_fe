@@ -28,7 +28,7 @@ export interface IContactInfoForm {
 	lastName: string;
 	email: string;
 	phone: string;
-	id: number | undefined;
+	id?: number;
 }
 
 export type FormPassSingleProfile = {

@@ -26,10 +26,10 @@ export interface IProps {
 }
 export interface IMessage {
 	message: string;
-	clientId: number | undefined;
-	freelancerId: number | undefined;
-	profileId: number | undefined;
-	jobPostId: number | undefined;
+	clientId?: number;
+	freelancerId?: number;
+	profileId?: number;
+	jobPostId?: number;
 	jobTitle: string;
 }
 
