@@ -50,6 +50,6 @@ export interface ISignUpResponseGoogle {
 
 export type FormData = {
 	email: string;
-	password?: string;
+	password: string;
 	role?: string;
 };

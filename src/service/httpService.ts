@@ -282,10 +282,10 @@ export const invitationPostApi = createApi({
 		postInvitation: build.mutation<
 			{
 				message: string;
-				clientId: number | undefined;
-				freelancerId: number | undefined;
-				profileId: number | undefined;
-				jobPostId: number | undefined;
+				clientId?: number;
+				freelancerId?: number;
+				profileId?: number;
+				jobPostId?: number;
 				jobTitle: string;
 			},
 			IMessage
