@@ -30,6 +30,7 @@ interface ModalProps {
 	setDisable: (disable: boolean) => void;
 	jobPostId: number;
 	receiverId: number;
+	clientId: number;
 }
 
 type ProposalForm = {
@@ -50,6 +51,7 @@ const Schema = Yup.object().shape({
 export const HandleModal: FunctionComponent<ModalProps> = ({
 	isShown,
 	hide,
+	clientId,
 	setDisable,
 	jobPostId,
 	receiverId,
@@ -78,7 +80,7 @@ export const HandleModal: FunctionComponent<ModalProps> = ({
 	};
 
 	const handleForm = async (data: ProposalForm) => {
-		await sendForm({ ...data, jobPost: jobPostId, userId: user.id })
+		await sendForm({ ...data, jobPost: jobPostId, userId: user.id, userIdClient: clientId })
 			.unwrap()
 			.then(() => {
 				openNotificationWithIcon('success');

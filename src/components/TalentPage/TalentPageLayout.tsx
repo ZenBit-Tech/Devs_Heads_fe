@@ -30,7 +30,6 @@ import { useGetFilterProfileQuery } from 'service/httpService';
 import Pagination from './Pagination';
 import Skills from 'components/freelancerJobs/components/skills';
 const discover = 'discover';
-const hires = 'hires';
 const saved = 'save';
 
 const TalentPageLayout: FC = () => {

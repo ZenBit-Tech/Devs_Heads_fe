@@ -1,4 +1,3 @@
-import { t } from 'i18next';
 import { SearchInput } from 'components/freelancerJobs/freelancerPage.styles';
 
 interface Props {
