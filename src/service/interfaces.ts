@@ -34,6 +34,7 @@ export interface IContactInfoForm {
 export type FormPassSingleProfile = {
 	id: number;
 	saved: boolean;
+	clientId: number | undefined;
 };
 
 export type FormDataGoogle = {

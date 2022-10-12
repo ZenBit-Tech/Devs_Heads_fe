@@ -6,13 +6,18 @@ import { Filter } from '../interfaces';
 import { useState } from 'react';
 import Pagination from '../Pagination';
 import { PaginationBlock, ProfileBlock, Title, TitleDiv } from '../TalentPageLayout.style';
+import { useAppSelector } from 'redux/hooks';
+import { RootState } from 'redux/store';
 
 const MySavedTalent = () => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const paginate = (pageNumber: React.SetStateAction<number>) => setCurrentPage(pageNumber);
-
-	const { data: talent, isFetching, isSuccess } = useGetTalentProfileQuery(currentPage);
-
+	const { user } = useAppSelector<RootState>(state => state);
+	const userData = {
+		page: currentPage,
+		id: user.id,
+	};
+	const { data: talent, isFetching, isSuccess } = useGetTalentProfileQuery(userData);
 	let content;
 	if (isFetching) {
 		content = <Suspense fallback={<div>{`${t('TalentPage.loading')}`}</div>}></Suspense>;

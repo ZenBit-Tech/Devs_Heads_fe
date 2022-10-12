@@ -1,7 +1,6 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import { GREY, WHITE, BLACK_COLOR, DODGERBLUE_COLOR } from 'constants/colors';
-import { RED_COLOR } from 'constants/colors';
-import { MEDIUM_FONT_SIZE, SMALL_FONT_SIZE } from 'constants/fonts';
+import { GREY, WHITE, DODGERBLUE_COLOR } from 'constants/colors';
+import { MEDIUM_FONT_SIZE } from 'constants/fonts';
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -16,34 +15,12 @@ export const Form = styled.form`
 	margin-top: 80px;
 `;
 
-export const ControlStyle = styled.label`
-	color: ${BLACK_COLOR};
-	font-weight: bold;
-	display: flex;
-	flex-flow: column wrap;
-	margin-left: 1%;
-`;
-
-export const InputBlock = styled.div`
-	margin: 10px 0 10px 0;
-	width: 30%;
-
-	@media screen and (max-width: 800px) {
-		width: unset;
-	}
-`;
-
 export const Title = styled.h2`
 	margin-bottom: 25px;
 `;
 
 export const H1 = styled.h2`
 	text-align: center;
-`;
-
-export const ErrorP = styled.p`
-	color: ${RED_COLOR};
-	font-size: ${SMALL_FONT_SIZE};
 `;
 
 export const Input = styled.input`

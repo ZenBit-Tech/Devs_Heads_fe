@@ -30,9 +30,8 @@ import { SaveButton } from 'components/clientSettings/clentSettings.styles';
 
 const InviteTalent: FC = () => {
 	const { t } = useTranslation();
-	const params = useParams();
+	const params = Number(useParams().id);
 	const [saveBool, setSaveBool] = useState<boolean>(false);
-	const [srcIcon, setSrcIcon] = useState<string>(whiteHeartIcon);
 	const [showPopup, setShowPopup] = useState<boolean>(false);
 	const [isDisabled, setIsDisabled] = useState<boolean>(false);
 	const [open, setOpen] = useState<boolean>(false);
@@ -40,7 +39,11 @@ const InviteTalent: FC = () => {
 		user: { id },
 	} = useAppSelector<RootState>(state => state);
 	const { data: post } = useGetPostJobQuery(id);
-	const { data, isLoading } = useGetUserProfileQuery(Number(params.id));
+	const profile = {
+		id: params,
+		clientId: id,
+	};
+	const { data, isLoading } = useGetUserProfileQuery(profile);
 	const [userUpdate] = useUpdateSingleProfileMutation();
 
 	const defaultTitle = post?.find((el: IPost) => el.jobTitle);
@@ -61,27 +64,16 @@ const InviteTalent: FC = () => {
 	}, []);
 
 	useEffect(() => {
-		handleSrc();
-	}, [saveBool]);
-
-	useEffect(() => {
 		const getSingleProfile = () => {
 			if (isLoading) {
 				return <Suspense fallback={<div>{`${t('PostDetailPage.loading')}`}</div>}></Suspense>;
 			} else if (data) {
-				setSaveBool(data.profile.saved);
+				setSaveBool(data?.status?.saved);
 			}
 		};
 		getSingleProfile();
-	}, [data?.profile.saved]);
+	}, [data?.status?.saved]);
 
-	const handleSrc = () => {
-		if (saveBool) {
-			setSrcIcon(blackHeartIcon);
-		} else {
-			setSrcIcon(whiteHeartIcon);
-		}
-	};
 	const handleSaveClick = async () => {
 		if (!saveBool) {
 			setSaveBool(true);
@@ -89,8 +81,9 @@ const InviteTalent: FC = () => {
 			setSaveBool(false);
 		}
 		const userHeartUpdate = await userUpdate({
-			id: Number(params.id),
+			id: params,
 			saved: !saveBool,
+			clientId: id,
 		}).unwrap();
 		const { saved } = userHeartUpdate;
 		if (saved) {
@@ -128,13 +121,13 @@ const InviteTalent: FC = () => {
 				<>
 					<Div1>
 						<Div2>
-							<H3>{data?.setting.firstName}</H3>
-							<H3>{data?.setting.lastName}</H3>
-							<P>{data?.setting.phone}</P>
+							<H3>{data?.setting?.firstName}</H3>
+							<H3>{data?.setting?.lastName}</H3>
+							<P>{data?.setting?.phone}</P>
 						</Div2>
 						<Image src={data?.profile.photo} />
 						<Save onClick={handleSaveClick}>
-							<Img src={srcIcon} />
+							<Img src={saveBool ? blackHeartIcon : whiteHeartIcon} />
 						</Save>
 					</Div1>
 					<Div1>
