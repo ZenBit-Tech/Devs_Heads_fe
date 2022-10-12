@@ -26,7 +26,7 @@ import {
 
 const Chat = () => {
 	const { user } = useAppSelector<RootState>(state => state);
-	const userId = user.id;
+	const userId = user?.id;
 
 	const [socket, setSocket] = useState<Socket>();
 	const [chatRoomId, setChatRoomId] = useState<number>(0);
@@ -47,7 +47,7 @@ const Chat = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			setChatRoomId(rooms[0].id);
+			setChatRoomId(rooms[0]?.id);
 		}
 	}, [isSuccess]);
 
@@ -77,12 +77,12 @@ const Chat = () => {
 					jobTitle: item.jobPostId?.jobTitle,
 					jobPostId: item.jobPostId?.id,
 					lastMessage: item.message.text,
-					senderId: item.senderId.id,
-					receiverId: item.receiverId.id,
-					roomId: item.id,
+					senderId: item.senderId?.id,
+					receiverId: item.receiverId?.id,
+					roomId: item?.id,
 					activeRoom: item.activeRoom,
 				};
-				if (item.senderId.id === user.id) {
+				if (item.senderId.id === user?.id) {
 					const obj = {
 						...newObj,
 						firstName: item.receiverId.firstName,
