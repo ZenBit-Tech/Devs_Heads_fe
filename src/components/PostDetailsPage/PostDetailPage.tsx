@@ -118,6 +118,7 @@ const DescriptionPage: FC = () => {
 									hide={toggle}
 									setDisable={setDisable}
 									jobPostId={Number(params.id)}
+									receiverId={post.userId}
 								/>
 							</MinColumn>
 							<DescriptionStyled>{post.jobDescription}</DescriptionStyled>
