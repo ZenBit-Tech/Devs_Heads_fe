@@ -11,7 +11,6 @@ import {
 	ISignUpResponseGoogle,
 	FormData,
 	FormPassSingleProfile,
-	IJobOffer,
 	IUpdateOffer,
 } from './interfaces';
 
@@ -308,27 +307,6 @@ export const JobOfferApi = createApi({
 	reducerPath: 'jobOffer',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
 	endpoints: build => ({
-		postJobOffer: build.mutation<
-			{
-				price: number;
-				status: boolean;
-				name: string;
-				startDate: Date;
-				endDate: Date;
-				freenlancerId: number;
-				jopPostId: number;
-			},
-			IJobOffer
-		>({
-			query: ({ price, status, name, startDate, endDate, freelancerId, jopPostId }) => ({
-				url: '/jobOffer/offer',
-				method: 'POST',
-				body: { price, status, name, startDate, endDate, freelancerId, jopPostId },
-				headers: {
-					'Content-type': 'application/json; charset=UTF-8',
-				},
-			}),
-		}),
 		getJobOffer: build.query({
 			query: ({ id, freelancerId }) => `/jobOffer/job/${id}/${freelancerId}`,
 		}),
@@ -348,5 +326,4 @@ export const JobOfferApi = createApi({
 	}),
 });
 
-export const { usePostJobOfferMutation, useGetJobOfferQuery, useUpdateJobOfferMutation } =
-	JobOfferApi;
+export const { useGetJobOfferQuery, useUpdateJobOfferMutation } = JobOfferApi;
