@@ -39,6 +39,7 @@ export type FormPassSingleProfile = {
 export type FormDataGoogle = {
 	email: string;
 	role?: string;
+	userId?: number;
 };
 
 export interface ISignUpResponseGoogle {
