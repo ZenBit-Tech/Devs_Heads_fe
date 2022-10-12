@@ -15,13 +15,15 @@ export interface IProps {
 		post: IPost[];
 		handleSelect: () => ReactI18NextChild | Iterable<ReactI18NextChild>;
 		data: {
-			profile: { userId: number };
+			profile: { userId: number; id: number };
 		};
+		defaultTitle: IPost;
 	};
 }
 export interface IMessage {
 	message: string;
 	userId: number | undefined;
+	profileId: number | undefined;
 	jobTitle: string;
 }
 

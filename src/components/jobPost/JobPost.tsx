@@ -18,9 +18,17 @@ import Select from 'react-select';
 import { useOnDataChange, selection } from 'components/jobPost/dataChanges';
 import ValidationSchema from 'components/jobPost/validationSchema';
 import { JobSubmitForm } from 'components/jobPost/interfaces';
+import { useAppSelector } from 'redux/hooks';
+import { RootState } from 'redux/store';
+import { useGetClientInfoByUserQuery } from 'service/httpService';
+import { useNavigate } from 'react-router-dom';
+import { SettingsJobOwner } from 'constants/routes';
 
 const JobPost = () => {
 	const { t } = useTranslation();
+	const { user } = useAppSelector<RootState>(state => state);
+	const { data: clientInfo, isLoading } = useGetClientInfoByUserQuery(user.id);
+	const navigate = useNavigate();
 	const { skillsOptions, onSkillsChange, skills, onSubmit } = useOnDataChange();
 	const [state] = useState({ data: { checked: `${t('JobPostPage.shortMonthDuration')}` } });
 	const {
@@ -59,6 +67,12 @@ const JobPost = () => {
 			setRedColor(false);
 		}
 	}, [skills, btn]);
+
+	useEffect(() => {
+		if (!isLoading && !clientInfo) {
+			navigate(`${SettingsJobOwner}`);
+		}
+	}, [clientInfo, isLoading]);
 
 	return (
 		<Container>
