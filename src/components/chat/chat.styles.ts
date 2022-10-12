@@ -17,14 +17,10 @@ export const Column = styled.div`
 	}
 `;
 export const UsersList = styled.div`
-	border: 1px solid black;
-	float: left;
-	width: 28%;
-	padding: 10px;
-	margin-left: 2%;
-	@media screen and (max-width: 600px) {
-		width: 100%;
-	}
+	width: 400px;
+	background-color: white;
+	height: 700px;
+	border: 1px solid grey;
 `;
 export const ChatList = styled.div`
 	border: 1px solid black;
