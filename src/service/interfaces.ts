@@ -28,7 +28,7 @@ export interface IContactInfoForm {
 	lastName: string;
 	email: string;
 	phone: string;
-	id: number | undefined;
+	id?: number;
 }
 
 export type FormPassSingleProfile = {
@@ -51,6 +51,6 @@ export interface ISignUpResponseGoogle {
 
 export type FormData = {
 	email: string;
-	password?: string;
+	password: string;
 	role?: string;
 };
