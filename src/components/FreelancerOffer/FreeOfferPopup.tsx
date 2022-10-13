@@ -12,16 +12,37 @@ import {
 	Modal,
 	P2,
 } from 'components/FreelancerOffer/FreeOfferPopup.styles';
-
-const hardCode = {
-	companyName: 'ZenBit',
-	price: '$500',
-	dateStart: '2022/10/15',
-	dateEnd: '2023/01/20',
-};
+import { useGetJobOfferQuery, useUpdateJobOfferMutation } from 'service/httpService';
+import { notification } from 'antd';
+import { Alert } from 'components/inviteTalent/interfaces';
 
 const FreelancerOfferPopup = () => {
+	const { data: offer } = useGetJobOfferQuery({ id: 25, freelancerId: 1 });
+	const [updateOffer] = useUpdateJobOfferMutation();
 	const open = true;
+
+	const alert = (type: Alert) => {
+		notification[type]({
+			message:
+				type === 'success'
+					? `${t('FreeOfferPopup.acceptMessage')}`
+					: `${t('FreeOfferPopup.declineMessage')}`,
+		});
+	};
+
+	const handleClick = async (status: boolean) => {
+		try {
+			await updateOffer({ jobId: 25, freelancerId: 1, status }).unwrap();
+			if (status === true) {
+				alert('success');
+			} else {
+				alert('error');
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	return (
 		<Div>
 			<Popup open={open} onClose={() => close()}>
@@ -29,17 +50,21 @@ const FreelancerOfferPopup = () => {
 					<Header>{`${t('FreeOfferPopup.title')}`}</Header>
 					<Content>
 						<P>{`${t('FreeOfferPopup.company')}:`}</P>
-						<P2>{hardCode.companyName}</P2>
+						<P2>{offer?.name}</P2>
 						<P>{`${t('FreeOfferPopup.price')}:`}</P>
-						<P2>{hardCode.price}</P2>
+						<P2>{offer?.price}</P2>
 						<P>{`${t('FreeOfferPopup.start')}:`}</P>
-						<P2>{hardCode.dateStart}</P2>
+						<P2>{offer?.startDate}</P2>
 						<P>{`${t('FreeOfferPopup.end')}:`}</P>
-						<P2>{hardCode.dateEnd}</P2>
+						<P2>{offer?.endDate}</P2>
 					</Content>
 					<Actions>
-						<BtnAccept type="button">{`${t('FreeOfferPopup.btnAccept')}`}</BtnAccept>
-						<BtnDecline type="button">{`${t('FreeOfferPopup.btnDecline')}`}</BtnDecline>
+						<BtnAccept type="button" onClick={() => handleClick(true)}>{`${t(
+							'FreeOfferPopup.btnAccept',
+						)}`}</BtnAccept>
+						<BtnDecline type="button" onClick={() => handleClick(false)}>{`${t(
+							'FreeOfferPopup.btnDecline',
+						)}`}</BtnDecline>
 					</Actions>
 				</Modal>
 			</Popup>

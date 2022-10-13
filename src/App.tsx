@@ -11,27 +11,14 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from 'config/theme';
 import TalentPage from 'pages/TalentPage';
 import SingleProfilePage from 'pages/SingleProfilePage';
-import FreelancerOfferPopup from 'components/FreelancerOffer/FreeOfferPopup';
 
 const WelcomePage = lazy(() => import('./pages/WelcomePage/WelcomePage'));
-
-const SignUp = lazy(() => import('pages/Signup'));
-
 const Cookies = require('js-cookie');
-
 const RoleSelection = lazy(() => import('./pages/RoleSelection'));
-
-const SignIn = lazy(() => import('pages/SigninPage'));
-
 const JobPostPage = lazy(() => import('pages/JobPostPage'));
-
-const ForgotPassword = lazy(() => import('components/forgotPassword/forgotPassword'));
-
-const RestorePassword = lazy(() => import('components/restorePassword/restorePassword'));
 const PostJobPage = lazy(() => import('pages/PostJobPage'));
 const JobDescriptionPage = lazy(() => import('pages/JobDescriptionPage'));
 const JobDescriptionEditPage = lazy(() => import('pages/JobDescriptionEditPage'));
-// const InviteTalent = lazy(() => import('pages/InviteTalentPage'));
 const ClientSettings = lazy(() => import('pages/ClientSettingsPage'));
 
 const App: FC = () => {
@@ -60,7 +47,6 @@ const App: FC = () => {
 								<Route path="edit-profile" element={<ProfileEdit />} />
 								<Route path="contact-info" element={<ContactInfo />} />
 							</Route>
-							<Route path="/test" element={<FreelancerOfferPopup />} />
 							<Route path="*" element={<Navigate to="/" />} />
 						</Route>
 						<Route element={<PrivateRoutes token={token} />}>

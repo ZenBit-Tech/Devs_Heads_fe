@@ -311,7 +311,7 @@ export const JobOfferApi = createApi({
 			query: ({ id, freelancerId }) => `/jobOffer/job/${id}/${freelancerId}`,
 		}),
 		updateJobOffer: build.mutation<
-			{ jobId: number; freelancerId: number; status: boolean },
+			{ jobId?: number; freelancerId?: number; status: boolean },
 			IUpdateOffer
 		>({
 			query: ({ jobId, freelancerId, status }) => ({
