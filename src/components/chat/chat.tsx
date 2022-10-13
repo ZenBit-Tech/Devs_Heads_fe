@@ -10,7 +10,27 @@ import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
 import io, { Socket } from 'socket.io-client';
 import { useEffect, useMemo, useState } from 'react';
-import { UsersList, ChatList, Input, Button, RightLi, LeftLi } from './chat.styles';
+import profileImage from 'image/profile.png';
+import {
+	UsersList,
+	ChatMessages,
+	Title,
+	MessageBlock,
+	ButtonChat,
+	InputBlock,
+	ButtonBlock,
+	RightLi,
+	LeftLi,
+	Wrapper,
+	ChatWrapper,
+	Message,
+	SingleUser,
+	ArrowBlock,
+	ChatImage,
+	LastMessage,
+	TitleMessage,
+	TitleChat,
+} from './chat.styles';
 import { Link } from 'react-router-dom';
 import {
 	DataSchema,
@@ -23,6 +43,8 @@ import {
 	UserList,
 	ValidationSchema,
 } from './interfaces';
+import { Input } from 'components/clientSettings/clentSettings.styles';
+import { Button } from 'antd';
 
 const Chat = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -30,6 +52,8 @@ const Chat = () => {
 
 	const [socket, setSocket] = useState<Socket>();
 	const [chatRoomId, setChatRoomId] = useState<number>(0);
+	const [client, setClient] = useState<string>();
+	const [photo, setPhoto] = useState<string>(profileImage);
 	const [socketMessage, setSocketMessage] = useState<MessageFrontend[]>(initialMessage);
 	const [currentChatId, setCurrentChatId] = useState<initialId>(initialRoomId);
 	const [roomMessages, setRoomMessages] = useState<MessageBackend[]>();
@@ -38,6 +62,7 @@ const Chat = () => {
 	const { data: messages, isLoading } = useGetMessagesByRoomQuery(chatRoomId);
 	const { data: room, isFetching } = useGetRoomsByTwoUsersQuery(currentChatId);
 	const [updateChatRoom] = useUpdateChatRoomMutation();
+	console.log(roomMessages);
 
 	useEffect(() => {
 		if (!isFetching) {
@@ -70,6 +95,20 @@ const Chat = () => {
 		}
 	}, [socket]);
 
+	console.log(rooms);
+
+	useEffect(() => {
+		setClient(
+			room?.message.filter((item: { user: { role: string } }) => item.user?.role === 'client')[0]
+				?.user.clientSetting.name,
+		);
+		setPhoto(
+			room?.message.filter(
+				(item: { user: { role: string } }) => item.user?.role === 'freelancer',
+			)[0]?.user.profileSetting.photo,
+		);
+	}, [chatRoomId, currentChatId]);
+
 	const userList = useMemo(
 		() =>
 			rooms?.map((item: RoomBackend) => {
@@ -81,21 +120,39 @@ const Chat = () => {
 					receiverId: item.receiverId?.id,
 					roomId: item?.id,
 					activeRoom: item.activeRoom,
+					date: item.createdAt,
+					photo: photo,
 				};
 				if (item.senderId.id === user?.id) {
-					const obj = {
-						...newObj,
-						firstName: item.receiverId.firstName,
-						lastName: item.receiverId.lastName,
-					};
-					return obj;
+					if (item.senderId.role === 'client') {
+						const obj = {
+							...newObj,
+							clientName: client,
+						};
+						return obj;
+					} else {
+						const obj = {
+							...newObj,
+							firstName: item.receiverId.firstName,
+							lastName: item.receiverId.lastName,
+						};
+						return obj;
+					}
 				} else {
-					const obj = {
-						...newObj,
-						firstName: item.senderId.firstName,
-						lastName: item.senderId.lastName,
-					};
-					return obj;
+					if (item.senderId.role === 'client') {
+						const obj = {
+							...newObj,
+							clientName: client,
+						};
+						return obj;
+					} else {
+						const obj = {
+							...newObj,
+							firstName: item.senderId.firstName,
+							lastName: item.senderId.lastName,
+						};
+						return obj;
+					}
 				}
 			}),
 		[rooms],
@@ -123,6 +180,8 @@ const Chat = () => {
 		setCurrentChatId({ senderId, receiverId, jobPostId });
 		setChatRoomId(roomId);
 	};
+	console.log(currentChatId);
+	console.log(userList);
 
 	const updateRoom = (chatRoomId: number) => {
 		const newObj = {
@@ -137,80 +196,128 @@ const Chat = () => {
 		};
 		socket?.emit('sendMessage', message);
 	};
-
+	const getDate = (date: Date) => {
+		const currentDate =
+			date.toLocaleDateString('en-us', { hour: 'numeric', minute: 'numeric' }) +
+			' ' +
+			date.getFullYear();
+		return currentDate;
+	};
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
+		<Wrapper onSubmit={handleSubmit(onSubmit)}>
 			<UsersList>
 				{userList?.map((item: UserList) => {
 					if ((user.role === 'freelancer' && item.activeRoom) || user.role === 'client') {
 						return (
-							<div
+							<SingleUser
 								onClick={() =>
 									changeRoom(item.senderId, item.receiverId, item.jobPostId, item.roomId)
 								}
 							>
-								<h4>
-									{item.firstName} {item.lastName}
-								</h4>
-								<h6>{item.jobTitle}</h6>
-							</div>
+								<div>
+									<ChatImage src={photo} alt="userpicture" width="40px" height="40px" />
+									{user?.role === 'client' ? (
+										<Title>
+											{item.firstName} {item.lastName}
+											<br />
+											{item.jobTitle}
+										</Title>
+									) : (
+										<Title>
+											{'ClientName'}
+											<br />
+											{item.jobTitle}
+										</Title>
+									)}
+									<LastMessage>{item.lastMessage}</LastMessage>
+								</div>
+							</SingleUser>
 						);
 					}
 				})}
 			</UsersList>
-			<ChatList>
-				{roomMessages?.map((message: MessageBackend) => {
-					if (message?.user.role === user?.role) {
-						return (
-							<RightLi>
-								{message.text}
-								{message.jobLink && (
-									<>
-										<Link to={message.jobLink}>
-											<br />
-											{process.env.REACT_APP_URL_JOB_POST}
-											{message.jobLink}
-										</Link>
-									</>
-								)}
-							</RightLi>
-						);
-					} else {
-						return (
-							<LeftLi>
-								{message.text}
-								{message.jobLink && (
-									<>
-										<Link to={message.jobLink}>
-											<br />
-											{process.env.REACT_APP_URL_JOB_POST}
-											{message.jobLink}
-										</Link>
-										{!room?.activeRoom && (
-											<>
-												<button onClick={() => updateRoom(chatRoomId)}>Accept</button>
-												<button>Decline</button>
-											</>
-										)}
-									</>
-								)}
-							</LeftLi>
-						);
-					}
-				})}
-				{socketMessage.map((message: MessageFrontend) => {
-					if (message?.chatRoomId === chatRoomId) {
-						if (message?.userId === user?.id) {
-							return <RightLi>{message.text}</RightLi>;
+			<ChatWrapper>
+				<TitleMessage>
+					<ArrowBlock>
+						<img src={photo} alt="user" />
+						<TitleChat>
+							{user?.role === 'client' ? (
+								<>
+									{room?.senderId.firstName} {room?.senderId.lastName}
+								</>
+							) : (
+								<>{'ClientName'}</>
+							)}
+						</TitleChat>
+					</ArrowBlock>
+				</TitleMessage>
+				<ChatMessages>
+					{roomMessages?.map((message: MessageBackend) => {
+						console.log(message);
+						if (message?.user.role === user?.role) {
+							const timeElapsed = message.created_at;
+							const date = getDate(new Date(timeElapsed));
+							return (
+								<RightLi>
+									<Message className={`message recieved`}>
+										<div className="content">
+											<p>{message.text}</p>
+											<Link to={`${message?.jobLink}`}>
+												{process.env.REACT_APP_URL_JOB_POST}
+												{message.jobLink}
+											</Link>
+										</div>
+									</Message>
+									<Message className={`message date recieved`}>{date}</Message>
+								</RightLi>
+							);
 						} else {
-							return <LeftLi>{message.text}</LeftLi>;
+							const date = getDate(new Date(message.created_at));
+							return (
+								<LeftLi>
+									<Message className={`message sended`}>
+										<img src={photo} alt="person" />
+										<div className="content">
+											<p>{message.text}</p>
+											<Link to={`${message?.jobLink}`}>
+												{process.env.REACT_APP_URL_JOB_POST}
+												{message.jobLink}
+											</Link>
+										</div>
+									</Message>
+									<MessageBlock>
+										<Message className={`message date sended`}>{date}</Message>
+										{!room?.activeRoom && (
+											<ButtonBlock>
+												<ButtonChat onClick={() => updateRoom(chatRoomId)}>Accept</ButtonChat>
+												<ButtonChat>Decline</ButtonChat>
+											</ButtonBlock>
+										)}
+									</MessageBlock>
+								</LeftLi>
+							);
 						}
-					}
-				})}
-				<Input type="text" {...register('text')} className={`${errors.text ? 'is-invalid' : ''}`} />
-				<Button type="submit">Send message</Button>
-			</ChatList>
-		</form>
+					})}
+					{socketMessage.map((message: MessageFrontend) => {
+						if (message?.chatRoomId === chatRoomId) {
+							if (message?.userId === user?.id) {
+								return <RightLi>{message.text}</RightLi>;
+							} else {
+								return <LeftLi>{message.text}</LeftLi>;
+							}
+						}
+					})}
+				</ChatMessages>
+				<InputBlock>
+					<Input
+						type="text"
+						{...register('text')}
+						className={`${errors.text ? 'is-invalid' : ''}`}
+					/>
+					<Button>Send message</Button>
+				</InputBlock>
+			</ChatWrapper>
+		</Wrapper>
 	);
 };
 

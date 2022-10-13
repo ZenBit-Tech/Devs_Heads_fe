@@ -32,6 +32,14 @@ export type MessageBackend = {
 		role: string;
 		userId: number;
 	};
+	profileSetting: {
+		photo: string;
+		position: string;
+		price: number;
+		englishLevel: string;
+		description: string;
+		userId: number;
+	};
 };
 
 export type RoomBackend = {
@@ -81,6 +89,9 @@ export type RoomBackend = {
 export type UserList = {
 	firstName: string;
 	lastName: string;
+	clientName: string;
+	date: string;
+	photo: string;
 	jobTitle: string;
 	jobPostId: number;
 	lastMessage: string;
