@@ -20,6 +20,9 @@ const PostJobPage = lazy(() => import('pages/PostJobPage'));
 const JobDescriptionPage = lazy(() => import('pages/JobDescriptionPage'));
 const JobDescriptionEditPage = lazy(() => import('pages/JobDescriptionEditPage'));
 const ClientSettings = lazy(() => import('pages/ClientSettingsPage'));
+const SigninPage = lazy(() => import('pages/SigninPage'));
+const SignupPage = lazy(() => import('pages/Signup'));
+const FreelancerOffer = lazy(() => import('components/FreelancerOffer/FreeOfferPopup'));
 
 const App: FC = () => {
 	Cookies.set('name', 'value');
@@ -33,6 +36,9 @@ const App: FC = () => {
 				<Suspense fallback={<div>Loading...</div>}>
 					<Routes>
 						<Route path="/" element={<Layout />}>
+							<Route path="/signi-in" element={<SigninPage />} />
+							<Route path="/sign-up" element={<SignupPage />} />
+							<Route path="/test" element={<FreelancerOffer />} />
 							<Route path="/welcome" element={<WelcomePage />} />
 							<Route path="/create-job-post" element={<JobPostPage />} />
 							<Route path="/role-selection" element={<RoleSelection />} />
