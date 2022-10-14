@@ -171,6 +171,7 @@ const FreelancerPage: FC = () => {
 					<ColumnBig>
 						<Search
 							search={search}
+							width={'60%'}
 							setSearch={setSearch}
 							placeholder={`${t('FreelancerPage.search')}`}
 							searchSize={'2% 10% 2% 0%'}

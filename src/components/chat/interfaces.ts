@@ -56,6 +56,12 @@ export type RoomBackend = {
 		phone: string;
 		role: string;
 		profileId: number;
+		clientSetting: {
+			name: string;
+		};
+		profileSetting: {
+			photo: string;
+		};
 	};
 	senderId: {
 		email: string;
@@ -67,6 +73,12 @@ export type RoomBackend = {
 		phone: string;
 		role: string;
 		profileId: number;
+		profileSetting: {
+			photo: string;
+		};
+		clientSetting: {
+			name: string;
+		};
 	};
 	message: {
 		text: string;

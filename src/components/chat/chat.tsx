@@ -9,8 +9,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
 import io, { Socket } from 'socket.io-client';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import profileImage from 'image/profile.png';
+import { IoMdSend } from 'react-icons/io';
+import Search from 'components/freelancerJobs/components/search';
 import {
 	UsersList,
 	ChatMessages,
@@ -27,9 +29,11 @@ import {
 	SingleUser,
 	ArrowBlock,
 	ChatImage,
+	Button,
 	LastMessage,
 	TitleMessage,
 	TitleChat,
+	SearchWrapper,
 } from './chat.styles';
 import { Link } from 'react-router-dom';
 import {
@@ -44,7 +48,6 @@ import {
 	ValidationSchema,
 } from './interfaces';
 import { Input } from 'components/clientSettings/clentSettings.styles';
-import { Button } from 'antd';
 
 const Chat = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -52,27 +55,55 @@ const Chat = () => {
 
 	const [socket, setSocket] = useState<Socket>();
 	const [chatRoomId, setChatRoomId] = useState<number>(0);
-	const [client, setClient] = useState<string>();
-	const [photo, setPhoto] = useState<string>(profileImage);
-	const [socketMessage, setSocketMessage] = useState<MessageFrontend[]>(initialMessage);
-	const [currentChatId, setCurrentChatId] = useState<initialId>(initialRoomId);
+	const [socketMessage, setSocketMessage] = useState<MessageFrontend[]>([]);
+	const [currentChatId, setCurrentChatId] = useState<initialId>();
 	const [roomMessages, setRoomMessages] = useState<MessageBackend[]>();
 
 	const { data: rooms, isSuccess } = useGetRoomsByUserQuery(userId);
 	const { data: messages, isLoading } = useGetMessagesByRoomQuery(chatRoomId);
 	const { data: room, isFetching } = useGetRoomsByTwoUsersQuery(currentChatId);
+	const [search, setSearch] = useState<string>('');
+	const [filteredRoom, setFilteredRoom] = useState<RoomBackend[]>(rooms);
+	const [defaultChat, setDefaultChat] = useState<RoomBackend>();
 	const [updateChatRoom] = useUpdateChatRoomMutation();
-	console.log(roomMessages);
+	const scrollRef = useRef<null | HTMLDivElement>(null);
+	useEffect(() => {
+		scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+	}, [messages]);
+	useEffect(() => {
+		const inputHandler = () => {
+			const inputText = search.toLowerCase();
+			const filteredData = rooms?.filter((item: RoomBackend) => {
+				if (inputText === '') {
+					return rooms;
+				}
+				if (user.role === 'freeelancer')
+					return (
+						item.senderId?.firstName.toLowerCase().includes(inputText) ||
+						item.senderId?.lastName.toLowerCase().includes(inputText)
+					);
+			});
+			setFilteredRoom([...filteredData]);
+		};
+		inputHandler();
+	}, [search]);
 
 	useEffect(() => {
 		if (!isFetching) {
 			setRoomMessages(room?.message);
+			setDefaultChat(room);
 		}
 	}, [isFetching]);
 
 	useEffect(() => {
 		if (isSuccess) {
 			setChatRoomId(rooms[0]?.id);
+			setDefaultChat(rooms[0]);
+			setCurrentChatId({
+				senderId: rooms[0].senderId.id,
+				receiverId: rooms[0].receiverId.id,
+				jobPostId: rooms[0].jobPostId.id,
+			});
 		}
 	}, [isSuccess]);
 
@@ -87,27 +118,16 @@ const Chat = () => {
 		setSocket(newSocket);
 	}, []);
 
+	const messageListener = (message: any) => {
+		setSocketMessage(arr => [...arr, message]);
+	};
+
 	useEffect(() => {
-		if (socket) {
-			socket?.on('recMessage', message => {
-				setSocketMessage(arr => [...arr, message]);
-			});
-		}
+		socket?.on('recMessage', messageListener);
+		return () => {
+			socket?.off('recMessage', messageListener);
+		};
 	}, [socket]);
-
-	console.log(rooms);
-
-	useEffect(() => {
-		setClient(
-			room?.message.filter((item: { user: { role: string } }) => item.user?.role === 'client')[0]
-				?.user.clientSetting.name,
-		);
-		setPhoto(
-			room?.message.filter(
-				(item: { user: { role: string } }) => item.user?.role === 'freelancer',
-			)[0]?.user.profileSetting.photo,
-		);
-	}, [chatRoomId, currentChatId]);
 
 	const userList = useMemo(
 		() =>
@@ -121,38 +141,22 @@ const Chat = () => {
 					roomId: item?.id,
 					activeRoom: item.activeRoom,
 					date: item.createdAt,
-					photo: photo,
 				};
-				if (item.senderId.id === user?.id) {
-					if (item.senderId.role === 'client') {
-						const obj = {
-							...newObj,
-							clientName: client,
-						};
-						return obj;
-					} else {
-						const obj = {
-							...newObj,
-							firstName: item.receiverId.firstName,
-							lastName: item.receiverId.lastName,
-						};
-						return obj;
-					}
+				if (item.senderId?.id === user?.id && user?.role === 'freelancer') {
+					const obj = {
+						...newObj,
+						clientName: item?.receiverId?.clientSetting.name ?? 'default',
+						photo: profileImage,
+					};
+					return obj;
 				} else {
-					if (item.senderId.role === 'client') {
-						const obj = {
-							...newObj,
-							clientName: client,
-						};
-						return obj;
-					} else {
-						const obj = {
-							...newObj,
-							firstName: item.senderId.firstName,
-							lastName: item.senderId.lastName,
-						};
-						return obj;
-					}
+					const obj = {
+						...newObj,
+						firstName: item.senderId?.firstName ?? 'default',
+						lastName: item.senderId?.lastName ?? 'default',
+						photo: item.senderId?.profileSetting?.photo ?? profileImage,
+					};
+					return obj;
 				}
 			}),
 		[rooms],
@@ -173,6 +177,8 @@ const Chat = () => {
 			chatRoomId,
 		};
 		socket?.emit('sendMessage', NewData);
+		console.log('1');
+		console.log(socketMessage);
 		reset();
 	};
 
@@ -180,8 +186,6 @@ const Chat = () => {
 		setCurrentChatId({ senderId, receiverId, jobPostId });
 		setChatRoomId(roomId);
 	};
-	console.log(currentChatId);
-	console.log(userList);
 
 	const updateRoom = (chatRoomId: number) => {
 		const newObj = {
@@ -203,9 +207,19 @@ const Chat = () => {
 			date.getFullYear();
 		return currentDate;
 	};
+
 	return (
 		<Wrapper onSubmit={handleSubmit(onSubmit)}>
 			<UsersList>
+				<SearchWrapper>
+					<Search
+						search={search}
+						setSearch={setSearch}
+						placeholder={'Search contact in chat'}
+						searchSize={'10px auto'}
+						width={'unset'}
+					/>
+				</SearchWrapper>
 				{userList?.map((item: UserList) => {
 					if ((user.role === 'freelancer' && item.activeRoom) || user.role === 'client') {
 						return (
@@ -215,7 +229,7 @@ const Chat = () => {
 								}
 							>
 								<div>
-									<ChatImage src={photo} alt="userpicture" width="40px" height="40px" />
+									<ChatImage src={item.photo} alt="userpicture" width="40px" height="40px" />
 									{user?.role === 'client' ? (
 										<Title>
 											{item.firstName} {item.lastName}
@@ -224,7 +238,7 @@ const Chat = () => {
 										</Title>
 									) : (
 										<Title>
-											{'ClientName'}
+											{item.clientName}
 											<br />
 											{item.jobTitle}
 										</Title>
@@ -239,22 +253,27 @@ const Chat = () => {
 			<ChatWrapper>
 				<TitleMessage>
 					<ArrowBlock>
-						<img src={photo} alt="user" />
-						<TitleChat>
-							{user?.role === 'client' ? (
-								<>
-									{room?.senderId.firstName} {room?.senderId.lastName}
-								</>
-							) : (
-								<>{'ClientName'}</>
-							)}
-						</TitleChat>
+						{user?.role === 'client' ? (
+							<>
+								<img src={room?.senderId?.profileSetting.photo} alt="user" />
+								<TitleChat>
+									{room?.senderId?.firstName ?? room?.receiverId.firstName}{' '}
+									{room?.senderId?.lastName ?? room?.receiverId.lastName}
+								</TitleChat>
+							</>
+						) : (
+							<>
+								<img src={profileImage} alt="user" />
+								<TitleChat>
+									{room?.senderId?.clientSetting?.name ?? room?.receiverId?.clientSetting?.name}
+								</TitleChat>
+							</>
+						)}
 					</ArrowBlock>
 				</TitleMessage>
-				<ChatMessages>
+				<ChatMessages ref={scrollRef}>
 					{roomMessages?.map((message: MessageBackend) => {
-						console.log(message);
-						if (message?.user.role === user?.role) {
+						if (message?.user?.role === user?.role) {
 							const timeElapsed = message.created_at;
 							const date = getDate(new Date(timeElapsed));
 							return (
@@ -276,7 +295,6 @@ const Chat = () => {
 							return (
 								<LeftLi>
 									<Message className={`message sended`}>
-										<img src={photo} alt="person" />
 										<div className="content">
 											<p>{message.text}</p>
 											<Link to={`${message?.jobLink}`}>
@@ -287,7 +305,7 @@ const Chat = () => {
 									</Message>
 									<MessageBlock>
 										<Message className={`message date sended`}>{date}</Message>
-										{!room?.activeRoom && (
+										{!defaultChat?.activeRoom && user.role === 'client' && (
 											<ButtonBlock>
 												<ButtonChat onClick={() => updateRoom(chatRoomId)}>Accept</ButtonChat>
 												<ButtonChat>Decline</ButtonChat>
@@ -298,12 +316,28 @@ const Chat = () => {
 							);
 						}
 					})}
-					{socketMessage.map((message: MessageFrontend) => {
+					{socketMessage?.map((message: MessageFrontend) => {
 						if (message?.chatRoomId === chatRoomId) {
 							if (message?.userId === user?.id) {
-								return <RightLi>{message.text}</RightLi>;
+								return (
+									<RightLi>
+										<Message className={`message recieved`}>
+											<div className="content">
+												<p>{message.text}</p>
+											</div>
+										</Message>
+									</RightLi>
+								);
 							} else {
-								return <LeftLi>{message.text}</LeftLi>;
+								return (
+									<LeftLi>
+										<Message className={`message sended`}>
+											<div className="content">
+												<p>{message.text}</p>
+											</div>
+										</Message>
+									</LeftLi>
+								);
 							}
 						}
 					})}
@@ -314,7 +348,9 @@ const Chat = () => {
 						{...register('text')}
 						className={`${errors.text ? 'is-invalid' : ''}`}
 					/>
-					<Button>Send message</Button>
+					<button type="submit">
+						<IoMdSend />
+					</button>
 				</InputBlock>
 			</ChatWrapper>
 		</Wrapper>

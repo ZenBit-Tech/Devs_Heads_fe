@@ -106,6 +106,25 @@ export const ChatWrapper = styled.div`
 	border: 1px solid grey;
 `;
 
+export const Button = styled.button`
+	border: 1px solid ${LIGHT_GREY};
+	border-radius: 10px;
+	padding: 10px 20px;
+	width: 50%;
+	margin-bottom: 5%;
+	background-color: ${LIGHT_GREY};
+	color: ${LIGHT_GREY};
+	margin-right: 10%;
+	text-align: center;
+	font-size: ${MEDIUM_FONT_SIZE};
+	box-shadow: 3px 2px 2px ${GREY};
+	cursor: pointer;
+	&.defaultActive {
+		background-color: ${LIGHT_GREY};
+		color: ${WHITE_COLOR};
+	}
+`;
+
 export const ChatMessages = styled.div`
 	width: 100%;
 	position: relative;
@@ -125,7 +144,7 @@ export const ChatMessages = styled.div`
 	}
 `;
 export const MessageBlock = styled.div`
-	margin-left: 60px;
+	margin-left: 0;
 `;
 
 export const Message = styled.div`
@@ -229,6 +248,27 @@ export const InputBlock = styled.div`
 	& > .ant-btn {
 		height: 40px;
 	}
+	& > button {
+		border-radius: 30px;
+		display: flex;
+		justify-content: center;
+		cursor: pointer;
+		align-items: center;
+		border: none;
+		&:focus {
+			outline: none;
+		}
+		@media screen and (min-width: 720px) and (max-width: 1080px) {
+			padding: 0.3rem 1rem;
+			svg {
+				font-size: 1rem;
+			}
+		}
+		svg {
+			font-size: 2rem;
+			color: $mesage-color;
+		}
+	}
 `;
 
 //chatTitle
@@ -274,4 +314,11 @@ export const TitleChat = styled.p`
 	color: black;
 	margin: unset;
 	font-weight: bold;
+`;
+
+//search
+export const SearchWrapper = styled.div`
+	display: flex;
+	justify-content: center;
+	width: 100%;
 `;
