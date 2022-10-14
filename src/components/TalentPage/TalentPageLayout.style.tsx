@@ -23,6 +23,7 @@ export const Wrapper = styled.div`
 `;
 export const SkillsBlock = styled.div`
 	margin-top: 50px;
+	z-index: 0;
 `;
 
 export const WrapperSidePanel = styled.div`

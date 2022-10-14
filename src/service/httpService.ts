@@ -32,7 +32,7 @@ export const authApi = createApi({
 		}),
 		signUpUpdate: build.mutation<ISignUpResponseGoogle, FormDataGoogle>({
 			query: body => ({
-				url: `auth/sign-up/update`,
+				url: `auth/sign-up`,
 				method: 'put',
 				body,
 				headers: {
@@ -135,10 +135,10 @@ export const profileApi = createApi({
 			}),
 		}),
 		updateSingleProfile: build.mutation<{ saved?: boolean }, FormPassSingleProfile>({
-			query: ({ id, saved }) => ({
+			query: ({ id, saved, clientId }) => ({
 				url: `profile/${id}`,
 				method: 'put',
-				body: { saved },
+				body: { saved, clientId },
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
 				},
@@ -146,11 +146,11 @@ export const profileApi = createApi({
 			invalidatesTags: ['Profile'],
 		}),
 		getTalentProfile: build.query({
-			query: page => `/profile/savedTalent?page=${page}`,
+			query: savedProfile => `/profile/${savedProfile.id}/savedTalent?page=${savedProfile.page}`,
 			providesTags: ['Profile'],
 		}),
 		getUserProfile: build.query({
-			query: id => `/profile/${id}`,
+			query: profile => `/profile/${profile.id}/${profile.clientId}`,
 			providesTags: ['Profile'],
 		}),
 	}),
@@ -283,16 +283,18 @@ export const invitationPostApi = createApi({
 		postInvitation: build.mutation<
 			{
 				message: string;
-				userId: number | undefined;
-				profileId: number | undefined;
+				clientId?: number;
+				freelancerId?: number;
+				profileId?: number;
+				jobPostId?: number;
 				jobTitle: string;
 			},
 			IMessage
 		>({
-			query: ({ message, userId, profileId, jobTitle }) => ({
+			query: ({ message, clientId, freelancerId, profileId, jobPostId, jobTitle }) => ({
 				url: '/invite-talent',
 				method: 'POST',
-				body: { message, userId, profileId, jobTitle },
+				body: { message, clientId, freelancerId, profileId, jobPostId, jobTitle },
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
 				},

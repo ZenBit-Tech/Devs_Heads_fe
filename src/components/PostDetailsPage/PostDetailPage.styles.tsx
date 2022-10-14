@@ -1,3 +1,5 @@
+import { DODGERBLUE_COLOR, GREY, LIGHTBLUE_COLOR, WHITE_COLOR } from 'constants/colors';
+import { FONT_LARGE, MEDIUM_FONT_SIZE } from 'constants/fonts';
 import styled from 'styled-components';
 
 export const TitleStyled = styled.p`
@@ -11,26 +13,41 @@ export const TitleStyled = styled.p`
 export const Wrapper = styled.div`
 	margin: ${props => props.theme.spacing(5)};
 	padding: ${props => props.theme.spacing(5)};
-	border: 1px solid ${props => props.theme.colors.black};
 	border-radius: ${props => props.theme.spacing(5)};
 `;
+
+export const WrapperWithBorder = styled.div`
+	border: 2px solid ${props => props.color || props.theme.colors.gray};
+	border-radius: 10px;
+	width: 90%;
+	text-align: center;
+`;
+
 export const CategoryStyled = styled.div`
 	border: 2px solid ${props => props.color || props.theme.colors.gray};
-	border-radius: ${props => props.theme.spacing(2)};
-	width: ${props => props.theme.spacing(51)};
-	padding: ${props => props.theme.spacing(3)} ${props => props.theme.spacing(5)};
-	height: ${props => props.theme.spacing(12)};
-	margin-bottom: ${props => props.theme.spacing(8)};
-	font-weight: bold;
-
+	border-radius: 10px;
+	padding: 10px;
+	width: 300px;
+	height: 55px;
+	margin-left: 2%;
+	font-style: italic;
+	font-size: ${FONT_LARGE};
 	@media (max-width: 800px) {
 		width: unset;
 	}
 `;
 
 export const DescriptionStyled = styled.div`
-	font-size: ${props => props.theme.spacing(4)};
-	padding-bottom: ${props => props.theme.spacing(10)};
+	font-size: ${MEDIUM_FONT_SIZE};
+	padding-top: 80px;
+	margin: 2%;
+	line-height: 35px;
+`;
+
+export const Description = styled.div`
+	font-size: ${MEDIUM_FONT_SIZE};
+	margin: 2%;
+	line-height: 35px;
 `;
 
 export const BorderStyled = styled.div`
@@ -49,12 +66,16 @@ export const WrapperSkillsStyled = styled.div`
 `;
 
 export const CategorySkillsBlock = styled.div`
-	margin: ${props => props.theme.spacing(0)} ${props => props.theme.spacing(12)};
-	${props => props.theme.spacing(8)};
-	font-weight: bold;
+	margin: 1% 2.5% 1% 2.5%;
+	font-style: italic;
+	font-size: ${MEDIUM_FONT_SIZE};
 
-	&:nth-child(1) {
-		margin-left: ${props => props.theme.spacing(0)};
+	& > label {
+		margin: 35px;
+		font-size: ${MEDIUM_FONT_SIZE};
+	}
+	& > p {
+		margin: 15px;
 	}
 	@media (max-width: 800px) {
 		width: 100%;
@@ -66,9 +87,13 @@ export const SkillsItem = styled.div`
 	color: ${props => props.theme.colors.green};
 	padding: ${props => props.theme.spacing(1)};
 	background-color: ${props => props.theme.colors.ligntGreen};
-	border-radius: ${props => props.theme.spacing(2)};
+	border-radius: 20px;
 	margin: ${props => props.theme.spacing(2)};
 	text-transform: capitalize;
+	font-size: ${MEDIUM_FONT_SIZE};
+	text-align: center;
+	width: 70%;
+	margin: 3% auto;
 `;
 
 export const WorkDurationStyled = styled.div`
@@ -76,21 +101,28 @@ export const WorkDurationStyled = styled.div`
 `;
 
 export const HourRateStyled = styled.div`
-	border-radius: ${props => props.theme.spacing(10)};
-	border: 1px solid ${props => props.theme.colors.gray};
 	text-align: center;
 	padding: ${props => props.theme.spacing(3)};
+	margin: 8%;
 `;
 
 export const SendProposal = styled.button`
-	width: 140px;
-	height: 50px;
+	width: 180px;
+	height: 55px;
 	border-radius: 10px;
-	margin-bottom: 4%;
-	margin-left: 30%;
+	background-color: ${DODGERBLUE_COLOR};
+	color: ${WHITE_COLOR};
+	border-color: ${WHITE_COLOR};
+	margin: auto;
 	text-align: center;
-	@media (max-width: 800px) {
-		margin-left: auto;
+	font-size: ${FONT_LARGE};
+	box-shadow: 3px 2px 2px ${GREY};
+	&:hover {
+		background-color: ${LIGHTBLUE_COLOR};
+	}
+	&active {
+		box-shadow: 0 5px;
+		transform: translateY(10px);
 	}
 `;
 export const Column = styled.div`
@@ -100,4 +132,53 @@ export const Column = styled.div`
 	@media (max-width: 800px) {
 		width: 100%;
 	}
+`;
+export const MinColumn = styled.div`
+	float: left;
+	width: 20%;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	@media screen and (max-width: 600px) {
+		width: 100%;
+	}
+`;
+export const MaxColumn = styled.div`
+	float: left;
+	width: 80%;
+	padding: 10px;
+	@media screen and (max-width: 600px) {
+		width: 100%;
+	}
+`;
+export const FullColumn = styled.div`
+	float: left;
+	width: 95%;
+	padding: 10px;
+	@media screen and (max-width: 600px) {
+		width: 100%;
+	}
+`;
+
+export const P = styled.p`
+	font-size: ${MEDIUM_FONT_SIZE};
+	margin-bottom: 2%;
+	text-align: center;
+`;
+
+export const P1 = styled.p`
+	font-size: ${FONT_LARGE};
+	margin: auto;
+	text-align: center;
+`;
+
+export const ClientInfoDescription = styled.p`
+	margin: 4% auto;
+	font-style: italic;
+`;
+
+export const Label = styled.label`
+	margin-left: 100px;
 `;
