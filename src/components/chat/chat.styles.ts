@@ -1,4 +1,5 @@
 import {
+	BLACK_COLOR,
 	DODGERBLUE_COLOR,
 	GREY,
 	LIGHTBLUE_COLOR,
@@ -23,7 +24,7 @@ export const UsersList = styled.ul`
 	overflow-y: auto;
 	width: 400px;
 	background-color: white;
-	height: 700px;
+	max-height: 1000px;
 	border-right: 1px solid grey;
 	margin: 0;
 
@@ -59,6 +60,10 @@ export const SingleUser = styled.li`
 		background: #e8e4e4;
 		cursor: pointer;
 	}
+
+	&.defaultActive {
+		background-color: #e8e4e4;
+	}
 `;
 
 export const ChatImage = styled.img`
@@ -89,6 +94,7 @@ export const Wrapper = styled.form`
 	width: 1000px;
 	display: flex;
 	margin: 0 auto;
+	max-height: 1000px;
 	border: 1px solid grey;
 `;
 
@@ -130,9 +136,11 @@ export const ChatMessages = styled.div`
 	position: relative;
 	padding: 1rem 2rem;
 	display: flex;
+	max-height: 700px;
 	flex-direction: column;
 	background-color: white;
-	overflow-y: auto;
+	margin-bottom: 100px;
+	overflow-y: scroll;
 	gap: 1rem;
 	&::-webkit-scrollbar {
 		width: 0.2rem;

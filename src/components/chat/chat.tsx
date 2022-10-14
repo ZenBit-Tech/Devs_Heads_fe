@@ -58,35 +58,17 @@ const Chat = () => {
 	const [socketMessage, setSocketMessage] = useState<MessageFrontend[]>([]);
 	const [currentChatId, setCurrentChatId] = useState<initialId>();
 	const [roomMessages, setRoomMessages] = useState<MessageBackend[]>();
-
+	const [active, setActive] = useState<number>(chatRoomId);
 	const { data: rooms, isSuccess } = useGetRoomsByUserQuery(userId);
 	const { data: messages, isLoading } = useGetMessagesByRoomQuery(chatRoomId);
 	const { data: room, isFetching } = useGetRoomsByTwoUsersQuery(currentChatId);
-	const [search, setSearch] = useState<string>('');
-	const [filteredRoom, setFilteredRoom] = useState<RoomBackend[]>(rooms);
 	const [defaultChat, setDefaultChat] = useState<RoomBackend>();
 	const [updateChatRoom] = useUpdateChatRoomMutation();
 	const scrollRef = useRef<null | HTMLDivElement>(null);
+
 	useEffect(() => {
 		scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
 	}, [messages]);
-	useEffect(() => {
-		const inputHandler = () => {
-			const inputText = search.toLowerCase();
-			const filteredData = rooms?.filter((item: RoomBackend) => {
-				if (inputText === '') {
-					return rooms;
-				}
-				if (user.role === 'freeelancer')
-					return (
-						item.senderId?.firstName.toLowerCase().includes(inputText) ||
-						item.senderId?.lastName.toLowerCase().includes(inputText)
-					);
-			});
-			setFilteredRoom([...filteredData]);
-		};
-		inputHandler();
-	}, [search]);
 
 	useEffect(() => {
 		if (!isFetching) {
@@ -100,10 +82,11 @@ const Chat = () => {
 			setChatRoomId(rooms[0]?.id);
 			setDefaultChat(rooms[0]);
 			setCurrentChatId({
-				senderId: rooms[0].senderId.id,
-				receiverId: rooms[0].receiverId.id,
-				jobPostId: rooms[0].jobPostId.id,
+				senderId: rooms[0]?.senderId.id,
+				receiverId: rooms[0]?.receiverId.id,
+				jobPostId: rooms[0]?.jobPostId.id,
 			});
+			setActive(rooms[0]?.id);
 		}
 	}, [isSuccess]);
 
@@ -136,7 +119,7 @@ const Chat = () => {
 					jobTitle: item.jobPostId?.jobTitle,
 					jobPostId: item.jobPostId?.id,
 					lastMessage: item.message.text,
-					senderId: item.senderId?.id,
+					senderId: item?.senderId?.id,
 					receiverId: item.receiverId?.id,
 					roomId: item?.id,
 					activeRoom: item.activeRoom,
@@ -177,14 +160,13 @@ const Chat = () => {
 			chatRoomId,
 		};
 		socket?.emit('sendMessage', NewData);
-		console.log('1');
-		console.log(socketMessage);
 		reset();
 	};
 
 	const changeRoom = (senderId: number, receiverId: number, jobPostId: number, roomId: number) => {
 		setCurrentChatId({ senderId, receiverId, jobPostId });
 		setChatRoomId(roomId);
+		setActive(chatRoomId);
 	};
 
 	const updateRoom = (chatRoomId: number) => {
@@ -211,22 +193,14 @@ const Chat = () => {
 	return (
 		<Wrapper onSubmit={handleSubmit(onSubmit)}>
 			<UsersList>
-				<SearchWrapper>
-					<Search
-						search={search}
-						setSearch={setSearch}
-						placeholder={'Search contact in chat'}
-						searchSize={'10px auto'}
-						width={'unset'}
-					/>
-				</SearchWrapper>
 				{userList?.map((item: UserList) => {
 					if ((user.role === 'freelancer' && item.activeRoom) || user.role === 'client') {
 						return (
 							<SingleUser
 								onClick={() =>
-									changeRoom(item.senderId, item.receiverId, item.jobPostId, item.roomId)
+									changeRoom(item?.senderId, item.receiverId, item.jobPostId, item.roomId)
 								}
+								className={item.roomId === active ? 'defaultActive' : ''}
 							>
 								<div>
 									<ChatImage src={item.photo} alt="userpicture" width="40px" height="40px" />
