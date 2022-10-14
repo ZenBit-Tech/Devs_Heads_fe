@@ -40,7 +40,6 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 	const [sendForm] = usePostOfferMutation();
 	const { user } = useAppSelector<RootState>(state => state);
 	const { data: clientInfo } = useGetClientInfoByUserQuery(user.id);
-	console.log(clientInfo);
 
 	const resetInput = () => {
 		return reset({ price: 0, startDate: {}, endDate: {} });
@@ -58,7 +57,6 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 	};
 
 	const handleForm = async (data: OfferForm) => {
-		console.log(data);
 		await sendForm({ ...data, freelancerId: freelancerId, jopPostId: jopPostId })
 			.unwrap()
 			.then(() => {
