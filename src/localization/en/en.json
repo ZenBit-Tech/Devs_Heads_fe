@@ -145,6 +145,7 @@
 	"PostDetailPage": {
 		"skills": "Skills",
 		"rate": "Hourly Rate",
+		"proposalSend": "Proposal already sent!",
 		"project": "Project length",
 		"skillsTechnik": "Technical Writing Services",
 		"category": "Category /",
