@@ -26,6 +26,7 @@ import { notification } from 'antd';
 const TEXTAREA_ROWS_MAX = 16;
 const TEXTAREA_ROWS_MIN = 8;
 const BORDER_RADIUS = 6;
+const ALERT_SUCCESS = 'success';
 
 const InvitePopup = (props: IProps) => {
 	const {
@@ -46,7 +47,7 @@ const InvitePopup = (props: IProps) => {
 
 	const alert = (type: Alert) => {
 		notification[type]({
-			message: type === 'success' ? `${t('InvitePopup.success')}` : `${t('InvitePopup.error')}`,
+			message: type === ALERT_SUCCESS ? `${t('InvitePopup.success')}` : `${t('InvitePopup.error')}`,
 		});
 	};
 

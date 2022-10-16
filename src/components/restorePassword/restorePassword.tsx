@@ -25,6 +25,8 @@ export type FormPass = {
 
 type Alert = 'success' | 'error';
 
+const ALERT_SUCCESS = 'success';
+
 const schema = Yup.object({
 	createPassword: Yup.string().min(8).required(),
 	password: Yup.string().min(8).required(),
@@ -47,7 +49,8 @@ const resetPassword = () => {
 
 	const alert = (type: Alert) => {
 		notification[type]({
-			message: type === 'success' ? `${t('ResetPassword.success')}` : `${t('ResetPassword.error')}`,
+			message:
+				type === ALERT_SUCCESS ? `${t('ResetPassword.success')}` : `${t('ResetPassword.error')}`,
 		});
 	};
 
@@ -75,7 +78,7 @@ const resetPassword = () => {
 			} catch (e) {
 				reset({ createPassword: '', password: '' });
 				alert('error');
-				// console.log(e);
+				console.log(e);
 			}
 		}
 	};

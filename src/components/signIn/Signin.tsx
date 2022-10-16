@@ -31,6 +31,8 @@ export type FormData = {
 
 type Alert = 'success' | 'error';
 
+const ALERT_SUCCESS = 'success';
+
 const Role = {
 	Freelancer: 'freelancer',
 	Client: 'client',
@@ -57,7 +59,7 @@ const signIn = () => {
 
 	const alert = (type: Alert) => {
 		notification[type]({
-			message: type === 'success' ? `${t('SignIn.success')}` : `${t('SignIn.error')}`,
+			message: type === ALERT_SUCCESS ? `${t('SignIn.success')}` : `${t('SignIn.error')}`,
 		});
 	};
 

@@ -280,7 +280,7 @@
 		"end": "End Date",
 		"btnAccept": "Accept",
 		"btnDecline": "Decline",
-		"acceptMessage": "You gave accepted the offer",
+		"acceptMessage": "You have accepted the offer",
 		"declineMessage": "You have declined the offer"
 	}
 }

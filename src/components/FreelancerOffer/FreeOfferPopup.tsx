@@ -16,6 +16,8 @@ import { useGetJobOfferQuery, useUpdateJobOfferMutation } from 'service/httpServ
 import { notification } from 'antd';
 import { Alert } from 'components/inviteTalent/interfaces';
 
+const ALERT_SUCCESS = 'success';
+
 const FreelancerOfferPopup = () => {
 	const { data: offer } = useGetJobOfferQuery({ id: 25, freelancerId: 1 });
 	const [updateOffer] = useUpdateJobOfferMutation();
@@ -24,7 +26,7 @@ const FreelancerOfferPopup = () => {
 	const alert = (type: Alert) => {
 		notification[type]({
 			message:
-				type === 'success'
+				type === ALERT_SUCCESS
 					? `${t('FreeOfferPopup.acceptMessage')}`
 					: `${t('FreeOfferPopup.declineMessage')}`,
 		});

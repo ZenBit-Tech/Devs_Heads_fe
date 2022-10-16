@@ -23,6 +23,8 @@ export interface IContactInfoForm {
 }
 type NotificationType = 'success' | 'error';
 
+const ALERT_SUCCESS = 'success';
+
 const phoneRegExp = new RegExp(phoneNumberRegExp);
 
 export const ContactInfo = () => {
@@ -50,9 +52,9 @@ export const ContactInfo = () => {
 
 	const openNotificationWithIcon = (type: NotificationType) => {
 		notification[type]({
-			message: type === 'success' ? `${t('ContactInfo.success')}` : `${t('ContactInfo.error')}`,
+			message: type === ALERT_SUCCESS ? `${t('ContactInfo.success')}` : `${t('ContactInfo.error')}`,
 			description:
-				type === 'success'
+				type === ALERT_SUCCESS
 					? `${t('ContactInfo.dataHasBeenSaved')}`
 					: `${t('ContactInfo.someErrorOccurred')}`,
 		});
