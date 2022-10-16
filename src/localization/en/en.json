@@ -165,6 +165,10 @@
 		"removeButton": "Delete",
 		"clientInfo": "About the client"
 	},
+	"MyContract": {
+		"status": "Status",
+		"date": "Date"
+	},
 	"EditPostDetailPage": {
 		"title": "Re-write a title for your job post",
 		"descriptionTitle": "Re-describe your job",
