@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { FormEmail } from 'components/forgotPassword/forgotPassword';
 import { IMessage } from 'components/inviteTalent/interfaces';
+import { StatusContractEnum } from 'components/myContracts/status.offer';
 import {
 	ISignUpResponse,
 	ISignInResponse,
@@ -11,6 +12,7 @@ import {
 	ISignUpResponseGoogle,
 	FormData,
 	FormPassSingleProfile,
+	IUpdateOffer,
 } from './interfaces';
 
 const BASE_URL = `${process.env.REACT_APP_API_URL}`;
@@ -303,3 +305,59 @@ export const invitationPostApi = createApi({
 });
 
 export const { usePostInvitationMutation } = invitationPostApi;
+
+export const JobOfferApi = createApi({
+	reducerPath: 'jobOffer',
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	tagTypes: ['jobOffer'],
+	endpoints: build => ({
+		postOffer: build.mutation({
+			query: body => ({
+				url: '/jobOffer/offer',
+				method: 'POST',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+			invalidatesTags: ['jobOffer'],
+		}),
+		getJobOffer: build.query({
+			query: ({ id, freelancerId }) => `/jobOffer/job/${id}/${freelancerId}`,
+			providesTags: ['jobOffer'],
+		}),
+		getAcceptedJobOffer: build.query({
+			query: () => `/jobOffer/offer/accepted`,
+			providesTags: ['jobOffer'],
+		}),
+		updateOfferStatusExpired: build.mutation({
+			query: ({ id, status }) => ({
+				url: `/jobOffer/${id}`,
+				method: 'PATCH',
+				body: status,
+			}),
+			invalidatesTags: ['jobOffer'],
+		}),
+		updateJobOffer: build.mutation<
+			{ jobId?: number; freelancerId?: number; status: StatusContractEnum },
+			IUpdateOffer
+		>({
+			query: ({ jobId, freelancerId, status }) => ({
+				url: `/jobOffer/${jobId}/${freelancerId}`,
+				method: 'PUT',
+				body: { status },
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+			invalidatesTags: ['jobOffer'],
+		}),
+	}),
+});
+
+export const {
+	useGetJobOfferQuery,
+	useUpdateJobOfferMutation,
+	useGetAcceptedJobOfferQuery,
+	useUpdateOfferStatusExpiredMutation,
+} = JobOfferApi;
