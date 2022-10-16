@@ -147,7 +147,7 @@ const InviteTalent: FC = () => {
 				isShown={isShown}
 				setIsShown={setIsShown}
 				freelancerId={128}
-				jopPostId={25}
+				jopPostId={22}
 			/>
 			<Invite type="button" onClick={() => handleClick()}>{`${t('InvitePage.button')}`}</Invite>
 			{showPopup ? <InvitePopup Context={Context} /> : null}

@@ -15,12 +15,12 @@ import { ButtonBlock, ContainerDate, DateBlock, Title } from './sendOffer.styles
 import { Input } from 'components/clientSettings/clentSettings.styles';
 import { Cancel, Button } from 'pages/setting-page-client/change-password/ChangePassword.styles';
 import { t } from 'i18next';
-import { useGetClientInfoByUserQuery, usePostOfferMutation } from 'service/httpService';
-import { notification } from 'antd';
+import { useGetClientInfoByUserQuery } from 'service/httpService';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
 import { useForm } from 'react-hook-form';
-import { ModalProps, NotificationType, OfferForm, Schema } from './data';
+import { ModalProps, OfferForm, Schema } from './data';
+import { useSendData } from './dataSend';
 
 export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 	isShown,
@@ -37,32 +37,22 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 	} = useForm<OfferForm>({
 		resolver: yupResolver(Schema),
 	});
-	const [sendForm] = usePostOfferMutation();
 	const { user } = useAppSelector<RootState>(state => state);
 	const { data: clientInfo } = useGetClientInfoByUserQuery(user.id);
+	const { sendData } = useSendData();
 
 	const resetInput = () => {
 		return reset({ price: 0, startDate: {}, endDate: {} });
 	};
 
-	const openNotificationWithIcon = (type: NotificationType) => {
-		notification[type]({
-			message:
-				type === 'success' ? `${t('SendOfferPopup.success')}` : `${t('SendOfferPopup.error')}`,
-			description:
-				type === 'success'
-					? `${t('SendOfferPopup.offerSent')}`
-					: `${t('SendOfferPopup.someErrorOccurred')}`,
-		});
-	};
-
-	const handleForm = async (data: OfferForm) => {
-		await sendForm({ ...data, freelancerId: freelancerId, jopPostId: jopPostId })
-			.unwrap()
-			.then(() => {
-				openNotificationWithIcon('success');
-			})
-			.catch(() => openNotificationWithIcon('error'));
+	const handleForm = (data: OfferForm) => {
+		const NewData = {
+			...data,
+			freelancerId,
+			jopPostId,
+		};
+		console.log(NewData);
+		sendData(NewData);
 		setIsShown(false);
 		resetInput();
 	};
@@ -78,7 +68,12 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 							<Title>{`${t('SendOfferPopup.offer')}`}</Title>
 							<div>
 								<Label>{`${t('SendOfferPopup.companyName')}`}</Label>
-								<Input type="text" {...register('name')} defaultValue={clientInfo?.name} />
+								<Input
+									type="text"
+									{...register('name')}
+									defaultValue={clientInfo?.name}
+									className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+								/>
 							</div>
 							<div>
 								<Label>{`${t('SendOfferPopup.price')}`}</Label>

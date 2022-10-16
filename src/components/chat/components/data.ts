@@ -13,6 +13,8 @@ export type OfferForm = {
 	price: number;
 	startDate: unknown;
 	endDate: unknown;
+	freelancerId: number;
+	jopPostId: number;
 };
 
 export type NotificationType = 'success' | 'error';
