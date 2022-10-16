@@ -3,6 +3,7 @@ import {
 	authApi,
 	clientSettingsApi,
 	invitationPostApi,
+	jobOfferApi,
 	jobPostApi,
 	profileApi,
 	proposalPostApi,
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
 	[proposalPostApi.reducerPath]: proposalPostApi.reducer,
 	[clientSettingsApi.reducerPath]: clientSettingsApi.reducer,
 	[invitationPostApi.reducerPath]: invitationPostApi.reducer,
+	[jobOfferApi.reducerPath]: jobOfferApi.reducer,
 });
 
 const persistConfig = {

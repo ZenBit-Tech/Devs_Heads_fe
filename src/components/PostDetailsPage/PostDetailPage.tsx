@@ -53,9 +53,8 @@ const DescriptionPage: FC = () => {
 	const { data: id, isLoading, isError } = useGetProposalDetailQuery(proposalId);
 	const { data: post, isFetching, isSuccess } = useGetJobsDetailQuery(params.id);
 	const { data: clientInfo } = useGetClientInfoByUserQuery(post?.userId);
-
-	const [disable, setDisable] = useState(false);
 	const [toggleModal, setToggleModal] = useState<boolean>(false);
+	const [disable, setDisable] = useState<boolean>(false);
 
 	useEffect(() => {
 		const buttonDisable = () => {
@@ -83,11 +82,12 @@ const DescriptionPage: FC = () => {
 		const toggle = () => setIsShown(!isShown);
 		return {
 			isShown,
+			setIsShown,
 			toggle,
 		};
 	};
 
-	const { isShown, toggle } = useModal();
+	const { isShown, toggle, setIsShown } = useModal();
 
 	let content;
 	if (isFetching) {
@@ -110,14 +110,23 @@ const DescriptionPage: FC = () => {
 								</CategoryStyled>
 							</MaxColumn>
 							<MinColumn>
-								<SendProposal onClick={toggle} className="btn btn-success" disabled={disable}>
-									{`${t('PostDetailPage.sendPrpBtn')}`}
-								</SendProposal>
+								{disable ? (
+									<div>{`${t('PostDetailPage.proposalSent')}`}</div>
+								) : (
+									<SendProposal
+										onClick={toggle}
+										className={`btn btn-success ${disable ? 'hidden' : 'block'}`}
+									>
+										{`${t('PostDetailPage.sendPrpBtn')}`}
+									</SendProposal>
+								)}
+
 								<Modal
 									isShown={isShown}
 									hide={toggle}
-									clientId={post.userId}
 									setDisable={setDisable}
+									setIsShown={setIsShown}
+									clientId={post.userId}
 									jobPostId={Number(params.id)}
 								/>
 							</MinColumn>

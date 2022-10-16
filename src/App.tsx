@@ -1,4 +1,4 @@
-import React, { FC, lazy, Suspense } from 'react';
+import React, { FC, lazy, Suspense, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from 'components/Layout/Layout';
 import PrivateRoutes from './hoc/PrivateRoutes';
@@ -11,6 +11,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from 'config/theme';
 import TalentPage from 'pages/TalentPage';
 import SingleProfilePage from 'pages/SingleProfilePage';
+import SendOfferPopup from 'components/chat/components/sendOfferPopup';
 
 const WelcomePage = lazy(() => import('./pages/WelcomePage/WelcomePage'));
 

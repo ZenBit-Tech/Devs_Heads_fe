@@ -168,7 +168,7 @@ export const {
 export const jobPostApi = createApi({
 	reducerPath: 'jobPost',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
-	tagTypes: ['JobPost'],
+	tagTypes: ['JobPost', 'JobOffer'],
 	endpoints: build => ({
 		postJob: build.mutation({
 			query: body => ({
