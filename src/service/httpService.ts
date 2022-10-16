@@ -327,7 +327,7 @@ export const JobOfferApi = createApi({
 			providesTags: ['jobOffer'],
 		}),
 		getAcceptedJobOffer: build.query({
-			query: () => `/jobOffer/offer/accepted`,
+			query: sendData => `/jobOffer/offer/${sendData.userId}/${sendData.role}`,
 			providesTags: ['jobOffer'],
 		}),
 		updateOfferStatusExpired: build.mutation({
