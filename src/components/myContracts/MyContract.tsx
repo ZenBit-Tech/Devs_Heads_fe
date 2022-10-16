@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import Select from 'react-select';
 import { useTranslation } from 'react-i18next';
 import { Div, SelectBlock, Wrapper } from './MyContract.style';
+import { useGetAcceptedJobOfferQuery } from 'service/httpService';
 
 export type DataSchema = {
 	status: { label: string; value: string };
@@ -21,6 +22,7 @@ export const selectionDate = [
 ];
 
 function MyContract() {
+	const { t } = useTranslation();
 	const {
 		register,
 		handleSubmit,
@@ -29,8 +31,7 @@ function MyContract() {
 		getValues,
 		formState: { errors },
 	} = useForm<DataSchema>();
-
-	const { t } = useTranslation();
+	const { data: offerAccepted, isLoading } = useGetAcceptedJobOfferQuery(user);
 
 	return (
 		<Wrapper>
