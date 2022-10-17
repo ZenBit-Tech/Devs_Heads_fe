@@ -2,8 +2,7 @@ import React from 'react';
 import googleIcon from 'assets/googleIcon.png';
 import { Image, Typography, Container } from 'components/GoogleAuth/GoogleAuthStyle';
 import { useTranslation } from 'react-i18next';
-
-const REACT_APP_GOOGLE_REDIRECT = 'http://localhost:3000/auth/redirect';
+import { REACT_APP_GOOGLE_REDIRECT } from 'constants/links';
 
 function GoogleAuth() {
 	const { t } = useTranslation();
