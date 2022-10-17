@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { useResetPasswordMutation } from 'service/httpService';
 import { saveUserId } from 'redux/reducers/userSlice';
 import { useAppDispatch } from 'redux/hooks';
+import { ALERT_SUCCESS } from 'constants/links';
 
 export type FormPass = {
 	createPassword: string;
@@ -24,8 +25,6 @@ export type FormPass = {
 };
 
 type Alert = 'success' | 'error';
-
-const ALERT_SUCCESS = 'success';
 
 const schema = Yup.object({
 	createPassword: Yup.string().min(8).required(),

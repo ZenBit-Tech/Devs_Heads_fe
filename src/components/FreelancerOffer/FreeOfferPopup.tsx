@@ -15,8 +15,7 @@ import {
 import { useGetJobOfferQuery, useUpdateJobOfferMutation } from 'service/httpService';
 import { notification } from 'antd';
 import { Alert } from 'components/inviteTalent/interfaces';
-
-const ALERT_SUCCESS = 'success';
+import { ALERT_SUCCESS } from 'constants/links';
 
 const FreelancerOfferPopup = () => {
 	const { data: offer } = useGetJobOfferQuery({ id: 25, freelancerId: 1 });

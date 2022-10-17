@@ -22,11 +22,11 @@ import { useNavigate } from 'react-router-dom';
 import { usePostInvitationMutation } from 'service/httpService';
 import { IMessage, IProps, Alert } from 'components/inviteTalent/interfaces';
 import { notification } from 'antd';
+import { ALERT_SUCCESS } from 'constants/links';
 
 const TEXTAREA_ROWS_MAX = 16;
 const TEXTAREA_ROWS_MIN = 8;
 const BORDER_RADIUS = 6;
-const ALERT_SUCCESS = 'success';
 
 const InvitePopup = (props: IProps) => {
 	const {
