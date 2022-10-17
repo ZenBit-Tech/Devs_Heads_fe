@@ -22,23 +22,10 @@ export type MessageBackend = {
 	created_at: Date;
 	jobLink: string | undefined;
 	user: {
-		email: string;
-		firstName: string;
-		lastName: string;
-		googleId: string;
-		id: number;
-		password: string;
-		phone: string;
 		role: string;
-		userId: number;
 	};
 	profileSetting: {
 		photo: string;
-		position: string;
-		price: number;
-		englishLevel: string;
-		description: string;
-		userId: number;
 	};
 };
 
@@ -47,14 +34,9 @@ export type RoomBackend = {
 	createdAt: Date;
 	activeRoom: boolean;
 	receiverId: {
-		email: string;
 		firstName: string;
 		lastName: string;
-		googleId: string;
 		id: number;
-		password: string;
-		phone: string;
-		role: string;
 		profileId: number;
 		clientSetting: {
 			name: string;
@@ -64,13 +46,9 @@ export type RoomBackend = {
 		};
 	};
 	senderId: {
-		email: string;
 		firstName: string;
 		lastName: string;
-		googleId: string;
 		id: number;
-		password: string;
-		phone: string;
 		role: string;
 		profileId: number;
 		profileSetting: {
@@ -82,20 +60,14 @@ export type RoomBackend = {
 	};
 	message: {
 		text: string;
-		userId: number | undefined;
+		userId?: number;
 		chatRoomId: number;
-		jobLink: string | undefined;
-	};
-	jobTitle: string | undefined;
+		jobLink?: string;
+	}[];
+	jobTitle: string;
 	jobPostId: {
 		id: number;
 		jobTitle: string;
-		dataTime: Date;
-		fromHourRate: number;
-		toHourRate: number;
-		jobDescription: string;
-		jobDuration: string;
-		userId: number;
 	};
 };
 export type UserList = {
@@ -103,7 +75,8 @@ export type UserList = {
 	lastName: string;
 	clientName: string;
 	date: string;
-	photo: string;
+	freelancerPhoto: string;
+	clientPhoto: string;
 	jobTitle: string;
 	jobPostId: number;
 	lastMessage: string;
@@ -117,19 +90,4 @@ export type initialId = {
 	senderId: number;
 	receiverId: number;
 	jobPostId: number;
-};
-
-export const initialMessage = [
-	{
-		text: '',
-		userId: 0,
-		chatRoomId: 0,
-		jobLink: '',
-	},
-];
-
-export const initialRoomId = {
-	senderId: 0,
-	receiverId: 0,
-	jobPostId: 0,
 };

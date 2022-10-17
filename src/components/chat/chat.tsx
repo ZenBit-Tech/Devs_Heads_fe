@@ -12,7 +12,6 @@ import io, { Socket } from 'socket.io-client';
 import { useEffect, useMemo, useState, useRef } from 'react';
 import profileImage from 'image/profile.png';
 import { IoMdSend } from 'react-icons/io';
-import Search from 'components/freelancerJobs/components/search';
 import {
 	UsersList,
 	ChatMessages,
@@ -29,18 +28,14 @@ import {
 	SingleUser,
 	ArrowBlock,
 	ChatImage,
-	Button,
 	LastMessage,
 	TitleMessage,
 	TitleChat,
-	SearchWrapper,
 } from './chat.styles';
 import { Link } from 'react-router-dom';
 import {
 	DataSchema,
 	initialId,
-	initialRoomId,
-	initialMessage,
 	MessageBackend,
 	MessageFrontend,
 	RoomBackend,
@@ -48,6 +43,12 @@ import {
 	ValidationSchema,
 } from './interfaces';
 import { Input } from 'components/clientSettings/clentSettings.styles';
+import { t } from 'i18next';
+
+const Role = {
+	Freelancer: 'freelancer',
+	Client: 'client',
+};
 
 const Chat = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -59,10 +60,12 @@ const Chat = () => {
 	const [currentChatId, setCurrentChatId] = useState<initialId>();
 	const [roomMessages, setRoomMessages] = useState<MessageBackend[]>();
 	const [active, setActive] = useState<number>(chatRoomId);
+	const [defaultChat, setDefaultChat] = useState<RoomBackend>();
+
 	const { data: rooms, isSuccess } = useGetRoomsByUserQuery(userId);
 	const { data: messages, isLoading } = useGetMessagesByRoomQuery(chatRoomId);
 	const { data: room, isFetching } = useGetRoomsByTwoUsersQuery(currentChatId);
-	const [defaultChat, setDefaultChat] = useState<RoomBackend>();
+
 	const [updateChatRoom] = useUpdateChatRoomMutation();
 	const scrollRef = useRef<null | HTMLDivElement>(null);
 
@@ -118,26 +121,31 @@ const Chat = () => {
 				const newObj = {
 					jobTitle: item.jobPostId?.jobTitle,
 					jobPostId: item.jobPostId?.id,
-					lastMessage: item.message.text,
+					lastMessage: item.message[0]?.text,
 					senderId: item?.senderId?.id,
 					receiverId: item.receiverId?.id,
 					roomId: item?.id,
 					activeRoom: item.activeRoom,
 					date: item.createdAt,
 				};
-				if (item.senderId?.id === user?.id && user?.role === 'freelancer') {
+				if (item.receiverId.clientSetting) {
 					const obj = {
 						...newObj,
-						clientName: item?.receiverId?.clientSetting.name ?? 'default',
-						photo: profileImage,
+						clientName: item.receiverId.clientSetting?.name,
+						clientPhoto: profileImage,
+						firstName: item.senderId?.firstName,
+						lastName: item.senderId?.lastName,
+						freelancerPhoto: item.senderId?.profileSetting.photo ?? profileImage,
 					};
 					return obj;
-				} else {
+				} else if (item.senderId?.clientSetting) {
 					const obj = {
 						...newObj,
-						firstName: item.senderId?.firstName ?? 'default',
-						lastName: item.senderId?.lastName ?? 'default',
-						photo: item.senderId?.profileSetting?.photo ?? profileImage,
+						clientName: item.senderId.clientSetting?.name,
+						clientPhoto: profileImage,
+						firstName: item.receiverId?.firstName,
+						lastName: item.receiverId?.lastName,
+						freelancerPhoto: item.receiverId?.profileSetting?.photo ?? profileImage,
 					};
 					return obj;
 				}
@@ -182,6 +190,7 @@ const Chat = () => {
 		};
 		socket?.emit('sendMessage', message);
 	};
+
 	const getDate = (date: Date) => {
 		const currentDate =
 			date.toLocaleDateString('en-us', { hour: 'numeric', minute: 'numeric' }) +
@@ -189,12 +198,17 @@ const Chat = () => {
 			date.getFullYear();
 		return currentDate;
 	};
-
+	console.log(room);
 	return (
 		<Wrapper onSubmit={handleSubmit(onSubmit)}>
 			<UsersList>
 				{userList?.map((item: UserList) => {
-					if ((user.role === 'freelancer' && item.activeRoom) || user.role === 'client') {
+					if (
+						(user.role === Role.Freelancer && item.activeRoom) ||
+						(user.role === Role.Freelancer && user.id === item.receiverId) ||
+						(user.role === Role.Client && user.id === item.receiverId) ||
+						(user.role === Role.Client && item.activeRoom)
+					) {
 						return (
 							<SingleUser
 								onClick={() =>
@@ -203,19 +217,25 @@ const Chat = () => {
 								className={item.roomId === active ? 'defaultActive' : ''}
 							>
 								<div>
-									<ChatImage src={item.photo} alt="userpicture" width="40px" height="40px" />
-									{user?.role === 'client' ? (
-										<Title>
-											{item.firstName} {item.lastName}
-											<br />
-											{item.jobTitle}
-										</Title>
-									) : (
-										<Title>
-											{item.clientName}
-											<br />
-											{item.jobTitle}
-										</Title>
+									{user?.role === Role.Client && (
+										<>
+											<ChatImage src={item.freelancerPhoto} />
+											<Title>
+												{item.firstName} {item.lastName}
+												<br />
+												{item.jobTitle}
+											</Title>
+										</>
+									)}
+									{user?.role === Role.Freelancer && (
+										<>
+											<ChatImage src={item.clientPhoto} />
+											<Title>
+												{item.clientName}
+												<br />
+												{item.jobTitle}
+											</Title>
+										</>
 									)}
 									<LastMessage>{item.lastMessage}</LastMessage>
 								</div>
@@ -227,20 +247,32 @@ const Chat = () => {
 			<ChatWrapper>
 				<TitleMessage>
 					<ArrowBlock>
-						{user?.role === 'client' ? (
+						{user?.role === Role.Client && room?.senderId.profileSetting && (
 							<>
-								<img src={room?.senderId?.profileSetting.photo} alt="user" />
+								<img src={room?.senderId?.profileSetting?.photo ?? profileImage} />
 								<TitleChat>
-									{room?.senderId?.firstName ?? room?.receiverId.firstName}{' '}
-									{room?.senderId?.lastName ?? room?.receiverId.lastName}
+									{room?.senderId.firstName} {room?.senderId.lastName}
 								</TitleChat>
 							</>
-						) : (
+						)}
+						{user?.role === Role.Client && room?.receiverId.profileSetting && (
 							<>
-								<img src={profileImage} alt="user" />
+								<img src={room?.receiverId?.profileSetting?.photo ?? profileImage} />
 								<TitleChat>
-									{room?.senderId?.clientSetting?.name ?? room?.receiverId?.clientSetting?.name}
+									{room?.receiverId.firstName} {room?.receiverId.lastName}
 								</TitleChat>
+							</>
+						)}
+						{user?.role === Role.Freelancer && room?.receiverId.clientSetting && (
+							<>
+								<img src={profileImage} />
+								<TitleChat>{room?.receiverId?.clientSetting?.name}</TitleChat>
+							</>
+						)}
+						{user?.role === Role.Freelancer && room?.senderId.clientSetting && (
+							<>
+								<img src={profileImage} />
+								<TitleChat>{room?.senderId?.clientSetting?.name}</TitleChat>
 							</>
 						)}
 					</ArrowBlock>
@@ -255,10 +287,12 @@ const Chat = () => {
 									<Message className={`message recieved`}>
 										<div className="content">
 											<p>{message.text}</p>
-											<Link to={`${message?.jobLink}`}>
-												{process.env.REACT_APP_URL_JOB_POST}
-												{message.jobLink}
-											</Link>
+											{message.jobLink && (
+												<Link to={`${message?.jobLink}`}>
+													{process.env.REACT_APP_URL_JOB_POST}
+													{message.jobLink}
+												</Link>
+											)}
 										</div>
 									</Message>
 									<Message className={`message date recieved`}>{date}</Message>
@@ -271,18 +305,21 @@ const Chat = () => {
 									<Message className={`message sended`}>
 										<div className="content">
 											<p>{message.text}</p>
-											<Link to={`${message?.jobLink}`}>
-												{process.env.REACT_APP_URL_JOB_POST}
-												{message.jobLink}
-											</Link>
+											{message.jobLink && (
+												<Link to={`${message?.jobLink}`}>
+													{process.env.REACT_APP_URL_JOB_POST}
+													{message.jobLink}
+												</Link>
+											)}
 										</div>
 									</Message>
 									<MessageBlock>
 										<Message className={`message date sended`}>{date}</Message>
-										{!defaultChat?.activeRoom && user.role === 'client' && (
+										{!defaultChat?.activeRoom && user.id !== message.userId && (
 											<ButtonBlock>
-												<ButtonChat onClick={() => updateRoom(chatRoomId)}>Accept</ButtonChat>
-												<ButtonChat>Decline</ButtonChat>
+												<ButtonChat onClick={() => updateRoom(chatRoomId)}>
+													{`${t('chat.accepted')}`}
+												</ButtonChat>
 											</ButtonBlock>
 										)}
 									</MessageBlock>

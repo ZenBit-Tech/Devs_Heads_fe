@@ -15,3 +15,4 @@ export const GREEN = 'rgb(33, 163, 33)';
 export const LIGHTGREY_COLOR = '#ced4da';
 export const GREY_BLUE_COLOR = '#ced9dc';
 export const GREY_LIGHT_COLOR = '#8aa5b0';
+export const COLOR_GREY = '#e8e4e4';

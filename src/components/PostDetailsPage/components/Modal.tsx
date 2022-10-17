@@ -31,6 +31,7 @@ interface ModalProps {
 	jobPostId: number;
 	receiverId: number;
 	clientId: number;
+	setIsShown: (disable: boolean) => void;
 }
 
 type ProposalForm = {
@@ -53,6 +54,7 @@ export const HandleModal: FunctionComponent<ModalProps> = ({
 	hide,
 	clientId,
 	setDisable,
+	setIsShown,
 	jobPostId,
 	receiverId,
 }) => {
@@ -77,6 +79,7 @@ export const HandleModal: FunctionComponent<ModalProps> = ({
 					? `${t('PostDetailPage.proposalSent')}`
 					: `${t('PostDetailPage.someErrorOccurred')}`,
 		});
+		setIsShown(false);
 	};
 
 	const handleForm = async (data: ProposalForm) => {
@@ -99,6 +102,7 @@ export const HandleModal: FunctionComponent<ModalProps> = ({
 			jobLink: `/post-job/${jobPostId}`,
 			userId: user.id,
 		});
+		hide();
 	};
 
 	const modal = (

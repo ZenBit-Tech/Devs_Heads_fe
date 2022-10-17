@@ -1,8 +1,7 @@
 import {
 	BLACK_COLOR,
-	DODGERBLUE_COLOR,
+	COLOR_GREY,
 	GREY,
-	LIGHTBLUE_COLOR,
 	LIGHTGREY_COLOR,
 	LIGHT_GREY,
 	WHITE_COLOR,
@@ -22,29 +21,27 @@ export const UsersList = styled.ul`
 	list-style-type: none;
 	padding-left: 0;
 	overflow-y: auto;
-	width: 400px;
-	background-color: white;
-	max-height: 1000px;
-	border-right: 1px solid grey;
+	width: 30%;
+	background-color: ${WHITE_COLOR};
+	height: 600px;
+	border-right: 1px solid ${GREY};
 	margin: 0;
 
 	&::-webkit-scrollbar {
 		width: 0.2rem;
 	}
 	&::-webkit-scrollbar-thumb {
-		background-color: rgb(98, 94, 94);
+		background-color: ${COLOR_GREY};
 		width: 0.1rem;
 		border-radius: 1rem;
 	}
 `;
 
 export const SingleUser = styled.li`
-	border-bottom: 1px solid #e8e4e4;
-
+	border-bottom: 1px solid ${LIGHTGREY_COLOR};
 	&:last-child {
 		border-bottom: unset;
 	}
-
 	& > div {
 		display: grid;
 		grid-template-columns: 40px 1fr -webkit-max-content;
@@ -57,12 +54,12 @@ export const SingleUser = styled.li`
 	}
 
 	& > div:hover {
-		background: #e8e4e4;
+		background: ${COLOR_GREY};
 		cursor: pointer;
 	}
 
 	&.defaultActive {
-		background-color: #e8e4e4;
+		background-color: ${COLOR_GREY};
 	}
 `;
 
@@ -91,25 +88,22 @@ export const LastMessage = styled.div`
 `;
 
 export const Wrapper = styled.form`
-	width: 1000px;
+	width: 70%;
 	display: flex;
 	margin: 0 auto;
-	max-height: 1000px;
-	border: 1px solid grey;
+	border: 1px solid ${GREY};
 `;
 
 export const DateTime = styled.div`
-	color: rgb(98, 94, 94);
 	white-space: nowrap;
 	margin-top: 6px;
-	font-size: 1rem;
 `;
 
 //chat style
 export const ChatWrapper = styled.div`
 	width: 100%;
 	position: relative;
-	border: 1px solid grey;
+	border: 1px solid ${GREY};
 `;
 
 export const Button = styled.button`
@@ -136,16 +130,16 @@ export const ChatMessages = styled.div`
 	position: relative;
 	padding: 1rem 2rem;
 	display: flex;
-	max-height: 700px;
+	height: 600px;
 	flex-direction: column;
-	background-color: white;
+	background-color: ${WHITE_COLOR};
 	margin-bottom: 100px;
 	overflow-y: scroll;
 	gap: 1rem;
 	&::-webkit-scrollbar {
 		width: 0.2rem;
 		&-thumb {
-			background-color: #e8e4e4;
+			background-color: ${COLOR_GREY};
 			width: 0.1rem;
 			border-radius: 1rem;
 		}
@@ -159,7 +153,7 @@ export const Message = styled.div`
 	display: flex;
 	align-items: center;
 	&.date {
-		color: black;
+		color: ${BLACK_COLOR};
 		padding-top: 8px;
 	}
 
@@ -183,15 +177,15 @@ export const Message = styled.div`
 	&.sended {
 		justify-content: flex-start;
 		& > .content {
-			background-color: #e8e4e4;
-			color: black;
+			background-color: ${COLOR_GREY};
+			color: ${BLACK_COLOR};
 		}
 	}
 	&.recieved {
 		justify-content: flex-end;
 		& > .content {
 			background-color: ${LIGHT_GREY};
-			color: black;
+			color: ${BLACK_COLOR};
 		}
 	}
 `;
@@ -212,7 +206,7 @@ export const ButtonChat = styled.button`
 	width: 100px;
 	padding: 7px;
 	border-radius: 10px;
-	background-color: grey;
+	background-color: ${GREY};
 	color: ${WHITE_COLOR};
 	border-color: ${WHITE_COLOR};
 	margin: 2% 4px;
@@ -220,7 +214,7 @@ export const ButtonChat = styled.button`
 	font-size: ${SMALL_FONT_SIZE};
 	box-shadow: 3px 2px 2px ${GREY};
 	&:hover {
-		background-color: grey;
+		background-color: ${GREY};
 	}
 	&:active {
 		box-shadow: 0 5px;
@@ -251,7 +245,7 @@ export const InputBlock = styled.div`
 	left: 0;
 	width: 100%;
 	position: absolute;
-	background-color: #e8e4e4;
+	background-color: ${COLOR_GREY};
 
 	& > .ant-btn {
 		height: 40px;
@@ -281,7 +275,7 @@ export const InputBlock = styled.div`
 
 //chatTitle
 export const TitleMessage = styled.div`
-	background-color: #e8e4e4;
+	background-color: ${COLOR_GREY};
 	position: relative;
 	display: flex;
 	align-content: center;
@@ -291,7 +285,7 @@ export const TitleMessage = styled.div`
 	font-size: 2rem;
 	padding: 10px 20px;
 	z-index: 1;
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid ${BLACK_COLOR};
 `;
 
 export const ArrowBlock = styled.div`
@@ -310,9 +304,9 @@ export const ArrowBlock = styled.div`
 
 		@media (max-width: 1020px) {
 			display: inline;
-			width: 30px;
-			height: 30px;
-			color: black;
+			width: 50px;
+			height: 50px;
+			color: ${BLACK_COLOR};
 		}
 	}
 `;

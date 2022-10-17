@@ -271,5 +271,8 @@
 		},
 		"settings": "My info",
 		"password": "Password"
+	},
+	"chat": {
+		"accepted": "Accepted"
 	}
 }
