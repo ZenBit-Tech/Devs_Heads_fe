@@ -23,6 +23,7 @@ import { RootState } from 'redux/store';
 interface ModalProps {
 	isShown: boolean;
 	hide: () => void;
+	setIsShown: (disable: boolean) => void;
 	setDisable: (disable: boolean) => void;
 	jobPostId: number;
 	clientId: number;
@@ -47,6 +48,7 @@ export const HandleModal: FunctionComponent<ModalProps> = ({
 	isShown,
 	hide,
 	clientId,
+	setIsShown,
 	setDisable,
 	jobPostId,
 }) => {
@@ -69,6 +71,7 @@ export const HandleModal: FunctionComponent<ModalProps> = ({
 					? `${t('PostDetailPage.proposalSent')}`
 					: `${t('PostDetailPage.someErrorOccurred')}`,
 		});
+		setIsShown(false);
 	};
 
 	const handleForm = async (data: ProposalForm) => {

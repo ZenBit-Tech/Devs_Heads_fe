@@ -145,6 +145,7 @@
 	"PostDetailPage": {
 		"skills": "Skills",
 		"rate": "Hourly Rate",
+		"proposalSend": "Proposal already sent!",
 		"project": "Project length",
 		"skillsTechnik": "Technical Writing Services",
 		"category": "Category /",
@@ -220,7 +221,25 @@
 		"noJobs": "First you need to create a job post",
 		"buttonPost": "Post a job",
 		"success": "Message sent",
-		"error": "Please, select a job"
+		"error": "Please, select a job",
+		"buttonOffer": "Send offer"
+	},
+	"SendOfferPopup": {
+		"fieldIsRequired": "This field is required!",
+		"error": "Error",
+		"success": "Success",
+		"someErrorOccurred": "Some error occurred.",
+		"offerSent": "Your offer has been sent successfully!",
+		"priceError": "This field must be a positive number!",
+		"companyName": "Company name",
+		"price": "Price",
+		"startDate": "Start Date",
+		"endDate": "End Date",
+		"minLength": "Must be at least 6 characters",
+		"maxLength100": "Maximum length is 100 symbols",
+		"saveButton": "Save",
+		"cancel": "Cancel",
+		"offer": "Offer"
 	},
 	"ClientPage": {
 		"clientTitle": "My Jobs",

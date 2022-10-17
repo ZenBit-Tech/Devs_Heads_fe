@@ -166,7 +166,7 @@ export const {
 export const jobPostApi = createApi({
 	reducerPath: 'jobPost',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
-	tagTypes: ['JobPost'],
+	tagTypes: ['JobPost', 'JobOffer'],
 	endpoints: build => ({
 		postJob: build.mutation({
 			query: body => ({
@@ -303,3 +303,23 @@ export const invitationPostApi = createApi({
 });
 
 export const { usePostInvitationMutation } = invitationPostApi;
+
+export const jobOfferApi = createApi({
+	reducerPath: 'jobOffer',
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	tagTypes: ['jobOffer'],
+	endpoints: build => ({
+		postOffer: build.mutation({
+			query: body => ({
+				url: '/jobOffer/offer',
+				method: 'POST',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+			invalidatesTags: ['jobOffer'],
+		}),
+	}),
+});
+export const { usePostOfferMutation } = jobOfferApi;

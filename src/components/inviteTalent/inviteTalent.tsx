@@ -25,6 +25,8 @@ import {
 import InvitePopup from 'components/inviteTalent/component/Invitepopup';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
+import SendOfferPopup from 'components/chat/components/sendOfferPopup';
+import { SaveButton } from 'components/clientSettings/clentSettings.styles';
 
 const InviteTalent: FC = () => {
 	const { t } = useTranslation();
@@ -107,6 +109,18 @@ const InviteTalent: FC = () => {
 		return post?.map((el: IPost) => <option>{el.jobTitle}</option>);
 	}
 
+	const useModal = () => {
+		const [isShown, setIsShown] = useState<boolean>(false);
+		const toggle = () => setIsShown(!isShown);
+		return {
+			isShown,
+			setIsShown,
+			toggle,
+		};
+	};
+
+	const { isShown, setIsShown, toggle } = useModal();
+
 	return (
 		<Container>
 			{
@@ -131,6 +145,16 @@ const InviteTalent: FC = () => {
 					</Div3>
 				</>
 			}
+			<SaveButton onClick={toggle} className="btn btn-success">
+				{`${t('InvitePopup.buttonOffer')}`}
+			</SaveButton>
+			<SendOfferPopup
+				hide={toggle}
+				isShown={isShown}
+				setIsShown={setIsShown}
+				freelancerId={128}
+				jopPostId={22}
+			/>
 			<Invite type="button" onClick={() => handleClick()}>{`${t('InvitePage.button')}`}</Invite>
 			{showPopup ? <InvitePopup Context={Context} /> : null}
 		</Container>

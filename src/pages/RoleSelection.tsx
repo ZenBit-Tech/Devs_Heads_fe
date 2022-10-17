@@ -36,6 +36,7 @@ const RoleSelection: FC = () => {
 			const res = await signUpUpdate({
 				email: user.email ?? String(params.user),
 				role: user.role,
+				userId: user.id,
 			}).unwrap();
 			dispatch(saveUserId(res.id));
 			navigate(`${Welcome}`);
