@@ -102,7 +102,12 @@ export const ProfileEdit = () => {
 					</Category>
 					<div>
 						<Title>{`${t('ProfileEdit.priceTitle')}`}</Title>
-						<input onChange={onPriceChange} value={price} type="number" />
+						<input
+							onChange={onPriceChange}
+							defaultValue={0}
+							value={price === 0 ? undefined : price}
+							type="number"
+						/>
 						<span>$</span>
 						{priceError && (
 							<Alert message={`${t('ProfileEdit.priceAlert')}`} type="warning" showIcon closable />
