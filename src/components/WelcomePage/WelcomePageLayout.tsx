@@ -6,7 +6,7 @@ import ArrowDowm from 'assets/arrowDown.jpg';
 import { RootState } from 'redux/store';
 import { useAppSelector } from 'redux/hooks';
 import { useNavigate } from 'react-router-dom';
-import { RoleSelection } from 'constants/routes';
+import { RoleSelection, Settings, SettingsJobOwner } from 'constants/routes';
 
 const WelcomePageLayout: FC = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -31,9 +31,9 @@ const WelcomePageLayout: FC = () => {
 			<p>{`${t('WelcomePage.pointerToLink')}`}</p>
 			<ImageStyled src={ArrowDowm} alt="arrowDown" />
 			{user.role === Role.Freelancer ? (
-				<Link to="/settings">{`${t('WelcomePage.linkDescription')}`}</Link>
+				<Link to={Settings}>{`${t('WelcomePage.linkDescription')}`}</Link>
 			) : (
-				<Link to="/post-job">{`${t('WelcomePage.linkDescription')}`}</Link>
+				<Link to={SettingsJobOwner}>{`${t('WelcomePage.linkDescription')}`}</Link>
 			)}
 		</WelcomePageLayoutWrapper>
 	);

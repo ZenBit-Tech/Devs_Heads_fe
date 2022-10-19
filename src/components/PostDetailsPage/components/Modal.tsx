@@ -15,7 +15,11 @@ import {
 	P,
 } from 'components/PostDetailsPage/components/Modal.styles';
 import { t } from 'i18next';
-import { usePostProposalMutation } from 'service/httpService';
+import {
+	usePostProposalMutation,
+	useCreateRoomMutation,
+	usePostMessageMutation,
+} from 'service/httpService';
 import { notification } from 'antd';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
@@ -25,7 +29,9 @@ interface ModalProps {
 	hide: () => void;
 	setDisable: (disable: boolean) => void;
 	jobPostId: number;
+	receiverId: number;
 	clientId: number;
+	setIsShown: (disable: boolean) => void;
 }
 
 type ProposalForm = {
@@ -48,7 +54,9 @@ export const HandleModal: FunctionComponent<ModalProps> = ({
 	hide,
 	clientId,
 	setDisable,
+	setIsShown,
 	jobPostId,
+	receiverId,
 }) => {
 	const {
 		register,
@@ -58,6 +66,8 @@ export const HandleModal: FunctionComponent<ModalProps> = ({
 		resolver: yupResolver(Schema),
 	});
 	const [sendForm] = usePostProposalMutation();
+	const [createRoom] = useCreateRoomMutation();
+	const [sendMessage] = usePostMessageMutation();
 	const { user } = useAppSelector<RootState>(state => state);
 
 	const openNotificationWithIcon = (type: NotificationType) => {
@@ -69,6 +79,7 @@ export const HandleModal: FunctionComponent<ModalProps> = ({
 					? `${t('PostDetailPage.proposalSent')}`
 					: `${t('PostDetailPage.someErrorOccurred')}`,
 		});
+		setIsShown(false);
 	};
 
 	const handleForm = async (data: ProposalForm) => {
@@ -79,6 +90,19 @@ export const HandleModal: FunctionComponent<ModalProps> = ({
 			})
 			.catch(() => openNotificationWithIcon('error'));
 		setDisable(true);
+		const room = await createRoom({
+			jobPostId: jobPostId,
+			senderId: user.id,
+			receiverId: receiverId,
+		}).unwrap();
+		const chatRoomId = room?.id;
+		await sendMessage({
+			chatRoomId,
+			text: data.message,
+			jobLink: `/post-job/${jobPostId}`,
+			userId: user.id,
+		});
+		hide();
 	};
 
 	const modal = (

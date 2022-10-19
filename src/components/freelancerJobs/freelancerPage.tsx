@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useGetJobPostsQuery, useGetUserProfileQuery } from 'service/httpService';
+import { useGetJobPostsQuery, useGetFreelancerInfoQuery } from 'service/httpService';
 import {
 	TitleStyled,
 	DescriptionDataStyled,
@@ -40,7 +40,7 @@ const FreelancerPage: FC = () => {
 	const { t } = useTranslation();
 	const { user } = useAppSelector<RootState>(state => state);
 
-	const { data: userInfo, isLoading } = useGetUserProfileQuery(user.id);
+	const { data: userInfo, isLoading } = useGetFreelancerInfoQuery(user.id);
 	const { data: posts } = useGetJobPostsQuery(user.id);
 
 	const [search, setSearch] = useState<string>('');
@@ -171,6 +171,7 @@ const FreelancerPage: FC = () => {
 					<ColumnBig>
 						<Search
 							search={search}
+							width={'60%'}
 							setSearch={setSearch}
 							placeholder={`${t('FreelancerPage.search')}`}
 							searchSize={'2% 10% 2% 0%'}

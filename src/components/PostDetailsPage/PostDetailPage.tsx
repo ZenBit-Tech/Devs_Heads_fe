@@ -83,11 +83,12 @@ const DescriptionPage: FC = () => {
 		const toggle = () => setIsShown(!isShown);
 		return {
 			isShown,
+			setIsShown,
 			toggle,
 		};
 	};
 
-	const { isShown, toggle } = useModal();
+	const { isShown, toggle, setIsShown } = useModal();
 
 	let content;
 	if (isFetching) {
@@ -116,9 +117,11 @@ const DescriptionPage: FC = () => {
 								<Modal
 									isShown={isShown}
 									hide={toggle}
+									setIsShown={setIsShown}
 									clientId={post.userId}
 									setDisable={setDisable}
 									jobPostId={Number(params.id)}
+									receiverId={post.userId}
 								/>
 							</MinColumn>
 							<DescriptionStyled>{post.jobDescription}</DescriptionStyled>
