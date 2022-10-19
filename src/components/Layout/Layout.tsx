@@ -10,7 +10,6 @@ import {
 	BoderNav,
 	Image,
 	BtnMenu,
-	Div,
 	MenuSetting,
 	DropdownMenu,
 } from './Layout.styles';
@@ -65,7 +64,7 @@ const Layout: FC = () => {
 
 	const dropdownItem = (role: string) => {
 		return (
-			<Div className="dropdown">
+			<div className="dropdown">
 				<BtnMenu
 					className="dropdownButton dropdown-toggle"
 					type="button"
@@ -81,7 +80,7 @@ const Layout: FC = () => {
 						<JOPopupSettings handleClick={handleClick} role={role} />
 					</div>
 				</MenuSetting>
-			</Div>
+			</div>
 		);
 	};
 
