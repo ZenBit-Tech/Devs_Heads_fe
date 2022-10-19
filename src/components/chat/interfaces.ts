@@ -40,6 +40,7 @@ export type RoomBackend = {
 		profileId: number;
 		clientSetting: {
 			name: string;
+			photo: string;
 		};
 		profileSetting: {
 			photo: string;
@@ -56,6 +57,7 @@ export type RoomBackend = {
 		};
 		clientSetting: {
 			name: string;
+			photo: string;
 		};
 	};
 	message: {

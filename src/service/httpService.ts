@@ -152,6 +152,10 @@ export const profileApi = createApi({
 			query: profile => `/profile/${profile.id}/${profile.clientId}`,
 			providesTags: ['Profile'],
 		}),
+		getFreelancerInfo: build.query({
+			query: id => `/profile/${id}`,
+			providesTags: ['Profile'],
+		}),
 	}),
 });
 export const {
@@ -161,6 +165,7 @@ export const {
 	useGetFilterProfileQuery,
 	useGetUserProfileQuery,
 	useGetTalentProfileQuery,
+	useGetFreelancerInfoQuery,
 } = profileApi;
 
 export const jobPostApi = createApi({
