@@ -19,7 +19,11 @@ import { BLUE } from 'constants/colors';
 import TextArea from 'antd/lib/input/TextArea';
 import { CreateJobPost } from 'constants/routes';
 import { useNavigate } from 'react-router-dom';
-import { usePostInvitationMutation } from 'service/httpService';
+import {
+	usePostInvitationMutation,
+	useCreateRoomMutation,
+	usePostMessageMutation,
+} from 'service/httpService';
 import { IMessage, IProps, Alert } from 'components/inviteTalent/interfaces';
 import { notification } from 'antd';
 import { ALERT_SUCCESS } from 'constants/links';
@@ -43,6 +47,8 @@ const InvitePopup = (props: IProps) => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 	const [postInvitation] = usePostInvitationMutation();
+	const [createRoom] = useCreateRoomMutation();
+	const [sendMessage] = usePostMessageMutation();
 	const { control, handleSubmit } = useForm<IMessage>();
 
 	const alert = (type: Alert) => {
@@ -71,6 +77,19 @@ const InvitePopup = (props: IProps) => {
 				setOpen(false);
 				alert('success');
 				setIsDisabled(true);
+				const room = await createRoom({
+					jobPostId: jobPostId,
+					senderId: clientId,
+					receiverId: userId,
+				}).unwrap();
+				const chatRoomId = room?.id;
+				await sendMessage({
+					chatRoomId,
+					text: message,
+					jobLink: `/post-job/${jobPostId}`,
+					userId: clientId,
+				});
+				setOpen(false);
 			} else {
 				alert('error');
 			}

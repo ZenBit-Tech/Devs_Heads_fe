@@ -153,6 +153,10 @@ export const profileApi = createApi({
 			query: profile => `/profile/${profile.id}/${profile.clientId}`,
 			providesTags: ['Profile'],
 		}),
+		getFreelancerInfo: build.query({
+			query: id => `/profile/${id}`,
+			providesTags: ['Profile'],
+		}),
 	}),
 });
 export const {
@@ -162,6 +166,7 @@ export const {
 	useGetFilterProfileQuery,
 	useGetUserProfileQuery,
 	useGetTalentProfileQuery,
+	useGetFreelancerInfoQuery,
 } = profileApi;
 
 export const jobPostApi = createApi({
@@ -320,12 +325,68 @@ export const JobOfferApi = createApi({
 				url: `/jobOffer/${jobId}/${freelancerId}`,
 				method: 'PUT',
 				body: { status },
-				headers: {
-					'Content-type': 'application/json; charset=UTF-8',
-				},
 			}),
 		}),
 	}),
 });
 
 export const { useGetJobOfferQuery, useUpdateJobOfferMutation } = JobOfferApi;
+
+export const messagesApi = createApi({
+	reducerPath: 'message',
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	tagTypes: ['message'],
+	endpoints: build => ({
+		postMessage: build.mutation({
+			query: body => ({
+				url: '/message',
+				method: 'POST',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
+		createRoom: build.mutation({
+			query: body => ({
+				url: '/chat-room',
+				method: 'POST',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
+		getMessagesByRoom: build.query({
+			query: id => `/message/${id}`,
+		}),
+		getRoomsByUser: build.query({
+			query: id => ({
+				url: `/chat-room/${id}`,
+				responseHandler: response => response.json(),
+			}),
+		}),
+		getRoomsByTwoUsers: build.query({
+			query: data => ({
+				url: `/chat-room/${data.senderId}/${data.receiverId}/${data.jobPostId}`,
+			}),
+		}),
+		updateChatRoom: build.mutation({
+			query: data => ({
+				url: `/chat-room/${data.chatRoomId}`,
+				method: 'PATCH',
+				body: data,
+			}),
+			invalidatesTags: ['message'],
+		}),
+	}),
+});
+
+export const {
+	usePostMessageMutation,
+	useGetMessagesByRoomQuery,
+	useCreateRoomMutation,
+	useGetRoomsByUserQuery,
+	useGetRoomsByTwoUsersQuery,
+	useUpdateChatRoomMutation,
+} = messagesApi;

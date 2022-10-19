@@ -160,7 +160,7 @@ export const useOnDataChange = () => {
 		setCategory(e.currentTarget.value);
 	};
 
-	const [price, setPrice] = useState<number>(0);
+	const [price, setPrice] = useState<number | undefined>(0);
 	const [priceError, setPriceError] = useState<boolean>(false);
 	const onPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (+e.currentTarget.value < 0) {

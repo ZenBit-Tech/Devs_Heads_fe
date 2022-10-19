@@ -177,6 +177,7 @@ const TalentPageLayout: FC = () => {
 						<InputContainer className="input-group rounded">
 							<Search
 								search={search}
+								width={'60%'}
 								setSearch={setSearch}
 								placeholder={`${t('TalentCompanyPage.discover')}`}
 								searchSize={'0'}

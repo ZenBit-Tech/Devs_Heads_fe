@@ -116,7 +116,6 @@ export const CheckLabel = styled.label`
 `;
 
 export const SearchInput = styled.input`
-	width: 60%;
 	padding: 12px 20px;
 	box-sizing: border-box;
 	border: 1px solid ${props => props.theme.colors.gray};

@@ -4,3 +4,4 @@ export const LARGE_FONT_SIZE = '24px';
 export const FONT_MEDIUM = '14px';
 export const FONT_LARGE = '20px';
 export const FONT_H1 = '40px';
+export const SMALL = '10px';

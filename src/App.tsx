@@ -34,6 +34,8 @@ const JobDescriptionEditPage = lazy(() => import('pages/JobDescriptionEditPage')
 const ClientSettings = lazy(() => import('pages/ClientSettingsPage'));
 const FreelancerOffer = lazy(() => import('components/FreelancerOffer/FreeOfferPopup'));
 
+const Chat = lazy(() => import('components/chat/chat'));
+
 const App: FC = () => {
 	Cookies.set('name', 'value');
 	const a = Cookies.get('accessToken'); // TODO delete mock token when sign up/sign in will be completed
@@ -60,6 +62,7 @@ const App: FC = () => {
 							<Route path="post-job/:id" element={<JobDescriptionPage />} />
 							<Route path="post-job" element={<PostJobPage />} />
 							<Route path="/talent" element={<TalentPage />} />
+							<Route path="/chat" element={<Chat />} />
 							<Route path="/client-settings" element={<ClientSettings />} />
 							<Route path="profile/:id" element={<SingleProfilePage />} />
 							<Route path="settings/" element={<SettingsPage />}>
