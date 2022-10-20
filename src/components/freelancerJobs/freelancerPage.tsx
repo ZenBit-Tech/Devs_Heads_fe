@@ -60,14 +60,12 @@ const FreelancerPage: FC = () => {
 	useEffect(() => {
 		if (!isLoading && userInfo) {
 			const category = {
-				value: userInfo.profile.category.name,
-				label: userInfo.profile.category.name,
+				value: userInfo.category.name,
+				label: userInfo.category.name,
 			};
 			const skills = skillsMock.map(skill => ({
 				...skill,
-				value: userInfo.profile.skills.some(
-					(jobSkill: { name: string }) => jobSkill.name === skill.name,
-				),
+				value: userInfo.skills.some((jobSkill: { name: string }) => jobSkill.name === skill.name),
 			}));
 			setSkillsOptions(skills);
 			setCategoryValue(category);
@@ -171,10 +169,8 @@ const FreelancerPage: FC = () => {
 					<ColumnBig>
 						<Search
 							search={search}
-							width={'60%'}
 							setSearch={setSearch}
 							placeholder={`${t('FreelancerPage.search')}`}
-							searchSize={'2% 10% 2% 0%'}
 						/>
 						<ClearBtn onClick={ClearFilters}>{`${t('FreelancerPage.clear')}`}</ClearBtn>
 						<ul>

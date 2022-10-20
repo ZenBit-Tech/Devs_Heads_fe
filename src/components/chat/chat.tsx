@@ -2,6 +2,7 @@ import {
 	useGetMessagesByRoomQuery,
 	useGetRoomsByUserQuery,
 	useGetRoomsByTwoUsersQuery,
+	useUpdateChatRoomMutation,
 } from 'service/httpService';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
@@ -23,7 +24,14 @@ import {
 	ArrowBlock,
 	TitleMessage,
 } from 'components/chat/chat.styles';
-import { initialId, MessageBackend, MessageFrontend, RoomBackend, UserList } from './interfaces';
+import {
+	DataSchema,
+	initialId,
+	MessageBackend,
+	MessageFrontend,
+	RoomBackend,
+	UserList,
+} from './interfaces';
 import { Input } from 'components/clientSettings/clentSettings.styles';
 import { t } from 'i18next';
 import Image from 'image/no_result.png';
@@ -50,6 +58,7 @@ const Chat = () => {
 	const { data: rooms, isSuccess } = useGetRoomsByUserQuery(userId);
 	const { data: messages, isLoading } = useGetMessagesByRoomQuery(chatRoomId);
 	const { data: room, isFetching } = useGetRoomsByTwoUsersQuery(currentChatId);
+	const [updateChatRoom] = useUpdateChatRoomMutation();
 	const scrollRef = useRef<null | HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -97,9 +106,33 @@ const Chat = () => {
 			socket?.off('recMessage', messageListener);
 		};
 	}, [socket]);
+	const { register, handleSubmit, errors, reset, getDate, userList } = useOnDataChange();
 
-	const { register, handleSubmit, onSubmit, errors, updateRoom, getDate, userList } =
-		useOnDataChange();
+	const updateRoom = (chatRoomId: number) => {
+		console.log(chatRoomId);
+		const newObj = {
+			chatRoomId,
+			activeRoom: true,
+		};
+		updateChatRoom(newObj);
+		const message = {
+			text: 'Accepted',
+			chatRoomId,
+			userId,
+		};
+		console.log(message);
+		socket?.emit('sendMessage', message);
+	};
+
+	const onSubmit = (data: DataSchema, chatRoomId: number) => {
+		const NewData = {
+			...data,
+			userId,
+			chatRoomId,
+		};
+		socket?.emit('sendMessage', NewData);
+		reset();
+	};
 
 	const changeRoom = (senderId: number, receiverId: number, jobPostId: number, roomId: number) => {
 		setCurrentChatId({ senderId, receiverId, jobPostId });
