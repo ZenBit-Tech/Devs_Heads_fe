@@ -344,9 +344,7 @@ export const messagesApi = createApi({
 			}),
 		}),
 		getRoomsByTwoUsers: build.query({
-			query: data => ({
-				url: `/chat-room/${data.senderId}/${data.receiverId}/${data.jobPostId}`,
-			}),
+			query: data => `/chat-room/${data.senderId}/${data.receiverId}/${data.jobPostId}`,
 		}),
 		updateChatRoom: build.mutation({
 			query: data => ({

@@ -177,10 +177,8 @@ const TalentPageLayout: FC = () => {
 						<InputContainer className="input-group rounded">
 							<Search
 								search={search}
-								width={'60%'}
 								setSearch={setSearch}
 								placeholder={`${t('TalentCompanyPage.discover')}`}
-								searchSize={'0'}
 							/>
 						</InputContainer>
 						{active?.discover === discover && data?.profile && !isLoading ? (

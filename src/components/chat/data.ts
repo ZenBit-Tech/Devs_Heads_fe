@@ -3,17 +3,14 @@ import { useForm } from 'react-hook-form';
 import { DataSchema, RoomBackend, ValidationSchema } from './interfaces';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
-import { useGetRoomsByUserQuery, useUpdateChatRoomMutation } from 'service/httpService';
-import { useMemo, useState } from 'react';
-import { Socket } from 'socket.io-client';
+import { useGetRoomsByUserQuery } from 'service/httpService';
+import { useMemo } from 'react';
 import profileImage from 'image/profile.png';
 
 export const useOnDataChange = () => {
 	const { user } = useAppSelector<RootState>(state => state);
 	const userId = user?.id;
-	const [socket] = useState<Socket>();
 	const { data: rooms } = useGetRoomsByUserQuery(userId);
-	const [updateChatRoom] = useUpdateChatRoomMutation();
 	const {
 		register,
 		handleSubmit,
@@ -22,30 +19,6 @@ export const useOnDataChange = () => {
 	} = useForm<DataSchema>({
 		resolver: yupResolver(ValidationSchema),
 	});
-
-	const onSubmit = (data: DataSchema, chatRoomId: number) => {
-		const NewData = {
-			...data,
-			userId,
-			chatRoomId,
-		};
-		socket?.emit('sendMessage', NewData);
-		reset();
-	};
-
-	const updateRoom = (chatRoomId: number) => {
-		const newObj = {
-			chatRoomId,
-			activeRoom: true,
-		};
-		updateChatRoom(newObj);
-		const message = {
-			text: 'Accepted',
-			chatRoomId,
-			userId,
-		};
-		socket?.emit('sendMessage', message);
-	};
 
 	const getDate = (date: Date) => {
 		const currentDate =
@@ -91,5 +64,5 @@ export const useOnDataChange = () => {
 			}),
 		[rooms],
 	);
-	return { register, handleSubmit, reset, onSubmit, errors, updateRoom, getDate, userList };
+	return { register, handleSubmit, reset, errors, getDate, userList };
 };
