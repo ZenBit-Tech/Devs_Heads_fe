@@ -44,14 +44,15 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 	const resetInput = () => {
 		return reset({ price: 0, startDate: {}, endDate: {} });
 	};
+	console.log(user.id);
 
 	const handleForm = (data: OfferForm) => {
 		const NewData = {
 			...data,
 			freelancerId,
 			jopPostId,
+			clientId: user.id,
 		};
-		console.log(NewData);
 		sendData(NewData);
 		setIsShown(false);
 		resetInput();

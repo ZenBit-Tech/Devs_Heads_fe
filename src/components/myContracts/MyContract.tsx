@@ -1,86 +1,150 @@
-import React from 'react';
+import React, { Suspense, useEffect, useMemo, useState } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import { useTranslation } from 'react-i18next';
-import { Div, SelectBlock, Wrapper } from './MyContract.style';
-import { useGetAcceptedJobOfferQuery } from 'service/httpService';
-import { useAppSelector } from 'redux/hooks';
+import {
+	ContractContainer,
+	ContractItem,
+	Div,
+	SelectBlock,
+	Wrapper,
+	P,
+	NotFoundContract,
+	MainWrapper,
+} from './MyContract.style';
+import {
+	useGetAcceptedJobOfferQuery,
+	useUpdateOfferStatusExpiredMutation,
+} from 'service/httpService';
+import { Image } from 'components/Layout/Layout.styles';
+import profileImage from 'image/profile.png';
+import Spinner from 'assets/spinner.gif';
+import { ImgSpinner } from 'components/freelancerJobs/freelancerPage.styles';
+import { DescriptionStyled } from 'components/freelancerJobs/freelancerPage.styles';
+import {
+	client,
+	DataSchema,
+	expired,
+	freelancer,
+	getDate,
+	selectionDate,
+	selectionStatus,
+	useSendData,
+} from './dataUpdate';
+import { IContract, ISelect } from './interfaces';
 import { RootState } from 'redux/store';
-
-export type DataSchema = {
-	status: { label: string; value: string };
-	date: { label: string; value: string };
-};
-
-export const selectionStatus = [
-	{ value: 'Ended', label: 'Ended' },
-	{ value: 'In process', label: 'In process' },
-];
-
-export const selectionDate = [
-	{ value: 'Oldest to newest', label: 'Oldest to newest' },
-	{ value: 'Newest to oldest', label: 'Newest to oldest' },
-];
+import { useAppSelector } from 'redux/hooks';
 
 function MyContract() {
 	const { t } = useTranslation();
 	const { user } = useAppSelector<RootState>(state => state);
-	const dataSend = {
-		userId: user.id,
-		role: user.role,
-	};
+	const [selectDate, setSelectDate] = useState<ISelect>();
+	const [selectStatus, setSelectStatus] = useState<ISelect>();
 	const {
-		register,
-		handleSubmit,
 		control,
-		setValue,
 		getValues,
 		formState: { errors },
 	} = useForm<DataSchema>();
-	const { data: offerAccepted, isLoading } = useGetAcceptedJobOfferQuery(dataSend);
+	const dataSend = {
+		userId: user.id,
+		role: user.role,
+		date: selectDate?.name,
+		status: selectStatus?.name,
+	};
+	const { data: offerAccepted, isLoading, isSuccess } = useGetAcceptedJobOfferQuery(dataSend);
 	console.log(offerAccepted);
+	const { ids } = useSendData(offerAccepted);
+	const [updateStatus] = useUpdateOfferStatusExpiredMutation();
 
-	return (
-		<Wrapper>
-			<SelectBlock>
-				<Div>
-					<Controller
-						name="status"
-						control={control}
-						render={({ field }) => {
-							return (
-								<Select
-									{...field}
-									options={selectionStatus}
-									className={`${errors.status ? 'is-invalid' : ''}`}
-									value={getValues('status')}
-									placeholder={`${t('MyContract.status')}`}
-								/>
-							);
-						}}
-					/>
-				</Div>
-				<Div>
-					<Controller
-						name="date"
-						control={control}
-						render={({ field }) => {
-							return (
-								<Select
-									{...field}
-									options={selectionDate}
-									className={`${errors.date ? 'is-invalid' : ''}`}
-									value={getValues('date')}
-									placeholder={`${t('MyContract.date')}`}
-								/>
-							);
-						}}
-					/>
-				</Div>
-			</SelectBlock>
-		</Wrapper>
-	);
+	useEffect(() => {
+		updateStatusContract();
+	}, []);
+
+	const updateStatusContract = async () => {
+		await updateStatus({ id: ids, status: expired });
+	};
+	let content;
+	if (isLoading) {
+		content = <ImgSpinner src={Spinner} />;
+	} else if (isSuccess) {
+		content = (
+			<MainWrapper>
+				<Wrapper>
+					<SelectBlock>
+						<Div>
+							<Controller
+								name="status"
+								control={control}
+								render={({ field }) => {
+									return (
+										<Select
+											{...field}
+											options={selectionStatus}
+											onChange={select => select && setSelectStatus({ name: select.value })}
+											className={`${errors.status ? 'is-invalid' : ''}`}
+											value={getValues('status')}
+											placeholder={`${t('MyContract.status')}`}
+										/>
+									);
+								}}
+							/>
+						</Div>
+						<Div>
+							<Controller
+								name="date"
+								control={control}
+								render={({ field }) => {
+									return (
+										<Select
+											{...field}
+											options={selectionDate}
+											onChange={select => select && setSelectDate({ name: select.value })}
+											className={`${errors.date ? 'is-invalid' : ''}`}
+											value={getValues('date')}
+											placeholder={`${t('MyContract.date')}`}
+										/>
+									);
+								}}
+							/>
+						</Div>
+					</SelectBlock>
+				</Wrapper>
+				{offerAccepted.length > 0 && !isLoading ? (
+					offerAccepted?.map((item: IContract) => {
+						return (
+							<ContractContainer key={item.id}>
+								<ContractItem>
+									<Image src={item.freelancerId.photo ?? profileImage} alt="userPhoto" />
+									<Link to="#">
+										{user.role === client && item?.freelancerId.userId.firstName && (
+											<>
+												<P>
+													{item?.freelancerId.userId.firstName ?? 'default'}{' '}
+													{item?.freelancerId.userId.lastName ?? 'default'}
+												</P>
+											</>
+										)}
+										{user.role === freelancer && <P>{item?.name}</P>}
+									</Link>
+									<P>Status/{item.status}</P>
+									<P>
+										{getDate(new Date(item.startDate))}-{getDate(new Date(item.endDate))}
+									</P>
+								</ContractItem>
+							</ContractContainer>
+						);
+					})
+				) : (
+					<NotFoundContract>
+						<DescriptionStyled>Not found created contract!</DescriptionStyled>
+					</NotFoundContract>
+				)}
+			</MainWrapper>
+		);
+	}
+	return <div>{content}</div>;
 }
 
 export default MyContract;

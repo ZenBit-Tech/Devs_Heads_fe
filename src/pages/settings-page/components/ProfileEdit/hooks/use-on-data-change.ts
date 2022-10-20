@@ -141,6 +141,7 @@ export const useOnDataChange = () => {
 		EnglishLevelEnum.PRE_INTERMEDIATE,
 	);
 	const onEnglishOptionChange = ({ target: { value } }: RadioChangeEvent) => {
+		console.log(typeof value);
 		setEnglishOption(value);
 	};
 

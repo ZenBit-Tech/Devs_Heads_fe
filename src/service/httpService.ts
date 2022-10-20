@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { FormEmail } from 'components/forgotPassword/forgotPassword';
 import { IMessage } from 'components/inviteTalent/interfaces';
-import { StatusContractEnum } from 'components/myContracts/status.offer';
 import {
 	ISignUpResponse,
 	ISignInResponse,
@@ -309,7 +308,7 @@ export const { usePostInvitationMutation } = invitationPostApi;
 export const JobOfferApi = createApi({
 	reducerPath: 'jobOffer',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
-	tagTypes: ['jobOffer'],
+	tagTypes: ['jobOffer', 'jobContract'],
 	endpoints: build => ({
 		postOffer: build.mutation({
 			query: body => ({
@@ -327,19 +326,22 @@ export const JobOfferApi = createApi({
 			providesTags: ['jobOffer'],
 		}),
 		getAcceptedJobOffer: build.query({
-			query: sendData => `/jobOffer/offer/${sendData.userId}/${sendData.role}`,
-			providesTags: ['jobOffer'],
+			query: sendData =>
+				`/jobOffer/offer/${sendData.userId}/${sendData.role}?date=${sendData.date ?? ''}&status=${
+					sendData.status ?? ''
+				}`,
+			providesTags: ['jobContract'],
 		}),
 		updateOfferStatusExpired: build.mutation({
 			query: ({ id, status }) => ({
-				url: `/jobOffer/${id}`,
-				method: 'PATCH',
-				body: status,
+				url: `/jobOffer`,
+				method: 'PUT',
+				body: { status, id },
 			}),
-			invalidatesTags: ['jobOffer'],
+			invalidatesTags: ['jobContract'],
 		}),
 		updateJobOffer: build.mutation<
-			{ jobId?: number; freelancerId?: number; status: StatusContractEnum },
+			{ jobId?: number; freelancerId?: number; status: string },
 			IUpdateOffer
 		>({
 			query: ({ jobId, freelancerId, status }) => ({
@@ -360,4 +362,5 @@ export const {
 	useUpdateJobOfferMutation,
 	useGetAcceptedJobOfferQuery,
 	useUpdateOfferStatusExpiredMutation,
+	usePostOfferMutation,
 } = JobOfferApi;

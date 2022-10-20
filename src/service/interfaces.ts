@@ -1,5 +1,3 @@
-import { StatusContractEnum } from 'components/myContracts/status.offer';
-
 export interface ISignUpResponse {
 	email: string;
 	password: string;
@@ -61,5 +59,5 @@ export type FormData = {
 export interface IUpdateOffer {
 	jobId?: number;
 	freelancerId?: number;
-	status: StatusContractEnum;
+	status: string;
 }

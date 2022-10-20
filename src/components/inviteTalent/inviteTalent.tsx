@@ -45,13 +45,15 @@ const InviteTalent: FC = () => {
 	};
 	const { data, isLoading } = useGetUserProfileQuery(profile);
 	const [userUpdate] = useUpdateSingleProfileMutation();
+	console.log(data);
 
 	const defaultTitle = post?.find((el: IPost) => el.jobTitle);
 
 	const clientInfos = {
-		clientId: post?.find((el: IPost) => el.userId).userId,
-		jobPostId: post?.find((el: IPost) => el.id).id,
+		clientId: post?.find((el: IPost) => el.userId)?.userId,
+		jobPostId: post?.find((el: IPost) => el.id)?.id,
 	};
+	console.log(data);
 
 	const Context = {
 		isDisabled,
@@ -120,6 +122,7 @@ const InviteTalent: FC = () => {
 	};
 
 	const { isShown, setIsShown, toggle } = useModal();
+	console.log(data?.profile?.userId);
 
 	return (
 		<Container>
@@ -152,8 +155,8 @@ const InviteTalent: FC = () => {
 				hide={toggle}
 				isShown={isShown}
 				setIsShown={setIsShown}
-				freelancerId={128}
-				jopPostId={22}
+				freelancerId={data?.profile?.userId}
+				jopPostId={1}
 			/>
 			<Invite type="button" onClick={() => handleClick()}>{`${t('InvitePage.button')}`}</Invite>
 			{showPopup ? <InvitePopup Context={Context} /> : null}

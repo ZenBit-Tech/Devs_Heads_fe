@@ -4,7 +4,7 @@ export interface ModalProps {
 	isShown: boolean;
 	hide: () => void;
 	setIsShown: (isShown: boolean) => void;
-	freelancerId: number;
+	freelancerId: number | undefined;
 	jopPostId: number;
 }
 
@@ -13,7 +13,8 @@ export type OfferForm = {
 	price: number;
 	startDate: unknown;
 	endDate: unknown;
-	freelancerId: number;
+	freelancerId: number | undefined;
+	clientId: number | undefined;
 	jopPostId: number;
 };
 
