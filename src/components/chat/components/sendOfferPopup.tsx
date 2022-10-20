@@ -27,7 +27,7 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 	setIsShown,
 	hide,
 	freelancerId,
-	jopPostId,
+	jobPostId,
 }) => {
 	const {
 		register,
@@ -50,7 +50,7 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 		const NewData = {
 			...data,
 			freelancerId,
-			jopPostId,
+			jobPostId,
 			clientId: user.id,
 		};
 		sendData(NewData);

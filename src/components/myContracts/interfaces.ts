@@ -11,6 +11,9 @@ export interface IContract {
 			lastName: string;
 		};
 	};
+	jobPost: {
+		jobTitle: string;
+	};
 }
 export interface ISelect {
 	name: string;

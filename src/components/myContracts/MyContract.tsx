@@ -9,6 +9,7 @@ import {
 	ContractItem,
 	Div,
 	SelectBlock,
+	Title,
 	Wrapper,
 	P,
 	NotFoundContract,
@@ -115,10 +116,11 @@ function MyContract() {
 					offerAccepted?.map((item: IContract) => {
 						return (
 							<ContractContainer key={item.id}>
+								<Title>{item.jobPost.jobTitle}</Title>
 								<ContractItem>
-									<Image src={item.freelancerId.photo ?? profileImage} alt="userPhoto" />
+									<Image src={item.freelancerId?.photo ?? profileImage} alt="userPhoto" />
 									<Link to="#">
-										{user.role === client && item?.freelancerId.userId.firstName && (
+										{user.role === client && item?.freelancerId?.userId.firstName && (
 											<>
 												<P>
 													{item?.freelancerId.userId.firstName ?? 'default'}{' '}

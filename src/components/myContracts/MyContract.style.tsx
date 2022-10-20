@@ -5,7 +5,12 @@ export const SelectBlock = styled.div`
 	display: flex;
 	justify-content: flex-start;
 `;
-
+export const Title = styled.div`
+	display: block;
+	font-weight: bold;
+	padding: ${props => props.theme.spacing(5)} 0 0 ${props => props.theme.spacing(5)};
+	font-size: 20px;
+`;
 export const MainWrapper = styled.div`
 	margin: ${props => props.theme.spacing(5)} auto;
 	padding: ${props => props.theme.spacing(5)};

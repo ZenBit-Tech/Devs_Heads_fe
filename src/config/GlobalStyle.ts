@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle`
 }
 body {
 height: 100%;
+overflow-x: hidden;
 }
 html {
   height: 100%;

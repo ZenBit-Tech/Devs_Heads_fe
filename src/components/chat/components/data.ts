@@ -5,7 +5,7 @@ export interface ModalProps {
 	hide: () => void;
 	setIsShown: (isShown: boolean) => void;
 	freelancerId: number | undefined;
-	jopPostId: number;
+	jobPostId: number;
 }
 
 export type OfferForm = {
@@ -15,7 +15,7 @@ export type OfferForm = {
 	endDate: unknown;
 	freelancerId: number | undefined;
 	clientId: number | undefined;
-	jopPostId: number;
+	jobPostId: number;
 };
 
 export type NotificationType = 'success' | 'error';

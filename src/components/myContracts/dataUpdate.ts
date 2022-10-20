@@ -1,10 +1,7 @@
-import { useGetAcceptedJobOfferQuery } from 'service/httpService';
-import { useAppSelector } from 'redux/hooks';
-import { RootState } from 'redux/store';
-import { useMemo, useState } from 'react';
-import { IContract, ISelect } from './interfaces';
+import { useMemo } from 'react';
+import { IContract } from './interfaces';
 
-export const expired = 'pending';
+export const expired = 'expired';
 export const client = 'client';
 export const freelancer = 'freelancer';
 
@@ -37,7 +34,7 @@ export const useSendData = (offerAccepted: IContract[]) => {
 	const ids: number[] = [];
 
 	const filteredContract = useMemo(
-		() => offerAccepted?.filter((item: IContract) => new Date(item.endDate) > new Date()),
+		() => offerAccepted?.filter((item: IContract) => new Date(item.endDate) < new Date()),
 		[offerAccepted],
 	);
 	useMemo(

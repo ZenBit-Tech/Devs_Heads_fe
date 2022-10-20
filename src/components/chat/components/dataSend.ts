@@ -27,7 +27,7 @@ export const useSendData = () => {
 				endDate: data.endDate,
 				freelancerId: data.freelancerId,
 				clientId: user.id,
-				jopPostId: data.jopPostId,
+				jobPostId: data.jobPostId,
 			};
 			await sendForm(newObj).unwrap();
 			openNotificationWithIcon('success');
