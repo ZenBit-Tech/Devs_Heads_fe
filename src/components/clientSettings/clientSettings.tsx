@@ -43,6 +43,7 @@ import { useGetClientInfoByUserQuery } from 'service/httpService';
 import { ImgSpinner } from 'components/freelancerJobs/freelancerPage.styles';
 import Spinner from 'assets/spinner.gif';
 import { defaultProfilePhoto } from 'constants/links';
+import { Image } from 'antd';
 
 const ClientSettings = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -113,6 +114,7 @@ const ClientSettings = () => {
 			setWebsiteValue(clientInfo.website);
 			setIndustryValue({ value: clientInfo.industry, label: clientInfo.industry });
 			setQuantityValue(clientInfo.quantity);
+			setFile(clientInfo.photo);
 		}
 	}, [clientInfo]);
 
@@ -187,7 +189,7 @@ const ClientSettings = () => {
 							<Column>
 								<ProfilePhoto>
 									<Title>{`${t('ProfileEdit.profilePhotoTitle')}`}</Title>
-									<img width={180} src={file || defaultProfilePhoto} />
+									<Image width={200} src={file || defaultProfilePhoto} />
 									<input type={'file'} accept=".png, .jpg, .jpeg" onChange={onChangePhotoHandler} />
 									<button onClick={onPhotoDelete}>{`${t('ProfileEdit.deletePhotoButton')}`}</button>
 								</ProfilePhoto>

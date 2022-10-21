@@ -116,7 +116,7 @@ export const Button = styled.div`
 	border: 1px solid ${DODGERBLUE_COLOR};
 	border-radius: 10px;
 	padding: 10px 20px;
-	width: 50%;
+	width: 150px;
 	margin-bottom: 5%;
 	background-color: ${WHITE_COLOR};
 	color: ${DODGERBLUE_COLOR};
@@ -144,11 +144,12 @@ export const ProfilePhoto = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-self: center;
+	min-height: 300px;
 
 	& > button {
 		width: 130px;
 		border: 1px solid;
-		margin-top: 5px;
+		margin-top: 10px;
 		background-color: #f0f0f0;
 	}
 `;
