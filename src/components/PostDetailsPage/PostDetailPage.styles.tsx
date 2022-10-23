@@ -59,6 +59,7 @@ export const WrapperSkillsStyled = styled.div`
 	display: flex;
 	padding-top: ${props => props.theme.spacing(5)};
 	align-items: flex-start;
+	flex-wrap: wrap;
 
 	@media (max-width: 800px) {
 		flex-direction: column;
