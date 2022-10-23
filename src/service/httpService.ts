@@ -173,6 +173,20 @@ export const jobPostApi = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
 	tagTypes: ['JobPost'],
 	endpoints: build => ({
+		getJobPosts: build.query({
+			query: () => ({
+				url: `/jobPost`,
+			}),
+			providesTags: ['JobPost'],
+		}),
+		getJobsDetail: build.query({
+			query: id => `/jobPost/${id}`,
+			providesTags: ['JobPost'],
+		}),
+		getPostJob: build.query({
+			query: id => `/jobPost/user/${id}`,
+			providesTags: ['JobPost'],
+		}),
 		postJob: build.mutation({
 			query: body => ({
 				url: '/jobPost',
@@ -183,18 +197,6 @@ export const jobPostApi = createApi({
 				},
 			}),
 			invalidatesTags: ['JobPost'],
-		}),
-		getJobPosts: build.query({
-			query: () => ({
-				url: `/jobPost`,
-			}),
-			providesTags: ['JobPost'],
-		}),
-		getJobsDetail: build.query({
-			query: id => `/jobPost/${id}`,
-		}),
-		getPostJob: build.query({
-			query: id => `/jobPost/user/${id}`,
 		}),
 		updateJobPost: build.mutation({
 			query: ({ data, postId }) => ({
