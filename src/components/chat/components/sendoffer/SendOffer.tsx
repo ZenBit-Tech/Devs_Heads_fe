@@ -51,9 +51,9 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 			jobPostId,
 		};
 		if (isError) {
-			sendData(NewData);
-		} else {
 			sendUpdatedData(NewData);
+		} else {
+			sendData(NewData);
 		}
 		setIsShown(false);
 		reset();
