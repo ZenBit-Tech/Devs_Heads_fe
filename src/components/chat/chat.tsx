@@ -3,6 +3,7 @@ import {
 	useGetRoomsByUserQuery,
 	useGetRoomsByTwoUsersQuery,
 	useUpdateChatRoomMutation,
+	useGetJobOfferQuery,
 } from 'service/httpService';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
@@ -61,6 +62,7 @@ const Chat = () => {
 	const { data: messages, isLoading } = useGetMessagesByRoomQuery(chatRoomId);
 	const { data: room, isFetching } = useGetRoomsByTwoUsersQuery(currentChatId);
 	const [updateChatRoom] = useUpdateChatRoomMutation();
+	const { data: offer, isError } = useGetJobOfferQuery(currentChatId);
 	const scrollRef = useRef<null | HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -197,6 +199,7 @@ const Chat = () => {
 								freelancerId={currentChatId.receiverId}
 								clientId={currentChatId.senderId}
 								jobPostId={currentChatId.jobPostId}
+								isError={isError}
 							/>
 						</div>
 					)}

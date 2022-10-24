@@ -26,6 +26,7 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 	isShown,
 	setIsShown,
 	hide,
+	isError,
 	freelancerId,
 	clientId,
 	jobPostId,
@@ -40,7 +41,7 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 	});
 	const { user } = useAppSelector<RootState>(state => state);
 	const { data: clientInfo } = useGetClientInfoByUserQuery(user.id);
-	const { sendData } = useSendData();
+	const { sendData, sendUpdatedData } = useSendData();
 
 	const handleForm = (data: OfferForm) => {
 		const NewData = {
@@ -49,7 +50,11 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 			clientId,
 			jobPostId,
 		};
-		sendData(NewData);
+		if (isError) {
+			sendData(NewData);
+		} else {
+			sendUpdatedData(NewData);
+		}
 		setIsShown(false);
 		reset();
 	};

@@ -183,7 +183,8 @@
 		"maxLength100": "Maximum length is 100 symbols",
 		"saveButton": "Save",
 		"cancel": "Cancel",
-		"offer": "Offer"
+		"offer": "Offer",
+		"errorMessage": "This field is required!"
 	},
 	"EditPostDetailPage": {
 		"title": "Re-write a title for your job post",

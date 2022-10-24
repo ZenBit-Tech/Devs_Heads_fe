@@ -1,6 +1,6 @@
 import { NotificationType, OfferForm } from './data';
 import { notification } from 'antd';
-import { usePostOfferMutation } from 'service/httpService';
+import { usePostOfferMutation, useUpdateOfferStatusMutation } from 'service/httpService';
 
 const error = 'error';
 const success = 'success';
@@ -9,6 +9,7 @@ const offerSent = 'Your offer has been sent successfully!';
 
 export const useSendData = () => {
 	const [sendForm] = usePostOfferMutation();
+	const [updateOffer] = useUpdateOfferStatusMutation();
 	const openNotificationWithIcon = (type: NotificationType) => {
 		notification[type]({
 			message: type === success ? success : error,
@@ -26,7 +27,6 @@ export const useSendData = () => {
 				clientId: data.clientId,
 				jobPostId: data.jobPostId,
 			};
-			console.log(newObj);
 			await sendForm(newObj).unwrap();
 			openNotificationWithIcon('success');
 		} catch (error) {
@@ -34,5 +34,24 @@ export const useSendData = () => {
 		}
 	};
 
-	return { sendData };
+	const sendUpdatedData = async (data: OfferForm) => {
+		try {
+			const newObj: OfferForm = {
+				name: data.name,
+				price: data.price,
+				startDate: data.startDate,
+				endDate: data.endDate,
+				freelancerId: data.freelancerId,
+				clientId: data.clientId,
+				jobPostId: data.jobPostId,
+			};
+			console.log(newObj);
+			await updateOffer(newObj).unwrap();
+			openNotificationWithIcon('success');
+		} catch (error) {
+			openNotificationWithIcon('error');
+		}
+	};
+
+	return { sendData, sendUpdatedData };
 };
