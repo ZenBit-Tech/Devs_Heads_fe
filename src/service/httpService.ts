@@ -367,3 +367,23 @@ export const {
 	useGetRoomsByTwoUsersQuery,
 	useUpdateChatRoomMutation,
 } = messagesApi;
+
+export const jobOfferApi = createApi({
+	reducerPath: 'jobOffer',
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	tagTypes: ['jobOffer'],
+	endpoints: build => ({
+		postOffer: build.mutation({
+			query: body => ({
+				url: '/jobOffer/offer',
+				method: 'POST',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+			invalidatesTags: ['jobOffer'],
+		}),
+	}),
+});
+export const { usePostOfferMutation } = jobOfferApi;

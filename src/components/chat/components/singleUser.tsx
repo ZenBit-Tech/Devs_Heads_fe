@@ -6,7 +6,13 @@ import { Role } from 'pages/RoleSelection';
 
 interface Props {
 	item: UserList;
-	changeRoom: (senderId: number, receiverId: number, jobPostId: number, roomId: number) => void;
+	changeRoom: (
+		senderId: number,
+		receiverId: number,
+		jobPostId: number,
+		roomId: number,
+		activeRoom: boolean,
+	) => void;
 	active: number;
 }
 
@@ -15,7 +21,9 @@ const User = (props: Props) => {
 	const { item, changeRoom, active } = props;
 	return (
 		<SingleUser
-			onClick={() => changeRoom(item?.senderId, item.receiverId, item.jobPostId, item.roomId)}
+			onClick={() =>
+				changeRoom(item?.senderId, item.receiverId, item.jobPostId, item.roomId, item.activeRoom)
+			}
 			className={item.roomId === active ? 'defaultActive' : ''}
 		>
 			<div>

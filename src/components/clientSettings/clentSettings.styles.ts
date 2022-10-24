@@ -30,7 +30,6 @@ export const SaveButton = styled.button`
 	background-color: ${DODGERBLUE_COLOR};
 	color: ${WHITE_COLOR};
 	border-color: ${WHITE_COLOR};
-	margin: 2% auto;
 	text-align: center;
 	font-size: ${MEDIUM_FONT_SIZE};
 	box-shadow: 3px 2px 2px ${GREY};

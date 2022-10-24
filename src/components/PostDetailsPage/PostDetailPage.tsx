@@ -111,9 +111,16 @@ const DescriptionPage: FC = () => {
 								</CategoryStyled>
 							</MaxColumn>
 							<MinColumn>
-								<SendProposal onClick={toggle} className="btn btn-success" disabled={disable}>
-									{`${t('PostDetailPage.sendPrpBtn')}`}
-								</SendProposal>
+								{disable ? (
+									<div>{`${t('PostDetailPage.proposalSent')}`}</div>
+								) : (
+									<SendProposal
+										onClick={toggle}
+										className={`btn btn-success ${disable ? 'hidden' : 'block'}`}
+									>
+										{`${t('PostDetailPage.sendPrpBtn')}`}
+									</SendProposal>
+								)}
 								<Modal
 									isShown={isShown}
 									hide={toggle}

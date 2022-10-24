@@ -121,6 +121,12 @@ export const SendProposal = styled.button`
 	&:hover {
 		background-color: ${LIGHTBLUE_COLOR};
 	}
+	& > .hidden {
+		display: none;
+	}
+	& > .block {
+		display: block;
+	}
 	&active {
 		box-shadow: 0 5px;
 		transform: translateY(10px);
@@ -144,6 +150,10 @@ export const MinColumn = styled.div`
 	align-items: center;
 	@media screen and (max-width: 600px) {
 		width: 100%;
+	}
+	& > div {
+		font-style: italic;
+		font-size: 20px;
 	}
 `;
 export const MaxColumn = styled.div`
