@@ -11,6 +11,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from 'config/theme';
 import TalentPage from 'pages/TalentPage';
 import SingleProfilePage from 'pages/SingleProfilePage';
+import MyContractPage from 'pages/MyContractPage';
 
 const WelcomePage = lazy(() => import('./pages/WelcomePage/WelcomePage'));
 
@@ -61,6 +62,7 @@ const App: FC = () => {
 							<Route path="post-job" element={<PostJobPage />} />
 							<Route path="/talent" element={<TalentPage />} />
 							<Route path="/chat" element={<Chat />} />
+							<Route path="/contracts" element={<MyContractPage />} />
 							<Route path="/client-settings" element={<ClientSettings />} />
 							<Route path="profile/:id" element={<SingleProfilePage />} />
 							<Route path="settings/" element={<SettingsPage />}>

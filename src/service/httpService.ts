@@ -368,7 +368,8 @@ export const {
 	useUpdateChatRoomMutation,
 } = messagesApi;
 
-export const jobOfferApi = createApi({
+
+export const JobOfferApi = createApi({
 	reducerPath: 'jobOffer',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
 	tagTypes: ['jobOffer'],
@@ -384,6 +385,42 @@ export const jobOfferApi = createApi({
 			}),
 			invalidatesTags: ['jobOffer'],
 		}),
+		getJobOffer: build.query({
+			query: ({ id, freelancerId, clientId }) => `/jobOffer/job/${id}/${freelancerId}/${clientId}`,
+			providesTags: ['jobOffer'],
+		}),
+		getAcceptedJobOffer: build.query({
+			query: sendData =>
+				`/jobOffer/offer/${sendData.userId}/${sendData.role}?date=${sendData.date ?? ''}&status=${
+					sendData.status ?? ''
+				}`,
+			providesTags: ['jobOffer'],
+		}),
+		updateOfferStatusExpired: build.mutation({
+			query: ({ id, status }) => ({
+				url: `/jobOffer`,
+				method: 'PUT',
+				body: { status, id },
+			}),
+			invalidatesTags: ['jobOffer'],
+		}),
+		updateJobOffer: build.mutation({
+			query: ({ jobId, freelancerId, status, clientId }) => ({
+				url: `/jobOffer/${jobId}/${freelancerId}/${clientId}`,
+				method: 'PUT',
+				body: { status },
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
 	}),
 });
-export const { usePostOfferMutation } = jobOfferApi;
+
+export const {
+	useGetJobOfferQuery,
+	useUpdateJobOfferMutation,
+	useGetAcceptedJobOfferQuery,
+	useUpdateOfferStatusExpiredMutation,
+	usePostOfferMutation,
+} = JobOfferApi;

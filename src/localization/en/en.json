@@ -262,6 +262,10 @@
 		"loading": "Loading...",
 		"data": "There are no saved talents yet!"
 	},
+	"MyContract": {
+		"status": "Status",
+		"date": "Date"
+	},
 	"FreelancerLayout": {
 		"chat": "Messages",
 		"contracts": "My Contracts",
