@@ -7,6 +7,7 @@ export interface ModalProps {
 	freelancerId: number;
 	clientId: number;
 	jobPostId: number;
+	isError: boolean;
 }
 
 export type OfferForm = {

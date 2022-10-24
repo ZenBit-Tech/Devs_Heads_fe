@@ -3,6 +3,7 @@ import {
 	useGetRoomsByUserQuery,
 	useGetRoomsByTwoUsersQuery,
 	useUpdateChatRoomMutation,
+	useGetJobOfferQuery,
 } from 'service/httpService';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
@@ -53,6 +54,12 @@ const Chat = () => {
 	const [chatRoomId, setChatRoomId] = useState<number>(0);
 	const [socketMessage, setSocketMessage] = useState<MessageFrontend[]>([]);
 	const [currentChatId, setCurrentChatId] = useState<initialId>();
+
+	const data = {
+		jobPostId: currentChatId?.jobPostId,
+		clientId: currentChatId?.senderId,
+		freelancerId: currentChatId?.receiverId,
+	};
 	const [roomMessages, setRoomMessages] = useState<MessageBackend[]>();
 	const [active, setActive] = useState<number>(chatRoomId);
 	const [defaultChat, setDefaultChat] = useState<RoomBackend>();
@@ -61,6 +68,7 @@ const Chat = () => {
 	const { data: messages, isLoading } = useGetMessagesByRoomQuery(chatRoomId);
 	const { data: room, isFetching } = useGetRoomsByTwoUsersQuery(currentChatId);
 	const [updateChatRoom] = useUpdateChatRoomMutation();
+	const { data: offer, isError } = useGetJobOfferQuery(data);
 	const scrollRef = useRef<null | HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -197,6 +205,7 @@ const Chat = () => {
 								freelancerId={currentChatId.receiverId}
 								clientId={currentChatId.senderId}
 								jobPostId={currentChatId.jobPostId}
+								isError={isError}
 							/>
 						</div>
 					)}

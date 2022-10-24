@@ -384,8 +384,19 @@ export const JobOfferApi = createApi({
 			}),
 			invalidatesTags: ['jobOffer'],
 		}),
+		updateOfferStatus: build.mutation({
+			query: body => ({
+				url: `/jobOffer/offer`,
+				method: 'PUT',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+			invalidatesTags: ['jobOffer'],
+		}),
 		getJobOffer: build.query({
-			query: ({ id, freelancerId, clientId }) => `/jobOffer/job/${id}/${freelancerId}/${clientId}`,
+			query: data => `/jobOffer/job/${data.jobPostId}/${data.freelancerId}/${data.clientId}`,
 			providesTags: ['jobOffer'],
 		}),
 		getAcceptedJobOffer: build.query({
@@ -418,6 +429,7 @@ export const JobOfferApi = createApi({
 
 export const {
 	useGetJobOfferQuery,
+	useUpdateOfferStatusMutation,
 	useUpdateJobOfferMutation,
 	useGetAcceptedJobOfferQuery,
 	useUpdateOfferStatusExpiredMutation,
