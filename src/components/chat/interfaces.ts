@@ -92,4 +92,5 @@ export type initialId = {
 	senderId: number;
 	receiverId: number;
 	jobPostId: number;
+	activeRoom: boolean;
 };

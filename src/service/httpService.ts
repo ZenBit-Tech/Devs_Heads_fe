@@ -382,6 +382,7 @@ export const JobOfferApi = createApi({
 					'Content-type': 'application/json; charset=UTF-8',
 				},
 			}),
+			invalidatesTags: ['jobOffer'],
 		}),
 		getJobOffer: build.query({
 			query: ({ id, freelancerId, clientId }) => `/jobOffer/job/${id}/${freelancerId}/${clientId}`,

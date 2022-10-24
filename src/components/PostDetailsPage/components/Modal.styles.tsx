@@ -2,6 +2,7 @@ import { RED_COLOR } from 'constants/colors';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
+	display: block;
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -10,6 +11,9 @@ export const Wrapper = styled.div`
 	width: inherit;
 	outline: 0;
 	max-width: 40%;
+	&.hidden {
+		display: none;
+	}
 	@media screen and (min-width: 1600px) {
 		max-width: 30%;
 	}
@@ -54,7 +58,7 @@ export const Content = styled.div`
 	padding: 10px;
 	max-height: 30rem;
 	overflow-x: hidden;
-	overflow-y: auto;
+	overflow-y: hidden;
 `;
 
 export const Form = styled.form`

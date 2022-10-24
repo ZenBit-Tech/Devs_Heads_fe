@@ -42,6 +42,8 @@ import User from 'components/chat/components/singleUser';
 import { useOnDataChange } from 'components/chat/data';
 import ChatTitle from 'components/chat/components/chatTitle';
 import { Role } from 'pages/RoleSelection';
+import SendOfferPopup from 'components/chat/components/sendoffer/SendOffer';
+import { SaveButton } from 'components/clientSettings/clentSettings.styles';
 
 const Chat = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -80,6 +82,7 @@ const Chat = () => {
 				senderId: rooms[0]?.senderId.id,
 				receiverId: rooms[0]?.receiverId.id,
 				jobPostId: rooms[0]?.jobPostId.id,
+				activeRoom: rooms[0]?.activeRoom,
 			});
 			setActive(rooms[0]?.id);
 		}
@@ -109,7 +112,6 @@ const Chat = () => {
 	const { register, handleSubmit, errors, reset, getDate, userList } = useOnDataChange();
 
 	const updateRoom = (chatRoomId: number) => {
-		console.log(chatRoomId);
 		const newObj = {
 			chatRoomId,
 			activeRoom: true,
@@ -120,9 +122,18 @@ const Chat = () => {
 			chatRoomId,
 			userId,
 		};
-		console.log(message);
 		socket?.emit('sendMessage', message);
 	};
+	const useModal = () => {
+		const [isShown, setIsShown] = useState<boolean>(false);
+		const toggle = () => setIsShown(!isShown);
+		return {
+			isShown,
+			setIsShown,
+			toggle,
+		};
+	};
+	const { isShown, setIsShown, toggle } = useModal();
 
 	const onSubmit = (data: DataSchema, chatRoomId: number) => {
 		const NewData = {
@@ -133,9 +144,14 @@ const Chat = () => {
 		socket?.emit('sendMessage', NewData);
 		reset();
 	};
-
-	const changeRoom = (senderId: number, receiverId: number, jobPostId: number, roomId: number) => {
-		setCurrentChatId({ senderId, receiverId, jobPostId });
+	const changeRoom = (
+		senderId: number,
+		receiverId: number,
+		jobPostId: number,
+		roomId: number,
+		activeRoom: boolean,
+	) => {
+		setCurrentChatId({ senderId, receiverId, jobPostId, activeRoom });
 		setChatRoomId(roomId);
 		setActive(chatRoomId);
 	};
@@ -169,6 +185,21 @@ const Chat = () => {
 					<ArrowBlock>
 						<ChatTitle userRole={user.role} room={room} />
 					</ArrowBlock>
+					{user.role === Role.Client && currentChatId?.activeRoom && (
+						<div>
+							<SaveButton onClick={toggle} className="btn btn-success">
+								{`${t('InvitePopup.buttonOffer')}`}
+							</SaveButton>
+							<SendOfferPopup
+								hide={toggle}
+								isShown={isShown}
+								setIsShown={setIsShown}
+								freelancerId={currentChatId.receiverId}
+								clientId={currentChatId.senderId}
+								jobPostId={currentChatId.jobPostId}
+							/>
+						</div>
+					)}
 				</TitleMessage>
 				<ChatMessages ref={scrollRef}>
 					{roomMessages?.map((message: MessageBackend) => {

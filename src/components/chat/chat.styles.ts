@@ -278,6 +278,7 @@ export const TitleMessage = styled.div`
 	background-color: ${COLOR_GREY};
 	position: relative;
 	display: flex;
+	justify-content: space-between;
 	align-content: center;
 	align-items: center;
 	color: black;

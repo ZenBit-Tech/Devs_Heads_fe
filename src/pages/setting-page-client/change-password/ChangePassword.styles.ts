@@ -56,7 +56,7 @@ export const Button = styled.button`
 	box-shadow: 3px 2px 2px ${GREY};
 
 	&:hover {
-		outline: 2px solid ${GREY};
+		outline: 2px solid ${DODGERBLUE_COLOR};
 	}
 `;
 
