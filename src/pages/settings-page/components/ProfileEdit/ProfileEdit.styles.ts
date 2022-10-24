@@ -17,6 +17,7 @@ export const ProfilePhoto = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-self: center;
+	justify-content: center;
 
 	& > button {
 		width: 100px;

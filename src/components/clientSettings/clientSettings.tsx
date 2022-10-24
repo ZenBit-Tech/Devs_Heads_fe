@@ -29,6 +29,7 @@ import {
 	ButtonBlock,
 	Button,
 	Img,
+	ProfilePhoto,
 } from 'components/clientSettings/clentSettings.styles';
 import countryList from 'react-select-country-list';
 import { FormEvent, useEffect, useMemo, useState } from 'react';
@@ -41,6 +42,8 @@ import { useSendData } from 'components/clientSettings/dataSend';
 import { useGetClientInfoByUserQuery } from 'service/httpService';
 import { ImgSpinner } from 'components/freelancerJobs/freelancerPage.styles';
 import Spinner from 'assets/spinner.gif';
+import { defaultProfilePhoto } from 'constants/links';
+import { Image } from 'antd';
 
 const ClientSettings = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -62,7 +65,25 @@ const ClientSettings = () => {
 	const [website, setWebsiteValue] = useState<string | undefined>(undefined);
 	const [industry, setIndustryValue] = useState<ICountry>(initialCountry);
 	const [quantity, setQuantityValue] = useState<string | null>(null);
+	const [file, setFile] = useState<string>(defaultProfilePhoto);
 	const options = useMemo(() => countryList().getData(), []);
+
+	const onChangePhotoHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const reader = new FileReader();
+		reader.onloadend = () => {
+			if (typeof reader.result === 'string') {
+				setFile(reader.result);
+			}
+		};
+		const newFile = e.target.files && e.target.files[0];
+		if (newFile) {
+			reader.readAsDataURL(newFile);
+		}
+	};
+	const onPhotoDelete = () => {
+		event?.preventDefault();
+		setFile(defaultProfilePhoto);
+	};
 
 	const websiteChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setWebsiteValue(event.target.value);
@@ -93,6 +114,7 @@ const ClientSettings = () => {
 			setWebsiteValue(clientInfo.website);
 			setIndustryValue({ value: clientInfo.industry, label: clientInfo.industry });
 			setQuantityValue(clientInfo.quantity);
+			setFile(clientInfo.photo);
 		}
 	}, [clientInfo]);
 
@@ -103,6 +125,7 @@ const ClientSettings = () => {
 			industry,
 			quantity,
 			userId,
+			photo: file,
 		};
 		if (clientInfo) {
 			sendUpdatedData(NewData, clientInfo.id);
@@ -143,13 +166,9 @@ const ClientSettings = () => {
 									{...register('name')}
 									className={`form-control ${errors.name ? 'is-invalid' : ''}`}
 								/>
-							</Column>
-							<Column>
+								{errors.name && <P>{errors.name?.message}</P>}
 								<Title>{`${t('ClientSettings.email')}`}</Title>
 								<Input type="text" value={user.email} />
-							</Column>
-							{errors.name && <P>{errors.name?.message}</P>}
-							<Div>
 								<Title>{`${t('ClientSettings.country')}`}</Title>
 								<Controller
 									name="country"
@@ -166,7 +185,15 @@ const ClientSettings = () => {
 									}}
 								/>
 								{errors.country && <P>{errors.country.value?.message}</P>}
-							</Div>
+							</Column>
+							<Column>
+								<ProfilePhoto>
+									<Title>{`${t('ProfileEdit.profilePhotoTitle')}`}</Title>
+									<Image width={200} src={file || defaultProfilePhoto} />
+									<input type={'file'} accept=".png, .jpg, .jpeg" onChange={onChangePhotoHandler} />
+									<button onClick={onPhotoDelete}>{`${t('ProfileEdit.deletePhotoButton')}`}</button>
+								</ProfilePhoto>
+							</Column>
 						</div>
 						<Div>
 							<Title>{`${t('ClientSettings.website')}`}</Title>

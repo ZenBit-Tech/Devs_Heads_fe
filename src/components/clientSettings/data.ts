@@ -55,7 +55,8 @@ export type Data = {
 	industry?: ICountry;
 	quantity: string | null;
 	description?: string;
-	userId: number | undefined;
+	userId?: number;
+	photo?: string;
 };
 
 export type DataBE = {
@@ -65,7 +66,8 @@ export type DataBE = {
 	industry?: string;
 	quantity: string | null;
 	description?: string;
-	userId: number | undefined;
+	userId?: number;
+	photo?: string;
 };
 
 export interface ICountry {

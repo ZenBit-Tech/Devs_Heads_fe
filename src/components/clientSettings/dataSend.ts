@@ -28,6 +28,7 @@ export const useSendData = () => {
 				quantity: data.quantity,
 				description: data.description,
 				userId: data.userId,
+				photo: data.photo,
 			};
 			await sendClientInfo(newObj).unwrap();
 			openNotificationWithIcon('success');
@@ -46,14 +47,12 @@ export const useSendData = () => {
 				quantity: data.quantity,
 				description: data.description,
 				userId: data.userId,
+				photo: data.photo,
 			};
-			console.log(newObj);
-			console.log(ClientInfoId);
 			await updateClientInfo({ ClientInfoId, newObj }).unwrap();
 			openNotificationWithIcon('success');
 		} catch (error) {
 			openNotificationWithIcon('error');
-			console.log(error);
 		}
 	};
 	return { sendData, sendUpdatedData };

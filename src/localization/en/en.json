@@ -66,6 +66,7 @@
 	},
 	"ProfileEdit": {
 		"profilePhotoTitle": "Profile photo",
+		"profilePhotowarning": "The maximum photo size are 200 X 300 px",
 		"deletePhotoButton": "Delete photo",
 		"positionTitle": "Position",
 		"positionAlert": "Maximum length is 25 symbols",
@@ -294,5 +295,8 @@
 		},
 		"settings": "My info",
 		"password": "Password"
+	},
+	"chat": {
+		"accepted": "Accepted"
 	}
 }

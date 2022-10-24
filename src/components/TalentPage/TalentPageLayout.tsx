@@ -179,7 +179,6 @@ const TalentPageLayout: FC = () => {
 								search={search}
 								setSearch={setSearch}
 								placeholder={`${t('TalentCompanyPage.discover')}`}
-								searchSize={'0'}
 							/>
 						</InputContainer>
 						{active?.discover === discover && data?.profile && !isLoading ? (

@@ -10,6 +10,11 @@ import { useAppDispatch } from 'redux/hooks';
 import { useSignUpUpdateMutation } from 'service/httpService';
 import { Welcome } from 'constants/routes';
 
+export const Role = {
+	Freelancer: 'freelancer',
+	Client: 'client',
+};
+
 const RoleSelection: FC = () => {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
@@ -23,10 +28,6 @@ const RoleSelection: FC = () => {
 			dispatch(saveEmail(String(params.user)));
 		}
 	}, []);
-	const Role = {
-		Freelancer: 'freelancer',
-		Client: 'client',
-	};
 
 	const handleChange = (event: RadioChangeEvent) => {
 		dispatch(saveRole(event.target.value));

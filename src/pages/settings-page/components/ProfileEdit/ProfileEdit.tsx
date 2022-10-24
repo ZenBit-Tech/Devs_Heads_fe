@@ -67,6 +67,7 @@ export const ProfileEdit = () => {
 			<Block>
 				<ProfilePhoto>
 					<Title>{`${t('ProfileEdit.profilePhotoTitle')}`}</Title>
+					<p>{`${t('ProfileEdit.profilePhotowarning')}`}</p>
 					<Image width={200} src={file64 || defaultProfilePhoto} />
 					<input type={'file'} accept=".png, .jpg, .jpeg" onChange={onChangePhotoHandler} />
 					<button onClick={onPhotoDelete}>{`${t('ProfileEdit.deletePhotoButton')}`}</button>
@@ -102,7 +103,12 @@ export const ProfileEdit = () => {
 					</Category>
 					<div>
 						<Title>{`${t('ProfileEdit.priceTitle')}`}</Title>
-						<input onChange={onPriceChange} value={price} type="number" />
+						<input
+							onChange={onPriceChange}
+							defaultValue={0}
+							value={price === 0 ? undefined : price}
+							type="number"
+						/>
 						<span>$</span>
 						{priceError && (
 							<Alert message={`${t('ProfileEdit.priceAlert')}`} type="warning" showIcon closable />

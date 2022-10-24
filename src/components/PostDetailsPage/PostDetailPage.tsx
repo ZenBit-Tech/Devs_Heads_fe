@@ -128,6 +128,7 @@ const DescriptionPage: FC = () => {
 									setIsShown={setIsShown}
 									clientId={post.userId}
 									jobPostId={Number(params.id)}
+									receiverId={post.userId}
 								/>
 							</MinColumn>
 							<DescriptionStyled>{post.jobDescription}</DescriptionStyled>
