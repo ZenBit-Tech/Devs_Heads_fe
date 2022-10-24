@@ -368,7 +368,6 @@ export const {
 	useUpdateChatRoomMutation,
 } = messagesApi;
 
-
 export const JobOfferApi = createApi({
 	reducerPath: 'jobOffer',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),

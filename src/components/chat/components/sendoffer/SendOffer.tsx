@@ -42,10 +42,6 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 	const { data: clientInfo } = useGetClientInfoByUserQuery(user.id);
 	const { sendData } = useSendData();
 
-	const resetInput = () => {
-		return reset({ price: 0, startDate: {}, endDate: {} });
-	};
-
 	const handleForm = (data: OfferForm) => {
 		const NewData = {
 			...data,
@@ -53,10 +49,9 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 			clientId,
 			jobPostId,
 		};
-		console.log(NewData);
 		sendData(NewData);
 		setIsShown(false);
-		resetInput();
+		reset();
 	};
 
 	const modal = (
@@ -111,7 +106,7 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 							</ContainerDate>
 							<ButtonBlock>
 								<Button type="submit">{`${t('SendOfferPopup.saveButton')}`}</Button>
-								<Cancel onClick={resetInput}>{`${t('SendOfferPopup.cancel')}`}</Cancel>
+								<Cancel onClick={() => reset()}>{`${t('SendOfferPopup.cancel')}`}</Cancel>
 							</ButtonBlock>
 						</Form>
 					</Content>

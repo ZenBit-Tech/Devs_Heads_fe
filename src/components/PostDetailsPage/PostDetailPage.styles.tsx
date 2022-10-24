@@ -153,7 +153,7 @@ export const MinColumn = styled.div`
 	}
 	& > div {
 		font-style: italic;
-		font-size: 20px;
+		font-size: ${MEDIUM_FONT_SIZE};
 	}
 `;
 export const MaxColumn = styled.div`

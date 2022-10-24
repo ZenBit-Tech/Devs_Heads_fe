@@ -73,7 +73,6 @@ const Chat = () => {
 			setDefaultChat(room);
 		}
 	}, [isFetching]);
-	console.log(rooms);
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -113,7 +112,6 @@ const Chat = () => {
 	const { register, handleSubmit, errors, reset, getDate, userList } = useOnDataChange();
 
 	const updateRoom = (chatRoomId: number) => {
-		console.log(chatRoomId);
 		const newObj = {
 			chatRoomId,
 			activeRoom: true,
@@ -124,7 +122,6 @@ const Chat = () => {
 			chatRoomId,
 			userId,
 		};
-		console.log(message);
 		socket?.emit('sendMessage', message);
 	};
 	const useModal = () => {
@@ -169,7 +166,6 @@ const Chat = () => {
 			</>
 		);
 	}
-	console.log(currentChatId);
 	return (
 		<Wrapper onSubmit={handleSubmit(data => onSubmit(data, chatRoomId))}>
 			<UsersList>

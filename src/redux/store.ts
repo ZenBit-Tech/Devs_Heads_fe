@@ -59,7 +59,7 @@ export const store = configureStore({
 			clientSettingsApi.middleware,
 			invitationPostApi.middleware,
 			messagesApi.middleware,
-			jobOfferApi.middleware,
+			JobOfferApi.middleware,
 		]),
 });
 
