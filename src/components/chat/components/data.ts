@@ -17,7 +17,6 @@ export type OfferForm = {
 	clientId: number | undefined;
 	jobPostId: number;
 };
-
 export type NotificationType = 'success' | 'error';
 
 export const Schema = Yup.object().shape({

@@ -11,8 +11,16 @@ export interface IContract {
 			lastName: string;
 		};
 	};
-	jobPost: {
+	jobPostId: {
 		jobTitle: string;
+		userId: {
+			clientSetting: {
+				photo: string;
+			};
+		};
+	};
+	clientId: {
+		photo: string;
 	};
 }
 export interface ISelect {

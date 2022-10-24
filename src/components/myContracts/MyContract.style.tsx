@@ -16,6 +16,10 @@ export const MainWrapper = styled.div`
 	padding: ${props => props.theme.spacing(5)};
 	border-radius: ${props => props.theme.spacing(5)};
 	width: ${props => props.theme.spacing(250)};
+
+	@media screen and (max-width: 1000px) {
+		width: 100%;
+	}
 `;
 export const Wrapper = styled.div`
 	&.block {
@@ -41,6 +45,9 @@ export const ContractItem = styled.div`
 	display: flex;
 	align-items: center;
 	padding: ${props => props.theme.spacing(5)};
+	& > .link {
+		width: 147px;
+	}
 `;
 
 export const P = styled.p`
@@ -48,6 +55,25 @@ export const P = styled.p`
 	padding: ${props => props.theme.spacing(5)} ${props => props.theme.spacing(5)} 0
 		${props => props.theme.spacing(5)};
 	align-items: center;
+
+	&.accepted {
+		border: 1px dotted green;
+		border-radius: 40px;
+		align-items: center;
+		background-color: lightgreen;
+		margin-bottom: -8px;
+		align-items: center;
+		padding: 10px;
+	}
+	&.expired {
+		border: 1px dotted black;
+		border-radius: 40px;
+		align-items: center;
+		background-color: lightgrey;
+		margin-bottom: -8px;
+		align-items: center;
+		padding: 10px;
+	}
 `;
 
 export const NotFoundContract = styled.div`

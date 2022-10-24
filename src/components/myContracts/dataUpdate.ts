@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { IContract } from './interfaces';
 
 export const expired = 'expired';
+export const accepted = 'accepted';
 export const client = 'client';
 export const freelancer = 'freelancer';
 
@@ -13,7 +14,6 @@ export type DataSchema = {
 export const selectionStatus = [
 	{ value: 'expired', label: 'Ended' },
 	{ value: 'accepted', label: 'In Process' },
-	{ value: 'pending', label: 'Pending' },
 ];
 
 export const selectionDate = [

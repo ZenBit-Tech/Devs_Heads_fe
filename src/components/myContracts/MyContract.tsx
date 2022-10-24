@@ -25,6 +25,7 @@ import Spinner from 'assets/spinner.gif';
 import { ImgSpinner } from 'components/freelancerJobs/freelancerPage.styles';
 import { DescriptionStyled } from 'components/freelancerJobs/freelancerPage.styles';
 import {
+	accepted,
 	client,
 	DataSchema,
 	expired,
@@ -43,6 +44,7 @@ function MyContract() {
 	const { user } = useAppSelector<RootState>(state => state);
 	const [selectDate, setSelectDate] = useState<ISelect>();
 	const [selectStatus, setSelectStatus] = useState<ISelect>();
+	const [status, setStatus] = useState<IContract[]>([]);
 	const {
 		control,
 		getValues,
@@ -55,17 +57,32 @@ function MyContract() {
 		status: selectStatus?.name,
 	};
 	const { data: offerAccepted, isLoading, isSuccess } = useGetAcceptedJobOfferQuery(dataSend);
-	console.log(offerAccepted);
 	const { ids } = useSendData(offerAccepted);
 	const [updateStatus] = useUpdateOfferStatusExpiredMutation();
 
 	useEffect(() => {
-		updateStatusContract();
+		const intervalId = setInterval(() => {
+			updateStatusContract();
+		}, 60000);
+		return () => clearInterval(intervalId);
 	}, []);
 
 	const updateStatusContract = async () => {
 		await updateStatus({ id: ids, status: expired });
 	};
+
+	useEffect(() => {
+		const sortArray = () => {
+			if (offerAccepted) {
+				const sorted = [...offerAccepted].sort((a: { status: string }, b: { status: string }) =>
+					a.status > b.status ? -1 : 1,
+				);
+				setStatus(sorted);
+			}
+		};
+
+		sortArray();
+	}, [offerAccepted]);
 	let content;
 	if (isLoading) {
 		content = <ImgSpinner src={Spinner} />;
@@ -112,14 +129,18 @@ function MyContract() {
 						</Div>
 					</SelectBlock>
 				</Wrapper>
-				{offerAccepted.length > 0 && !isLoading ? (
-					offerAccepted?.map((item: IContract) => {
+				{status.length > 0 && !isLoading ? (
+					status?.map((item: IContract) => {
 						return (
 							<ContractContainer key={item.id}>
-								<Title>{item.jobPost.jobTitle}</Title>
+								<Title>{item.jobPostId?.jobTitle}</Title>
 								<ContractItem>
-									<Image src={item.freelancerId?.photo ?? profileImage} alt="userPhoto" />
-									<Link to="#">
+									{user.role === client ? (
+										<Image src={item.freelancerId?.photo ?? profileImage} alt="freelancerPhoto" />
+									) : (
+										<Image src={item.jobPostId?.userId.clientSetting.photo} alt="clientPoto" />
+									)}
+									<Link className="link" to="#">
 										{user.role === client && item?.freelancerId?.userId.firstName && (
 											<>
 												<P>
@@ -130,7 +151,9 @@ function MyContract() {
 										)}
 										{user.role === freelancer && <P>{item?.name}</P>}
 									</Link>
-									<P>Status/{item.status}</P>
+									<P className={item.status === accepted ? 'accepted' : 'expired'}>
+										Status/{item.status}
+									</P>
 									<P>
 										{getDate(new Date(item.startDate))}-{getDate(new Date(item.endDate))}
 									</P>

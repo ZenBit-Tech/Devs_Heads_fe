@@ -101,7 +101,7 @@ const JobPost = () => {
 							);
 						}}
 					/>
-					{errors.category && <P>{errors.category.value?.message}</P>}
+					{errors.category && <P>{errors?.category.value?.message}</P>}
 				</Column>
 				<Column>
 					<div>

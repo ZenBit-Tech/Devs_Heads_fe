@@ -153,6 +153,10 @@ export const profileApi = createApi({
 			query: profile => `/profile/${profile.id}/${profile.clientId}`,
 			providesTags: ['Profile'],
 		}),
+		getFreelancerInfo: build.query({
+			query: id => `/profile/${id}`,
+			providesTags: ['Profile'],
+		}),
 	}),
 });
 export const {
@@ -162,6 +166,7 @@ export const {
 	useGetFilterProfileQuery,
 	useGetUserProfileQuery,
 	useGetTalentProfileQuery,
+	useGetFreelancerInfoQuery,
 } = profileApi;
 
 export const jobPostApi = createApi({
@@ -305,10 +310,69 @@ export const invitationPostApi = createApi({
 
 export const { usePostInvitationMutation } = invitationPostApi;
 
+export const messagesApi = createApi({
+	reducerPath: 'message',
+	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+	tagTypes: ['message'],
+	endpoints: build => ({
+		postMessage: build.mutation({
+			query: body => ({
+				url: '/message',
+				method: 'POST',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
+		createRoom: build.mutation({
+			query: body => ({
+				url: '/chat-room',
+				method: 'POST',
+				body,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			}),
+		}),
+		getMessagesByRoom: build.query({
+			query: id => `/message/${id}`,
+		}),
+		getRoomsByUser: build.query({
+			query: id => ({
+				url: `/chat-room/${id}`,
+				responseHandler: response => response.json(),
+			}),
+		}),
+		getRoomsByTwoUsers: build.query({
+			query: data => ({
+				url: `/chat-room/${data.senderId}/${data.receiverId}/${data.jobPostId}`,
+			}),
+		}),
+		updateChatRoom: build.mutation({
+			query: data => ({
+				url: `/chat-room/${data.chatRoomId}`,
+				method: 'PATCH',
+				body: data,
+			}),
+			invalidatesTags: ['message'],
+		}),
+	}),
+});
+
+export const {
+	usePostMessageMutation,
+	useGetMessagesByRoomQuery,
+	useCreateRoomMutation,
+	useGetRoomsByUserQuery,
+	useGetRoomsByTwoUsersQuery,
+	useUpdateChatRoomMutation,
+} = messagesApi;
+
 export const JobOfferApi = createApi({
 	reducerPath: 'jobOffer',
 	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
-	tagTypes: ['jobOffer', 'jobContract'],
+	tagTypes: ['jobOffer'],
 	endpoints: build => ({
 		postOffer: build.mutation({
 			query: body => ({
@@ -319,10 +383,9 @@ export const JobOfferApi = createApi({
 					'Content-type': 'application/json; charset=UTF-8',
 				},
 			}),
-			invalidatesTags: ['jobOffer'],
 		}),
 		getJobOffer: build.query({
-			query: ({ id, freelancerId }) => `/jobOffer/job/${id}/${freelancerId}`,
+			query: ({ id, freelancerId, clientId }) => `/jobOffer/job/${id}/${freelancerId}/${clientId}`,
 			providesTags: ['jobOffer'],
 		}),
 		getAcceptedJobOffer: build.query({
@@ -330,7 +393,7 @@ export const JobOfferApi = createApi({
 				`/jobOffer/offer/${sendData.userId}/${sendData.role}?date=${sendData.date ?? ''}&status=${
 					sendData.status ?? ''
 				}`,
-			providesTags: ['jobContract'],
+			providesTags: ['jobOffer'],
 		}),
 		updateOfferStatusExpired: build.mutation({
 			query: ({ id, status }) => ({
@@ -338,21 +401,17 @@ export const JobOfferApi = createApi({
 				method: 'PUT',
 				body: { status, id },
 			}),
-			invalidatesTags: ['jobContract'],
+			invalidatesTags: ['jobOffer'],
 		}),
-		updateJobOffer: build.mutation<
-			{ jobId?: number; freelancerId?: number; status: string },
-			IUpdateOffer
-		>({
-			query: ({ jobId, freelancerId, status }) => ({
-				url: `/jobOffer/${jobId}/${freelancerId}`,
+		updateJobOffer: build.mutation({
+			query: ({ jobId, freelancerId, status, clientId }) => ({
+				url: `/jobOffer/${jobId}/${freelancerId}/${clientId}`,
 				method: 'PUT',
 				body: { status },
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
 				},
 			}),
-			invalidatesTags: ['jobOffer'],
 		}),
 	}),
 });
