@@ -396,7 +396,8 @@ export const JobOfferApi = createApi({
 			invalidatesTags: ['jobOffer'],
 		}),
 		getJobOffer: build.query({
-			query: data => `/jobOffer/job/${data.jobPostId}/${data.freelancerId}/${data.clientId}`,
+			query: currentChatId =>
+				`/jobOffer/job/${currentChatId.jobPostId}/${currentChatId.receiverId}/${currentChatId.senderId}`,
 			providesTags: ['jobOffer'],
 		}),
 		getAcceptedJobOffer: build.query({
