@@ -9,7 +9,7 @@ export const Title = styled.div`
 	display: block;
 	font-weight: bold;
 	padding: ${props => props.theme.spacing(5)} 0 0 ${props => props.theme.spacing(5)};
-	font-size: 20px;
+	font-size: ${MEDIUM_FONT_SIZE};
 `;
 export const MainWrapper = styled.div`
 	margin: ${props => props.theme.spacing(5)} auto;
