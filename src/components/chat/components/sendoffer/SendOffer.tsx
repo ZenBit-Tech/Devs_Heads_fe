@@ -49,9 +49,7 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 			freelancerId,
 			clientId,
 			jobPostId,
-			isError,
 		};
-		console.log(isError);
 		if (isError) {
 			sendData(NewData);
 		} else {
