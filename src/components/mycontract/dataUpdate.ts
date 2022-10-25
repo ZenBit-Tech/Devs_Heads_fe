@@ -1,7 +1,7 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { IContract } from './interfaces';
 
-export const expired = 'expired';
+export const expired = 'accepted';
 export const accepted = 'accepted';
 export const client = 'client';
 export const freelancer = 'freelancer';
@@ -31,16 +31,15 @@ export const getDate = (date: Date) => {
 };
 
 export const useSendData = (offerAccepted: IContract[]) => {
-	const ids: number[] = [];
-
+	const [ids, setIds] = useState<number[]>([]);
 	const filteredContract = useMemo(
-		() => offerAccepted?.filter((item: IContract) => new Date(item.endDate) < new Date()),
+		() => offerAccepted?.filter((item: IContract) => new Date(item.endDate) > new Date()),
 		[offerAccepted],
 	);
-	useMemo(
-		() => filteredContract?.filter((item: IContract) => ids.push(item.id)),
-		[filteredContract],
-	);
+	useEffect(() => {
+		const contract = filteredContract?.map(item => item.id);
+		setIds(contract);
+	}, [filteredContract, offerAccepted]);
 
 	return { ids, offerAccepted };
 };
