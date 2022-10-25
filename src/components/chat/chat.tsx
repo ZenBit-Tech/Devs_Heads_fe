@@ -62,7 +62,7 @@ const Chat = () => {
 	const { data: messages, isLoading } = useGetMessagesByRoomQuery(chatRoomId);
 	const { data: room, isFetching } = useGetRoomsByTwoUsersQuery(currentChatId);
 	const [updateChatRoom] = useUpdateChatRoomMutation();
-	const { data: offer, isError } = useGetJobOfferQuery(currentChatId);
+	const { data: offer } = useGetJobOfferQuery(currentChatId);
 	const scrollRef = useRef<null | HTMLDivElement>(null);
 	useEffect(() => {
 		scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -191,15 +191,27 @@ const Chat = () => {
 							<SaveButton onClick={toggle} className="btn btn-success">
 								{`${t('InvitePopup.buttonOffer')}`}
 							</SaveButton>
-							<SendOfferPopup
-								hide={toggle}
-								isShown={isShown}
-								setIsShown={setIsShown}
-								freelancerId={currentChatId.receiverId}
-								clientId={currentChatId.senderId}
-								jobPostId={currentChatId.jobPostId}
-								isError={offer?.length}
-							/>
+							{room?.receiverId.profileSetting ? (
+								<SendOfferPopup
+									hide={toggle}
+									isShown={isShown}
+									setIsShown={setIsShown}
+									freelancerId={currentChatId.receiverId}
+									clientId={currentChatId.senderId}
+									jobPostId={currentChatId.jobPostId}
+									isError={offer?.length}
+								/>
+							) : (
+								<SendOfferPopup
+									hide={toggle}
+									isShown={isShown}
+									setIsShown={setIsShown}
+									freelancerId={currentChatId.senderId}
+									clientId={currentChatId.receiverId}
+									jobPostId={currentChatId.jobPostId}
+									isError={offer?.length}
+								/>
+							)}
 						</div>
 					)}
 				</TitleMessage>

@@ -39,7 +39,7 @@ export const useSendData = (offerAccepted: IContract[]) => {
 	useEffect(() => {
 		const contract = filteredContract?.map(item => item.id);
 		setIds(contract);
-	}, [filteredContract, offerAccepted]);
+	}, [filteredContract]);
 
 	return { ids, offerAccepted };
 };
