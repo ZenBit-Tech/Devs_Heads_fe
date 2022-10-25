@@ -1,3 +1,4 @@
+import { ACE_BLUE } from 'constants/colors';
 import { LARGE_FONT_SIZE, MEDIUM_FONT_SIZE } from 'constants/fonts';
 import styled from 'styled-components';
 
@@ -40,6 +41,9 @@ export const ContractContainer = styled.div`
 	border: 2px solid ${props => props.theme.colors.lightGray};
 	border-radius: ${props => props.theme.spacing(5)};
 	margin-bottom: ${props => props.theme.spacing(10)};
+	&:hover {
+		background-color: ${ACE_BLUE};
+	}
 `;
 export const ContractItem = styled.div`
 	display: flex;
@@ -79,5 +83,32 @@ export const P = styled.p`
 export const NotFoundContract = styled.div`
 	display: flex;
 	margin: ${props => props.theme.spacing(12.5)};
+	font-size: ${LARGE_FONT_SIZE};
+`;
+
+export const ContractP = styled.p`
+	font-size: ${MEDIUM_FONT_SIZE};
+	margin: 2%;
+`;
+export const ContractDiv = styled.div`
+	& > p {
+		font-size: ${MEDIUM_FONT_SIZE};
+		margin-top: 2%;
+		display: inline-block;
+	}
+	& > img {
+		grid-row: span 2;
+		height: 50px;
+		width: 50px;
+		border-radius: 100%;
+		margin: 2%;
+		display: inline-block;
+	}
+`;
+export const ContractTitle = styled.p`
+	margin: 3%;
+	border-radius: ${props => props.theme.spacing(1)};
+	padding: ${props => props.theme.spacing(2)} ${props => props.theme.spacing(10)};
+	border: 2px solid ${props => props.theme.colors.lightGray};
 	font-size: ${LARGE_FONT_SIZE};
 `;

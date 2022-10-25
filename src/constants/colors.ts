@@ -16,3 +16,4 @@ export const LIGHTGREY_COLOR = '#ced4da';
 export const GREY_BLUE_COLOR = '#ced9dc';
 export const GREY_LIGHT_COLOR = '#8aa5b0';
 export const COLOR_GREY = '#e8e4e4';
+export const ACE_BLUE = '#f0f8ff';

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import ReactDOM from 'react-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
@@ -30,7 +30,6 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 	freelancerId,
 	clientId,
 	jobPostId,
-	setOpen,
 }) => {
 	const {
 		register,
@@ -52,13 +51,12 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 			jobPostId,
 		};
 		if (isError) {
-			sendData(NewData);
-		} else {
 			sendUpdatedData(NewData);
+		} else {
+			sendData(NewData);
 		}
 		setIsShown(false);
 		reset();
-		setOpen(true);
 	};
 
 	const modal = (

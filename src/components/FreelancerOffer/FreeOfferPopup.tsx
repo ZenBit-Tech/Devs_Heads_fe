@@ -23,19 +23,21 @@ interface IProps {
 		endDate: string;
 		jopPostId: number;
 		freelancerId: number;
+		clientId: number;
 	};
 	setOfferResponse: (response: string) => void;
 	setStatus: (status: boolean) => void;
 }
 
 const FreelancerOfferPopup = (props: IProps) => {
-	const { open, offer, setOfferResponse, setStatus } = props;
+	const { offer, setOfferResponse, setStatus } = props;
 	const [updateOffer] = useUpdateJobOfferMutation();
+	const open = true;
 
 	const handleClick = async (status: boolean) => {
 		try {
-			const { jopPostId, freelancerId } = offer;
-			await updateOffer({ jobId: jopPostId, freelancerId, status }).unwrap();
+			const { jopPostId, freelancerId, clientId } = offer;
+			await updateOffer({ jobId: jopPostId, freelancerId, clientId, status }).unwrap();
 			setStatus(status);
 			if (status === true) {
 				setOfferResponse(`${t('FreeOfferPopup.acceptMessage')}`);

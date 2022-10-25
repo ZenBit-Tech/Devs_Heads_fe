@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { IContract } from './interfaces';
 
-export const expired = 'expired';
-export const accepted = 'accepted';
+export const expired = 'Expired';
+export const accepted = 'Accepted';
 export const client = 'client';
 export const freelancer = 'freelancer';
 
@@ -12,8 +12,8 @@ export type DataSchema = {
 };
 
 export const selectionStatus = [
-	{ value: 'expired', label: 'Ended' },
-	{ value: 'accepted', label: 'In Process' },
+	{ value: 'Expired', label: 'Ended' },
+	{ value: 'Accepted', label: 'In Process' },
 ];
 
 export const selectionDate = [
@@ -31,16 +31,17 @@ export const getDate = (date: Date) => {
 };
 
 export const useSendData = (offerAccepted: IContract[]) => {
-	const ids: number[] = [];
-
+	const [ids, setIds] = useState<number[]>([]);
 	const filteredContract = useMemo(
 		() => offerAccepted?.filter((item: IContract) => new Date(item.endDate) < new Date()),
 		[offerAccepted],
 	);
-	useMemo(
-		() => filteredContract?.filter((item: IContract) => ids.push(item.id)),
-		[filteredContract],
-	);
+	useEffect(() => {
+		if (filteredContract) {
+			const contract = filteredContract?.map(item => item.id);
+			setIds(contract);
+		}
+	}, [filteredContract]);
 
 	return { ids, offerAccepted };
 };

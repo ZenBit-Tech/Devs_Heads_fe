@@ -45,7 +45,6 @@ export const useSendData = () => {
 				clientId: data.clientId,
 				jobPostId: data.jobPostId,
 			};
-			console.log(newObj);
 			await updateOffer(newObj).unwrap();
 			openNotificationWithIcon('success');
 		} catch (error) {

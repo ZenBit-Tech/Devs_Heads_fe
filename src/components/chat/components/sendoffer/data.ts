@@ -4,7 +4,6 @@ export interface ModalProps {
 	isShown: boolean;
 	hide: () => void;
 	setIsShown: (isShown: boolean) => void;
-	setOpen: (open: boolean) => void;
 	freelancerId: number;
 	clientId: number;
 	jobPostId: number;
