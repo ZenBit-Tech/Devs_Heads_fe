@@ -11,7 +11,6 @@ import {
 	ISignUpResponseGoogle,
 	FormData,
 	FormPassSingleProfile,
-	IUpdateOffer,
 } from './interfaces';
 
 const BASE_URL = `${process.env.REACT_APP_API_URL}`;
@@ -311,28 +310,6 @@ export const invitationPostApi = createApi({
 });
 
 export const { usePostInvitationMutation } = invitationPostApi;
-
-export const JobOfferApi = createApi({
-	reducerPath: 'jobOffer',
-	baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
-	endpoints: build => ({
-		getJobOffer: build.query({
-			query: ({ id, freelancerId }) => `/jobOffer/job/${id}/${freelancerId}`,
-		}),
-		updateJobOffer: build.mutation<
-			{ jobId?: number; freelancerId?: number; status: boolean },
-			IUpdateOffer
-		>({
-			query: ({ jobId, freelancerId, status }) => ({
-				url: `/jobOffer/${jobId}/${freelancerId}`,
-				method: 'PUT',
-				body: { status },
-			}),
-		}),
-	}),
-});
-
-export const { useGetJobOfferQuery, useUpdateJobOfferMutation } = JobOfferApi;
 
 export const messagesApi = createApi({
 	reducerPath: 'message',

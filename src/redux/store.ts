@@ -6,7 +6,6 @@ import {
 	jobPostApi,
 	profileApi,
 	proposalPostApi,
-	JobOfferApi,
 	messagesApi,
 	JobOfferApi,
 } from 'service/httpService';

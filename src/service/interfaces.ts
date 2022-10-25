@@ -54,8 +54,3 @@ export type FormData = {
 	password: string;
 	role?: string;
 };
-export interface IUpdateOffer {
-	jobId?: number;
-	freelancerId?: number;
-	status: boolean;
-}

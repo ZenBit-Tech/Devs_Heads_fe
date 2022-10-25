@@ -45,6 +45,7 @@ import ChatTitle from 'components/chat/components/chatTitle';
 import { Role } from 'pages/RoleSelection';
 import SendOfferPopup from 'components/chat/components/sendoffer/SendOffer';
 import { SaveButton } from 'components/clientSettings/clentSettings.styles';
+import FreeOfferPopup from 'components/FreelancerOffer/FreeOfferPopup';
 
 const Chat = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -57,6 +58,9 @@ const Chat = () => {
 	const [roomMessages, setRoomMessages] = useState<MessageBackend[]>();
 	const [active, setActive] = useState<number>(chatRoomId);
 	const [defaultChat, setDefaultChat] = useState<RoomBackend>();
+	const [open, setOpen] = useState<boolean>(false);
+	const [offerResponse, setOfferResponse] = useState<string>('');
+	const [status, setStatus] = useState<boolean>(false);
 
 	const { data: rooms, isSuccess } = useGetRoomsByUserQuery(userId);
 	const { data: messages, isLoading } = useGetMessagesByRoomQuery(chatRoomId);
@@ -196,6 +200,7 @@ const Chat = () => {
 								hide={toggle}
 								isShown={isShown}
 								setIsShown={setIsShown}
+								setOpen={setOpen}
 								freelancerId={currentChatId.receiverId}
 								clientId={currentChatId.senderId}
 								jobPostId={currentChatId.jobPostId}
@@ -239,6 +244,13 @@ const Chat = () => {
 								return (
 									<RightLi>
 										<MessageComponent message={message} className={`message recieved`} />
+										<FreeOfferPopup
+											open={open}
+											offer={offer}
+											setOfferResponse={setOfferResponse}
+											setStatus={setStatus}
+										/>
+										{(status && offerResponse) || (!status && offerResponse)}
 									</RightLi>
 								);
 							} else {

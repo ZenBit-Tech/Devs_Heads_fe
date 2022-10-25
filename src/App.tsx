@@ -31,9 +31,7 @@ const RestorePassword = lazy(() => import('components/restorePassword/restorePas
 const PostJobPage = lazy(() => import('pages/PostJobPage'));
 const JobDescriptionPage = lazy(() => import('pages/JobDescriptionPage'));
 const JobDescriptionEditPage = lazy(() => import('pages/JobDescriptionEditPage'));
-// const InviteTalent = lazy(() => import('pages/InviteTalentPage'));
 const ClientSettings = lazy(() => import('pages/ClientSettingsPage'));
-const FreelancerOffer = lazy(() => import('components/FreelancerOffer/FreeOfferPopup'));
 
 const Chat = lazy(() => import('components/chat/chat'));
 
@@ -52,7 +50,6 @@ const App: FC = () => {
 							{/*here public routes */}
 							<Route path="/forgot-password" element={<ForgotPassword />} />
 							<Route path={'/restore-password/:token'} element={<RestorePassword />} />
-							<Route path="/test" element={<FreelancerOffer />} />
 							<Route path="/sign-in" element={<SignIn />} />
 							<Route path="/sign-up" element={<SignUp />} />
 							<Route path="/welcome" element={<WelcomePage />} />

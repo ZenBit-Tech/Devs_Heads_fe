@@ -12,32 +12,35 @@ import {
 	Modal,
 	P2,
 } from 'components/FreelancerOffer/FreeOfferPopup.styles';
-import { useGetJobOfferQuery, useUpdateJobOfferMutation } from 'service/httpService';
-import { notification } from 'antd';
-import { Alert } from 'components/inviteTalent/interfaces';
-import { ALERT_SUCCESS } from 'constants/links';
+import { useUpdateJobOfferMutation } from 'service/httpService';
 
-const FreelancerOfferPopup = () => {
-	const { data: offer } = useGetJobOfferQuery({ id: 25, freelancerId: 1 });
-	const [updateOffer] = useUpdateJobOfferMutation();
-	const open = true;
-
-	const alert = (type: Alert) => {
-		notification[type]({
-			message:
-				type === ALERT_SUCCESS
-					? `${t('FreeOfferPopup.acceptMessage')}`
-					: `${t('FreeOfferPopup.declineMessage')}`,
-		});
+interface IProps {
+	open: boolean;
+	offer: {
+		name: string;
+		price: number;
+		startDate: string;
+		endDate: string;
+		jopPostId: number;
+		freelancerId: number;
 	};
+	setOfferResponse: (response: string) => void;
+	setStatus: (status: boolean) => void;
+}
+
+const FreelancerOfferPopup = (props: IProps) => {
+	const { open, offer, setOfferResponse, setStatus } = props;
+	const [updateOffer] = useUpdateJobOfferMutation();
 
 	const handleClick = async (status: boolean) => {
 		try {
-			await updateOffer({ jobId: 25, freelancerId: 1, status }).unwrap();
+			const { jopPostId, freelancerId } = offer;
+			await updateOffer({ jobId: jopPostId, freelancerId, status }).unwrap();
+			setStatus(status);
 			if (status === true) {
-				alert('success');
+				setOfferResponse(`${t('FreeOfferPopup.acceptMessage')}`);
 			} else {
-				alert('error');
+				setOfferResponse(`${t('FreeOfferPopup.declineMessage')}`);
 			}
 		} catch (error) {
 			console.error(error);

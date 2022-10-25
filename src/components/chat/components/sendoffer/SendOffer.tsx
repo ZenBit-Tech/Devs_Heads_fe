@@ -30,6 +30,7 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 	freelancerId,
 	clientId,
 	jobPostId,
+	setOpen,
 }) => {
 	const {
 		register,
@@ -57,6 +58,7 @@ export const SendOfferPopup: FunctionComponent<ModalProps> = ({
 		}
 		setIsShown(false);
 		reset();
+		setOpen(true);
 	};
 
 	const modal = (
