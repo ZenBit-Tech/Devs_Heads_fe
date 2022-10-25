@@ -146,7 +146,7 @@ function MyContract() {
 										alt="freelancerPhoto"
 									/>
 								) : (
-									<Image src={item.clientId?.clientSetting.photo} alt="clientPрoto" />
+									<Image src={item.clientId?.clientSetting.photo} alt="clientPhoto" />
 								)}
 								<div>
 									{user.role === client && item?.freelancerId?.firstName && (
@@ -159,7 +159,7 @@ function MyContract() {
 									)}
 									{user.role === freelancer && <P>{item?.name}</P>}
 								</div>
-								<P className={item.status === accepted ? 'accepted' : 'expired'}>
+								<P className={item.status === accepted ? accepted : expired}>
 									Status/{item.status}
 								</P>
 								<P>

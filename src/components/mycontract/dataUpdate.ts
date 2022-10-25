@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { IContract } from './interfaces';
 
-export const expired = 'expired';
-export const accepted = 'accepted';
+export const expired = 'Expired';
+export const accepted = 'Accepted';
 export const client = 'client';
 export const freelancer = 'freelancer';
 
@@ -12,8 +12,8 @@ export type DataSchema = {
 };
 
 export const selectionStatus = [
-	{ value: 'expired', label: 'Ended' },
-	{ value: 'accepted', label: 'In Process' },
+	{ value: 'Expired', label: 'Ended' },
+	{ value: 'Accepted', label: 'In Process' },
 ];
 
 export const selectionDate = [
