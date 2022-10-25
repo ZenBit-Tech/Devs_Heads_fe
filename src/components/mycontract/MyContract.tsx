@@ -44,7 +44,6 @@ function MyContract() {
 	const { user } = useAppSelector<RootState>(state => state);
 	const [selectDate, setSelectDate] = useState<ISelect>();
 	const [selectStatus, setSelectStatus] = useState<ISelect>();
-	const [status, setStatus] = useState<IContract[]>([]);
 	const {
 		control,
 		getValues,
@@ -57,27 +56,22 @@ function MyContract() {
 		status: selectStatus?.name,
 	};
 	const { data: offerAccepted, isLoading, isSuccess } = useGetAcceptedJobOfferQuery(dataSend);
-	const { ids } = useSendData(offerAccepted);
 	const [updateStatus] = useUpdateOfferStatusExpiredMutation();
+	const { ids } = useSendData(offerAccepted);
 
 	useEffect(() => {
-		const intervalId = setInterval(() => {
-			updateStatusContract();
-		}, 60000);
-		return () => clearInterval(intervalId);
-	}, []);
-
-	const updateStatusContract = async () => {
-		await updateStatus({ id: ids, status: expired });
-	};
+		const updateExpired = async () => {
+			const data = await updateStatus({ id: ids, status: expired });
+		};
+		updateExpired();
+	}, [offerAccepted, ids, expired]);
 
 	useEffect(() => {
 		const sortArray = () => {
 			if (offerAccepted) {
-				const sorted = [...offerAccepted].sort((a: { status: string }, b: { status: string }) =>
+				return [...offerAccepted].sort((a: { status: string }, b: { status: string }) =>
 					a.status > b.status ? -1 : 1,
 				);
-				setStatus(sorted);
 			}
 		};
 
@@ -129,23 +123,26 @@ function MyContract() {
 						</Div>
 					</SelectBlock>
 				</Wrapper>
-				{status.length > 0 && !isLoading ? (
-					status?.map((item: IContract) => {
+				{offerAccepted.length > 0 && !isLoading ? (
+					offerAccepted?.map((item: IContract) => {
 						return (
 							<ContractContainer key={item.id}>
 								<Title>{item.jobPostId?.jobTitle}</Title>
 								<ContractItem>
 									{user.role === client ? (
-										<Image src={item.freelancerId?.photo ?? profileImage} alt="freelancerPhoto" />
+										<Image
+											src={item.freelancerId?.profileSetting?.photo ?? profileImage}
+											alt="freelancerPhoto"
+										/>
 									) : (
 										<Image src={item.jobPostId?.userId.clientSetting.photo} alt="clientPoto" />
 									)}
 									<Link className="link" to="#">
-										{user.role === client && item?.freelancerId?.userId.firstName && (
+										{user.role === client && item?.freelancerId?.firstName && (
 											<>
 												<P>
-													{item?.freelancerId.userId.firstName ?? 'default'}{' '}
-													{item?.freelancerId.userId.lastName ?? 'default'}
+													{item?.freelancerId?.firstName ?? 'default'}{' '}
+													{item?.freelancerId?.lastName ?? 'default'}
 												</P>
 											</>
 										)}

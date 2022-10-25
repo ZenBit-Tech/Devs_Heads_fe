@@ -64,7 +64,6 @@ const Chat = () => {
 	const [updateChatRoom] = useUpdateChatRoomMutation();
 	const { data: offer, isError } = useGetJobOfferQuery(currentChatId);
 	const scrollRef = useRef<null | HTMLDivElement>(null);
-	console.log(offer?.length);
 	useEffect(() => {
 		scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
 	}, [messages]);

@@ -5,11 +5,11 @@ export interface IContract {
 	startDate: string;
 	endDate: string;
 	freelancerId: {
-		photo: string;
-		userId: {
-			firstName: string;
-			lastName: string;
+		profileSetting: {
+			photo: string;
 		};
+		firstName: string;
+		lastName: string;
 	};
 	jobPostId: {
 		jobTitle: string;
