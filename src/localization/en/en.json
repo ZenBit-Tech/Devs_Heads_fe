@@ -300,5 +300,13 @@
 	},
 	"chat": {
 		"accepted": "Accepted"
+	},
+	"ContractSummary": {
+		"title" : "Contract Summary",
+		"name" : "Contract name: ",
+		"price": "Price: $ ",
+		"start": "Start date: ",
+		"end": "End date: ",
+		"status": "Status: "
 	}
 }

@@ -4,6 +4,7 @@ export interface IContract {
 	status: string;
 	startDate: string;
 	endDate: string;
+	price: string;
 	freelancerId: {
 		profileSetting: {
 			photo: string;
@@ -13,16 +14,38 @@ export interface IContract {
 	};
 	jobPostId: {
 		jobTitle: string;
-		userId: {
-			clientSetting: {
-				photo: string;
-			};
-		};
 	};
 	clientId: {
-		photo: string;
+		clientSetting: {
+			photo: string;
+			name: string;
+		};
 	};
 }
 export interface ISelect {
 	name: string;
 }
+export const initialContract = {
+	id: 0,
+	name: '',
+	status: '',
+	startDate: '',
+	endDate: '',
+	price: '',
+	freelancerId: {
+		profileSetting: {
+			photo: '',
+		},
+		firstName: '',
+		lastName: '',
+	},
+	jobPostId: {
+		jobTitle: '',
+	},
+	clientId: {
+		clientSetting: {
+			photo: '',
+			name: '',
+		},
+	},
+};
