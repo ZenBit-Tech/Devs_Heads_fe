@@ -13,7 +13,11 @@ import Profile from 'image/profile-talent.png';
 
 const FilterProfileUser: FC<{ item: Filter; path: boolean }> = ({ item, path }) => {
 	return (
-		<>
+		<Link
+			to={{
+				pathname: `/profile/${item.id}`,
+			}}
+		>
 			<ImageWrapperBlock>
 				{item.photo ? (
 					<PhotoWrapper>
@@ -26,23 +30,13 @@ const FilterProfileUser: FC<{ item: Filter; path: boolean }> = ({ item, path }) 
 				)}
 			</ImageWrapperBlock>
 			<ProfileData>
-				{path ? (
-					<Link
-						to={{
-							pathname: `/profile/${item.id}`,
-						}}
-					>
-						{item.userId.firstName} {item.userId.lastName}
-					</Link>
-				) : (
-					<>
-						{item.userId.firstName} {item.userId.lastName}
-					</>
-				)}
+				<p>
+					{item.userId.firstName} {item.userId.lastName}
+				</p>
 				<p>{item.position}</p>
 				{`${t('TalentCompanyPage.rate')} ${item.price}$`}
 			</ProfileData>
-		</>
+		</Link>
 	);
 };
 

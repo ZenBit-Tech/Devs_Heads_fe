@@ -8,6 +8,7 @@ import {
 	proposalPostApi,
 	JobOfferApi,
 	messagesApi,
+	JobOfferApi,
 } from 'service/httpService';
 import sampleReducer from './reducers/sampleSlice';
 import { userReducer } from './reducers/userSlice';
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
 	[invitationPostApi.reducerPath]: invitationPostApi.reducer,
 	[JobOfferApi.reducerPath]: JobOfferApi.reducer,
 	[messagesApi.reducerPath]: messagesApi.reducer,
+	[JobOfferApi.reducerPath]: JobOfferApi.reducer,
 });
 
 const persistConfig = {
@@ -60,6 +62,7 @@ export const store = configureStore({
 			invitationPostApi.middleware,
 			JobOfferApi.middleware,
 			messagesApi.middleware,
+			JobOfferApi.middleware,
 		]),
 });
 

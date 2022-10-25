@@ -30,7 +30,6 @@ export const SaveButton = styled.button`
 	background-color: ${DODGERBLUE_COLOR};
 	color: ${WHITE_COLOR};
 	border-color: ${WHITE_COLOR};
-	margin: 2% auto;
 	text-align: center;
 	font-size: ${MEDIUM_FONT_SIZE};
 	box-shadow: 3px 2px 2px ${GREY};
@@ -116,7 +115,7 @@ export const Button = styled.div`
 	border: 1px solid ${DODGERBLUE_COLOR};
 	border-radius: 10px;
 	padding: 10px 20px;
-	width: 50%;
+	width: 150px;
 	margin-bottom: 5%;
 	background-color: ${WHITE_COLOR};
 	color: ${DODGERBLUE_COLOR};
@@ -144,11 +143,12 @@ export const ProfilePhoto = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-self: center;
+	min-height: 300px;
 
 	& > button {
 		width: 130px;
 		border: 1px solid;
-		margin-top: 5px;
+		margin-top: 10px;
 		background-color: #f0f0f0;
 	}
 `;

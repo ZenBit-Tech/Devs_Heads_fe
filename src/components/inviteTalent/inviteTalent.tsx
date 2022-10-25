@@ -47,8 +47,8 @@ const InviteTalent: FC = () => {
 	const defaultTitle = post?.find((el: IPost) => el.jobTitle);
 
 	const clientInfos = {
-		clientId: post?.find((el: IPost) => el.userId).userId,
-		jobPostId: post?.find((el: IPost) => el.id).id,
+		clientId: post?.find((el: IPost) => el.userId)?.userId,
+		jobPostId: post?.find((el: IPost) => el.id)?.id,
 	};
 
 	const Context = {

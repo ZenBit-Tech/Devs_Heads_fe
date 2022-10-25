@@ -2,6 +2,8 @@ import {
 	useGetMessagesByRoomQuery,
 	useGetRoomsByUserQuery,
 	useGetRoomsByTwoUsersQuery,
+	useUpdateChatRoomMutation,
+	useGetJobOfferQuery,
 } from 'service/httpService';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
@@ -23,7 +25,14 @@ import {
 	ArrowBlock,
 	TitleMessage,
 } from 'components/chat/chat.styles';
-import { initialId, MessageBackend, MessageFrontend, RoomBackend, UserList } from './interfaces';
+import {
+	DataSchema,
+	initialId,
+	MessageBackend,
+	MessageFrontend,
+	RoomBackend,
+	UserList,
+} from './interfaces';
 import { Input } from 'components/clientSettings/clentSettings.styles';
 import { t } from 'i18next';
 import Image from 'image/no_result.png';
@@ -34,6 +43,8 @@ import User from 'components/chat/components/singleUser';
 import { useOnDataChange } from 'components/chat/data';
 import ChatTitle from 'components/chat/components/chatTitle';
 import { Role } from 'pages/RoleSelection';
+import SendOfferPopup from 'components/chat/components/sendoffer/SendOffer';
+import { SaveButton } from 'components/clientSettings/clentSettings.styles';
 
 const Chat = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -50,6 +61,8 @@ const Chat = () => {
 	const { data: rooms, isSuccess } = useGetRoomsByUserQuery(userId);
 	const { data: messages, isLoading } = useGetMessagesByRoomQuery(chatRoomId);
 	const { data: room, isFetching } = useGetRoomsByTwoUsersQuery(currentChatId);
+	const [updateChatRoom] = useUpdateChatRoomMutation();
+	const { data: offer, isError } = useGetJobOfferQuery(currentChatId);
 	const scrollRef = useRef<null | HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -71,6 +84,7 @@ const Chat = () => {
 				senderId: rooms[0]?.senderId.id,
 				receiverId: rooms[0]?.receiverId.id,
 				jobPostId: rooms[0]?.jobPostId.id,
+				activeRoom: rooms[0]?.activeRoom,
 			});
 			setActive(rooms[0]?.id);
 		}
@@ -97,12 +111,49 @@ const Chat = () => {
 			socket?.off('recMessage', messageListener);
 		};
 	}, [socket]);
+	const { register, handleSubmit, errors, reset, getDate, userList } = useOnDataChange();
 
-	const { register, handleSubmit, onSubmit, errors, updateRoom, getDate, userList } =
-		useOnDataChange();
+	const updateRoom = (chatRoomId: number) => {
+		const newObj = {
+			chatRoomId,
+			activeRoom: true,
+		};
+		updateChatRoom(newObj);
+		const message = {
+			text: 'Accepted',
+			chatRoomId,
+			userId,
+		};
+		socket?.emit('sendMessage', message);
+	};
+	const useModal = () => {
+		const [isShown, setIsShown] = useState<boolean>(false);
+		const toggle = () => setIsShown(!isShown);
+		return {
+			isShown,
+			setIsShown,
+			toggle,
+		};
+	};
+	const { isShown, setIsShown, toggle } = useModal();
 
-	const changeRoom = (senderId: number, receiverId: number, jobPostId: number, roomId: number) => {
-		setCurrentChatId({ senderId, receiverId, jobPostId });
+	const onSubmit = (data: DataSchema, chatRoomId: number) => {
+		const NewData = {
+			...data,
+			userId,
+			chatRoomId,
+		};
+		socket?.emit('sendMessage', NewData);
+		reset();
+	};
+	const changeRoom = (
+		senderId: number,
+		receiverId: number,
+		jobPostId: number,
+		roomId: number,
+		activeRoom: boolean,
+	) => {
+		setCurrentChatId({ senderId, receiverId, jobPostId, activeRoom });
 		setChatRoomId(roomId);
 		setActive(chatRoomId);
 	};
@@ -136,6 +187,22 @@ const Chat = () => {
 					<ArrowBlock>
 						<ChatTitle userRole={user.role} room={room} />
 					</ArrowBlock>
+					{user.role === Role.Client && currentChatId?.activeRoom && (
+						<div>
+							<SaveButton onClick={toggle} className="btn btn-success">
+								{`${t('InvitePopup.buttonOffer')}`}
+							</SaveButton>
+							<SendOfferPopup
+								hide={toggle}
+								isShown={isShown}
+								setIsShown={setIsShown}
+								freelancerId={currentChatId.receiverId}
+								clientId={currentChatId.senderId}
+								jobPostId={currentChatId.jobPostId}
+								isError={isError}
+							/>
+						</div>
+					)}
 				</TitleMessage>
 				<ChatMessages ref={scrollRef}>
 					{roomMessages?.map((message: MessageBackend) => {
