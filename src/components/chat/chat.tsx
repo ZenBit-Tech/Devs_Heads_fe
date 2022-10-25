@@ -217,6 +217,13 @@ const Chat = () => {
 								<RightLi>
 									<MessageComponent message={message} className={`message recieved`} />
 									<Message className={`message date recieved`}>{date}</Message>
+									<FreeOfferPopup
+										open={open}
+										offer={offer}
+										setOfferResponse={setOfferResponse}
+										setStatus={setStatus}
+									/>
+									{(status && offerResponse) || (!status && offerResponse)}
 								</RightLi>
 							);
 						} else {
@@ -244,13 +251,6 @@ const Chat = () => {
 								return (
 									<RightLi>
 										<MessageComponent message={message} className={`message recieved`} />
-										<FreeOfferPopup
-											open={open}
-											offer={offer}
-											setOfferResponse={setOfferResponse}
-											setStatus={setStatus}
-										/>
-										{(status && offerResponse) || (!status && offerResponse)}
 									</RightLi>
 								);
 							} else {
