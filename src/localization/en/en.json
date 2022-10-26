@@ -307,7 +307,9 @@
 		"btnAccept": "Accept",
 		"btnDecline": "Decline",
 		"acceptMessage": "You have accepted the offer",
-		"declineMessage": "You have declined the offer"
+		"declineMessage": "You have declined the offer",
+		"accepted": "Your offer has been accepted",
+		"declined": "Your offer has been declined"
 	},
 	"chat": {
 		"accepted": "Accepted"

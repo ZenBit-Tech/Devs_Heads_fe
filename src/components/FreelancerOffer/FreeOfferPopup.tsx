@@ -11,6 +11,8 @@ import {
 	P2,
 } from 'components/FreelancerOffer/FreeOfferPopup.styles';
 import { useUpdateJobOfferMutation } from 'service/httpService';
+import { ISliceState } from 'redux/reducers/userSlice';
+import { Role } from 'pages/RoleSelection';
 
 interface IProps {
 	offer: [
@@ -24,12 +26,13 @@ interface IProps {
 			clientId: number;
 		},
 	];
+	user: ISliceState;
 	setOfferResponse: (response: string) => void;
 	setStatus: (status: boolean) => void;
 }
 
 const FreelancerOfferPopup = (props: IProps) => {
-	const { offer, setOfferResponse, setStatus } = props;
+	const { offer, user, setOfferResponse, setStatus } = props;
 	const [updateOffer] = useUpdateJobOfferMutation();
 	const Accepted = 'Accepted';
 
@@ -44,10 +47,12 @@ const FreelancerOfferPopup = (props: IProps) => {
 			await updateOffer({ jobPostId, freelancerId, clientId, status }).unwrap();
 			if (status === Accepted) {
 				setStatus(true);
-				setOfferResponse(`${t('FreeOfferPopup.acceptMessage')}`);
+				user.role === Role.Freelancer && setOfferResponse(`${t('FreeOfferPopup.acceptMessage')}`);
+				user.role === Role.Client && setOfferResponse(`${t('FreeOfferPopup.accepted')}`);
 			} else {
 				setStatus(false);
-				setOfferResponse(`${t('FreeOfferPopup.declineMessage')}`);
+				user.role === Role.Freelancer && setOfferResponse(`${t('FreeOfferPopup.declineMessage')}`);
+				user.role === Role.Client && setOfferResponse(`${t('FreeOfferPopup.declined')}`);
 			}
 		} catch (error) {
 			console.error(error);

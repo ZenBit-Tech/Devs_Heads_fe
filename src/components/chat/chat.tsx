@@ -236,12 +236,15 @@ const Chat = () => {
 										<>
 											<FreeOfferPopup
 												offer={offer}
+												user={user}
 												setOfferResponse={setOfferResponse}
 												setStatus={setStatus}
 											/>
 											<Message>{status ? offerResponse : offerResponse}</Message>
 										</>
-									) : null}
+									) : (
+										<Message>{status ? offerResponse : offerResponse}</Message>
+									)}
 								</RightLi>
 							);
 						} else {
