@@ -2,20 +2,19 @@ import styled from 'styled-components';
 import { BLACK_COLOR, BLUE, WHITE } from 'constants/colors';
 import { FONT_MEDIUM, MEDIUM_FONT_SIZE } from 'constants/fonts';
 
-export const Div = styled.div`
-	align-content: center;
-	display: flex;
-	flex-flow: row wrap;
-`;
-
 export const P2 = styled.h4`
+	align-self: flex-start;
 	font-size: ${FONT_MEDIUM};
 	font-weight: bold;
+	margin: 5px;
+	margin-top: -20px;
+	margin-left: 180px;
 `;
 
 export const P = styled.p`
 	font-size: ${FONT_MEDIUM};
-	margin: 2px;
+	margin: 5px;
+	margin-right: 250px;
 `;
 
 export const Modal = styled.div`
@@ -26,7 +25,7 @@ export const Modal = styled.div`
 	border: 1px solid ${BLACK_COLOR};
 	border-radius: 10px;
 	margin-top: 20px;
-	height: 220px;
+	height: 250px;
 	width: 400px;
 `;
 
@@ -38,17 +37,8 @@ export const Header = styled.header`
 `;
 
 export const Content = styled.div`
-	align-content: center;
-	& p {
-		margin-left: 0;
-	}
-	& h4 {
-		margin-top: -20px;
-		margin-left: 120px;
-	}
 	display: flex;
 	flex-flow: column wrap;
-	padding: 10px;
 	width: 100%;
 `;
 
@@ -57,6 +47,7 @@ export const Actions = styled.div`
 	display: flex;
 	flex-flow: row wrap;
 	margin-left: 100px;
+	margin-top: 25px;
 	width: 100%;
 `;
 

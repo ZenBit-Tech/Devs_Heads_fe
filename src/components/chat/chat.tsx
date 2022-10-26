@@ -58,15 +58,19 @@ const Chat = () => {
 	const [roomMessages, setRoomMessages] = useState<MessageBackend[]>();
 	const [active, setActive] = useState<number>(chatRoomId);
 	const [defaultChat, setDefaultChat] = useState<RoomBackend>();
-	const [open, setOpen] = useState<boolean>(false);
 	const [offerResponse, setOfferResponse] = useState<string>('');
-	const [status, setStatus] = useState<boolean>(false);
+
+	const data = {
+		jobPostId: currentChatId?.jobPostId,
+		freelancerId: currentChatId?.receiverId,
+		clientId: currentChatId?.senderId,
+	};
 
 	const { data: rooms, isSuccess } = useGetRoomsByUserQuery(userId);
 	const { data: messages, isLoading } = useGetMessagesByRoomQuery(chatRoomId);
 	const { data: room, isFetching } = useGetRoomsByTwoUsersQuery(currentChatId);
 	const [updateChatRoom] = useUpdateChatRoomMutation();
-	const { data: offer } = useGetJobOfferQuery(currentChatId);
+	const { data: offer } = useGetJobOfferQuery(data);
 	console.log(offer);
 	const scrollRef = useRef<null | HTMLDivElement>(null);
 	useEffect(() => {
@@ -228,13 +232,7 @@ const Chat = () => {
 								<RightLi>
 									<MessageComponent message={message} className={`message recieved`} />
 									<Message className={`message date recieved`}>{date}</Message>
-									<FreeOfferPopup
-										open={open}
-										offer={offer}
-										setOfferResponse={setOfferResponse}
-										setStatus={setStatus}
-									/>
-									{(status && offerResponse) || (!status && offerResponse)}
+									<FreeOfferPopup offer={offer} setOfferResponse={setOfferResponse} />
 								</RightLi>
 							);
 						} else {

@@ -1,12 +1,10 @@
 import React from 'react';
-import Popup from 'reactjs-popup';
 import { t } from 'i18next';
 import {
 	Actions,
 	BtnAccept,
 	BtnDecline,
 	Content,
-	Div,
 	P,
 	Header,
 	Modal,
@@ -15,31 +13,35 @@ import {
 import { useUpdateJobOfferMutation } from 'service/httpService';
 
 interface IProps {
-	open: boolean;
-	offer: {
-		name: string;
-		price: number;
-		startDate: string;
-		endDate: string;
-		jopPostId: number;
-		freelancerId: number;
-		clientId: number;
-	};
+	offer: [
+		{
+			name: string;
+			price: number;
+			startDate: string;
+			endDate: string;
+			jobPostId: number;
+			freelancerId: number;
+			clientId: number;
+		},
+	];
 	setOfferResponse: (response: string) => void;
-	setStatus: (status: boolean) => void;
 }
 
 const FreelancerOfferPopup = (props: IProps) => {
-	const { offer, setOfferResponse, setStatus } = props;
+	const { offer, setOfferResponse } = props;
 	const [updateOffer] = useUpdateJobOfferMutation();
-	const open = true;
+	const Accepted = 'Accepted';
 
-	const handleClick = async (status: boolean) => {
+	const handleClick = async (status: string) => {
 		try {
-			const { jopPostId, freelancerId, clientId } = offer;
-			await updateOffer({ jobId: jopPostId, freelancerId, clientId, status }).unwrap();
-			setStatus(status);
-			if (status === true) {
+			const obj = {
+				jobPostId: offer.map(el => el.jobPostId),
+				freelancerId: offer.map(el => el.freelancerId),
+				clientId: offer.map(el => el.clientId),
+			};
+			const { jobPostId, freelancerId, clientId } = obj;
+			await updateOffer({ jobPostId, freelancerId, clientId, status }).unwrap();
+			if (status === Accepted) {
 				setOfferResponse(`${t('FreeOfferPopup.acceptMessage')}`);
 			} else {
 				setOfferResponse(`${t('FreeOfferPopup.declineMessage')}`);
@@ -50,31 +52,31 @@ const FreelancerOfferPopup = (props: IProps) => {
 	};
 
 	return (
-		<Div>
-			<Popup open={open} onClose={() => close()}>
-				<Modal>
-					<Header>{`${t('FreeOfferPopup.title')}`}</Header>
+		<div>
+			<Modal>
+				<Header>{`${t('FreeOfferPopup.title')}`}</Header>
+				{offer.map(el => (
 					<Content>
 						<P>{`${t('FreeOfferPopup.company')}:`}</P>
-						<P2>{offer?.name}</P2>
+						<P2>{el.name}</P2>
 						<P>{`${t('FreeOfferPopup.price')}:`}</P>
-						<P2>{offer?.price}</P2>
+						<P2>{el.price}</P2>
 						<P>{`${t('FreeOfferPopup.start')}:`}</P>
-						<P2>{offer?.startDate}</P2>
+						<P2>{el.startDate}</P2>
 						<P>{`${t('FreeOfferPopup.end')}:`}</P>
-						<P2>{offer?.endDate}</P2>
+						<P2>{el.endDate}</P2>
 					</Content>
-					<Actions>
-						<BtnAccept type="button" onClick={() => handleClick(true)}>{`${t(
-							'FreeOfferPopup.btnAccept',
-						)}`}</BtnAccept>
-						<BtnDecline type="button" onClick={() => handleClick(false)}>{`${t(
-							'FreeOfferPopup.btnDecline',
-						)}`}</BtnDecline>
-					</Actions>
-				</Modal>
-			</Popup>
-		</Div>
+				))}
+				<Actions>
+					<BtnAccept type="button" onClick={() => handleClick('Accepted')}>{`${t(
+						'FreeOfferPopup.btnAccept',
+					)}`}</BtnAccept>
+					<BtnDecline type="button" onClick={() => handleClick('Rejected')}>{`${t(
+						'FreeOfferPopup.btnDecline',
+					)}`}</BtnDecline>
+				</Actions>
+			</Modal>
+		</div>
 	);
 };
 
