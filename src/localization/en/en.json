@@ -299,7 +299,8 @@
 		"password": "Password"
 	},
 	"chat": {
-		"accepted": "Accepted"
+		"accepted": "Accept",
+		"declined": "Decline"
 	},
 	"ContractSummary": {
 		"title" : "Contract Summary",

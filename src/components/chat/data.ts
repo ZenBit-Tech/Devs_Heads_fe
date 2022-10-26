@@ -1,11 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { DataSchema, RoomBackend, ValidationSchema } from './interfaces';
+import { DataSchema, RoomBackend, UserList, ValidationSchema } from './interfaces';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
 import { useGetRoomsByUserQuery } from 'service/httpService';
 import { useMemo } from 'react';
 import profileImage from 'image/profile.png';
+import { Role } from 'pages/RoleSelection';
 
 export const useOnDataChange = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -39,6 +40,7 @@ export const useOnDataChange = () => {
 					roomId: item?.id,
 					activeRoom: item.activeRoom,
 					date: item.createdAt,
+					deletedFor: item.deletedFor,
 				};
 				if (item.receiverId.clientSetting) {
 					const obj = {
@@ -64,5 +66,28 @@ export const useOnDataChange = () => {
 			}),
 		[rooms],
 	);
-	return { register, handleSubmit, reset, errors, getDate, userList };
+
+	const users = userList?.map((item: UserList) => {
+		if (
+			(user.role === Role.Freelancer &&
+				item.activeRoom !== 'none' &&
+				user.role !== item.deletedFor &&
+				item.deletedFor !== 'both') ||
+			(user.role === Role.Freelancer &&
+				user.id === item.receiverId &&
+				user.role !== item.deletedFor &&
+				item.deletedFor !== 'both') ||
+			(user.role === Role.Client &&
+				user.id === item.receiverId &&
+				user.role !== item.deletedFor &&
+				item.deletedFor !== 'both') ||
+			(user.role === Role.Client &&
+				item.activeRoom !== 'none' &&
+				user.role !== item.deletedFor &&
+				item.deletedFor !== 'both')
+		) {
+			return item;
+		}
+	});
+	return { register, handleSubmit, reset, errors, getDate, userList, users };
 };

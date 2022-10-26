@@ -3,6 +3,7 @@ import { ChatImage, LastMessage, SingleUser, Title } from 'components/chat/chat.
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
 import { Role } from 'pages/RoleSelection';
+import { useUpdateDeletingStatusMutation } from 'service/httpService';
 
 interface Props {
 	item: UserList;
@@ -11,7 +12,7 @@ interface Props {
 		receiverId: number,
 		jobPostId: number,
 		roomId: number,
-		activeRoom: boolean,
+		activeRoom: string,
 	) => void;
 	active: number;
 }
@@ -19,6 +20,14 @@ interface Props {
 const User = (props: Props) => {
 	const { user } = useAppSelector<RootState>(state => state);
 	const { item, changeRoom, active } = props;
+	const [updateDeletingStatus] = useUpdateDeletingStatusMutation();
+	const deleteHandler = (status: string) => {
+		const newObj = {
+			id: item.roomId,
+			deletedFor: status,
+		};
+		updateDeletingStatus(newObj);
+	};
 	return (
 		<SingleUser
 			onClick={() =>
@@ -26,6 +35,8 @@ const User = (props: Props) => {
 			}
 			className={item.roomId === active ? 'defaultActive' : ''}
 		>
+			<button onClick={() => deleteHandler(user.role)}>Delete only for me</button>
+			<button onClick={() => deleteHandler('both')}>Delete for both</button>
 			<div>
 				{user?.role === Role.Client && (
 					<>

@@ -23,7 +23,7 @@ export const UsersList = styled.ul`
 	overflow-y: auto;
 	width: 30%;
 	background-color: ${WHITE_COLOR};
-	height: 600px;
+	height: 800px;
 	border-right: 1px solid ${GREY};
 	margin: 0;
 

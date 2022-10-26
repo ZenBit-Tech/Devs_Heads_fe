@@ -110,16 +110,16 @@ const Chat = () => {
 			socket?.off('recMessage', messageListener);
 		};
 	}, [socket]);
-	const { register, handleSubmit, errors, reset, getDate, userList } = useOnDataChange();
+	const { register, handleSubmit, errors, reset, getDate, userList, users } = useOnDataChange();
 
-	const updateRoom = (chatRoomId: number) => {
+	const updateRoom = (chatRoomId: number, text: string, activeRoom: string) => {
 		const newObj = {
 			chatRoomId,
-			activeRoom: true,
+			activeRoom,
 		};
 		updateChatRoom(newObj);
 		const message = {
-			text: 'Accepted',
+			text,
 			chatRoomId,
 			userId,
 		};
@@ -150,7 +150,7 @@ const Chat = () => {
 		receiverId: number,
 		jobPostId: number,
 		roomId: number,
-		activeRoom: boolean,
+		activeRoom: string,
 	) => {
 		setCurrentChatId({ senderId, receiverId, jobPostId, activeRoom });
 		setChatRoomId(roomId);
@@ -167,15 +167,28 @@ const Chat = () => {
 			</>
 		);
 	}
+	console.log(users);
 	return (
 		<Wrapper onSubmit={handleSubmit(data => onSubmit(data, chatRoomId))}>
 			<UsersList>
 				{userList?.map((item: UserList) => {
 					if (
-						(user.role === Role.Freelancer && item.activeRoom) ||
-						(user.role === Role.Freelancer && user.id === item.receiverId) ||
-						(user.role === Role.Client && user.id === item.receiverId) ||
-						(user.role === Role.Client && item.activeRoom)
+						(user.role === Role.Freelancer &&
+							item.activeRoom !== 'none' &&
+							user.role !== item.deletedFor &&
+							item.deletedFor !== 'both') ||
+						(user.role === Role.Freelancer &&
+							user.id === item.receiverId &&
+							user.role !== item.deletedFor &&
+							item.deletedFor !== 'both') ||
+						(user.role === Role.Client &&
+							user.id === item.receiverId &&
+							user.role !== item.deletedFor &&
+							item.deletedFor !== 'both') ||
+						(user.role === Role.Client &&
+							item.activeRoom !== 'none' &&
+							user.role !== item.deletedFor &&
+							item.deletedFor !== 'both')
 					) {
 						return <User item={item} changeRoom={changeRoom} active={active} />;
 					}
@@ -232,10 +245,21 @@ const Chat = () => {
 									<MessageComponent message={message} className={`message sended`} />
 									<MessageBlock>
 										<Message className={`message date sended`}>{date}</Message>
-										{!defaultChat?.activeRoom && user.id !== message.userId && (
+										{defaultChat?.activeRoom === 'none' && user.id !== message.userId && (
 											<ButtonBlock>
-												<ButtonChat onClick={() => updateRoom(chatRoomId)}>
+												<ButtonChat
+													onClick={() =>
+														updateRoom(chatRoomId, 'This proposal is accepted', 'accepted')
+													}
+												>
 													{`${t('chat.accepted')}`}
+												</ButtonChat>
+												<ButtonChat
+													onClick={() =>
+														updateRoom(chatRoomId, 'This proposal is declined', 'declined')
+													}
+												>
+													{`${t('chat.declined')}`}
 												</ButtonChat>
 											</ButtonBlock>
 										)}
