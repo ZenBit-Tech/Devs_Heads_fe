@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { useResetPasswordMutation } from 'service/httpService';
 import { saveUserId } from 'redux/reducers/userSlice';
 import { useAppDispatch } from 'redux/hooks';
+import { ALERT_SUCCESS } from 'constants/links';
 
 export type FormPass = {
 	createPassword: string;
@@ -47,7 +48,8 @@ const resetPassword = () => {
 
 	const alert = (type: Alert) => {
 		notification[type]({
-			message: type === 'success' ? `${t('ResetPassword.success')}` : `${t('ResetPassword.error')}`,
+			message:
+				type === ALERT_SUCCESS ? `${t('ResetPassword.success')}` : `${t('ResetPassword.error')}`,
 		});
 	};
 
@@ -75,7 +77,7 @@ const resetPassword = () => {
 			} catch (e) {
 				reset({ createPassword: '', password: '' });
 				alert('error');
-				// console.log(e);
+				console.log(e);
 			}
 		}
 	};

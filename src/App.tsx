@@ -31,7 +31,6 @@ const RestorePassword = lazy(() => import('components/restorePassword/restorePas
 const PostJobPage = lazy(() => import('pages/PostJobPage'));
 const JobDescriptionPage = lazy(() => import('pages/JobDescriptionPage'));
 const JobDescriptionEditPage = lazy(() => import('pages/JobDescriptionEditPage'));
-// const InviteTalent = lazy(() => import('pages/InviteTalentPage'));
 const ClientSettings = lazy(() => import('pages/ClientSettingsPage'));
 
 const Chat = lazy(() => import('components/chat/chat'));

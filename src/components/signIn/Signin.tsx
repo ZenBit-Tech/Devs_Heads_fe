@@ -22,6 +22,7 @@ import { useAppDispatch } from 'redux/hooks';
 import { saveEmail, saveRole, saveToken, saveUserId } from 'redux/reducers/userSlice';
 import { useSignInMutation } from 'service/httpService';
 import { CreateJobPost, PostJobPage, Welcome } from 'constants/routes';
+import { ALERT_SUCCESS } from 'constants/links';
 
 export type FormData = {
 	email: string;
@@ -57,7 +58,7 @@ const signIn = () => {
 
 	const alert = (type: Alert) => {
 		notification[type]({
-			message: type === 'success' ? `${t('SignIn.success')}` : `${t('SignIn.error')}`,
+			message: type === ALERT_SUCCESS ? `${t('SignIn.success')}` : `${t('SignIn.error')}`,
 		});
 	};
 

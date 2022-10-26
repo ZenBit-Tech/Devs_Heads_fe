@@ -397,7 +397,7 @@ export const JobOfferApi = createApi({
 		}),
 		getJobOffer: build.query({
 			query: currentChatId =>
-				`/jobOffer/job/${currentChatId.jobPostId}/${currentChatId.receiverId}/${currentChatId.senderId}`,
+				`/jobOffer/job/${currentChatId.jobPostId}/${currentChatId.freelancerId}/${currentChatId.clientId}`,
 			providesTags: ['jobOffer'],
 		}),
 		getAcceptedJobOffer: build.query({
@@ -416,8 +416,8 @@ export const JobOfferApi = createApi({
 			invalidatesTags: ['jobOffer'],
 		}),
 		updateJobOffer: build.mutation({
-			query: ({ jobId, freelancerId, status, clientId }) => ({
-				url: `/jobOffer/${jobId}/${freelancerId}/${clientId}`,
+			query: ({ jobPostId, freelancerId, status, clientId }) => ({
+				url: `/jobOffer/${jobPostId}/${freelancerId}/${clientId}`,
 				method: 'PUT',
 				body: { status },
 				headers: {

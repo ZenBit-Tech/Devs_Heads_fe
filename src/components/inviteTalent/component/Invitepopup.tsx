@@ -26,6 +26,7 @@ import {
 } from 'service/httpService';
 import { IMessage, IProps, Alert } from 'components/inviteTalent/interfaces';
 import { notification } from 'antd';
+import { ALERT_SUCCESS } from 'constants/links';
 
 const TEXTAREA_ROWS_MAX = 16;
 const TEXTAREA_ROWS_MIN = 8;
@@ -52,7 +53,7 @@ const InvitePopup = (props: IProps) => {
 
 	const alert = (type: Alert) => {
 		notification[type]({
-			message: type === 'success' ? `${t('InvitePopup.success')}` : `${t('InvitePopup.error')}`,
+			message: type === ALERT_SUCCESS ? `${t('InvitePopup.success')}` : `${t('InvitePopup.error')}`,
 		});
 	};
 

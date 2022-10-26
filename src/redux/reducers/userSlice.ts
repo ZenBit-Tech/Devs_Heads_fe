@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface ISliceState {
+export interface ISliceState {
 	email: string;
 	password: string;
 	id: number | undefined;

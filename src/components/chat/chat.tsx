@@ -45,6 +45,7 @@ import ChatTitle from 'components/chat/components/chatTitle';
 import { Role } from 'pages/RoleSelection';
 import SendOfferPopup from 'components/chat/components/sendoffer/SendOffer';
 import { SaveButton } from 'components/clientSettings/clentSettings.styles';
+import FreeOfferPopup from 'components/FreelancerOffer/FreeOfferPopup';
 
 const Chat = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -57,12 +58,20 @@ const Chat = () => {
 	const [roomMessages, setRoomMessages] = useState<MessageBackend[]>();
 	const [active, setActive] = useState<number>(chatRoomId);
 	const [defaultChat, setDefaultChat] = useState<RoomBackend>();
+	const [offerResponse, setOfferResponse] = useState<string>('');
+	const [status, setStatus] = useState<boolean>();
+
+	const data = {
+		jobPostId: currentChatId?.jobPostId,
+		freelancerId: currentChatId?.receiverId,
+		clientId: currentChatId?.senderId,
+	};
 
 	const { data: rooms, isSuccess } = useGetRoomsByUserQuery(userId);
 	const { data: messages, isLoading } = useGetMessagesByRoomQuery(chatRoomId);
 	const { data: room, isFetching } = useGetRoomsByTwoUsersQuery(currentChatId);
 	const [updateChatRoom] = useUpdateChatRoomMutation();
-	const { data: offer } = useGetJobOfferQuery(currentChatId);
+	const { data: offer } = useGetJobOfferQuery(data);
 	const scrollRef = useRef<null | HTMLDivElement>(null);
 	useEffect(() => {
 		scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -223,6 +232,19 @@ const Chat = () => {
 								<RightLi>
 									<MessageComponent message={message} className={`message recieved`} />
 									<Message className={`message date recieved`}>{date}</Message>
+									{user?.role === Role.Freelancer ? (
+										<>
+											<FreeOfferPopup
+												offer={offer}
+												user={user}
+												setOfferResponse={setOfferResponse}
+												setStatus={setStatus}
+											/>
+											<Message>{status ? offerResponse : offerResponse}</Message>
+										</>
+									) : (
+										<Message>{status ? offerResponse : offerResponse}</Message>
+									)}
 								</RightLi>
 							);
 						} else {

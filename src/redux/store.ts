@@ -32,6 +32,7 @@ const rootReducer = combineReducers({
 	[proposalPostApi.reducerPath]: proposalPostApi.reducer,
 	[clientSettingsApi.reducerPath]: clientSettingsApi.reducer,
 	[invitationPostApi.reducerPath]: invitationPostApi.reducer,
+	[JobOfferApi.reducerPath]: JobOfferApi.reducer,
 	[messagesApi.reducerPath]: messagesApi.reducer,
 	[JobOfferApi.reducerPath]: JobOfferApi.reducer,
 });
@@ -58,6 +59,7 @@ export const store = configureStore({
 			proposalPostApi.middleware,
 			clientSettingsApi.middleware,
 			invitationPostApi.middleware,
+			JobOfferApi.middleware,
 			messagesApi.middleware,
 			JobOfferApi.middleware,
 		]),

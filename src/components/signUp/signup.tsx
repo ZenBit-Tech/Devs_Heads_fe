@@ -11,6 +11,7 @@ import { useAppDispatch } from 'redux/hooks';
 import { saveEmail, savePassword, saveUserId } from 'redux/reducers/userSlice';
 import { notification } from 'antd';
 import { RoleSelection } from 'constants/routes';
+import { ALERT_SUCCESS } from 'constants/links';
 
 export type FormData = {
 	email: string;
@@ -19,6 +20,7 @@ export type FormData = {
 	role: string;
 };
 type Alert = 'success' | 'error';
+
 const schema = Yup.object({
 	email: Yup.string().email().required(),
 	createPassword: Yup.string().min(8).required(),
@@ -38,7 +40,8 @@ const signUp = () => {
 	});
 	const alert = (type: Alert) => {
 		notification[type]({
-			message: type === 'success' ? `${t('SignUp.errorPasswords')}` : `${t('SignUp.errorEmail')}`,
+			message:
+				type === ALERT_SUCCESS ? `${t('SignUp.errorPasswords')}` : `${t('SignUp.errorEmail')}`,
 		});
 	};
 
