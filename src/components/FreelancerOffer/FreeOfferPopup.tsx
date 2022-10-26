@@ -25,25 +25,28 @@ interface IProps {
 		},
 	];
 	setOfferResponse: (response: string) => void;
+	setStatus: (status: boolean) => void;
 }
 
 const FreelancerOfferPopup = (props: IProps) => {
-	const { offer, setOfferResponse } = props;
+	const { offer, setOfferResponse, setStatus } = props;
 	const [updateOffer] = useUpdateJobOfferMutation();
 	const Accepted = 'Accepted';
 
 	const handleClick = async (status: string) => {
 		try {
 			const obj = {
-				jobPostId: offer.map(el => el.jobPostId),
-				freelancerId: offer.map(el => el.freelancerId),
-				clientId: offer.map(el => el.clientId),
+				jobPostId: offer?.map(el => el.jobPostId),
+				freelancerId: offer?.map(el => el.freelancerId),
+				clientId: offer?.map(el => el.clientId),
 			};
 			const { jobPostId, freelancerId, clientId } = obj;
 			await updateOffer({ jobPostId, freelancerId, clientId, status }).unwrap();
 			if (status === Accepted) {
+				setStatus(true);
 				setOfferResponse(`${t('FreeOfferPopup.acceptMessage')}`);
 			} else {
+				setStatus(false);
 				setOfferResponse(`${t('FreeOfferPopup.declineMessage')}`);
 			}
 		} catch (error) {
@@ -55,7 +58,7 @@ const FreelancerOfferPopup = (props: IProps) => {
 		<div>
 			<Modal>
 				<Header>{`${t('FreeOfferPopup.title')}`}</Header>
-				{offer.map(el => (
+				{offer?.map(el => (
 					<Content>
 						<P>{`${t('FreeOfferPopup.company')}:`}</P>
 						<P2>{el.name}</P2>

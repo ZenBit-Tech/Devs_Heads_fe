@@ -59,6 +59,7 @@ const Chat = () => {
 	const [active, setActive] = useState<number>(chatRoomId);
 	const [defaultChat, setDefaultChat] = useState<RoomBackend>();
 	const [offerResponse, setOfferResponse] = useState<string>('');
+	const [status, setStatus] = useState<boolean>();
 
 	const data = {
 		jobPostId: currentChatId?.jobPostId,
@@ -71,7 +72,6 @@ const Chat = () => {
 	const { data: room, isFetching } = useGetRoomsByTwoUsersQuery(currentChatId);
 	const [updateChatRoom] = useUpdateChatRoomMutation();
 	const { data: offer } = useGetJobOfferQuery(data);
-	console.log(offer);
 	const scrollRef = useRef<null | HTMLDivElement>(null);
 	useEffect(() => {
 		scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -232,7 +232,16 @@ const Chat = () => {
 								<RightLi>
 									<MessageComponent message={message} className={`message recieved`} />
 									<Message className={`message date recieved`}>{date}</Message>
-									<FreeOfferPopup offer={offer} setOfferResponse={setOfferResponse} />
+									{user?.role === Role.Freelancer ? (
+										<>
+											<FreeOfferPopup
+												offer={offer}
+												setOfferResponse={setOfferResponse}
+												setStatus={setStatus}
+											/>
+											<Message>{status ? offerResponse : offerResponse}</Message>
+										</>
+									) : null}
 								</RightLi>
 							);
 						} else {
