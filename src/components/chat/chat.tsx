@@ -46,6 +46,11 @@ import { Role } from 'pages/RoleSelection';
 import SendOfferPopup from 'components/chat/components/sendoffer/SendOffer';
 import { SaveButton } from 'components/clientSettings/clentSettings.styles';
 
+export const BOTH = 'both';
+export const NONE = 'none';
+export const ACCEPTED = 'accepted';
+export const DECLINED = 'declined';
+
 const Chat = () => {
 	const { user } = useAppSelector<RootState>(state => state);
 	const userId = user?.id;
@@ -77,15 +82,23 @@ const Chat = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			setChatRoomId(rooms[0]?.id);
-			setDefaultChat(rooms[0]);
-			setCurrentChatId({
-				senderId: rooms[0]?.senderId.id,
-				receiverId: rooms[0]?.receiverId.id,
-				jobPostId: rooms[0]?.jobPostId.id,
-				activeRoom: rooms[0]?.activeRoom,
+			rooms.map((item: RoomBackend) => {
+				if (
+					(item.activeRoom === ACCEPTED || user.role === item.receiverId.role) &&
+					item.deletedFor !== user.role &&
+					item.deletedFor !== BOTH
+				) {
+					setDefaultChat(item);
+					setChatRoomId(item.id);
+					setCurrentChatId({
+						senderId: item.senderId.id,
+						receiverId: item.receiverId.id,
+						jobPostId: item.jobPostId.id,
+						activeRoom: item.activeRoom,
+					});
+					setActive(item.id);
+				}
 			});
-			setActive(rooms[0]?.id);
 		}
 	}, [isSuccess]);
 
@@ -110,7 +123,7 @@ const Chat = () => {
 			socket?.off('recMessage', messageListener);
 		};
 	}, [socket]);
-	const { register, handleSubmit, errors, reset, getDate, userList, users } = useOnDataChange();
+	const { register, handleSubmit, errors, reset, getDate, userList } = useOnDataChange();
 
 	const updateRoom = (chatRoomId: number, text: string, activeRoom: string) => {
 		const newObj = {
@@ -167,28 +180,27 @@ const Chat = () => {
 			</>
 		);
 	}
-	console.log(users);
 	return (
 		<Wrapper onSubmit={handleSubmit(data => onSubmit(data, chatRoomId))}>
 			<UsersList>
 				{userList?.map((item: UserList) => {
 					if (
 						(user.role === Role.Freelancer &&
-							item.activeRoom !== 'none' &&
+							item.activeRoom !== NONE &&
 							user.role !== item.deletedFor &&
-							item.deletedFor !== 'both') ||
+							item.deletedFor !== BOTH) ||
 						(user.role === Role.Freelancer &&
 							user.id === item.receiverId &&
 							user.role !== item.deletedFor &&
-							item.deletedFor !== 'both') ||
+							item.deletedFor !== BOTH) ||
 						(user.role === Role.Client &&
 							user.id === item.receiverId &&
 							user.role !== item.deletedFor &&
-							item.deletedFor !== 'both') ||
+							item.deletedFor !== BOTH) ||
 						(user.role === Role.Client &&
-							item.activeRoom !== 'none' &&
+							item.activeRoom !== NONE &&
 							user.role !== item.deletedFor &&
-							item.deletedFor !== 'both')
+							item.deletedFor !== BOTH)
 					) {
 						return <User item={item} changeRoom={changeRoom} active={active} />;
 					}
@@ -249,14 +261,14 @@ const Chat = () => {
 											<ButtonBlock>
 												<ButtonChat
 													onClick={() =>
-														updateRoom(chatRoomId, 'This proposal is accepted', 'accepted')
+														updateRoom(chatRoomId, 'This proposal is accepted', ACCEPTED)
 													}
 												>
 													{`${t('chat.accepted')}`}
 												</ButtonChat>
 												<ButtonChat
 													onClick={() =>
-														updateRoom(chatRoomId, 'This proposal is declined', 'declined')
+														updateRoom(chatRoomId, 'This proposal is declined', DECLINED)
 													}
 												>
 													{`${t('chat.declined')}`}

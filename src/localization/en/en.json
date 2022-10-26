@@ -300,7 +300,9 @@
 	},
 	"chat": {
 		"accepted": "Accept",
-		"declined": "Decline"
+		"declined": "Decline",
+		"deleteForMe": "Delete only for me",
+		"deleteBoth": "Delete for both"
 	},
 	"ContractSummary": {
 		"title" : "Contract Summary",

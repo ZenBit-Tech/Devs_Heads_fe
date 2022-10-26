@@ -38,6 +38,7 @@ export type RoomBackend = {
 		firstName: string;
 		lastName: string;
 		id: number;
+		role: string;
 		profileId: number;
 		clientSetting: {
 			name: string;
