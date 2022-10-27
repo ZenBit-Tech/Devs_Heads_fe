@@ -60,6 +60,7 @@ const Chat = () => {
 	const [defaultChat, setDefaultChat] = useState<RoomBackend>();
 	const [offerResponse, setOfferResponse] = useState<string>('');
 	const [status, setStatus] = useState<boolean>();
+	console.log(currentChatId);
 
 	const data = {
 		jobPostId: currentChatId?.jobPostId,
@@ -232,7 +233,7 @@ const Chat = () => {
 								<RightLi>
 									<MessageComponent message={message} className={`message recieved`} />
 									<Message className={`message date recieved`}>{date}</Message>
-									{user?.role === Role.Freelancer ? (
+									{user?.role === Role.Freelancer && offer.length ? (
 										<>
 											<FreeOfferPopup
 												offer={offer}

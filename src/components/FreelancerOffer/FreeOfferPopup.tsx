@@ -13,6 +13,7 @@ import {
 import { useUpdateJobOfferMutation } from 'service/httpService';
 import { ISliceState } from 'redux/reducers/userSlice';
 import { Role } from 'pages/RoleSelection';
+import { getDate } from 'components/mycontract/dataUpdate';
 
 interface IProps {
 	offer: [
@@ -34,7 +35,7 @@ interface IProps {
 const FreelancerOfferPopup = (props: IProps) => {
 	const { offer, user, setOfferResponse, setStatus } = props;
 	const [updateOffer] = useUpdateJobOfferMutation();
-	const Accepted = 'Accepted';
+	const Accepted = 'In Process';
 
 	const handleClick = async (status: string) => {
 		try {
@@ -68,15 +69,15 @@ const FreelancerOfferPopup = (props: IProps) => {
 						<P>{`${t('FreeOfferPopup.company')}:`}</P>
 						<P2>{el.name}</P2>
 						<P>{`${t('FreeOfferPopup.price')}:`}</P>
-						<P2>{el.price}</P2>
+						<P2>{el.price}$</P2>
 						<P>{`${t('FreeOfferPopup.start')}:`}</P>
-						<P2>{el.startDate}</P2>
+						<P2>{getDate(new Date(el.startDate))}</P2>
 						<P>{`${t('FreeOfferPopup.end')}:`}</P>
-						<P2>{el.endDate}</P2>
+						<P2>{getDate(new Date(el.endDate))}</P2>
 					</Content>
 				))}
 				<Actions>
-					<BtnAccept type="button" onClick={() => handleClick('Accepted')}>{`${t(
+					<BtnAccept type="button" onClick={() => handleClick('In Process')}>{`${t(
 						'FreeOfferPopup.btnAccept',
 					)}`}</BtnAccept>
 					<BtnDecline type="button" onClick={() => handleClick('Rejected')}>{`${t(
