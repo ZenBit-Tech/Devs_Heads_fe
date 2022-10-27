@@ -315,11 +315,17 @@
 		"accepted": "Accepted"
 	},
 	"ContractSummary": {
-		"title" : "Contract Summary",
-		"name" : "Contract name: ",
+		"title": "Contract Summary",
+		"name": "Contract name: ",
 		"price": "Price: $ ",
 		"start": "Start date: ",
 		"end": "End date: ",
 		"status": "Status: "
+	},
+	"DeleteSummary": {
+		"title": "Delete Confirmation",
+		"description": "Do you really want to delete contract?",
+		"delete": "Delete",
+		"cancel": "Cancel"
 	}
 }

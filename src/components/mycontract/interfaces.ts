@@ -6,6 +6,7 @@ export interface IContract {
 	endDate: string;
 	price: string;
 	freelancerId: {
+		id: number;
 		profileSetting: {
 			photo: string;
 		};
@@ -13,9 +14,11 @@ export interface IContract {
 		lastName: string;
 	};
 	jobPostId: {
+		id: number;
 		jobTitle: string;
 	};
 	clientId: {
+		id: number;
 		clientSetting: {
 			photo: string;
 			name: string;
@@ -33,6 +36,7 @@ export const initialContract = {
 	endDate: '',
 	price: '',
 	freelancerId: {
+		id: 0,
 		profileSetting: {
 			photo: '',
 		},
@@ -40,9 +44,11 @@ export const initialContract = {
 		lastName: '',
 	},
 	jobPostId: {
+		id: 0,
 		jobTitle: '',
 	},
 	clientId: {
+		id: 0,
 		clientSetting: {
 			photo: '',
 			name: '',
