@@ -312,7 +312,10 @@
 		"declined": "Your offer has been declined"
 	},
 	"chat": {
-		"accepted": "Accepted"
+		"accepted": "Accept",
+		"declined": "Decline",
+		"deleteForMe": "Delete only for me",
+		"deleteBoth": "Delete for both"
 	},
 	"ContractSummary": {
 		"title" : "Contract Summary",
