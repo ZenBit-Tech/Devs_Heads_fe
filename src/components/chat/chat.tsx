@@ -82,25 +82,29 @@ const Chat = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			rooms.map((item: RoomBackend) => {
-				if (
-					(item.activeRoom === ACCEPTED || user.role === item.receiverId.role) &&
-					item.deletedFor !== user.role &&
-					item.deletedFor !== BOTH
-				) {
-					setDefaultChat(item);
-					setChatRoomId(item.id);
-					setCurrentChatId({
-						senderId: item.senderId.id,
-						receiverId: item.receiverId.id,
-						jobPostId: item.jobPostId.id,
-						activeRoom: item.activeRoom,
-					});
-					setActive(item.id);
-				}
-			});
+			if (isSuccess) {
+				const newArray = rooms.filter((item: RoomBackend) => {
+					return (
+						(item.activeRoom === NONE &&
+							user.id === item.receiverId.id &&
+							item.deletedFor !== user.role) ||
+						(item.activeRoom === (ACCEPTED || DECLINED) &&
+							item.deletedFor !== BOTH &&
+							item.deletedFor !== user.role)
+					);
+				});
+				setDefaultChat(newArray[0]);
+				setChatRoomId(newArray[0]?.id);
+				setCurrentChatId({
+					senderId: newArray[0]?.senderId.id,
+					receiverId: newArray[0]?.receiverId.id,
+					jobPostId: newArray[0]?.jobPostId.id,
+					activeRoom: newArray[0]?.activeRoom,
+				});
+				setActive(newArray[0]?.id);
+			}
 		}
-	}, [isSuccess]);
+	}, [isSuccess, rooms]);
 
 	useEffect(() => {
 		if (!isLoading) {
@@ -257,7 +261,7 @@ const Chat = () => {
 									<MessageComponent message={message} className={`message sended`} />
 									<MessageBlock>
 										<Message className={`message date sended`}>{date}</Message>
-										{defaultChat?.activeRoom === 'none' && user.id !== message.userId && (
+										{defaultChat?.activeRoom === NONE && user.id !== message.userId && (
 											<ButtonBlock>
 												<ButtonChat
 													onClick={() =>
