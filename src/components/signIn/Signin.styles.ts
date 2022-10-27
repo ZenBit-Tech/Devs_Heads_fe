@@ -19,6 +19,12 @@ export const Div2 = styled.div`
 	margin: auto;
 `;
 
+export const DivGoogle = styled.div`
+	display: flex;
+	align-content: center;
+	margin-top: 10px;
+`;
+
 export const H1 = styled.h2`
 	text-align: center;
 `;

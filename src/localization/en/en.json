@@ -50,7 +50,8 @@
 		"errorEmail": "Invalid email or password"
 	},
 	"GoogleAuthButton": {
-		"googleAuth": "Sign up with Google"
+		"googleAuth": "Sign up with Google",
+		"googleSignin": "Sign in with Google"
 	},
 	"Registration": {
 		"title": "Complete your registration",
