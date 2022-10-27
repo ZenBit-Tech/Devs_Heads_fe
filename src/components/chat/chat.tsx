@@ -87,10 +87,9 @@ const Chat = () => {
 					return (
 						(item.activeRoom === NONE &&
 							user.id === item.receiverId.id &&
-							item.deletedFor !== user.role) ||
-						(item.activeRoom === (ACCEPTED || DECLINED) &&
-							item.deletedFor !== BOTH &&
-							item.deletedFor !== user.role)
+							item.deletedFor !== user.role &&
+							item.deletedFor !== BOTH) ||
+						(item.activeRoom !== NONE && item.deletedFor !== BOTH && item.deletedFor !== user.role)
 					);
 				});
 				setDefaultChat(newArray[0]);
