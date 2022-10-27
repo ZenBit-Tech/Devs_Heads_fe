@@ -7,6 +7,11 @@ import {
 	OnChangeObjectKeys,
 } from '../interfaces/interfaces';
 import { useTranslation } from 'react-i18next';
+import { DatePicker, Space } from 'antd';
+import type { RangePickerProps } from 'antd/es/date-picker';
+import moment from 'moment';
+
+const { RangePicker } = DatePicker;
 
 const Container = styled.div`
 	display: flex;
@@ -44,7 +49,6 @@ export const TextareaWithDates = (props: ITextareaWithDates) => {
 	const [endDate, setEndDate] = useState<Date>(props.item.dateEnd || new Date().toISOString());
 	const [text, setText] = useState<string>(props.item.info || '');
 	const [isTouched, setIsTouched] = useState<boolean>(false);
-	const [dateError, setDateError] = useState<boolean>(false);
 
 	useEffect(() => {
 		const error = !text && isTouched;
@@ -56,23 +60,13 @@ export const TextareaWithDates = (props: ITextareaWithDates) => {
 		if (!isTouched) setIsTouched(true);
 	}, [startDate, endDate, text]);
 
-	const onChangeStartDate = (e: ChangeEvent<HTMLInputElement>) => {
-		if (new Date(e.currentTarget.value) > new Date(endDate)) {
-			setDateError(true);
-		} else {
-			setDateError(false);
-			setStartDate(new Date(e.currentTarget.value));
+	const onChange = (value: RangePickerProps['value'], dateString: [string, string]) => {
+		if (dateString) {
+			setStartDate(new Date(dateString[0]));
+			setEndDate(new Date(dateString[1]));
 		}
 	};
 
-	const onChangeEndDate = (e: ChangeEvent<HTMLInputElement>) => {
-		if (new Date(e.currentTarget.value) < new Date(startDate)) {
-			setDateError(true);
-		} else {
-			setDateError(false);
-			setEndDate(new Date(e.currentTarget.value));
-		}
-	};
 	const onTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		if (e.currentTarget.value.length > 200) {
 			return;
@@ -100,30 +94,10 @@ export const TextareaWithDates = (props: ITextareaWithDates) => {
 			</div>
 			<Block>
 				<CalendarBlock>
-					<label>{`${t('ProfileEdit.startDate')}`}</label>
-					<input
-						value={startDate.toLocaleDateString('en-CA')}
-						onChange={onChangeStartDate}
-						type="date"
-					/>
+					<Space direction="vertical" size={12}>
+						<RangePicker onChange={onChange} value={[moment(startDate), moment(endDate)]} />
+					</Space>
 				</CalendarBlock>
-				<CalendarBlock>
-					<label>{`${t('ProfileEdit.endDate')}`}</label>
-					<input
-						value={endDate.toLocaleDateString('en-CA')}
-						onChange={onChangeEndDate}
-						type="date"
-					/>
-				</CalendarBlock>
-				{dateError && (
-					<Alert
-						style={{ height: '28px', margin: '22px 0 0' }}
-						message={`${t('ProfileEdit.wrongDate')}`}
-						type="warning"
-						showIcon
-						closable
-					/>
-				)}
 			</Block>
 		</Container>
 	);
