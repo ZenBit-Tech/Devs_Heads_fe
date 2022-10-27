@@ -64,8 +64,8 @@ const FreelancerOfferPopup = (props: IProps) => {
 		<div>
 			<Modal>
 				<Header>{`${t('FreeOfferPopup.title')}`}</Header>
-				{offer?.map(el => (
-					<Content>
+				{offer?.map((el, i) => (
+					<Content key={`offer${i}`}>
 						<P>{`${t('FreeOfferPopup.company')}:`}</P>
 						<P2>{el.name}</P2>
 						<P>{`${t('FreeOfferPopup.price')}:`}</P>

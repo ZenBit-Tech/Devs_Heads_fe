@@ -60,7 +60,6 @@ const Chat = () => {
 	const [defaultChat, setDefaultChat] = useState<RoomBackend>();
 	const [offerResponse, setOfferResponse] = useState<string>('');
 	const [status, setStatus] = useState<boolean>();
-	console.log(currentChatId);
 
 	const data = {
 		jobPostId: currentChatId?.jobPostId,
@@ -154,6 +153,7 @@ const Chat = () => {
 		};
 		socket?.emit('sendMessage', NewData);
 		reset();
+		setIsShown(false);
 	};
 	const changeRoom = (
 		senderId: number,
@@ -177,17 +177,31 @@ const Chat = () => {
 			</>
 		);
 	}
+	const receiveOffer = (condition: boolean) => {
+		if (condition) {
+			return (
+				<>
+					<FreeOfferPopup
+						offer={offer}
+						user={user}
+						setOfferResponse={setOfferResponse}
+						setStatus={setStatus}
+					/>
+				</>
+			);
+		} else return <Message>{offerResponse}</Message>;
+	};
 	return (
 		<Wrapper onSubmit={handleSubmit(data => onSubmit(data, chatRoomId))}>
 			<UsersList>
-				{userList?.map((item: UserList) => {
+				{userList?.map((item: UserList, i: number) => {
 					if (
 						(user.role === Role.Freelancer && item.activeRoom) ||
 						(user.role === Role.Freelancer && user.id === item.receiverId) ||
 						(user.role === Role.Client && user.id === item.receiverId) ||
 						(user.role === Role.Client && item.activeRoom)
 					) {
-						return <User item={item} changeRoom={changeRoom} active={active} />;
+						return <User key={`c1${i}`} item={item} changeRoom={changeRoom} active={active} />;
 					}
 				})}
 			</UsersList>
@@ -226,32 +240,24 @@ const Chat = () => {
 					)}
 				</TitleMessage>
 				<ChatMessages ref={scrollRef}>
-					{roomMessages?.map((message: MessageBackend) => {
+					{roomMessages?.map((message: MessageBackend, i: number) => {
 						if (message?.user?.role === user?.role) {
 							const date = getDate(new Date(message.created_at));
 							return (
-								<RightLi>
+								<RightLi key={`b2${i}`}>
 									<MessageComponent message={message} className={`message recieved`} />
 									<Message className={`message date recieved`}>{date}</Message>
-									{user?.role === Role.Freelancer && offer.length ? (
-										<>
-											<FreeOfferPopup
-												offer={offer}
-												user={user}
-												setOfferResponse={setOfferResponse}
-												setStatus={setStatus}
-											/>
-											<Message>{status ? offerResponse : offerResponse}</Message>
-										</>
-									) : (
-										<Message>{status ? offerResponse : offerResponse}</Message>
+									{receiveOffer(
+										user?.role === Role.Freelancer &&
+											offer?.length &&
+											roomMessages.length - 1 === i,
 									)}
 								</RightLi>
 							);
 						} else {
 							const date = getDate(new Date(message.created_at));
 							return (
-								<LeftLi>
+								<LeftLi key={`b1${i}`}>
 									<MessageComponent message={message} className={`message sended`} />
 									<MessageBlock>
 										<Message className={`message date sended`}>{date}</Message>
@@ -267,17 +273,17 @@ const Chat = () => {
 							);
 						}
 					})}
-					{socketMessage?.map((message: MessageFrontend) => {
+					{socketMessage?.map((message: MessageFrontend, i: number) => {
 						if (message?.chatRoomId === chatRoomId) {
 							if (message?.userId === user?.id) {
 								return (
-									<RightLi>
+									<RightLi key={`a1${i}`}>
 										<MessageComponent message={message} className={`message recieved`} />
 									</RightLi>
 								);
 							} else {
 								return (
-									<LeftLi>
+									<LeftLi key={`a2${i}`}>
 										<MessageComponent message={message} className={`message sended`} />
 									</LeftLi>
 								);
