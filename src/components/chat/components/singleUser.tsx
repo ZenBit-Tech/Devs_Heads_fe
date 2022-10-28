@@ -6,7 +6,6 @@ import { Role } from 'pages/RoleSelection';
 import { useUpdateDeletingStatusMutation } from 'service/httpService';
 import Image from 'image/dots.png';
 import { t } from 'i18next';
-import { BOTH } from 'components/chat/chat';
 
 interface Props {
 	item: UserList;
@@ -72,9 +71,7 @@ const User = (props: Props) => {
 					</a>
 
 					<div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-						<Btn onClick={() => deleteHandler(user.role)}>{`${t('chat.deleteForMe')}`}</Btn>
-						<br />
-						<Btn onClick={() => deleteHandler(BOTH)}>{`${t('chat.deleteBoth')}`}</Btn>
+						<Btn onClick={() => deleteHandler(user.role)}>{`${t('chat.delete')}`}</Btn>
 					</div>
 				</div>
 				<LastMessage>{item.lastMessage}</LastMessage>

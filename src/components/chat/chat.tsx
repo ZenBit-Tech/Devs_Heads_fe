@@ -47,7 +47,6 @@ import SendOfferPopup from 'components/chat/components/sendoffer/SendOffer';
 import { SaveButton } from 'components/clientSettings/clentSettings.styles';
 import FreeOfferPopup from 'components/FreelancerOffer/FreeOfferPopup';
 
-export const BOTH = 'both';
 export const NONE = 'none';
 export const ACCEPTED = 'accepted';
 export const DECLINED = 'declined';
@@ -96,9 +95,8 @@ const Chat = () => {
 					return (
 						(item.activeRoom === NONE &&
 							user.id === item.receiverId.id &&
-							item.deletedFor !== user.role &&
-							item.deletedFor !== BOTH) ||
-						(item.activeRoom !== NONE && item.deletedFor !== BOTH && item.deletedFor !== user.role)
+							item.deletedFor !== user.role) ||
+						(item.activeRoom !== NONE && item.deletedFor !== user.role)
 					);
 				});
 				setDefaultChat(newArray[0]);
@@ -199,20 +197,14 @@ const Chat = () => {
 					if (
 						(user.role === Role.Freelancer &&
 							item.activeRoom !== NONE &&
-							user.role !== item.deletedFor &&
-							item.deletedFor !== BOTH) ||
+							user.role !== item.deletedFor) ||
 						(user.role === Role.Freelancer &&
 							user.id === item.receiverId &&
-							user.role !== item.deletedFor &&
-							item.deletedFor !== BOTH) ||
+							user.role !== item.deletedFor) ||
 						(user.role === Role.Client &&
 							user.id === item.receiverId &&
-							user.role !== item.deletedFor &&
-							item.deletedFor !== BOTH) ||
-						(user.role === Role.Client &&
-							item.activeRoom !== NONE &&
-							user.role !== item.deletedFor &&
-							item.deletedFor !== BOTH)
+							user.role !== item.deletedFor) ||
+						(user.role === Role.Client && item.activeRoom !== NONE && user.role !== item.deletedFor)
 					) {
 						return <User item={item} changeRoom={changeRoom} active={active} />;
 					}
