@@ -7,6 +7,7 @@ import { notification } from 'antd';
 import {
 	Div,
 	Div2,
+	DivGoogle,
 	H1,
 	H2,
 	Form,
@@ -23,6 +24,7 @@ import { saveEmail, saveRole, saveToken, saveUserId } from 'redux/reducers/userS
 import { useSignInMutation } from 'service/httpService';
 import { CreateJobPost, PostJobPage, Welcome } from 'constants/routes';
 import { ALERT_SUCCESS } from 'constants/links';
+import GoogleAuth from 'components/GoogleAuth/GoogleAuth';
 
 export type FormData = {
 	email: string;
@@ -81,7 +83,6 @@ const signIn = () => {
 		} catch (e) {
 			reset({ email: '', password: '' });
 			alert('error');
-			// console.log(e);
 		}
 	};
 
@@ -94,6 +95,9 @@ const signIn = () => {
 				<H2>{`${t('SignIn.upperText')}`}</H2>
 			</div>
 			<Form onSubmit={handleSubmit(onSubmit)}>
+				<DivGoogle>
+					<GoogleAuth />
+				</DivGoogle>
 				<ControlStyle>{`${t('SignIn.email')}`}</ControlStyle>
 				<Controller
 					render={({ field }) => <Input type="email" {...field} />}
