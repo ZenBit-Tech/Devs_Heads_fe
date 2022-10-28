@@ -93,8 +93,6 @@ const Chat = () => {
 		}
 	}, [room, offer]);
 
-	console.log(allMessages);
-
 	useEffect(() => {
 		if (isSuccess) {
 			setChatRoomId(rooms[0]?.id);
@@ -114,8 +112,6 @@ const Chat = () => {
 			setAllMessages([messages, offer]);
 		}
 	}, [isLoading]);
-
-	console.group(room);
 
 	useEffect(() => {
 		const newSocket = io(`${process.env.REACT_APP_API_URL}`);
