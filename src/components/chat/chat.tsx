@@ -45,6 +45,7 @@ import ChatTitle from 'components/chat/components/chatTitle';
 import { Role } from 'pages/RoleSelection';
 import SendOfferPopup from 'components/chat/components/sendoffer/SendOffer';
 import { SaveButton } from 'components/clientSettings/clentSettings.styles';
+import FreeOfferPopup from 'components/FreelancerOffer/FreeOfferPopup';
 
 export const NONE = 'none';
 export const ACCEPTED = 'accepted';
@@ -200,6 +201,18 @@ const Chat = () => {
 			</>
 		);
 	}
+	const MessageConst = () => {
+		return (
+			<ButtonBlock>
+				<ButtonChat onClick={() => updateRoom(chatRoomId, 'This proposal is accepted', ACCEPTED)}>
+					{`${t('chat.accepted')}`}
+				</ButtonChat>
+				<ButtonChat onClick={() => updateRoom(chatRoomId, 'This proposal is declined', DECLINED)}>
+					{`${t('chat.declined')}`}
+				</ButtonChat>
+			</ButtonBlock>
+		);
+	};
 	return (
 		<Wrapper onSubmit={handleSubmit(data => onSubmit(data, chatRoomId))}>
 			<UsersList>
@@ -260,15 +273,7 @@ const Chat = () => {
 							const date = getDate(new Date(message.created_at));
 							return (
 								<RightLi key={`b2${i}`}>
-									<MessageComponent
-										message={message}
-										className={`message recieved`}
-										offer={offer}
-										userSlice={user}
-										offerResponse={offerResponse}
-										setOfferResponse={setOfferResponse}
-										setStatus={setStatus}
-									/>
+									<MessageComponent message={message} className={`message recieved`} />
 									<Message className={`message date recieved`}>{date}</Message>
 								</RightLi>
 							);
@@ -276,35 +281,24 @@ const Chat = () => {
 							const date = getDate(new Date(message?.created_at));
 							return (
 								<LeftLi key={`b1${i}`}>
-									<MessageComponent
-										message={message}
-										className={`message sended`}
-										offer={offer}
-										userSlice={user}
-										offerResponse={offerResponse}
-										setOfferResponse={setOfferResponse}
-										setStatus={setStatus}
-									/>
+									<MessageComponent message={message} className={`message sended`} />
+									{offer?.length > 0 && user.role === Role.Freelancer && (
+										<div>
+											<FreeOfferPopup
+												offer={offer}
+												user={user}
+												setOfferResponse={setOfferResponse}
+												setStatus={setStatus}
+											/>
+											<Message>{offerResponse}</Message>
+										</div>
+									)}
 									<MessageBlock>
 										<Message className={`message date sended`}>{date}</Message>
-										{defaultChat?.activeRoom === NONE && user.id !== message?.userId && (
-											<ButtonBlock>
-												<ButtonChat
-													onClick={() =>
-														updateRoom(chatRoomId, 'This proposal is accepted', ACCEPTED)
-													}
-												>
-													{`${t('chat.accepted')}`}
-												</ButtonChat>
-												<ButtonChat
-													onClick={() =>
-														updateRoom(chatRoomId, 'This proposal is declined', DECLINED)
-													}
-												>
-													{`${t('chat.declined')}`}
-												</ButtonChat>
-											</ButtonBlock>
-										)}
+										{defaultChat?.activeRoom === NONE &&
+											user.id !== message?.userId &&
+											message?.jobLink &&
+											MessageConst()}
 									</MessageBlock>
 								</LeftLi>
 							);
@@ -315,29 +309,13 @@ const Chat = () => {
 							if (message?.userId === user?.id) {
 								return (
 									<RightLi key={`a1${i}`}>
-										<MessageComponent
-											message={message}
-											className={`message recieved`}
-											offer={offer}
-											userSlice={user}
-											offerResponse={offerResponse}
-											setOfferResponse={setOfferResponse}
-											setStatus={setStatus}
-										/>
+										<MessageComponent message={message} className={`message recieved`} />
 									</RightLi>
 								);
 							} else {
 								return (
 									<LeftLi key={`a2${i}`}>
-										<MessageComponent
-											message={message}
-											className={`message sended`}
-											offer={offer}
-											userSlice={user}
-											offerResponse={offerResponse}
-											setOfferResponse={setOfferResponse}
-											setStatus={setStatus}
-										/>
+										<MessageComponent message={message} className={`message sended`} />
 									</LeftLi>
 								);
 							}
