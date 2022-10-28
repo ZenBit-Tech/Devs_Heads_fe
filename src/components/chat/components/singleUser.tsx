@@ -1,8 +1,12 @@
 import { UserList } from 'components/chat/interfaces';
-import { ChatImage, LastMessage, SingleUser, Title } from 'components/chat/chat.styles';
+import { Btn, ChatImage, LastMessage, SingleUser, Title } from 'components/chat/chat.styles';
 import { useAppSelector } from 'redux/hooks';
 import { RootState } from 'redux/store';
 import { Role } from 'pages/RoleSelection';
+import { useUpdateDeletingStatusMutation } from 'service/httpService';
+import Image from 'image/dots.png';
+import { t } from 'i18next';
+import { BOTH } from 'components/chat/chat';
 
 interface Props {
 	item: UserList;
@@ -11,7 +15,7 @@ interface Props {
 		receiverId: number,
 		jobPostId: number,
 		roomId: number,
-		activeRoom: boolean,
+		activeRoom: string,
 	) => void;
 	active: number;
 }
@@ -19,6 +23,14 @@ interface Props {
 const User = (props: Props) => {
 	const { user } = useAppSelector<RootState>(state => state);
 	const { item, changeRoom, active } = props;
+	const [updateDeletingStatus] = useUpdateDeletingStatusMutation();
+	const deleteHandler = (status: string) => {
+		const newObj = {
+			id: item.roomId,
+			deletedFor: status,
+		};
+		updateDeletingStatus(newObj);
+	};
 	return (
 		<SingleUser
 			onClick={() =>
@@ -47,6 +59,24 @@ const User = (props: Props) => {
 						</Title>
 					</>
 				)}
+				<div className="dropdown show">
+					<a
+						className="btn"
+						role="button"
+						id="dropdownMenuLink"
+						data-toggle="dropdown"
+						aria-haspopup="true"
+						aria-expanded="false"
+					>
+						<img src={Image} />
+					</a>
+
+					<div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<Btn onClick={() => deleteHandler(user.role)}>{`${t('chat.deleteForMe')}`}</Btn>
+						<br />
+						<Btn onClick={() => deleteHandler(BOTH)}>{`${t('chat.deleteBoth')}`}</Btn>
+					</div>
+				</div>
 				<LastMessage>{item.lastMessage}</LastMessage>
 			</div>
 		</SingleUser>

@@ -325,3 +325,11 @@ export const SearchWrapper = styled.div`
 	justify-content: center;
 	width: 100%;
 `;
+
+export const Btn = styled.button`
+	margin: 0% 5% 0% 5%;
+	width: 90%;
+	&:hover {
+		background-color: ${COLOR_GREY};
+	}
+`;
