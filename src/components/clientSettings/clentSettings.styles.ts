@@ -31,6 +31,7 @@ export const SaveButton = styled.button`
 	color: ${WHITE_COLOR};
 	border-color: ${WHITE_COLOR};
 	text-align: center;
+	margin: 2% auto;
 	font-size: ${MEDIUM_FONT_SIZE};
 	box-shadow: 3px 2px 2px ${GREY};
 	&:hover {

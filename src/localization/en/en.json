@@ -314,8 +314,7 @@
 	"chat": {
 		"accepted": "Accept",
 		"declined": "Decline",
-		"deleteForMe": "Delete only for me",
-		"deleteBoth": "Delete for both"
+		"delete": "Delete chat"
 	},
 	"ContractSummary": {
 		"title": "Contract Summary",
