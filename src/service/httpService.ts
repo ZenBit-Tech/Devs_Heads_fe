@@ -433,6 +433,7 @@ export const JobOfferApi = createApi({
 					'Content-type': 'application/json; charset=UTF-8',
 				},
 			}),
+			invalidatesTags: ['jobOffer'],
 		}),
 	}),
 });
