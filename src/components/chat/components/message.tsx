@@ -41,7 +41,7 @@ const MessageComponent = (props: Props) => {
 				</div>
 			</Message>
 		);
-	} else {
+	} else if (offer?.length) {
 		return (
 			<div>
 				<FreeOfferPopup
