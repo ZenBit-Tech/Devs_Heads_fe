@@ -46,6 +46,11 @@ import { Role } from 'pages/RoleSelection';
 import SendOfferPopup from 'components/chat/components/sendoffer/SendOffer';
 import { SaveButton } from 'components/clientSettings/clentSettings.styles';
 
+export const BOTH = 'both';
+export const NONE = 'none';
+export const ACCEPTED = 'accepted';
+export const DECLINED = 'declined';
+
 const Chat = () => {
 	const { user } = useAppSelector<RootState>(state => state);
 	const userId = user?.id;
@@ -95,17 +100,28 @@ const Chat = () => {
 
 	useEffect(() => {
 		if (isSuccess) {
-			setChatRoomId(rooms[0]?.id);
-			setDefaultChat(rooms[0]);
-			setCurrentChatId({
-				senderId: rooms[0]?.senderId.id,
-				receiverId: rooms[0]?.receiverId.id,
-				jobPostId: rooms[0]?.jobPostId.id,
-				activeRoom: rooms[0]?.activeRoom,
-			});
-			setActive(rooms[0]?.id);
+			if (isSuccess) {
+				const newArray = rooms.filter((item: RoomBackend) => {
+					return (
+						(item.activeRoom === NONE &&
+							user.id === item.receiverId.id &&
+							item.deletedFor !== user.role &&
+							item.deletedFor !== BOTH) ||
+						(item.activeRoom !== NONE && item.deletedFor !== BOTH && item.deletedFor !== user.role)
+					);
+				});
+				setDefaultChat(newArray[0]);
+				setChatRoomId(newArray[0]?.id);
+				setCurrentChatId({
+					senderId: newArray[0]?.senderId.id,
+					receiverId: newArray[0]?.receiverId.id,
+					jobPostId: newArray[0]?.jobPostId.id,
+					activeRoom: newArray[0]?.activeRoom,
+				});
+				setActive(newArray[0]?.id);
+			}
 		}
-	}, [isSuccess]);
+	}, [isSuccess, rooms]);
 
 	useEffect(() => {
 		if (!isLoading) {
@@ -130,14 +146,14 @@ const Chat = () => {
 	}, [socket]);
 	const { register, handleSubmit, errors, reset, getDate, userList } = useOnDataChange();
 
-	const updateRoom = (chatRoomId: number) => {
+	const updateRoom = (chatRoomId: number, text: string, activeRoom: string) => {
 		const newObj = {
 			chatRoomId,
-			activeRoom: true,
+			activeRoom,
 		};
 		updateChatRoom(newObj);
 		const message = {
-			text: 'Accepted',
+			text,
 			chatRoomId,
 			userId,
 		};
@@ -169,7 +185,7 @@ const Chat = () => {
 		receiverId: number,
 		jobPostId: number,
 		roomId: number,
-		activeRoom: boolean,
+		activeRoom: string,
 	) => {
 		setCurrentChatId({ senderId, receiverId, jobPostId, activeRoom });
 		setChatRoomId(roomId);
@@ -191,10 +207,22 @@ const Chat = () => {
 			<UsersList>
 				{userList?.map((item: UserList, i: number) => {
 					if (
-						(user.role === Role.Freelancer && item.activeRoom) ||
-						(user.role === Role.Freelancer && user.id === item.receiverId) ||
-						(user.role === Role.Client && user.id === item.receiverId) ||
-						(user.role === Role.Client && item.activeRoom)
+						(user.role === Role.Freelancer &&
+							item.activeRoom !== NONE &&
+							user.role !== item.deletedFor &&
+							item.deletedFor !== BOTH) ||
+						(user.role === Role.Freelancer &&
+							user.id === item.receiverId &&
+							user.role !== item.deletedFor &&
+							item.deletedFor !== BOTH) ||
+						(user.role === Role.Client &&
+							user.id === item.receiverId &&
+							user.role !== item.deletedFor &&
+							item.deletedFor !== BOTH) ||
+						(user.role === Role.Client &&
+							item.activeRoom !== NONE &&
+							user.role !== item.deletedFor &&
+							item.deletedFor !== BOTH)
 					) {
 						return <User key={`c1${i}`} item={item} changeRoom={changeRoom} active={active} />;
 					}
@@ -267,10 +295,21 @@ const Chat = () => {
 									/>
 									<MessageBlock>
 										<Message className={`message date sended`}>{date}</Message>
-										{!defaultChat?.activeRoom && user.id !== message?.userId && (
+										{defaultChat?.activeRoom === NONE && user.id !== message.userId && (
 											<ButtonBlock>
-												<ButtonChat onClick={() => updateRoom(chatRoomId)}>
+												<ButtonChat
+													onClick={() =>
+														updateRoom(chatRoomId, 'This proposal is accepted', ACCEPTED)
+													}
+												>
 													{`${t('chat.accepted')}`}
+												</ButtonChat>
+												<ButtonChat
+													onClick={() =>
+														updateRoom(chatRoomId, 'This proposal is declined', DECLINED)
+													}
+												>
+													{`${t('chat.declined')}`}
 												</ButtonChat>
 											</ButtonBlock>
 										)}

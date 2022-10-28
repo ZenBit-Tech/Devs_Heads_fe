@@ -39,6 +39,7 @@ export const useOnDataChange = () => {
 					roomId: item?.id,
 					activeRoom: item.activeRoom,
 					date: item.createdAt,
+					deletedFor: item.deletedFor,
 				};
 				if (item.receiverId.clientSetting) {
 					const obj = {
@@ -64,5 +65,6 @@ export const useOnDataChange = () => {
 			}),
 		[rooms],
 	);
-	return { register, handleSubmit, reset, errors, getDate, userList };
+
+	return { register, handleSubmit, reset, errors, getDate, userList, rooms };
 };

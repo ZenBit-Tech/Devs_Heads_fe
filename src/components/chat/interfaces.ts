@@ -50,11 +50,13 @@ export type MessageBackend = {
 export type RoomBackend = {
 	id: number;
 	createdAt: Date;
-	activeRoom: boolean;
+	activeRoom: string;
+	deletedFor: string;
 	receiverId: {
 		firstName: string;
 		lastName: string;
 		id: number;
+		role: string;
 		profileId: number;
 		clientSetting: {
 			name: string;
@@ -103,12 +105,13 @@ export type UserList = {
 	senderId: number;
 	receiverId: number;
 	roomId: number;
-	activeRoom: boolean;
+	activeRoom: string;
+	deletedFor: string;
 };
 
 export type initialId = {
 	senderId: number;
 	receiverId: number;
 	jobPostId: number;
-	activeRoom: boolean;
+	activeRoom: string;
 };
