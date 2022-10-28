@@ -94,7 +94,7 @@ const Chat = () => {
 				(a: MessageBackend, b: MessageBackend) =>
 					new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
 			);
-			setAllMessages([...messages]);
+			setAllMessages([...room?.message]);
 		}
 	}, [room, offer]);
 
@@ -282,6 +282,13 @@ const Chat = () => {
 							return (
 								<LeftLi key={`b1${i}`}>
 									<MessageComponent message={message} className={`message sended`} />
+									<MessageBlock>
+										<Message className={`message date sended`}>{date}</Message>
+										{defaultChat?.activeRoom === NONE &&
+											user.id !== message?.userId &&
+											message?.jobLink &&
+											MessageConst()}
+									</MessageBlock>
 									{offer?.length > 0 && user.role === Role.Freelancer && (
 										<div>
 											<FreeOfferPopup
@@ -293,13 +300,6 @@ const Chat = () => {
 											<Message>{offerResponse}</Message>
 										</div>
 									)}
-									<MessageBlock>
-										<Message className={`message date sended`}>{date}</Message>
-										{defaultChat?.activeRoom === NONE &&
-											user.id !== message?.userId &&
-											message?.jobLink &&
-											MessageConst()}
-									</MessageBlock>
 								</LeftLi>
 							);
 						}

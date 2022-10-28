@@ -44,18 +44,18 @@ export const useOnDataChange = () => {
 				if (item.receiverId.clientSetting) {
 					const obj = {
 						...newObj,
-						clientName: item.receiverId.clientSetting?.name,
-						clientPhoto: item.receiverId.clientSetting?.photo ?? profileImage,
+						clientName: item.receiverId?.clientSetting?.name,
+						clientPhoto: item.receiverId?.clientSetting?.photo ?? profileImage,
 						firstName: item.senderId?.firstName,
 						lastName: item.senderId?.lastName,
-						freelancerPhoto: item.senderId?.profileSetting.photo ?? profileImage,
+						freelancerPhoto: item.senderId?.profileSetting?.photo ?? profileImage,
 					};
 					return obj;
 				} else if (item.senderId?.clientSetting) {
 					const obj = {
 						...newObj,
-						clientName: item.senderId.clientSetting?.name,
-						clientPhoto: item.senderId.clientSetting?.photo ?? profileImage,
+						clientName: item.senderId?.clientSetting?.name,
+						clientPhoto: item.senderId?.clientSetting?.photo ?? profileImage,
 						firstName: item.receiverId?.firstName,
 						lastName: item.receiverId?.lastName,
 						freelancerPhoto: item.receiverId?.profileSetting?.photo ?? profileImage,
