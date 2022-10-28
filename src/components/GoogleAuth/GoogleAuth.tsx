@@ -8,6 +8,7 @@ import { SignUp } from 'constants/routes';
 function GoogleAuth() {
 	const { t } = useTranslation();
 	const location = useLocation();
+
 	const googleAuth = () => {
 		location.pathname === SignUp
 			? window.open(`${process.env.REACT_APP_GOOGLE_REDIRECT}`, '_self')

@@ -322,5 +322,10 @@
 		"start": "Start date: ",
 		"end": "End date: ",
 		"status": "Status: "
+	},
+	"GoogleRoleSelection": {
+		"title": "Role Selection",
+		"text": "Please select your role",
+		"button": "Enter"
 	}
 }

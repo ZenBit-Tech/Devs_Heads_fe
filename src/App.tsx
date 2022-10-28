@@ -21,6 +21,8 @@ const Cookies = require('js-cookie');
 
 const RoleSelection = lazy(() => import('./pages/RoleSelection'));
 
+const GoogleRoleSelection = lazy(() => import('./pages/GoogleRoleSelection'));
+
 const SignIn = lazy(() => import('pages/SigninPage'));
 
 const JobPostPage = lazy(() => import('pages/JobPostPage'));
@@ -56,6 +58,7 @@ const App: FC = () => {
 							<Route path="/create-job-post" element={<JobPostPage />} />
 							<Route path="/role-selection" element={<RoleSelection />} />
 							<Route path="/role-selection/:user" element={<RoleSelection />} />
+							<Route path="/google-role-selection/:user" element={<GoogleRoleSelection />} />
 							<Route path="post-job/:id/edit" element={<JobDescriptionEditPage />} />
 							<Route path="post-job/:id" element={<JobDescriptionPage />} />
 							<Route path="post-job" element={<PostJobPage />} />
