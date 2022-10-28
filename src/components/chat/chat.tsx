@@ -45,7 +45,6 @@ import ChatTitle from 'components/chat/components/chatTitle';
 import { Role } from 'pages/RoleSelection';
 import SendOfferPopup from 'components/chat/components/sendoffer/SendOffer';
 import { SaveButton } from 'components/clientSettings/clentSettings.styles';
-import FreeOfferPopup from 'components/FreelancerOffer/FreeOfferPopup';
 
 const Chat = () => {
 	const { user } = useAppSelector<RootState>(state => state);
@@ -55,7 +54,7 @@ const Chat = () => {
 	const [chatRoomId, setChatRoomId] = useState<number>(0);
 	const [socketMessage, setSocketMessage] = useState<MessageFrontend[]>([]);
 	const [currentChatId, setCurrentChatId] = useState<initialId>();
-	const [roomMessages, setRoomMessages] = useState<MessageBackend[]>();
+	const [allMessages, setAllMessages] = useState<MessageBackend[]>([]);
 	const [active, setActive] = useState<number>(chatRoomId);
 	const [defaultChat, setDefaultChat] = useState<RoomBackend>();
 	const [offerResponse, setOfferResponse] = useState<string>('');
@@ -79,10 +78,22 @@ const Chat = () => {
 
 	useEffect(() => {
 		if (!isFetching) {
-			setRoomMessages(room?.message);
 			setDefaultChat(room);
 		}
 	}, [isFetching]);
+
+	useEffect(() => {
+		if (room?.message && offer) {
+			const messages = [...room.message, ...offer];
+			messages.sort(
+				(a: MessageBackend, b: MessageBackend) =>
+					new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
+			);
+			setAllMessages([...messages]);
+		}
+	}, [room, offer]);
+
+	console.log(allMessages);
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -100,9 +111,11 @@ const Chat = () => {
 
 	useEffect(() => {
 		if (!isLoading) {
-			setRoomMessages(messages);
+			setAllMessages([messages, offer]);
 		}
 	}, [isLoading]);
+
+	console.group(room);
 
 	useEffect(() => {
 		const newSocket = io(`${process.env.REACT_APP_API_URL}`);
@@ -177,20 +190,6 @@ const Chat = () => {
 			</>
 		);
 	}
-	const receiveOffer = (condition: boolean) => {
-		if (condition) {
-			return (
-				<>
-					<FreeOfferPopup
-						offer={offer}
-						user={user}
-						setOfferResponse={setOfferResponse}
-						setStatus={setStatus}
-					/>
-				</>
-			);
-		} else return <Message>{offerResponse}</Message>;
-	};
 	return (
 		<Wrapper onSubmit={handleSubmit(data => onSubmit(data, chatRoomId))}>
 			<UsersList>
@@ -240,28 +239,39 @@ const Chat = () => {
 					)}
 				</TitleMessage>
 				<ChatMessages ref={scrollRef}>
-					{roomMessages?.map((message: MessageBackend, i: number) => {
+					{allMessages?.map((message: MessageBackend, i: number) => {
 						if (message?.user?.role === user?.role) {
 							const date = getDate(new Date(message.created_at));
 							return (
 								<RightLi key={`b2${i}`}>
-									<MessageComponent message={message} className={`message recieved`} />
+									<MessageComponent
+										message={message}
+										className={`message recieved`}
+										offer={offer}
+										userSlice={user}
+										offerResponse={offerResponse}
+										setOfferResponse={setOfferResponse}
+										setStatus={setStatus}
+									/>
 									<Message className={`message date recieved`}>{date}</Message>
-									{receiveOffer(
-										user?.role === Role.Freelancer &&
-											offer?.length &&
-											roomMessages.length - 1 === i,
-									)}
 								</RightLi>
 							);
 						} else {
-							const date = getDate(new Date(message.created_at));
+							const date = getDate(new Date(message?.created_at));
 							return (
 								<LeftLi key={`b1${i}`}>
-									<MessageComponent message={message} className={`message sended`} />
+									<MessageComponent
+										message={message}
+										className={`message sended`}
+										offer={offer}
+										userSlice={user}
+										offerResponse={offerResponse}
+										setOfferResponse={setOfferResponse}
+										setStatus={setStatus}
+									/>
 									<MessageBlock>
 										<Message className={`message date sended`}>{date}</Message>
-										{!defaultChat?.activeRoom && user.id !== message.userId && (
+										{!defaultChat?.activeRoom && user.id !== message?.userId && (
 											<ButtonBlock>
 												<ButtonChat onClick={() => updateRoom(chatRoomId)}>
 													{`${t('chat.accepted')}`}
@@ -278,13 +288,29 @@ const Chat = () => {
 							if (message?.userId === user?.id) {
 								return (
 									<RightLi key={`a1${i}`}>
-										<MessageComponent message={message} className={`message recieved`} />
+										<MessageComponent
+											message={message}
+											className={`message recieved`}
+											offer={offer}
+											userSlice={user}
+											offerResponse={offerResponse}
+											setOfferResponse={setOfferResponse}
+											setStatus={setStatus}
+										/>
 									</RightLi>
 								);
 							} else {
 								return (
 									<LeftLi key={`a2${i}`}>
-										<MessageComponent message={message} className={`message sended`} />
+										<MessageComponent
+											message={message}
+											className={`message sended`}
+											offer={offer}
+											userSlice={user}
+											offerResponse={offerResponse}
+											setOfferResponse={setOfferResponse}
+											setStatus={setStatus}
+										/>
 									</LeftLi>
 								);
 							}

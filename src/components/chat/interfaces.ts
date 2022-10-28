@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { t } from 'i18next';
+import { ISliceState } from 'redux/reducers/userSlice';
 
 export const ValidationSchema = Yup.object().shape({
 	text: Yup.string().required(`${t('JobPostPage.fieldIsRequired')}`),
@@ -27,6 +28,23 @@ export type MessageBackend = {
 	profileSetting: {
 		photo: string;
 	};
+	clientId: number;
+	dateTime: Date;
+	offer: [
+		{
+			name: string;
+			price: number;
+			startDate: string;
+			endDate: string;
+			jobPostId: number;
+			freelancerId: number;
+			clientId: number;
+		},
+	];
+	userSlice: ISliceState;
+	setOfferResponse: (response: string) => void;
+	setStatus: (status: boolean) => void;
+	offerResponse: string;
 };
 
 export type RoomBackend = {
