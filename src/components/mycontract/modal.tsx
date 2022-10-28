@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import {
 	Wrapper,
@@ -13,18 +13,33 @@ import { getDate } from 'components/mycontract/dataUpdate';
 import { t } from 'i18next';
 
 interface ModalProps {
-	isShown: boolean;
-	hide: () => void;
+	isShown: boolean | undefined;
 	item: IContract;
+	setIsShown: (isShown: boolean) => void;
 }
 export const ContractModal = (props: ModalProps) => {
-	const { hide, isShown, item } = props;
+	const { setIsShown, isShown, item } = props;
+	const ref = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		function handleClickOutside(event: { target: any }) {
+			const target = event.target as HTMLDivElement;
+			if (ref.current && !ref.current.contains(target)) {
+				setIsShown(false);
+			}
+		}
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [ref]);
+
 	const modal = (
 		<React.Fragment>
 			<Backdrop />
 			<Wrapper>
-				<StyledModal>
-					<CloseButton onClick={hide}>X</CloseButton>
+				<StyledModal ref={ref}>
+					<CloseButton onClick={() => setIsShown(false)}>X</CloseButton>
 					<ContractDiv>
 						{item.clientId.clientSetting ? (
 							<img src={item?.clientId.clientSetting.photo} />

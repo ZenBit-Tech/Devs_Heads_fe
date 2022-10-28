@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, MouseEvent, useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select';
 import { useTranslation } from 'react-i18next';
@@ -11,12 +11,14 @@ import {
 	Wrapper,
 	P,
 	MainWrapper,
+	DeleteButton,
+	TitleBlock,
 } from 'components/mycontract/MyContract.style';
 import {
 	useGetAcceptedJobOfferQuery,
 	useUpdateOfferStatusExpiredMutation,
 } from 'service/httpService';
-import { Image } from 'components/Layout/Layout.styles';
+import { Image } from 'components/mycontract/MyContract.style';
 import profileImage from 'image/profile.png';
 import Spinner from 'assets/spinner.gif';
 import { H3, H5, Img, ImgSpinner } from 'components/freelancerJobs/freelancerPage.styles';
@@ -36,6 +38,8 @@ import { RootState } from 'redux/store';
 import { useAppSelector } from 'redux/hooks';
 import ContractModal from 'components/mycontract/modal';
 import ImageNoFound from 'image/no_result.png';
+import { TiDeleteOutline } from 'react-icons/ti';
+import DeleteModal from './deleteModal';
 
 function MyContract() {
 	const { t } = useTranslation();
@@ -43,6 +47,8 @@ function MyContract() {
 	const [selectDate, setSelectDate] = useState<ISelect>();
 	const [selectStatus, setSelectStatus] = useState<ISelect>();
 	const [contractItem, setItem] = useState<IContract>(initialContract);
+	const [showDeleteModal, setShowDeleteModal] = useState<boolean>();
+	const [showContractModal, setShowContractModal] = useState<boolean>();
 	const {
 		control,
 		getValues,
@@ -53,6 +59,7 @@ function MyContract() {
 		role: user.role,
 		date: selectDate?.name,
 		status: selectStatus?.name,
+		statusContract: contractItem.status,
 	};
 	const { data: offerAccepted, isLoading } = useGetAcceptedJobOfferQuery(dataSend);
 	const [updateStatus] = useUpdateOfferStatusExpiredMutation();
@@ -78,18 +85,14 @@ function MyContract() {
 	}, [offerAccepted]);
 
 	const itemChange = (item: IContract) => {
-		toggle();
+		setShowContractModal(!showContractModal);
 		setItem(item);
 	};
-	const useModal = () => {
-		const [isShown, setIsShown] = useState<boolean>(false);
-		const toggle = () => setIsShown(!isShown);
-		return {
-			isShown,
-			toggle,
-		};
+	const shownDeleteModal = (event: { stopPropagation: () => void }) => {
+		event.stopPropagation();
+		setShowDeleteModal(!showDeleteModal);
+		setShowContractModal(false);
 	};
-	const { isShown, toggle } = useModal();
 
 	return (
 		<MainWrapper>
@@ -137,9 +140,19 @@ function MyContract() {
 			{offerAccepted?.length > 0 && !isLoading ? (
 				offerAccepted?.map((item: IContract) => {
 					return (
-						<ContractContainer key={item.id} onClick={() => itemChange(item)}>
-							<Title>{item.jobPostId?.jobTitle}</Title>
-							<ContractItem>
+						<ContractContainer key={item.id}>
+							<TitleBlock>
+								<Title>{item.jobPostId?.jobTitle}</Title>
+								<DeleteButton>
+									<TiDeleteOutline onClick={shownDeleteModal} />
+								</DeleteButton>
+							</TitleBlock>
+							<DeleteModal
+								isShown={showDeleteModal}
+								setIsShown={setShowDeleteModal}
+								item={contractItem}
+							/>
+							<ContractItem onClick={() => itemChange(item)}>
 								{user.role === client ? (
 									<Image
 										src={item.freelancerId?.profileSetting?.photo ?? profileImage}
@@ -166,7 +179,11 @@ function MyContract() {
 									{getDate(new Date(item.startDate))}-{getDate(new Date(item.endDate))}
 								</P>
 							</ContractItem>
-							<ContractModal isShown={isShown} hide={toggle} item={contractItem} />
+							<ContractModal
+								isShown={showContractModal}
+								setIsShown={setShowContractModal}
+								item={contractItem}
+							/>
 						</ContractContainer>
 					);
 				})

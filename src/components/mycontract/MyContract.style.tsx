@@ -9,7 +9,6 @@ export const SelectBlock = styled.div`
 export const Title = styled.div`
 	display: block;
 	font-weight: bold;
-	padding: ${props => props.theme.spacing(5)} 0 0 ${props => props.theme.spacing(5)};
 	font-size: ${MEDIUM_FONT_SIZE};
 `;
 export const MainWrapper = styled.div`
@@ -111,4 +110,47 @@ export const ContractTitle = styled.p`
 	padding: ${props => props.theme.spacing(2)} ${props => props.theme.spacing(10)};
 	border: 2px solid ${props => props.theme.colors.lightGray};
 	font-size: ${LARGE_FONT_SIZE};
+`;
+
+export const Image = styled.img`
+	width: 60px;
+	height: 60px;
+	border-radius: 6px;
+	@media (max-width: 860px) {
+		width: 45px;
+		height: 45px;
+	}
+`;
+
+//Modal Delete Styles
+
+export const DeleteButton = styled.div`
+	display: flex;
+	cursor: pointer;
+	justify-content: flex-end;
+	& > svg {
+		width: 35px;
+		height: 35px;
+	}
+`;
+
+export const TitleDelete = styled.h2`
+	display: flex;
+	justify-content: center;
+	font-size: ${LARGE_FONT_SIZE};
+`;
+
+export const SubTitle = styled.p`
+	display: flex;
+	justify-content: center;
+	font-size: ${MEDIUM_FONT_SIZE};
+`;
+export const ModalBlock = styled.div`
+	padding: 35px;
+`;
+export const TitleBlock = styled.div`
+	display: flex;
+	padding: ${props => props.theme.spacing(5)} ${props => props.theme.spacing(5)} 0
+		${props => props.theme.spacing(5)};
+	justify-content: space-between;
 `;

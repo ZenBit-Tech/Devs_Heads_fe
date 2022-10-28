@@ -356,6 +356,14 @@ export const messagesApi = createApi({
 			}),
 			invalidatesTags: ['message'],
 		}),
+		updateDeletingStatus: build.mutation({
+			query: data => ({
+				url: `/chat-room/delete/${data.id}`,
+				method: 'PATCH',
+				body: data,
+			}),
+			invalidatesTags: ['message'],
+		}),
 	}),
 });
 
@@ -366,6 +374,7 @@ export const {
 	useGetRoomsByUserQuery,
 	useGetRoomsByTwoUsersQuery,
 	useUpdateChatRoomMutation,
+	useUpdateDeletingStatusMutation,
 } = messagesApi;
 
 export const JobOfferApi = createApi({
@@ -424,6 +433,7 @@ export const JobOfferApi = createApi({
 					'Content-type': 'application/json; charset=UTF-8',
 				},
 			}),
+			invalidatesTags: ['jobOffer'],
 		}),
 	}),
 });
