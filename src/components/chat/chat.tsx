@@ -287,7 +287,7 @@ const Chat = () => {
 									/>
 									<MessageBlock>
 										<Message className={`message date sended`}>{date}</Message>
-										{defaultChat?.activeRoom === NONE && user.id !== message.userId && (
+										{defaultChat?.activeRoom === NONE && user.id !== message?.userId && (
 											<ButtonBlock>
 												<ButtonChat
 													onClick={() =>
